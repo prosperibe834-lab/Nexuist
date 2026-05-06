@@ -248,4 +248,247 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Popular Asset Class Cryptocurrency Trading starts here 
+// Tighter Spreads. Faster Execution starts here
+async function fetchMarketData() {
+    const tableBody = document.getElementById('market-body');
+    const url = 'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana,cardano&order=market_cap_desc&per_page=4&page=1&sparkline=false';
+
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        tableBody.innerHTML = ''; // Clear loading state
+
+        data.forEach(coin => {
+            const priceChange = coin.price_change_percentage_24h.toFixed(2);
+            const changeClass = priceChange >= 0 ? 'ft-price-up' : 'ft-price-down';
+            const changeSymbol = priceChange >= 0 ? '↑' : '↓';
+
+            const row = `
+                <tr>
+                    <td>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <img src="${coin.image}" width="24" height="24">
+                            <strong>${coin.name}</strong> <span style="color:var(--text-gray); font-size:12px;">${coin.symbol.toUpperCase()}</span>
+                        </div>
+                    </td>
+                    <td>$${coin.current_price.toLocaleString()}</td>
+                    <td class="${changeClass}">${changeSymbol} ${Math.abs(priceChange)}%</td>
+                    <td>$${(coin.market_cap / 1e9).toFixed(2)}B</td>
+                    <td class="ft-hide-mobile">$${(coin.total_volume / 1e6).toFixed(0)}M</td>
+                </tr>
+            `;
+            tableBody.innerHTML += row;
+        });
+    } catch (error) {
+        tableBody.innerHTML = '<tr><td colspan="5" style="color:var(--accent-red)">Failed to sync market data. Please refresh.</td></tr>';
+    }
+}
+
+// Initial fetch and set interval for every 60 seconds
+fetchMarketData();
+setInterval(fetchMarketData, 60000);
+
+
+// Copy Professional Traders starts here
+document.addEventListener("DOMContentLoaded", function() {
+    
+    // Select all elements that have the 'st-animate' class
+    const animElements = document.querySelectorAll(".st-animate");
+
+    // Configure the IntersectionObserver to detect when an element is visible
+    const observerOptions = {
+        root: null, // Use the viewport as the container
+        rootMargin: "0px",
+        threshold: 0.15 // Trigger when 15% of the element is visible
+    };
+
+    const observerCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Add the active class to start the animation
+                entry.target.classList.add("active");
+                // Stop observing this element after it has animated in
+                observer.unobserve(entry.target);
+            }
+        });
+    };
+
+    // Initialize the observer
+    const animationObserver = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Tell the observer to watch each element
+    animElements.forEach(el => {
+        animationObserver.observe(el);
+    });
+});
+
+
+// advanced charting tools starts here
+document.addEventListener("DOMContentLoaded", function() {
+    // Animation Trigger
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.2 });
+
+    document.querySelectorAll('.at-animate').forEach(el => observer.observe(el));
+
+    // Simple Professional Chart Drawing
+    const canvas = document.getElementById('at-live-chart');
+    if(canvas) {
+        const ctx = canvas.getContext('2d');
+        canvas.width = canvas.parentElement.offsetWidth;
+        canvas.height = 350;
+
+        function drawChart() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+            ctx.strokeStyle = '#0070f3';
+            ctx.lineWidth = 3;
+            ctx.moveTo(0, 200);
+
+            for (let i = 0; i < canvas.width; i += 20) {
+                const y = 150 + Math.sin(i * 0.05) * 40 + Math.random() * 30;
+                ctx.lineTo(i, y);
+            }
+            ctx.stroke();
+
+            // Gradient Fill
+            ctx.lineTo(canvas.width, canvas.height);
+            ctx.lineTo(0, canvas.height);
+            const grad = ctx.createLinearGradient(0, 0, 0, 400);
+            grad.addColorStop(0, 'rgba(0, 112, 243, 0.2)');
+            grad.addColorStop(1, 'transparent');
+            ctx.fillStyle = grad;
+            ctx.fill();
+        }
+        drawChart();
+    }
+});
+
+
+// why you should trade with us starts here
+document.addEventListener("DOMContentLoaded", () => {
+    const observerOptions = { threshold: 0.2 };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                
+                // If it's the stats bar, trigger the counters
+                if (entry.target.classList.contains('nx-stats-bar')) {
+                    startCounters();
+                }
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.nx-animate').forEach(el => observer.observe(el));
+
+    function startCounters() {
+        const counters = document.querySelectorAll('.nx-counter');
+        counters.forEach(counter => {
+            const target = +counter.getAttribute('data-target');
+            const increment = target / 50; // Speed of counting
+
+            const updateCount = () => {
+                const count = +counter.innerText;
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(updateCount, 30);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount();
+        });
+    }
+});
+
+
+// how we work starts here
+document.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.sp-animate').forEach(el => observer.observe(el));
+});
+
+
+// Trade What You Want, When You Want starts here
+document.addEventListener("DOMContentLoaded", function() {
+    
+    // Select all elements that should animate in
+    const animElements = document.querySelectorAll(".dm-animate");
+
+    // Configure the observer for detection
+    const observerOptions = {
+        root: null, // Use the viewport
+        rootMargin: "0px",
+        threshold: 0.15 // Trigger when 15% of the element is visible
+    };
+
+    const observerCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Add the active class to trigger CSS animation
+                entry.target.classList.add("active");
+                // Stop observing after it has animated in once
+                observer.unobserve(entry.target);
+            }
+        });
+    };
+
+    // Initialize the observer
+    const animationObserver = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Observe each element
+    animElements.forEach(el => {
+        animationObserver.observe(el);
+    });
+});
+
+
+// Start Trading with Nexuist starts here
+document.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.cs-animate').forEach((el, index) => {
+        // Apply slight delay manually if not using CSS variables
+        el.style.transitionDelay = `${index * 0.1}s`;
+        observer.observe(el);
+    });
+});
+
+
+// Testimonials starts here
+document.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.ts-animate').forEach((el, index) => {
+        el.style.transitionDelay = `${index * 0.15}s`;
+        observer.observe(el);
+    });
+});
