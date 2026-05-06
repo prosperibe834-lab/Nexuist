@@ -15,7 +15,7 @@
     /* "Up" color */
     --accent-red: #ff3355;
 
-      --card-bg: #131722;
+    --card-bg: #131722;
     --primary-blue: #2962ff;
     --text-main: #ffffff;
     --text-dim: #b2b5be;
@@ -26,6 +26,10 @@
     /* Transitions for premium feel */
     --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-mid: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Extra Gradients for premium feel */
+    --grad-blue: linear-gradient(135deg, #0070f3 0%, #00a2ff 100%);
+    --grad-surface: linear-gradient(180deg, rgba(26, 35, 47, 0.5) 0%, rgba(9, 14, 22, 0) 100%);
 }
 
 * {
@@ -415,17 +419,17 @@ body {
 
 .nav-link.active {
     color: #fff;
-    background: rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .dropdown-content a.active {
     color: #fff;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 
-                                    /* Global Trade starts here */
-                                 
+/* Global Trade starts here */
+
 .hero-section {
     min-height: 100vh;
     display: flex;
@@ -500,7 +504,7 @@ p {
     border-radius: 12px;
     border: 1px solid var(--border-color);
     overflow: hidden;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 .chart-header {
@@ -543,9 +547,18 @@ p {
 }
 
 @media (max-width: 968px) {
-    .container { grid-template-columns: 1fr; text-align: center; }
-    .cta-group { justify-content: center; }
-    h1 { font-size: 2.5rem; }
+    .container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .cta-group {
+        justify-content: center;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
 }
 
 
@@ -575,4 +588,777 @@ p {
 /* Extra safety for mobile menu */
 .nav-menu {
     max-width: 100%;
+}
+
+
+
+
+/* Why trade with us starts here */
+
+/* BACKGROUNDS & TICKER */
+.ticker-container {
+    background: #0f141e;
+    border-bottom: 1px solid #1a232f;
+    overflow: hidden;
+    padding: 10px 0;
+}
+
+.ticker-content {
+    display: flex;
+    white-space: nowrap;
+    animation: marquee 30s linear infinite;
+}
+
+.ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 25px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.ticker-item img {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+}
+
+.up {
+    color: #26a69a;
+}
+
+.down {
+    color: #ef5350;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+/* Why Trade With Us Section */
+/* Container to keep everything centered on the page */
+.ft-why-section {
+    padding: 100px 20px;
+    background-color: #0f172a;
+    /* Deep fintech dark blue */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ft-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header Alignment */
+.ft-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+/* Perfect Grid Alignment */
+.ft-feature-grid {
+    display: grid;
+    /* Forces 4 columns on desktop, scales down on mobile */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    align-items: stretch;
+    /* Ensures all cards are the same height */
+}
+
+/* Card Alignment */
+.ft-feature-card {
+    position: relative;
+    background: rgba(30, 41, 59, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 50px 30px;
+    border-radius: 24px;
+
+    /* The Secret Sauce for Alignment */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Horizontal centering */
+    text-align: center;
+    /* Text centering */
+
+    transition: all 0.3s ease;
+    backdrop-filter: blur(12px);
+}
+
+.ft-feature-card:hover {
+    transform: translateY(-10px);
+    border-color: #3b82f6;
+    background: rgba(30, 41, 59, 0.8);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Icon Centering */
+.ft-icon-box {
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+    /* Space between icon and title */
+    flex-shrink: 0;
+    /* Prevents icon from squishing */
+}
+
+/* Typography Spacing */
+.ft-feature-card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 15px 0;
+    /* Tight control over margins */
+    line-height: 1.2;
+}
+
+.ft-feature-card p {
+    color: #94a3b8;
+    font-size: 15px;
+    line-height: 1.6;
+    margin: 0;
+    /* Helps keep text block balanced */
+    max-width: 280px;
+}
+
+/* Glow Effects */
+.ft-blue-glow {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+}
+
+.ft-green-glow {
+    background: linear-gradient(135deg, #10b981, #059669);
+    box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+}
+
+.ft-gold-glow {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    box-shadow: 0 10px 20px rgba(245, 158, 11, 0.3);
+}
+
+
+
+
+/* Market Analysis & Insights starts here */
+/* MODERN FINTECH SECTION */
+.investment-why-section {
+    background-color: #090e16;
+    padding: 100px 0;
+    color: #ffffff;
+}
+
+.bento-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.badge {
+    background: rgba(41, 98, 255, 0.1);
+    color: #2962ff;
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.bento-header h2 {
+    font-size: 42px;
+    margin-top: 15px;
+    font-weight: 800;
+}
+
+/* THE BENTO GRID */
+.bento-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.bento-card {
+    background: #131722;
+    border: 1px solid #1a232f;
+    border-radius: 24px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.bento-card:hover {
+    border-color: #2962ff;
+    transform: translateY(-5px);
+}
+
+.large {
+    grid-row: span 2;
+}
+
+.wide {
+    grid-column: span 2;
+}
+
+/* CARD INNER STYLES */
+.icon-wrap {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.bg-blue {
+    background: rgba(41, 98, 255, 0.1);
+    color: #2962ff;
+}
+
+.bg-green {
+    background: rgba(38, 166, 154, 0.1);
+    color: #26a69a;
+}
+
+.bg-amber {
+    background: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+}
+
+.bento-card h3 {
+    font-size: 22px;
+    margin-bottom: 12px;
+    font-weight: 700;
+}
+
+.bento-card p {
+    color: #9ca3af;
+    line-height: 1.6;
+    font-size: 15px;
+}
+
+.blue-gradient {
+    background: linear-gradient(135deg, #131722 0%, #0d1e4d 100%);
+}
+
+.main-icon {
+    width: 50px;
+    height: 50px;
+    color: #2962ff;
+    margin-bottom: 24px;
+}
+
+.flex-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* MOBILE RESPONSIVE FIX */
+@media (max-width: 1024px) {
+    .bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .large {
+        grid-row: span 1;
+    }
+
+    .wide {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .bento-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .wide {
+        grid-column: span 1;
+    }
+
+    .bento-header h2 {
+        font-size: 32px;
+    }
+}
+
+
+
+/* Unique Styles for Market Section */
+.ft-market-section {
+    padding: 80px 20px;
+    background-color: var(--bg-dark);
+    display: flex;
+    justify-content: center;
+}
+
+.ft-container {
+    max-width: 1200px;
+    width: 100%;
+}
+
+.ft-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.ft-badge {
+    background: rgba(0, 255, 136, 0.1);
+    color: var(--accent-green);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border: 1px solid rgba(0, 255, 136, 0.2);
+}
+
+.ft-title {
+    font-size: 36px;
+    margin: 15px 0;
+    color: var(--text-white);
+    font-weight: 700;
+}
+
+.ft-subtitle {
+    color: var(--text-gray);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Grid Layout */
+.ft-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 30px;
+    align-items: stretch;
+}
+
+@media (max-width: 992px) {
+    .ft-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.ft-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.ft-card-label {
+    font-size: 18px;
+    margin-bottom: 25px;
+    color: var(--text-white);
+}
+
+/* Left Card / Widget */
+.ft-widget-card {
+    border: 1px solid var(--accent-blue);
+    /* Matching image highlight */
+    height: 600px;
+    /* Fixed height to prevent overflow */
+}
+
+.ft-chart-container {
+    flex-grow: 1;
+    overflow: hidden;
+    border-radius: 8px;
+    background: #171b26;
+    /* TradingView base color */
+}
+
+/* Right Card / Analysis */
+.ft-analysis-list {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.ft-analysis-item {
+    display: flex;
+    gap: 20px;
+}
+
+.ft-iconbox {
+    min-width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ft-icon-green {
+    background: rgba(0, 255, 136, 0.15);
+    color: var(--accent-green);
+}
+
+.ft-icon-blue {
+    background: rgba(0, 112, 243, 0.15);
+    color: var(--accent-blue);
+}
+
+.ft-icon-shield {
+    background: rgba(41, 98, 255, 0.15);
+    color: var(--primary-blue);
+}
+
+.ft-item-content h4 {
+    margin-bottom: 8px;
+    font-size: 17px;
+}
+
+.ft-item-content h4 span {
+    color: var(--accent-green);
+}
+
+.ft-item-content p {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+/* The Tag Buttons you requested */
+.ft-link-btn {
+    display: inline-block;
+    background: var(--accent-blue);
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 4px;
+    transition: var(--transition-fast);
+}
+
+.ft-link-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+}
+
+/* Main CTA Button */
+.ft-cta-main {
+    margin-top: auto;
+    background: var(--grad-blue);
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 16px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: var(--transition-mid);
+}
+
+.ft-cta-main:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 4px 15px rgba(0, 112, 243, 0.3);
+}
+
+
+/* Diverse Trading Products starts here */
+
+
+.ft-products {
+    background-color: var(--bg-deep);
+    padding: 100px 20px;
+    font-family: 'Inter', sans-serif;
+}
+
+.ft-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.ft-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.ft-title {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 10px;
+}
+
+.ft-subtitle {
+    color: var(--text-dim);
+    font-size: 18px;
+}
+
+/* Grid Layout */
+.ft-product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+}
+
+/* Premium Card Design */
+.ft-product-card {
+    position: relative;
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 40px 30px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.ft-product-card:hover {
+    transform: translateY(-12px);
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Bottom Glow Effect */
+.ft-card-glow {
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: var(--accent);
+    filter: blur(60px);
+    opacity: 0.15;
+    transition: opacity 0.4s ease;
+}
+
+.ft-product-card:hover .ft-card-glow {
+    opacity: 0.4;
+}
+
+/* Icon & Content */
+.ft-icon-circle {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 20px;
+    margin-bottom: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ft-product-card h3 {
+    color: var(--text-main);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.ft-product-card p {
+    color: var(--text-dim);
+    line-height: 1.6;
+    font-size: 15px;
+    margin-bottom: 30px;
+}
+
+/* The Link Tag */
+.ft-explore-link {
+    text-decoration: none;
+    color: var(--accent);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    transition: gap 0.3s ease;
+}
+
+.ft-explore-link:hover {
+    gap: 12px;
+}
+
+.ft-arrow {
+    transition: transform 0.3s ease;
+}
+
+/* Staggered Animation Logic */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.ft-product-card {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+
+/* Popular Asset Class Cryptocurrency Trading starts here  */
+.ft-crypto-section {
+    padding: 80px 20px;
+    background-color: var(--bg-dark);
+}
+
+/* Header & Badge */
+.ft-badge {
+    background: rgba(0, 255, 136, 0.1);
+    color: var(--accent-green);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.ft-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 60px auto;
+}
+
+/* Responsive Grid - NO OVERFLOW */
+.ft-crypto-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Premium Card Design */
+.ft-crypto-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: var(--transition-mid);
+    display: flex;
+    flex-direction: column;
+}
+
+.ft-crypto-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--card-accent);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Card Visuals */
+.ft-card-banner {
+    height: 120px;
+    background: var(--card-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.ft-crypto-icon {
+    font-size: 50px;
+    color: white;
+}
+
+.ft-crypto-text-icon {
+    font-size: 32px;
+    font-weight: 800;
+    color: white;
+    border: 3px solid white;
+    padding: 5px 15px;
+    border-radius: 50%;
+}
+
+.ft-card-body {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.ft-card-body h3 {
+    color: var(--text-white);
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+
+.ft-card-body p {
+    color: var(--text-dim);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    flex-grow: 1;
+}
+
+/* Card Footer Alignment */
+.ft-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+}
+
+.ft-trade-link {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.ft-ticker {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-gray);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+/* CTA Button */
+.ft-action-wrapper {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.ft-btn-primary {
+    background: var(--accent-blue);
+    color: white;
+    padding: 14px 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: var(--transition-fast);
+}
+
+.ft-btn-primary:hover {
+    background: var(--accent-hover);
+    transform: scale(1.02);
 }

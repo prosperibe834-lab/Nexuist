@@ -117,8 +117,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-                                    // Global Trade starts here
-                                    new TradingView.widget({
+// Global Trade starts here
+new TradingView.widget({
     "autosize": true,
     "symbol": "BITSTAMP:BTCUSD",
     "interval": "D",
@@ -147,3 +147,105 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
+
+
+
+// Market Analysis & Insights starts here
+
+const injectTradingView = () => {
+    const container = document.getElementById('tradingview-wrapper');
+    if (!container) return;
+
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js';
+    script.async = true;
+
+    // This is where your design settings go
+    script.innerHTML = JSON.stringify({
+        "colorTheme": "dark",
+        "dateRange": "12M",
+        "showChart": true,
+        "locale": "en",
+        "width": "100%",
+        "height": "100%",
+        "largeChartUrl": "",
+        "isTransparent": true,
+        "showSymbolLogo": true,
+        "showFloatingTooltip": true,
+        "gridLineColor": "rgba(41, 98, 255, 0)",
+        "plotLineColorGrowing": "rgba(0, 255, 136, 1)",
+        "plotLineColorFalling": "rgba(255, 51, 85, 1)",
+        "topColor": "rgba(0, 112, 243, 0.12)",
+        "bottomColor": "rgba(0, 112, 243, 0)",
+        "tabs": [
+            {
+                "title": "Indices",
+                "symbols": [
+                    { "s": "FOREXCOM:SPX500", "d": "S&P 500" },
+                    { "s": "NASDAQ:IXIC", "d": "Nasdaq 100" },
+                    { "s": "FOREXCOM:DJI", "d": "Dow 30" },
+                    { "s": "INDEX:NKY", "d": "Nikkei 225" },
+                    { "s": "INDEX:DEU40", "d": "DAX Index" }
+                ]
+            },
+            {
+                "title": "Futures",
+                "symbols": [
+                    { "s": "CME_MINI:ES1!", "d": "S&P 500" },
+                    { "s": "CME:6E1!", "d": "Euro" },
+                    { "s": "COMEX:GC1!", "d": "Gold" },
+                    { "s": "NYMEX:CL1!", "d": "Crude Oil" }
+                ]
+            },
+            {
+                "title": "Bonds",
+                "symbols": [
+                    { "s": "CME:GE1!", "d": "Eurodollar" },
+                    { "s": "CBOT:ZB1!", "d": "T-Bond" },
+                    { "s": "CBOT:ZN1!", "d": "10Y Note" }
+                ]
+            },
+            {
+                "title": "Forex",
+                "symbols": [
+                    { "s": "FX:EURUSD", "d": "EUR/USD" },
+                    { "s": "FX:GBPUSD", "d": "GBP/USD" },
+                    { "s": "FX:USDJPY", "d": "USD/JPY" },
+                    { "s": "FX:AUDUSD", "d": "AUD/USD" }
+                ]
+            }
+        ]
+    });
+
+    container.appendChild(script);
+};
+
+// Run the function when the page loads
+document.addEventListener('DOMContentLoaded', injectTradingView);
+
+
+// Diverse Trading Products starts here
+document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.ft-product-card');
+    
+    // Set staggered delays for the entrance animation
+    cards.forEach((card, index) => {
+        card.style.animationDelay = `${index * 0.15}s`;
+    });
+
+    // Optional: Add a subtle tilt effect or hover tracking
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
+});
+
+
+// Popular Asset Class Cryptocurrency Trading starts here 
