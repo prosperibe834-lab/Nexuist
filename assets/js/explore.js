@@ -492,3 +492,22 @@ document.addEventListener("DOMContentLoaded", () => {
         observer.observe(el);
     });
 });
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.ln-animate').forEach((el, index) => {
+        // Apply slight delay manually if not using CSS variables
+        el.style.transitionDelay = `${index * 0.08}s`;
+        observer.observe(el);
+    });
+});
