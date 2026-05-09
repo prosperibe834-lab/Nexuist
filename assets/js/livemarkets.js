@@ -18,11 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Simulate real loading behavior
     const interval = setInterval(() => {
         progress += Math.random() * 15; // Random jump for realism
-        
+
         if (progress >= 100) {
             progress = 100;
             clearInterval(interval);
-            
+
             // Fade out the preloader
             setTimeout(() => {
                 preloader.classList.add("preloader-hidden");
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Update bar and text
         loadBar.style.width = progress + "%";
-        
+
         // Update status message based on progress
         if (progress > (messageIndex + 1) * 20 && messageIndex < messages.length - 1) {
             messageIndex++;
@@ -77,16 +77,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function setupDropdown(btnId, menuId) {
         const btn = document.getElementById(btnId);
         const menu = document.getElementById(menuId);
-        
+
         if (btn && menu) {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                
+
                 // Close all other dropdowns first
                 document.querySelectorAll('.dropdown-menu').forEach(m => {
                     if (m.id !== menuId) m.classList.remove('show');
                 });
-                
+
                 menu.classList.toggle('show');
             });
         }
@@ -164,10 +164,10 @@ qtDropdownBtn.addEventListener("click", () => {
 
 window.addEventListener("click", (e) => {
 
-    if(
+    if (
         !qtDropdownBtn.contains(e.target) &&
         !qtDropdownMenu.contains(e.target)
-    ){
+    ) {
         qtDropdownMenu.classList.remove("active");
         qtDropdownBtn.classList.remove("active");
     }
@@ -187,3 +187,267 @@ acmVerifyBtn.addEventListener("click", () => {
 
 
 // Main section starts here
+const allAssets = [
+    // CRYPTO
+    { symbol: "BTC/USD", name: "Bitcoin", cat: "crypto", price: "64,231.50", change: "+2.4%", trend: "up" },
+    { symbol: "ETH/USD", name: "Ethereum", cat: "crypto", price: "3,450.12", change: "+1.8%", trend: "up" },
+    { symbol: "SOL/USD", name: "Solana", cat: "crypto", price: "145.30", change: "+12.4%", trend: "up" },
+    { symbol: "BNB/USD", name: "Binance Coin", cat: "crypto", price: "590.20", change: "+0.5%", trend: "up" },
+    { symbol: "DOGE/USD", name: "Dogecoin", cat: "crypto", price: "0.162", change: "-5.1%", trend: "down" },
+
+    // STOCKS
+    { symbol: "AAPL", name: "Apple Inc.", cat: "stocks", price: "189.45", change: "+1.2%", trend: "up" },
+    { symbol: "TSLA", name: "Tesla Inc.", cat: "stocks", price: "172.10", change: "+7.1%", trend: "up" },
+    { symbol: "NVDA", name: "NVIDIA Corp.", cat: "stocks", price: "890.12", change: "+5.2%", trend: "up" },
+    { symbol: "META", name: "Meta Platforms", cat: "stocks", price: "485.30", change: "-1.9%", trend: "down" },
+
+    // FOREX
+    { symbol: "EUR/USD", name: "Euro / US Dollar", cat: "forex", price: "1.0845", change: "+0.1%", trend: "up" },
+    { symbol: "GBP/USD", name: "Pound / US Dollar", cat: "forex", price: "1.2640", change: "-3.2%", trend: "down" },
+
+    // COMMODITIES
+    { symbol: "XAU/USD", name: "Gold", cat: "commodities", price: "2,341.10", change: "+0.5%", trend: "up" },
+    { symbol: "Crude Oil", name: "West Texas Oil", cat: "commodities", price: "78.40", change: "-2.8%", trend: "down" }
+];
+
+let currentFilter = 'all';
+
+function renderAssets(filter = 'all', search = '') {
+    const list = document.getElementById('marketList');
+    list.innerHTML = ""; // Clear current list
+
+    const filtered = allAssets.filter(item => {
+        const matchesTab = filter === 'all' || item.cat === filter;
+        const matchesSearch = item.symbol.toLowerCase().includes(search.toLowerCase()) ||
+            item.name.toLowerCase().includes(search.toLowerCase());
+        return matchesTab && matchesSearch;
+    });
+
+    filtered.forEach(asset => {
+        const trendIcon = asset.trend === 'up' ?
+            'https://s3.tradingview.com/snapshots/c/chart_thumb.png' :
+            'https://s3.tradingview.com/snapshots/c/chart_thumb.png'; // Use a red-tinted version if available
+
+        list.innerHTML += `
+            <div class="market-row">
+                <div>
+                    <span style="font-weight:bold; color:white;">${asset.symbol}</span><br>
+                    <small style="color:#848e9c;">${asset.name}</small>
+                </div>
+                <div style="color:white; font-weight:600;">$${asset.price}</div>
+                <div class="${asset.trend}">${asset.change}</div>
+                <div><img src="${trendIcon}" style="width:50px; filter:${asset.trend === 'up' ? 'hue-rotate(90deg)' : 'hue-rotate(340deg) grayscale(0.5)'};"></div>
+                <div><button class="btn-trade" onclick="launchTerminal('${asset.symbol}')">Trade</button></div>
+            </div>
+        `;
+    });
+}
+
+// Filter by Tab
+function filterCategory(cat, event) {
+    currentFilter = cat;
+    // Update Active Button UI
+    document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+
+    renderAssets(cat, document.getElementById('assetSearch').value);
+}
+
+// Search Logic
+function searchAssets() {
+    const searchValue = document.getElementById('assetSearch').value;
+    renderAssets(currentFilter, searchValue);
+}
+
+// Initial Load
+renderAssets();
+
+// This function handles opening the professional chart
+function launchTerminal(symbol) {
+    const modal = document.getElementById('tradingTerminal');
+    const title = document.getElementById('orderTitle');
+
+    if (modal && title) {
+        modal.style.display = 'block';
+        title.innerText = symbol;
+
+        // Clean up symbol for TradingView (remove slashes if they exist)
+        const cleanSymbol = symbol.replace('/', '');
+
+        // Initialize the TradingView Widget
+        new TradingView.widget({
+            "autosize": true,
+            "symbol": cleanSymbol,
+            "interval": "D",
+            "timezone": "Etc/UTC",
+            "theme": "dark",
+            "style": "1", // 1 = Candlestick
+            "locale": "en",
+            "container_id": "tradingview_widget",
+            "hide_side_toolbar": false,
+            "allow_symbol_change": true,
+            "details": true,
+            "hotlist": true,
+            "calendar": true,
+            "show_popup_button": true,
+            "popup_width": "1000",
+            "popup_height": "650"
+        });
+    } else {
+        console.error("Trading modal elements not found! Check your HTML IDs.");
+    }
+}
+
+// Function to close the chart
+function closeTerminal() {
+    document.getElementById('tradingTerminal').style.display = 'none';
+}
+
+function renderAssets(filter = 'all', search = '') {
+    const list = document.getElementById('marketList');
+    list.innerHTML = "";
+
+    const filtered = allAssets.filter(item => {
+        const matchesTab = filter === 'all' || item.cat === filter;
+        const matchesSearch = item.symbol.toLowerCase().includes(search.toLowerCase()) ||
+            item.name.toLowerCase().includes(search.toLowerCase());
+        return matchesTab && matchesSearch;
+    });
+
+    filtered.forEach(asset => {
+        // Instead of a broken image, we create a beautiful CSS trend line
+        const isUp = asset.trend === 'up';
+        const color = isUp ? '#0ecb81' : '#f6465d';
+
+        list.innerHTML += `
+            <div class="market-row">
+                <div>
+                    <span style="font-weight:bold; color:white; font-size:16px;">${asset.symbol}</span><br>
+                    <small style="color:#848e9c;">${asset.name}</small>
+                </div>
+                <div style="color:white; font-weight:600;">$${asset.price}</div>
+                <div class="${asset.trend}">${asset.change}</div>
+                
+                <!-- NEW TREND GRAPH (No more broken images) -->
+                <div>
+                    <svg width="80" height="30" viewBox="0 0 80 30" fill="none">
+                        <path d="${isUp ? 'M0 25 L20 20 L40 22 L60 10 L80 5' : 'M0 5 L20 15 L40 12 L60 25 L80 28'}" 
+                              stroke="${color}" stroke-width="2" stroke-linecap="round"/>
+                        <path d="${isUp ? 'M0 25 L20 20 L40 22 L60 10 L80 5 V30 H0 Z' : 'M0 5 L20 15 L40 12 L60 25 L80 28 V30 H0 Z'}" 
+                              fill="url(#grad-${asset.trend})" opacity="0.2"/>
+                        <defs>
+                            <linearGradient id="grad-up" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#0ecb81"/>
+                                <stop offset="100%" stop-color="transparent"/>
+                            </linearGradient>
+                            <linearGradient id="grad-down" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#f6465d"/>
+                                <stop offset="100%" stop-color="transparent"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+
+                <div><button class="btn-trade" onclick="launchTerminal('${asset.symbol}')">Trade</button></div>
+            </div>
+        `;
+    });
+}
+
+// 1. Handle switching between Buy and Sell tabs in the Terminal
+document.querySelector('.tab-buy').addEventListener('click', function () {
+    this.style.background = '#0ecb81'; // Green
+    this.style.color = 'white';
+    document.querySelector('.tab-sell').style.background = '#1e2329'; // Dark
+    document.querySelector('.tab-sell').style.color = '#848e9c';
+    document.querySelector('.tab-buy-final').innerText = 'PLACE BUY ORDER';
+    document.querySelector('.tab-buy-final').style.background = '#0ecb81';
+});
+
+document.querySelector('.tab-sell').addEventListener('click', function () {
+    this.style.background = '#f6465d'; // Red
+    this.style.color = 'white';
+    document.querySelector('.tab-buy').style.background = '#1e2329'; // Dark
+    document.querySelector('.tab-buy').style.color = '#848e9c';
+    // Update the big button at the bottom to say Sell
+    document.querySelector('.tab-buy-final').innerText = 'PLACE SELL ORDER';
+    document.querySelector('.tab-buy-final').style.background = '#f6465d';
+});
+
+// 2. Handle the "Place Order" button click
+function handlePlaceOrder() {
+    const symbol = document.getElementById('orderTitle').innerText;
+    const amount = document.querySelector('.form-field input[type="number"]').value;
+    const type = document.querySelector('.tab-buy-final').innerText; // Checks if Buy or Sell
+
+    if (!amount || amount <= 0) {
+        alert("Please enter a valid amount to trade.");
+        return;
+    }
+
+    // This is where you would normally send data to your backend
+    alert(`Order Submitted Successfully!\nType: ${type}\nAsset: ${symbol}\nAmount: $${amount}`);
+
+    // Close terminal after "successful" trade
+    closeTerminal();
+}
+
+function setVal(percent) {
+    const balance = 1245.89; // Replace this with your actual balance variable later
+    const amountInput = document.querySelector('.form-field input[type="number"]');
+
+    const calculatedAmount = (balance * (percent / 100)).toFixed(2);
+    amountInput.value = calculatedAmount;
+}
+
+// --- 1. SUCCESS MODAL LOGIC ---
+function handlePlaceOrder() {
+    const symbol = document.getElementById('orderTitle').innerText;
+    const amount = document.querySelector('.form-field input[type="number"]').value;
+
+    if (!amount || amount <= 0) {
+        alert("Please enter a valid amount.");
+        return;
+    }
+
+    // Show Success Modal
+    document.getElementById('successMessage').innerText = `Your order for ${symbol} has been executed.`;
+    document.getElementById('orderSuccessModal').style.display = 'flex';
+}
+
+function closeSuccessModal() {
+    document.getElementById('orderSuccessModal').style.display = 'none';
+    closeTerminal(); // Closes the chart too
+}
+
+// --- 2. REFRESH PERSISTENCE LOGIC ---
+
+// Override the launchTerminal to save the state
+const originalLaunchTerminal = launchTerminal;
+launchTerminal = function (symbol) {
+    originalLaunchTerminal(symbol);
+    // Save to browser memory
+    localStorage.setItem('nexuist_last_symbol', symbol);
+    localStorage.setItem('nexuist_terminal_open', 'true');
+};
+
+// Override closeTerminal to clear state
+const originalCloseTerminal = closeTerminal;
+closeTerminal = function () {
+    originalCloseTerminal();
+    localStorage.removeItem('nexuist_terminal_open');
+    localStorage.removeItem('nexuist_last_symbol');
+};
+
+// Check on page load if we should be in a trade
+window.addEventListener('load', () => {
+    const isTerminalOpen = localStorage.getItem('nexuist_terminal_open');
+    const lastSymbol = localStorage.getItem('nexuist_last_symbol');
+
+    if (isTerminalOpen === 'true' && lastSymbol) {
+        // Wait a tiny bit for TradingView library to be ready
+        setTimeout(() => {
+            launchTerminal(lastSymbol);
+        }, 500);
+    }
+});
