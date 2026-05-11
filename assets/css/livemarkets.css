@@ -1911,155 +1911,6 @@ ul {
 }
 
 
-/* ===== PREMIUM MOBILE HEADER FIX ===== */
-
-@media (max-width: 768px) {
-
-    /* Header */
-    .top-header {
-        height: 65px;
-        padding: 0 12px;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        overflow: visible !important;
-
-        z-index: 99999;
-    }
-
-    /* Left Side */
-    .header-left {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-
-        flex: 1;
-        min-width: 0;
-    }
-
-    /* RIGHT SIDE */
-    .header-right {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-
-        flex-shrink: 0;
-    }
-
-    /* SHOW SIDEBAR TOGGLE */
-    .mobile-menu-btn {
-        display: flex !important;
-
-        align-items: center;
-        justify-content: center;
-
-        width: 38px;
-        height: 38px;
-
-        border-radius: 10px;
-
-        background: rgba(255,255,255,0.05);
-
-        font-size: 22px;
-
-        flex-shrink: 0;
-    }
-
-    /* Logo */
-    .logo-area {
-        gap: 8px;
-        overflow: hidden;
-    }
-
-    .logo-img {
-        width: 30px;
-        height: 30px;
-    }
-
-    .logo-text h2 {
-        font-size: 13px;
-        white-space: nowrap;
-    }
-
-    .logo-text p {
-        display: none;
-    }
-
-    /* HIDE CRYPTO TICKER */
-    .crypto-ticker {
-        display: none !important;
-    }
-
-    /* BALANCE BOX */
-    .top-balance-box {
-        padding: 5px 8px;
-
-        min-width: auto;
-    }
-
-    .balance-label {
-        font-size: 7px;
-    }
-
-    .balance-value {
-        font-size: 11px;
-    }
-
-    /* QUICK TRADE */
-    .qt-dropdown-btn {
-        padding: 8px 10px !important;
-        gap: 6px;
-    }
-
-    .qt-user-title {
-        font-size: 11px;
-    }
-
-    .qt-user-sub {
-        display: none;
-    }
-
-    /* Notification */
-    .icon-btn {
-        font-size: 18px;
-    }
-
-    .red-badge {
-        top: -2px;
-        right: -2px;
-    }
-
-    /* PROFILE */
-    .profile-btn {
-        gap: 0;
-    }
-
-    .user-info {
-        display: none;
-    }
-
-    .avatar {
-        width: 30px;
-        height: 30px;
-
-        font-size: 12px;
-    }
-
-    /* FIX DROPDOWN OVERLAY */
-    .dropdown-menu,
-    .qt-dropdown-menu {
-        z-index: 999999 !important;
-    }
-
-    /* Prevent content covering dropdown */
-    .main-wrapper {
-        position: relative;
-        z-index: 1;
-    }
-
-}
 
 /* ===== PRELOADER FIX ===== */
 
@@ -2122,5 +1973,221 @@ ul {
         right: -4px;
     }
 
+}/* =========================================
+   FINAL MOBILE HEADER + ICON FIX
+========================================= */
+
+@media screen and (max-width: 768px) {
+
+    /* HEADER */
+    .top-header{
+        height:65px;
+        padding:0 12px;
+
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+
+        overflow:visible !important;
+
+        z-index:999999;
+    }
+
+    /* LEFT */
+    .header-left{
+        display:flex;
+        align-items:center;
+        gap:10px;
+
+        flex:1;
+        min-width:0;
+    }
+
+    /* RIGHT */
+    .header-right{
+        display:flex;
+        align-items:center;
+        gap:10px;
+
+        flex-shrink:0;
+    }
+
+    /* MENU BUTTON */
+    .mobile-menu-btn{
+        display:flex !important;
+        align-items:center;
+        justify-content:center;
+
+        width:40px;
+        height:40px;
+
+        min-width:40px;
+
+        border:none;
+        outline:none;
+
+        background:rgba(255,255,255,0.08);
+
+        border-radius:10px;
+
+        color:#fff !important;
+
+        cursor:pointer;
+
+        z-index:999999;
+    }
+
+    .mobile-menu-btn .iconify{
+        font-size:24px !important;
+        color:#fff !important;
+    }
+
+    /* LOGO */
+    .logo-area{
+        display:flex;
+        align-items:center;
+        gap:8px;
+
+        overflow:hidden;
+    }
+
+    .logo-img{
+        width:30px;
+        height:30px;
+    }
+
+    .logo-text h2{
+        font-size:13px;
+        white-space:nowrap;
+    }
+
+    .logo-text p{
+        display:none;
+    }
+
+    /* HIDE TICKER */
+    .crypto-ticker{
+        display:none !important;
+    }
+
+    /* QUICK TRADE */
+    .qt-dropdown-btn{
+        padding:8px 10px !important;
+    }
+
+    .qt-user-sub{
+        display:none;
+    }
+
+    .qt-user-title{
+        font-size:11px;
+    }
+
+    /* NOTIFICATION */
+    .notification-wrapper{
+        position:relative;
+    }
+
+    .icon-btn{
+        display:flex !important;
+        align-items:center;
+        justify-content:center;
+
+        width:38px;
+        height:38px;
+
+        border:none;
+        background:rgba(255,255,255,0.06);
+
+        border-radius:10px;
+
+        color:#fff !important;
+
+        cursor:pointer;
+    }
+
+    .icon-btn .iconify{
+        font-size:21px !important;
+        color:#fff !important;
+    }
+
+    /* BADGE */
+    .red-badge{
+        position:absolute;
+
+        top:-3px;
+        right:-3px;
+
+        min-width:16px;
+        height:16px;
+
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        font-size:9px;
+
+        background:#ef4444;
+        color:#fff;
+
+        border-radius:50%;
+    }
+
+    /* PROFILE */
+    .profile-btn{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+
+        padding:0;
+        gap:0;
+    }
+
+    .user-info{
+        display:none !important;
+    }
+
+    .avatar{
+        width:32px;
+        height:32px;
+
+        font-size:12px;
+    }
+
+    /* DROPDOWNS */
+    .dropdown-menu,
+    .qt-dropdown-menu{
+        z-index:99999999 !important;
+    }
+
+    /* MAIN */
+    .main-wrapper{
+        margin-left:0 !important;
+        width:100% !important;
+        padding:15px !important;
+    }
+
+    /* SIDEBAR */
+    .sidebar{
+        transform:translateX(-100%);
+        transition:0.3s ease;
+        z-index:999999;
+    }
+
+    .sidebar.show{
+        transform:translateX(0);
+    }
 }
 
+/* PRELOADER ALWAYS ON TOP */
+#fintech-preloader{
+    z-index:999999999 !important;
+}
+
+@media (max-width: 768px){
+
+    .top-balance-box{
+        display: none !important;
+    }
+
+}

@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexuist | Professional Trading</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/copytrading.css">
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 
 <body>
@@ -148,7 +149,7 @@
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:layout-grid-line"></span> OVERVIEW</h3>
-                    <a href="index.html" class="nav-item active">
+                    <a href="index.html" class="nav-item">
                         <span class="iconify" data-icon="solar:widget-2-outline"></span>
                         Dashboard
                     </a>
@@ -211,7 +212,7 @@
                             Markets</div>
                         <span class="badge solid-red"><span class="dot"></span> Live</span>
                     </a>
-                    <a href="copytrading.html" class="nav-item">
+                    <a href="copytrading.html" class="nav-item active">
                         <div class="item-left"><span class="iconify" data-icon="ri:user-follow-line"></span> Copy
                             Trading</div>
                         <span class="badge solid-purple">Pro</span>
@@ -235,14 +236,14 @@
 
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:wallet-3-line"></span> WALLET & FUNDS</h3>
-                    <a href="depositfunds.html" class="nav-item">
+                    <a href="deposit.html" class="nav-item">
                         <span class="iconify" data-icon="ri:add-circle-line"></span> Deposit Funds
                     </a>
                     <a href="withdraw.html" class="nav-item">
                         <span class="iconify" data-icon="solar:card-send-outline"></span>
                         Withdraw Funds
                     </a>
-                    <a href="internal-transfer.html" class="nav-item">
+                    <a href="transfer.html" class="nav-item">
                         <span class="iconify" data-icon="ri:arrow-left-right-line"></span> Internal Transfer
                     </a>
                 </div>
@@ -376,134 +377,95 @@
             </div>
         </aside>
 
-        <main class="content-area">
-            <div class="page-header">
-                <div class="welcome-text">
-                    <h1>Welcome back, marine military!</h1>
-                    <p>Your investment dashboard overview</p>
+        <!-- Main Content -->
+        <section class="dashboard-container">
+            <div class="dashboard-header">
+                <div class="header-text">
+                    <h1>Copy Trading Dashboard</h1>
+                    <p>Manage your copy trading portfolio and track performance</p>
                 </div>
-                <div class="header-buttons">
-                    <a href="wallet.html" class="btn btn-outline-purple">
-                        <span class="iconify" data-icon="ri:link"></span> Connect Wallet
-                    </a>
-                    <a href="invest.html" class="btn btn-solid-green">
-                        <span class="iconify" data-icon="ri:line-chart-line"></span> Invest Now
-                    </a>
+                <div class="header-actions">
+                    <a href="experts.html" class="btn btn-primary"><i class="fas fa-users"></i> Browse Experts</a>
+                    <button class="btn btn-secondary" id="refresh-btn">
+                        <i class="fas fa-sync-alt" id="refresh-icon"></i> Refresh
+                    </button>
                 </div>
-            </div>
-
-            <div class="banner demo-banner">
-                <div class="banner-left">
-                    <div class="icon-box"><span class="iconify" data-icon="ri:graduation-cap-line"></span></div>
-                    <div>
-                        <h2>Demo Account Active</h2>
-                        <p>Demo Balance: $100,000.00</p>
-                    </div>
-                </div>
-                <a href="live-trade.html" class="btn btn-white">
-                    <span class="iconify" data-icon="ri:play-line"></span> Switch to Demo Trading
-                </a>
             </div>
 
             <div class="stats-grid">
-                <div class="card balance-card">
-                    <div class="card-head">
-                        <div class="title">
-                            <span class="iconify" data-icon="ri:wallet-3-line"></span>
-                            <h3>Account Balance</h3>
-                        </div>
-                        <button class="icon-btn" id="toggleBalanceBtn">
-                            <span class="iconify" id="eyeIcon" data-icon="ri:eye-line"></span>
-                        </button>
+                <div class="stat-card fade-in">
+                    <div class="stat-info">
+                        <span class="stat-label">Active Copies</span>
+                        <h2 class="stat-value">0</h2>
+                        <span class="stat-sub">Experts being copied</span>
                     </div>
-                    <p class="subtitle">Your available funds</p>
-                    <h1 class="main-amount" id="balanceAmount">$0.00</h1>
-
-                    <div class="status-tags">
-                        <span class="tag tag-success"><span class="iconify" data-icon="ri:checkbox-circle-line"></span>
-                            Available for Withdrawal</span>
-                        <span class="tag tag-danger"><span class="iconify" data-icon="ri:error-warning-line"></span>
-                            Unverified</span>
-                    </div>
-
-                    <p class="last-updated">Last updated: May 07, 2026 11:23 AM</p>
-
-                    <div class="card-actions">
-                        <a href="deposit.html" class="btn btn-dark"><span class="iconify"
-                                data-icon="ri:add-circle-line"></span> Deposit</a>
-                        <a href="withdraw.html" class="btn btn-dark"><span class="iconify"
-                                data-icon="ri:arrow-right-up-line"></span> Withdraw</a>
-                    </div>
+                    <div class="stat-icon icon-blue"><i class="fas fa-user-friends"></i></div>
                 </div>
 
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Profit</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:money-dollar-circle-line"></span>
-                        </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-info">
+                        <span class="stat-label">Total Invested</span>
+                        <h2 class="stat-value">$0.00</h2>
+                        <span class="stat-sub">Capital deployed</span>
                     </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> Last period</p>
+                    <div class="stat-icon icon-green"><i class="fas fa-dollar-sign"></i></div>
                 </div>
 
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Deposit</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:arrow-down-line"></span></div>
+                <div class="stat-card fade-in">
+                    <div class="stat-info">
+                        <span class="stat-label">Current Value</span>
+                        <h2 class="stat-value">$0.00</h2>
+                        <span class="stat-sub">Portfolio value</span>
                     </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
+                    <div class="stat-icon icon-purple"><i class="fas fa-wallet"></i></div>
                 </div>
 
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Withdrawal</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:arrow-up-line"></span></div>
+                <div class="stat-card fade-in">
+                    <div class="stat-info">
+                        <span class="stat-label">Total P&L</span>
+                        <h2 class="stat-value success">+$0.00</h2>
+                        <span class="stat-sub">0% ROI</span>
                     </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Bonus</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:gift-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
+                    <div class="stat-icon icon-green-light"><i class="fas fa-chart-line"></i></div>
                 </div>
             </div>
 
-            <div class="card flex-card">
-                <div class="flex-left">
-                    <div class="icon-box dark-box"><span class="iconify" data-icon="ri:shield-check-line"></span></div>
-                    <div>
-                        <h3>Identity Verification</h3>
-                        <p>Complete verification to access all features</p>
+            <div class="empty-state-card scale-up">
+                <div class="empty-icon">
+                    <i class="fas fa-copy"></i>
+                </div>
+                <h2>Start Copy Trading</h2>
+                <p>You haven't started copying any traders yet. Browse our expert traders and start copying their
+                    winning strategies to earn profits automatically.</p>
+
+                <div class="feature-highlights">
+                    <div class="feature-item">
+                        <div class="f-icon icon-blue"><i class="fas fa-user-tie"></i></div>
+                        <h4>Expert Traders</h4>
+                        <p>Copy from verified professional traders</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="f-icon icon-green"><i class="fas fa-bolt"></i></div>
+                        <h4>Auto Trading</h4>
+                        <p>Trades executed automatically 24/7</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="f-icon icon-purple"><i class="fas fa-shield-alt"></i></div>
+                        <h4>Risk Management</h4>
+                        <p>Set your own limits and stop-loss</p>
                     </div>
                 </div>
-                <a href="verify.html" class="btn btn-blue">View Details <span class="iconify"
-                        data-icon="ri:arrow-down-s-line" style="transform: rotate(-90deg);"></span></a>
-            </div>
 
-            <div class="card flex-card promo-card" id="promoCard">
-                <button class="close-promo" id="closePromoBtn"><span class="iconify"
-                        data-icon="ri:close-line"></span></button>
-                <div class="flex-left">
-                    <div class="icon-box dark-box border-purple"><span class="iconify text-purple"
-                            data-icon="ri:wallet-3-fill"></span></div>
-                    <div>
-                        <h3>Connect Your Wallet to Start Earning</h3>
-                        <p class="text-purple-light">Connect your cryptocurrency wallet to unlock daily earning
-                            opportunities of up to <strong>$3000 per day</strong>.</p>
-                    </div>
+                <div class="empty-actions">
+                    <a href="#" class="btn btn-primary btn-lg">Browse Expert Traders</a>
+                    <a href="#" class="btn btn-outline">How It Works</a>
                 </div>
             </div>
+        </section>
 
-        </main>
     </div>
 
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/copytrading.js"></script>
 </body>
 
 </html>
