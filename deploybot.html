@@ -5,9 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexuist | Professional Trading</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/deploybot.css">
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome CDN for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
@@ -148,7 +150,7 @@
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:layout-grid-line"></span> OVERVIEW</h3>
-                    <a href="index.html" class="nav-item active">
+                    <a href="index.html" class="nav-item">
                         <span class="iconify" data-icon="solar:widget-2-outline"></span>
                         Dashboard
                     </a>
@@ -211,12 +213,12 @@
                             Markets</div>
                         <span class="badge solid-red"><span class="dot"></span> Live</span>
                     </a>
-                    <a href="copytrading.html" class="nav-item">
+                    <a href="copy.html" class="nav-item">
                         <div class="item-left"><span class="iconify" data-icon="ri:user-follow-line"></span> Copy
                             Trading</div>
                         <span class="badge solid-purple">Pro</span>
                     </a>
-                    <a href="botTrading.html" class="nav-item">
+                    <a href="botTrading.html" class="nav-item active">
                         <div class="item-left"><span class="iconify" data-icon="ri:robot-2-line"></span> AI Trading Bots
                         </div>
                         <span class="badge solid-blue">AI</span>
@@ -235,14 +237,14 @@
 
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:wallet-3-line"></span> WALLET & FUNDS</h3>
-                    <a href="depositfunds.html" class="nav-item">
+                    <a href="deposit.html" class="nav-item">
                         <span class="iconify" data-icon="ri:add-circle-line"></span> Deposit Funds
                     </a>
                     <a href="withdraw.html" class="nav-item">
                         <span class="iconify" data-icon="solar:card-send-outline"></span>
                         Withdraw Funds
                     </a>
-                    <a href="internal-transfer.html" class="nav-item">
+                    <a href="transfer.html" class="nav-item">
                         <span class="iconify" data-icon="ri:arrow-left-right-line"></span> Internal Transfer
                     </a>
                 </div>
@@ -376,134 +378,255 @@
             </div>
         </aside>
 
-        <main class="content-area">
-            <div class="page-header">
-                <div class="welcome-text">
-                    <h1>Welcome back, marine military!</h1>
-                    <p>Your investment dashboard overview</p>
-                </div>
-                <div class="header-buttons">
-                    <a href="wallet.html" class="btn btn-outline-purple">
-                        <span class="iconify" data-icon="ri:link"></span> Connect Wallet
-                    </a>
-                    <a href="invest.html" class="btn btn-solid-green">
-                        <span class="iconify" data-icon="ri:line-chart-line"></span> Invest Now
-                    </a>
-                </div>
+        <!-- Main Content -->
+        <main class="dashboard-content">
+
+    <!-- Header Hero Section -->
+    <header class="hero-section reveal">
+
+        <div class="hero-text">
+            <h1>Bot Trading Dashboard</h1>
+            <p>
+                Monitor and manage your automated trading investments
+            </p>
+        </div>
+
+        <div class="hero-stats-icon">
+            <i class="fas fa-chart-line"></i>
+        </div>
+
+    </header>
+
+    <!-- Top Stats Cards -->
+    <section class="stats-grid">
+
+        <div class="stat-card reveal">
+            <div class="icon-box blue">
+                <i class="fas fa-wallet"></i>
             </div>
 
-            <div class="banner demo-banner">
-                <div class="banner-left">
-                    <div class="icon-box"><span class="iconify" data-icon="ri:graduation-cap-line"></span></div>
-                    <div>
-                        <h2>Demo Account Active</h2>
-                        <p>Demo Balance: $100,000.00</p>
-                    </div>
-                </div>
-                <a href="live-trade.html" class="btn btn-white">
-                    <span class="iconify" data-icon="ri:play-line"></span> Switch to Demo Trading
+            <div class="stat-info">
+                <h3 id="totalInvested">$0.00</h3>
+                <p>Total Invested</p>
+            </div>
+        </div>
+
+        <div class="stat-card reveal">
+            <div class="icon-box green">
+                <i class="fas fa-chart-pie"></i>
+            </div>
+
+            <div class="stat-info">
+                <h3 id="currentBalance">$0.00</h3>
+                <p>Current Balance</p>
+            </div>
+        </div>
+
+        <div class="stat-card reveal">
+            <div class="icon-box green-light">
+                <i class="fas fa-arrow-up"></i>
+            </div>
+
+            <div class="stat-info">
+                <h3 class="text-green" id="totalProfit">
+                    +$0.00
+                </h3>
+
+                <p>Total Profit</p>
+            </div>
+        </div>
+
+        <div class="stat-card reveal">
+            <div class="icon-box red">
+                <i class="fas fa-robot"></i>
+            </div>
+
+            <div class="stat-info">
+                <h3 id="activeBotsCount">1</h3>
+                <p>Active Bots</p>
+
+                <span class="status-indicator"></span>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Main Grid -->
+    <div class="main-grid">
+
+        <!-- ACTIVE INVESTMENTS -->
+        <section class="content-card inventory-card reveal">
+
+            <div class="card-header">
+
+                <h2>Active Investments</h2>
+
+                <a href="bot-hub.html" class="btn-primary">
+                    + New Investment
                 </a>
+
             </div>
 
-            <div class="stats-grid">
-                <div class="card balance-card">
-                    <div class="card-head">
-                        <div class="title">
-                            <span class="iconify" data-icon="ri:wallet-3-line"></span>
-                            <h3>Account Balance</h3>
+            <div class="inventory-list">
+
+                <!-- DYNAMIC BOT -->
+                <div class="inventory-item">
+
+                    <div class="item-info">
+
+                        <span class="bot-icon">
+                            <i class="fas fa-robot"></i>
+                        </span>
+
+                        <div>
+
+                            <h4 id="deployBotName">
+                                Loading Bot...
+                            </h4>
+
+                            <p id="deployBotDesc">
+                                Please wait...
+                            </p>
+
+                            <div style="margin-top:10px;">
+
+                                <small>
+                                    ROI:
+                                    <span id="deployBotROI"></span>
+                                </small>
+
+                                <br>
+
+                                <small>
+                                    Duration:
+                                    <span id="deployBotDuration"></span>
+                                </small>
+
+                                <br>
+
+                                <small>
+                                    Risk:
+                                    <span id="deployBotRisk"></span>
+                                </small>
+
+                                <br>
+
+                                <small>
+                                    Investment:
+                                    $<span id="deployBotAmount"></span>
+                                </small>
+
+                            </div>
+
                         </div>
-                        <button class="icon-btn" id="toggleBalanceBtn">
-                            <span class="iconify" id="eyeIcon" data-icon="ri:eye-line"></span>
-                        </button>
-                    </div>
-                    <p class="subtitle">Your available funds</p>
-                    <h1 class="main-amount" id="balanceAmount">$0.00</h1>
 
-                    <div class="status-tags">
-                        <span class="tag tag-success"><span class="iconify" data-icon="ri:checkbox-circle-line"></span>
-                            Available for Withdrawal</span>
-                        <span class="tag tag-danger"><span class="iconify" data-icon="ri:error-warning-line"></span>
-                            Unverified</span>
                     </div>
 
-                    <p class="last-updated">Last updated: May 07, 2026 11:23 AM</p>
+                    <div class="item-status">
 
-                    <div class="card-actions">
-                        <a href="deposit.html" class="btn btn-dark"><span class="iconify"
-                                data-icon="ri:add-circle-line"></span> Deposit</a>
-                        <a href="withdraw.html" class="btn btn-dark"><span class="iconify"
-                                data-icon="ri:arrow-right-up-line"></span> Withdraw</a>
+                        <span class="badge success">
+                            Active
+                        </span>
+
+                        <p class="profit" id="deployBotProfit">
+                            +$0.00
+                        </p>
+
                     </div>
+
                 </div>
 
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Profit</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:money-dollar-circle-line"></span>
-                        </div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> Last period</p>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Deposit</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:arrow-down-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Withdrawal</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:arrow-up-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Bonus</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:gift-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
             </div>
 
-            <div class="card flex-card">
-                <div class="flex-left">
-                    <div class="icon-box dark-box"><span class="iconify" data-icon="ri:shield-check-line"></span></div>
-                    <div>
-                        <h3>Identity Verification</h3>
-                        <p>Complete verification to access all features</p>
-                    </div>
-                </div>
-                <a href="verify.html" class="btn btn-blue">View Details <span class="iconify"
-                        data-icon="ri:arrow-down-s-line" style="transform: rotate(-90deg);"></span></a>
-            </div>
+        </section>
 
-            <div class="card flex-card promo-card" id="promoCard">
-                <button class="close-promo" id="closePromoBtn"><span class="iconify"
-                        data-icon="ri:close-line"></span></button>
-                <div class="flex-left">
-                    <div class="icon-box dark-box border-purple"><span class="iconify text-purple"
-                            data-icon="ri:wallet-3-fill"></span></div>
-                    <div>
-                        <h3>Connect Your Wallet to Start Earning</h3>
-                        <p class="text-purple-light">Connect your cryptocurrency wallet to unlock daily earning
-                            opportunities of up to <strong>$3000 per day</strong>.</p>
-                    </div>
-                </div>
-            </div>
+        <!-- Right Column -->
+        <div class="side-column">
 
-        </main>
+            <!-- Recent Activity -->
+            <section class="content-card activity-card reveal">
+
+                <h2>Recent Activity</h2>
+
+                <div class="timeline">
+
+                    <div class="timeline-item">
+
+                        <div class="time-dot"></div>
+
+                        <p>
+                            <strong>
+                                Bot Started:
+                            </strong>
+
+                            <span id="recentBotActivity">
+                                Loading activity...
+                            </span>
+                        </p>
+
+                        <span>
+                            Just now
+                        </span>
+
+                    </div>
+
+                    <div class="timeline-item">
+
+                        <div class="time-dot green"></div>
+
+                        <p>
+                            <strong>
+                                AI Monitoring:
+                            </strong>
+
+                            Market analysis running successfully.
+                        </p>
+
+                        <span>
+                            Live
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="content-card actions-card reveal">
+
+                <h2>Quick Actions</h2>
+
+                <div class="action-buttons">
+
+                    <a href="bot-hub.html" class="action-btn">
+                        <i class="fas fa-plus"></i>
+                        New Investment
+                    </a>
+
+                    <a href="withdraw.html" class="action-btn">
+                        <i class="fas fa-download"></i>
+                        Withdraw Funds
+                    </a>
+
+                    <a href="deposit.html" class="action-btn">
+                        <i class="fas fa-upload"></i>
+                        Deposit Funds
+                    </a>
+
+                </div>
+
+            </section>
+
+        </div>
+
     </div>
 
-    <script src="assets/js/script.js"></script>
+</main>
+
+    </div>
+
+    <script src="assets/js/deploybot.js"></script>
 </body>
 
 </html>

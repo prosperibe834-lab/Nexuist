@@ -212,5 +212,5 @@ document.querySelectorAll(`
 
 
 git add .
-git commit -m "Updated mobile sidebar and UI"
+git commit -m "added some pages"
 git push

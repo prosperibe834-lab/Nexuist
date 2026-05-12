@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexuist | Professional Trading</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/botTrading.css">
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -148,7 +149,7 @@
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:layout-grid-line"></span> OVERVIEW</h3>
-                    <a href="index.html" class="nav-item active">
+                    <a href="index.html" class="nav-item">
                         <span class="iconify" data-icon="solar:widget-2-outline"></span>
                         Dashboard
                     </a>
@@ -211,12 +212,12 @@
                             Markets</div>
                         <span class="badge solid-red"><span class="dot"></span> Live</span>
                     </a>
-                    <a href="copytrading.html" class="nav-item">
+                    <a href="copy.html" class="nav-item">
                         <div class="item-left"><span class="iconify" data-icon="ri:user-follow-line"></span> Copy
                             Trading</div>
                         <span class="badge solid-purple">Pro</span>
                     </a>
-                    <a href="botTrading.html" class="nav-item">
+                    <a href="botTrading.html" class="nav-item active">
                         <div class="item-left"><span class="iconify" data-icon="ri:robot-2-line"></span> AI Trading Bots
                         </div>
                         <span class="badge solid-blue">AI</span>
@@ -235,14 +236,14 @@
 
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:wallet-3-line"></span> WALLET & FUNDS</h3>
-                    <a href="depositfunds.html" class="nav-item">
+                    <a href="deposit.html" class="nav-item">
                         <span class="iconify" data-icon="ri:add-circle-line"></span> Deposit Funds
                     </a>
                     <a href="withdraw.html" class="nav-item">
                         <span class="iconify" data-icon="solar:card-send-outline"></span>
                         Withdraw Funds
                     </a>
-                    <a href="internal-transfer.html" class="nav-item">
+                    <a href="transfer.html" class="nav-item">
                         <span class="iconify" data-icon="ri:arrow-left-right-line"></span> Internal Transfer
                     </a>
                 </div>
@@ -376,134 +377,296 @@
             </div>
         </aside>
 
-        <main class="content-area">
-            <div class="page-header">
-                <div class="welcome-text">
-                    <h1>Welcome back, marine military!</h1>
-                    <p>Your investment dashboard overview</p>
-                </div>
-                <div class="header-buttons">
-                    <a href="wallet.html" class="btn btn-outline-purple">
-                        <span class="iconify" data-icon="ri:link"></span> Connect Wallet
-                    </a>
-                    <a href="invest.html" class="btn btn-solid-green">
-                        <span class="iconify" data-icon="ri:line-chart-line"></span> Invest Now
-                    </a>
-                </div>
-            </div>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- PAGE 1: BOT STRATEGY HUB -->
+            <section id="bot-hub-page">
+                <header class="hub-header">
+                    <div class="header-main-content">
+                        <div class="badge-ai"><i class='bx bxs-zap'></i> AI-Powered Trading Active</div>
+                        <h1 class="gradient-text">Bot Strategy Hub</h1>
+                        <p class="subtitle">Deploy institutional-grade algorithms to maximize your portfolio performance
+                            across global markets.</p>
 
-            <div class="banner demo-banner">
-                <div class="banner-left">
-                    <div class="icon-box"><span class="iconify" data-icon="ri:graduation-cap-line"></span></div>
-                    <div>
-                        <h2>Demo Account Active</h2>
-                        <p>Demo Balance: $100,000.00</p>
-                    </div>
-                </div>
-                <a href="live-trade.html" class="btn btn-white">
-                    <span class="iconify" data-icon="ri:play-line"></span> Switch to Demo Trading
-                </a>
-            </div>
+                        <div class="hero-stats-row">
+                            <div class="glass-stat-card">
+                                <div class="stat-icon" style="color: var(--color-blue);"><i
+                                        class='bx bx-target-lock'></i></div>
+                                <div class="stat-info">
+                                    <small>Avg. Success Rate</small>
+                                    <span class="stat-value">84.0%</span>
+                                </div>
+                                <div class="stat-graph-mini up"></div>
+                            </div>
 
-            <div class="stats-grid">
-                <div class="card balance-card">
-                    <div class="card-head">
-                        <div class="title">
-                            <span class="iconify" data-icon="ri:wallet-3-line"></span>
-                            <h3>Account Balance</h3>
+                            <div class="glass-stat-card">
+                                <div class="stat-icon" style="color: var(--color-green);"><i class='bx bx-wallet'></i>
+                                </div>
+                                <div class="stat-info">
+                                    <small>Total Net Profit</small>
+                                    <span class="stat-value">$0.00</span>
+                                </div>
+                            </div>
+
+                            <div class="glass-stat-card">
+                                <div class="stat-icon" style="color: var(--color-orange);"><i
+                                        class='bx bx-line-chart-down'></i></div>
+                                <div class="stat-info">
+                                    <small>Expected ROI</small>
+                                    <span class="stat-value">1.8%</span>
+                                </div>
+                            </div>
                         </div>
-                        <button class="icon-btn" id="toggleBalanceBtn">
-                            <span class="iconify" id="eyeIcon" data-icon="ri:eye-line"></span>
+                    </div>
+
+                    <div class="market-pulse-premium">
+                        <div class="pulse-grid">
+                            <!-- Always visible items -->
+                            <div class="pulse-asset">
+                                <div class="asset-info"><strong>S&P 500</strong><small>Stock Index</small></div>
+                                <div class="asset-change up">+1.12%</div>
+                            </div>
+                            <div class="pulse-asset">
+                                <div class="asset-info"><strong>NASDAQ</strong><small>Tech Index</small></div>
+                                <div class="asset-change down">-2.02%</div>
+                            </div>
+
+                            <!-- Hidden items that appear on click -->
+                            <div id="extraAssets" class="hidden-content">
+                                <div class="pulse-asset">
+                                    <div class="asset-info"><strong>DOW JONES</strong><small>Industrial</small></div>
+                                    <div class="asset-change up">+0.45%</div>
+                                </div>
+                                <div class="pulse-asset">
+                                    <div class="asset-info"><strong>RUSSELL 2000</strong><small>Small Cap</small></div>
+                                    <div class="asset-change down">-0.10%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- The Button -->
+                        <button id="viewMoreBtn" class="btn-pulse-view">View Full Market</button>
+                    </div>
+                </header>
+
+                <!-- Filter System -->
+                <nav class="filter-nav">
+                    <button class="filter-btn active" data-filter="all"><i class='bx bx-grid-alt'></i> All Bots</button>
+                    <button class="filter-btn" data-filter="forex"><i class='bx bx-trending-up'></i> Forex</button>
+                    <button class="filter-btn" data-filter="crypto"><i class='bx bxl-bitcoin'></i> Crypto</button>
+                    <button class="filter-btn" data-filter="stocks"><i class='bx bx-line-chart'></i> Stocks</button>
+                    <button class="filter-btn" data-filter="commodities"><i class='bx bx-diamond'></i>
+                        Commodities</button>
+                </nav>
+
+                <div class="bot-grid" id="botGrid">
+                    <!-- Bots will be injected here by JS (18+ items) -->
+                </div>
+            </section>
+
+            <!-- PAGE 2: ADVANCED TRADING TERMINAL -->
+            <section id="trading-terminal-page" class="hidden">
+                <div class="terminal-container">
+                    <header class="terminal-header">
+                        <button onclick="showPage('bot-hub-page')" class="back-link">
+                            <i class='bx bx-left-arrow-alt'></i>
+                            <span>Back to Bots</span>
                         </button>
-                    </div>
-                    <p class="subtitle">Your available funds</p>
-                    <h1 class="main-amount" id="balanceAmount">$0.00</h1>
+                        <h2 id="selectedBotName"></h2>
 
-                    <div class="status-tags">
-                        <span class="tag tag-success"><span class="iconify" data-icon="ri:checkbox-circle-line"></span>
-                            Available for Withdrawal</span>
-                        <span class="tag tag-danger"><span class="iconify" data-icon="ri:error-warning-line"></span>
-                            Unverified</span>
-                    </div>
+                        <p id="selectedBotDesc"></p>
 
-                    <p class="last-updated">Last updated: May 07, 2026 11:23 AM</p>
+                        <div class="bot-terminal-stats">
 
-                    <div class="card-actions">
-                        <a href="deposit.html" class="btn btn-dark"><span class="iconify"
-                                data-icon="ri:add-circle-line"></span> Deposit</a>
-                        <a href="withdraw.html" class="btn btn-dark"><span class="iconify"
-                                data-icon="ri:arrow-right-up-line"></span> Withdraw</a>
-                    </div>
-                </div>
+                            <div class="terminal-stat">
+                                <small>Daily ROI</small>
+                                <strong id="selectedBotROI"></strong>
+                            </div>
 
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Profit</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:money-dollar-circle-line"></span>
+                            <div class="terminal-stat">
+                                <small>Duration</small>
+                                <strong id="selectedBotDays"></strong>
+                            </div>
+
+                            <div class="terminal-stat">
+                                <small>Risk Level</small>
+                                <strong id="selectedBotRisk"></strong>
+                            </div>
+
                         </div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> Last period</p>
-                </div>
+                    </header>
 
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Deposit</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:arrow-down-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
+                    <div class="terminal-grid">
+                        <!-- Left: Analysis -->
+                        <div class="terminal-left">
+                            <div class="card chart-card">
+                                <div class="card-label">Performance</div>
 
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Withdrawal</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:arrow-up-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
+                                <!-- TradingView Widget -->
+                                <div class="tradingview-widget-container">
+                                    <div id="tradingview_chart"></div>
+                                </div>
+                            </div>
 
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Bonus</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:gift-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
-            </div>
+                            <div class="card strategy-card">
+                                <div class="card-label">Strategy Visual Workflow</div>
+                                <div class="workflow-container">
 
-            <div class="card flex-card">
-                <div class="flex-left">
-                    <div class="icon-box dark-box"><span class="iconify" data-icon="ri:shield-check-line"></span></div>
-                    <div>
-                        <h3>Identity Verification</h3>
-                        <p>Complete verification to access all features</p>
+                                    <div class="workflow-step active">
+                                        <div class="workflow-icon">
+                                            <i class='bx bx-search-alt'></i>
+                                        </div>
+
+                                        <div class="workflow-content">
+                                            <h4>Market Scanner</h4>
+                                            <p>Scanning global markets...</p>
+                                        </div>
+
+                                        <span class="workflow-status live"></span>
+                                    </div>
+
+                                    <div class="workflow-line"></div>
+
+                                    <div class="workflow-step">
+                                        <div class="workflow-icon">
+                                            <i class='bx bx-brain'></i>
+                                        </div>
+
+                                        <div class="workflow-content">
+                                            <h4>AI Analysis</h4>
+                                            <p>Analyzing trading signals...</p>
+                                        </div>
+
+                                        <span class="workflow-status"></span>
+                                    </div>
+
+                                    <div class="workflow-line"></div>
+
+                                    <div class="workflow-step">
+                                        <div class="workflow-icon">
+                                            <i class='bx bx-transfer'></i>
+                                        </div>
+
+                                        <div class="workflow-content">
+                                            <h4>Trade Execution</h4>
+                                            <p>Executing optimized entries...</p>
+                                        </div>
+
+                                        <span class="workflow-status"></span>
+                                    </div>
+
+                                    <div class="workflow-line"></div>
+
+                                    <div class="workflow-step">
+                                        <div class="workflow-icon">
+                                            <i class='bx bx-shield-quarter'></i>
+                                        </div>
+
+                                        <div class="workflow-content">
+                                            <h4>Risk Protection</h4>
+                                            <p>Managing exposure levels...</p>
+                                        </div>
+
+                                        <span class="workflow-status"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Right: Execution -->
+                        <div class="terminal-right">
+                            <div class="card invest-details-card">
+                                <div class="success-circle">
+                                    <svg viewBox="0 0 36 36" class="circular-chart">
+                                        <path class="circle-bg"
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <path class="circle" stroke-dasharray="84, 100"
+                                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                        <text x="18" y="20.35" class="percentage">84%</text>
+                                    </svg>
+                                </div>
+                                <div class="input-group">
+                                    <label>Investment Amount</label>
+                                    <input type="number" placeholder="$ 200" id="investAmountInput">
+                                    <div class="range-info">Min: $200.00 • Max: $15,000</div>
+                                </div>
+                                <div class="risk-selector">
+                                    <label>Risk Level</label>
+                                    <div class="risk-track">
+                                        <div class="risk-thumb"></div>
+                                    </div>
+                                </div>
+                                <button class="btn-deploy" id="deployBotBtn">
+                                    Deploy Bot
+                                </button>
+                            </div>
+                        </div>
+
+
                     </div>
                 </div>
-                <a href="verify.html" class="btn btn-blue">View Details <span class="iconify"
-                        data-icon="ri:arrow-down-s-line" style="transform: rotate(-90deg);"></span></a>
-            </div>
-
-            <div class="card flex-card promo-card" id="promoCard">
-                <button class="close-promo" id="closePromoBtn"><span class="iconify"
-                        data-icon="ri:close-line"></span></button>
-                <div class="flex-left">
-                    <div class="icon-box dark-box border-purple"><span class="iconify text-purple"
-                            data-icon="ri:wallet-3-fill"></span></div>
-                    <div>
-                        <h3>Connect Your Wallet to Start Earning</h3>
-                        <p class="text-purple-light">Connect your cryptocurrency wallet to unlock daily earning
-                            opportunities of up to <strong>$3000 per day</strong>.</p>
-                    </div>
-                </div>
-            </div>
-
+            </section>
         </main>
+
     </div>
 
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/botTrading.js"></script>
+    <script src="https://s3.tradingview.com/tv.js"></script>
+
+    <script>
+        new TradingView.widget({
+            "container_id": "tradingview_chart",
+            "width": "100%",
+            "height": 320,
+            "symbol": "BINANCE:BTCUSDT",
+            "interval": "15",
+            "timezone": "Etc/UTC",
+            "theme": "dark",
+            "style": "1",
+            "locale": "en",
+            "toolbar_bg": "#0f172a",
+            "enable_publishing": false,
+            "hide_top_toolbar": true,
+            "hide_legend": false,
+            "save_image": false,
+            "withdateranges": true,
+            "allow_symbol_change": true,
+            "studies": [
+                "RSI@tv-basicstudies",
+                "MACD@tv-basicstudies"
+            ]
+        });
+
+        const workflowSteps = document.querySelectorAll('.workflow-step');
+
+        let activeStep = 0;
+
+        setInterval(() => {
+
+            workflowSteps.forEach(step => {
+                step.classList.remove('active');
+
+                const status = step.querySelector('.workflow-status');
+
+                status.classList.remove('live');
+            });
+
+            workflowSteps[activeStep].classList.add('active');
+
+            workflowSteps[activeStep]
+                .querySelector('.workflow-status')
+                .classList.add('live');
+
+            activeStep++;
+
+            if (activeStep >= workflowSteps.length) {
+                activeStep = 0;
+            }
+
+        }, 2500);
+    </script>
 </body>
 
 </html>
