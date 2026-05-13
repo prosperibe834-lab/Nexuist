@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexuist | Professional Trading</title>
-    <link rel="stylesheet" href="assets/css/deploybot.css">
+    <link rel="stylesheet" href="assets/css/premiumSignals.css">
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome CDN for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -218,7 +218,7 @@
                             Trading</div>
                         <span class="badge solid-purple">Pro</span>
                     </a>
-                    <a href="botTrading.html" class="nav-item active">
+                    <a href="botTrading.html" class="nav-item">
                         <div class="item-left"><span class="iconify" data-icon="ri:robot-2-line"></span> AI Trading Bots
                         </div>
                         <span class="badge solid-blue">AI</span>
@@ -228,7 +228,7 @@
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:radar-line"></span> MARKET INTELLIGENCE
                     </h3>
-                    <a href="signals.html" class="nav-item">
+                    <a href="premiumSignals.html" class="nav-item active">
                         <div class="item-left"><span class="iconify" data-icon="ri:flashlight-fill"></span> Premium
                             Signals</div>
                         <span class="badge solid-orange">Premium</span>
@@ -379,254 +379,218 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="dashboard-content">
+        <!-- BASIC SIDE NAV (Provided) -->
+        <nav class="side-nav">
+            <a href="#" class="logo">Nexuist</a>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link"><i class='bx bxs-dashboard'></i> Dashboard</a></li>
+                <li><a href="#" class="nav-link active"><i class='bx bx-trending-up'></i> Trading Signals</a></li>
+                <li><a href="#" class="nav-link"><i class='bx bx-coin-stack'></i> Portfolio</a></li>
+                <li><a href="#" class="nav-link"><i class='bx bx-credit-card'></i> Subscription</a></li>
+            </ul>
+        </nav>
 
-    <!-- Header Hero Section -->
-    <header class="hero-section reveal">
-
-        <div class="hero-text">
-            <h1>Bot Trading Dashboard</h1>
-            <p>
-                Monitor and manage your automated trading investments
-            </p>
-        </div>
-
-        <div class="hero-stats-icon">
-            <i class="fas fa-chart-line"></i>
-        </div>
-
-    </header>
-
-    <!-- Top Stats Cards -->
-    <section class="stats-grid">
-
-        <div class="stat-card reveal">
-            <div class="icon-box blue">
-                <i class="fas fa-wallet"></i>
+        <!-- MAIN CONTENT -->
+        <div class="nexuist-main-content">
+    <!-- Header Section -->
+    <div class="signals-header">
+        <div class="header-left">
+            <div class="title-with-icon">
+                <i class='bx bx-bar-chart-alt-2 main-icon'></i>
+                <h1>Premium Trading Signals</h1>
             </div>
-
-            <div class="stat-info">
-                <h3 id="totalInvested">$0.00</h3>
-                <p>Total Invested</p>
+            <p>Subscribe to professional trading signals and enhance your trading success</p>
+        </div>
+        <div class="available-badge">
+            <i class='bx bx-trending-up'></i>
+            <div class="badge-text">
+                <span class="count">6</span>
+                <span class="label">Available Signals</span>
             </div>
         </div>
+    </div>
 
-        <div class="stat-card reveal">
-            <div class="icon-box green">
-                <i class="fas fa-chart-pie"></i>
-            </div>
-
-            <div class="stat-info">
-                <h3 id="currentBalance">$0.00</h3>
-                <p>Current Balance</p>
-            </div>
-        </div>
-
-        <div class="stat-card reveal">
-            <div class="icon-box green-light">
-                <i class="fas fa-arrow-up"></i>
-            </div>
-
-            <div class="stat-info">
-                <h3 class="text-green" id="totalProfit">
-                    +$0.00
-                </h3>
-
-                <p>Total Profit</p>
-            </div>
-        </div>
-
-        <div class="stat-card reveal">
-            <div class="icon-box red">
-                <i class="fas fa-robot"></i>
-            </div>
-
-            <div class="stat-info">
-                <h3 id="activeBotsCount">1</h3>
-                <p>Active Bots</p>
-
-                <span class="status-indicator"></span>
-            </div>
-        </div>
-
-    </section>
-
-    <!-- Main Grid -->
-    <div class="main-grid">
-
-        <!-- ACTIVE INVESTMENTS -->
-        <section class="content-card inventory-card reveal">
-
+    <!-- Grid Section -->
+    <div class="signals-grid">
+        <!-- Card 1 -->
+        <div class="sig-card" data-name="Breakout Signals" data-price="3000.00">
             <div class="card-header">
-
-                <h2>Active Investments</h2>
-
-                <a href="botTrading.html" class="btn-primary">
-                    + New Investment
-                </a>
-
+                <i class='bx bx-broadcast'></i>
+                <h3>Breakout Signals</h3>
+                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
             </div>
-
-            <div class="inventory-list">
-
-                <!-- DYNAMIC BOT -->
-                <div class="inventory-item">
-
-                    <div class="item-info">
-
-                        <span class="bot-icon">
-                            <i class="fas fa-robot"></i>
-                        </span>
-
-                        <div>
-
-                            <h4 id="deployBotName">
-                                Loading Bot...
-                            </h4>
-
-                            <p id="deployBotDesc">
-                                Please wait...
-                            </p>
-
-                            <div style="margin-top:10px;">
-
-                                <small>
-                                    ROI:
-                                    <span id="deployBotROI"></span>
-                                </small>
-
-                                <br>
-
-                                <small>
-                                    Duration:
-                                    <span id="deployBotDuration"></span>
-                                </small>
-
-                                <br>
-
-                                <small>
-                                    Risk:
-                                    <span id="deployBotRisk"></span>
-                                </small>
-
-                                <br>
-
-                                <small>
-                                    Investment:
-                                    $<span id="deployBotAmount"></span>
-                                </small>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="item-status">
-
-                        <span class="badge success">
-                            Active
-                        </span>
-
-                        <p class="profit" id="deployBotProfit">
-                            +$0.00
-                        </p>
-
-                    </div>
-
-                </div>
-
+            <div class="card-price">
+                <span class="currency">$</span>
+                <span class="amount">3,000.00</span>
+                <span class="period">/month</span>
             </div>
-
-        </section>
-
-        <!-- Right Column -->
-        <div class="side-column">
-
-            <!-- Recent Activity -->
-            <section class="content-card activity-card reveal">
-
-                <h2>Recent Activity</h2>
-
-                <div class="timeline">
-
-                    <div class="timeline-item">
-
-                        <div class="time-dot"></div>
-
-                        <p>
-                            <strong>
-                                Bot Started:
-                            </strong>
-
-                            <span id="recentBotActivity">
-                                Loading activity...
-                            </span>
-                        </p>
-
-                        <span>
-                            Just now
-                        </span>
-
-                    </div>
-
-                    <div class="timeline-item">
-
-                        <div class="time-dot green"></div>
-
-                        <p>
-                            <strong>
-                                AI Monitoring:
-                            </strong>
-
-                            Market analysis running successfully.
-                        </p>
-
-                        <span>
-                            Live
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-            <!-- Quick Actions -->
-            <section class="content-card actions-card reveal">
-
-                <h2>Quick Actions</h2>
-
-                <div class="action-buttons">
-
-                    <a href="botTrading.html" class="action-btn">
-                        <i class="fas fa-plus"></i>
-                        New Investment
-                    </a>
-
-                    <a href="withdraw.html" class="action-btn">
-                        <i class="fas fa-download"></i>
-                        Withdraw Funds
-                    </a>
-
-                    <a href="depositfunds.html" class="action-btn">
-                        <i class="fas fa-upload"></i>
-                        Deposit Funds
-                    </a>
-
-                </div>
-
-            </section>
-
+            <p class="sub-text">Professional trading signals subscription</p>
+            <ul class="feat-list">
+                <li><i class='bx bx-check'></i> Success Rate: 68.7%</li>
+                <li><i class='bx bx-check'></i> Real-time notifications</li>
+                <li><i class='bx bx-check'></i> Expert analysis</li>
+                <li><i class='bx bx-check'></i> 24/7 support</li>
+            </ul>
+            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
         </div>
 
+        <!-- Card 2 -->
+        <div class="sig-card" data-name="Buying Oversold" data-price="3800.00">
+            <div class="card-header">
+                <i class='bx bx-bullseye'></i>
+                <h3>Buying Oversold</h3>
+                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
+            </div>
+            <div class="card-price">
+                <span class="currency">$</span>
+                <span class="amount">3,800.00</span>
+                <span class="period">/month</span>
+            </div>
+            <p class="sub-text">Professional trading signals subscription</p>
+            <ul class="feat-list">
+                <li><i class='bx bx-check'></i> Success Rate: 75%</li>
+                <li><i class='bx bx-check'></i> Real-time notifications</li>
+                <li><i class='bx bx-check'></i> Expert analysis</li>
+                <li><i class='bx bx-check'></i> 24/7 support</li>
+            </ul>
+            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="sig-card" data-name="Trend Signal" data-price="4000.00">
+            <div class="card-header">
+                <i class='bx bx-line-chart'></i>
+                <h3>Trend Signal</h3>
+                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
+            </div>
+            <div class="card-price">
+                <span class="currency">$</span>
+                <span class="amount">4,000.00</span>
+                <span class="period">/month</span>
+            </div>
+            <p class="sub-text">Professional trading signals subscription</p>
+            <ul class="feat-list">
+                <li><i class='bx bx-check'></i> Success Rate: 78.4%</li>
+                <li><i class='bx bx-check'></i> Real-time notifications</li>
+                <li><i class='bx bx-check'></i> Expert analysis</li>
+                <li><i class='bx bx-check'></i> 24/7 support</li>
+            </ul>
+            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="sig-card active-border" data-name="AntMiner-S7" data-price="5300.00">
+            <div class="card-header">
+                <i class='bx bx-chip'></i>
+                <h3>AntMiner-S7</h3>
+                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
+            </div>
+            <div class="card-price">
+                <span class="currency">$</span>
+                <span class="amount">5,300.00</span>
+                <span class="period">/month</span>
+            </div>
+            <p class="sub-text">Professional trading signals subscription</p>
+            <ul class="feat-list">
+                <li><i class='bx bx-check'></i> Success Rate: 85.4%</li>
+                <li><i class='bx bx-check'></i> Real-time notifications</li>
+                <li><i class='bx bx-check'></i> Expert analysis</li>
+                <li><i class='bx bx-check'></i> 24/7 support</li>
+            </ul>
+            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="sig-card" data-name="S9 Mining" data-price="6000.00">
+            <div class="card-header">
+                <i class='bx bx-server'></i>
+                <h3>S9 Mining</h3>
+                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
+            </div>
+            <div class="card-price">
+                <span class="currency">$</span>
+                <span class="amount">6,000.00</span>
+                <span class="period">/month</span>
+            </div>
+            <p class="sub-text">Professional trading signals subscription</p>
+            <ul class="feat-list">
+                <li><i class='bx bx-check'></i> Success Rate: 87.5%</li>
+                <li><i class='bx bx-check'></i> Real-time notifications</li>
+                <li><i class='bx bx-check'></i> Expert analysis</li>
+                <li><i class='bx bx-check'></i> 24/7 support</li>
+            </ul>
+            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="sig-card" data-name="Bitfury-B8" data-price="7000.00">
+            <div class="card-header">
+                <i class='bx bx-shield-quarter'></i>
+                <h3>Bitfury-B8</h3>
+                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
+            </div>
+            <div class="card-price">
+                <span class="currency">$</span>
+                <span class="amount">7,000.00</span>
+                <span class="period">/month</span>
+            </div>
+            <p class="sub-text">Professional trading signals subscription</p>
+            <ul class="feat-list">
+                <li><i class='bx bx-check'></i> Success Rate: 93.4%</li>
+                <li><i class='bx bx-check'></i> Real-time notifications</li>
+                <li><i class='bx bx-check'></i> Expert analysis</li>
+                <li><i class='bx bx-check'></i> 24/7 support</li>
+            </ul>
+            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Section (Outside main flow to avoid sidebar interference) -->
+<div class="modal-overlay" id="subModal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <div class="modal-title-group">
+                <div class="modal-icon"><i class='bx bx-pulse'></i></div>
+                <div>
+                    <h2>Subscribe to Signal</h2>
+                    <span id="display-name" class="modal-subtitle">Trend Signal</span>
+                </div>
+            </div>
+            <button class="close-modal" id="closeBtn"><i class='bx bx-x'></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="input-group">
+                <label><i class='bx bx-credit-card'></i> Payment Method</label>
+                <select class="modal-select">
+                    <option>Bank Transfer</option>
+                    <option>USDT (Tether)</option>
+                    <option>Bitcoin</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label><i class='bx bx-dollar'></i> Subscription Amount ($)</label>
+                <div class="price-input-box">
+                    <input type="text" id="display-price" readonly>
+                    <span class="freq">/month</span>
+                </div>
+            </div>
+            <div class="modal-notice">
+                <i class='bx bx-info-circle'></i> Recurring monthly subscription. Cancel anytime.
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" id="cancelBtn">Cancel</button>
+            <button class="btn-complete"><i class='bx bx-check-circle'></i> Complete Subscription</button>
+        </div>
+
+        
+    </div>
+</div>
+
     </div>
 
-</main>
-
-    </div>
-
-    <script src="assets/js/deploybot.js"></script>
+    <script src="assets/js/premiumSignals.js"></script>
 </body>
 
 </html>

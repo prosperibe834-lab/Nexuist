@@ -5,41 +5,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexuist | Professional Trading</title>
-    <link rel="stylesheet" href="assets/css/deploybot.css">
+    <link rel="stylesheet" href="assets/css/premiumPayment.css">
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome CDN for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
 </head>
 
 <body>
 
 
     <div id="fintech-preloader">
-        <div class="loader-container">
-            <div class="loader-logo">
-                <div class="logo-hexagon">
-                    <span class="iconify" data-icon="ri:shield-flash-line"></span>
-                </div>
-                <h2 class="loader-brand-name">Nexuist</h2>
+    <div class="loader-container">
+        <div class="loader-logo">
+            <div class="logo-hexagon">
+                <span class="iconify" data-icon="ri:shield-flash-line"></span>
             </div>
+            <h2 class="loader-brand-name">Nexuist</h2>
+        </div>
 
-            <div class="loader-progress-wrapper">
-                <div class="loader-progress-bar" id="load-bar">
-                    <div class="shimmer-effect"></div>
-                </div>
-            </div>
-
-            <div class="loader-status">
-                <span class="status-dot"></span>
-                <p id="status-text">Initializing encrypted connection...</p>
+        <div class="loader-progress-wrapper">
+            <div class="loader-progress-bar" id="load-bar">
+                <div class="shimmer-effect"></div>
             </div>
         </div>
 
-        <div class="glow glow-1"></div>
-        <div class="glow glow-2"></div>
+        <div class="loader-status">
+            <span class="status-dot"></span>
+            <p id="status-text">Initializing encrypted connection...</p>
+        </div>
     </div>
-    <!-- Preloader ends here -->
+    
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+</div>
+<!-- Preloader ends here -->
 
     <header class="top-header">
         <div class="header-left">
@@ -218,7 +218,7 @@
                             Trading</div>
                         <span class="badge solid-purple">Pro</span>
                     </a>
-                    <a href="botTrading.html" class="nav-item active">
+                    <a href="ai.html" class="nav-item">
                         <div class="item-left"><span class="iconify" data-icon="ri:robot-2-line"></span> AI Trading Bots
                         </div>
                         <span class="badge solid-blue">AI</span>
@@ -228,7 +228,7 @@
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:radar-line"></span> MARKET INTELLIGENCE
                     </h3>
-                    <a href="signals.html" class="nav-item">
+                    <a href="premiumSignals.html" class="nav-item active">
                         <div class="item-left"><span class="iconify" data-icon="ri:flashlight-fill"></span> Premium
                             Signals</div>
                         <span class="badge solid-orange">Premium</span>
@@ -376,257 +376,177 @@
                 </a>
 
             </div>
-        </aside>
+        </aside> 
 
         <!-- Main Content -->
-        <main class="dashboard-content">
-
-    <!-- Header Hero Section -->
-    <header class="hero-section reveal">
-
-        <div class="hero-text">
-            <h1>Bot Trading Dashboard</h1>
-            <p>
-                Monitor and manage your automated trading investments
-            </p>
-        </div>
-
-        <div class="hero-stats-icon">
-            <i class="fas fa-chart-line"></i>
-        </div>
-
-    </header>
-
-    <!-- Top Stats Cards -->
-    <section class="stats-grid">
-
-        <div class="stat-card reveal">
-            <div class="icon-box blue">
-                <i class="fas fa-wallet"></i>
-            </div>
-
-            <div class="stat-info">
-                <h3 id="totalInvested">$0.00</h3>
-                <p>Total Invested</p>
+         
+        <main class="payment-portal">
+    <div class="payment-container animate-slide-up">
+        <!-- Status Bar -->
+        <div class="secure-header">
+            <div class="secure-pill">
+                <i class='bx bxs-lock-alt'></i>
+                <span>Secure Payment Gateway</span>
             </div>
         </div>
 
-        <div class="stat-card reveal">
-            <div class="icon-box green">
-                <i class="fas fa-chart-pie"></i>
-            </div>
-
-            <div class="stat-info">
-                <h3 id="currentBalance">$0.00</h3>
-                <p>Current Balance</p>
-            </div>
-        </div>
-
-        <div class="stat-card reveal">
-            <div class="icon-box green-light">
-                <i class="fas fa-arrow-up"></i>
-            </div>
-
-            <div class="stat-info">
-                <h3 class="text-green" id="totalProfit">
-                    +$0.00
-                </h3>
-
-                <p>Total Profit</p>
+        <!-- Hero Branding -->
+        <div class="payment-hero">
+            <h1>Complete Your Deposit</h1>
+            <p>Securely deposit funds using <span id="displayMethod" class="neon-text">Ethereum</span> to start trading</p>
+            
+            <div class="stepper-ui">
+                <div class="step-item completed">
+                    <div class="step-circle"><i class='bx bx-check'></i></div>
+                    <span>Method</span>
+                </div>
+                <div class="step-connector active"></div>
+                <div class="step-item active">
+                    <div class="step-circle">2</div>
+                    <span>Payment</span>
+                </div>
+                <div class="step-connector"></div>
+                <div class="step-item">
+                    <div class="step-circle">3</div>
+                    <span>Verify</span>
+                </div>
             </div>
         </div>
 
-        <div class="stat-card reveal">
-            <div class="icon-box red">
-                <i class="fas fa-robot"></i>
-            </div>
-
-            <div class="stat-info">
-                <h3 id="activeBotsCount">1</h3>
-                <p>Active Bots</p>
-
-                <span class="status-indicator"></span>
-            </div>
-        </div>
-
-    </section>
-
-    <!-- Main Grid -->
-    <div class="main-grid">
-
-        <!-- ACTIVE INVESTMENTS -->
-        <section class="content-card inventory-card reveal">
-
-            <div class="card-header">
-
-                <h2>Active Investments</h2>
-
-                <a href="botTrading.html" class="btn-primary">
-                    + New Investment
-                </a>
-
-            </div>
-
-            <div class="inventory-list">
-
-                <!-- DYNAMIC BOT -->
-                <div class="inventory-item">
-
-                    <div class="item-info">
-
-                        <span class="bot-icon">
-                            <i class="fas fa-robot"></i>
-                        </span>
-
+        <!-- Main Glass Card -->
+        <section class="checkout-card glass-morph">
+            <div class="card-inner">
+                
+                <!-- Deposit Info Header -->
+                <div class="deposit-details-header">
+                    <div class="details-left">
+                        <i class='bx bx-wallet-alt'></i>
                         <div>
+                            <h3>Payment Details</h3>
+                            <p id="sub-title">Ethereum Deposit</p>
+                        </div>
+                    </div>
+                    <div class="details-right">
+                        <span class="badge-ssl"><i class='bx bx-shield-quarter'></i> SSL Secured</span>
+                    </div>
+                </div>
 
-                            <h4 id="deployBotName">
-                                Loading Bot...
-                            </h4>
+                <!-- Price Banner -->
+                <div class="amount-hero">
+                    <span class="label">Amount to Deposit</span>
+                    <div class="price-display">
+                        <span class="symbol">$</span>
+                        <span id="displayPrice">5,300</span>
+                        <span class="cents">.00</span>
+                    </div>
+                    <div class="warning-banner">
+                        <i class='bx bx-info-circle'></i>
+                        <span>Send exact amount to avoid delays</span>
+                    </div>
+                </div>
 
-                            <p id="deployBotDesc">
-                                Please wait...
-                            </p>
+                <!-- Three-Step Instructions -->
+                <div class="instruction-grid">
+                    <div class="ins-card">
+                        <div class="ins-num">1</div>
+                        <div class="ins-content">
+                            <h4>Send Payment</h4>
+                            <p>Transfer to the wallet address</p>
+                        </div>
+                    </div>
+                    <div class="ins-card">
+                        <div class="ins-num">2</div>
+                        <div class="ins-content">
+                            <h4>Upload Proof</h4>
+                            <p>Take a screenshot of receipt</p>
+                        </div>
+                    </div>
+                    <div class="ins-card">
+                        <div class="ins-num">3</div>
+                        <div class="ins-content">
+                            <h4>Submit & Wait</h4>
+                            <p>Verification in 1-30 mins</p>
+                        </div>
+                    </div>
+                </div>
 
-                            <div style="margin-top:10px;">
+                <!-- Payment Assets Grid -->
+                <div class="assets-grid">
+                    <!-- QR Panel -->
+                    <div class="asset-panel qr-panel">
+                        <label><i class='bx bx-qr-scan'></i> QR Code Payment</label>
+                        <div class="qr-container">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=0xddae7bc4abc0f8866c893255bca368df6d8a513" alt="QR Code">
+                        </div>
+                        <p class="qr-hint">Scan with your wallet app instantly</p>
+                    </div>
 
-                                <small>
-                                    ROI:
-                                    <span id="deployBotROI"></span>
-                                </small>
-
-                                <br>
-
-                                <small>
-                                    Duration:
-                                    <span id="deployBotDuration"></span>
-                                </small>
-
-                                <br>
-
-                                <small>
-                                    Risk:
-                                    <span id="deployBotRisk"></span>
-                                </small>
-
-                                <br>
-
-                                <small>
-                                    Investment:
-                                    $<span id="deployBotAmount"></span>
-                                </small>
-
+                    <!-- Input Panel -->
+                    <div class="asset-panel input-panel">
+                        <div class="input-wrap">
+                            <label>Wallet Address</label>
+                            <div class="copy-field">
+                                <input type="text" value="0xddae7bc4abc0f8866c893255bca368df6d8a513" id="walletAddr" readonly>
+                                <button onclick="copyAddr()" class="copy-btn">
+                                    <i class='bx bx-copy-alt'></i> Copy
+                                </button>
                             </div>
-
                         </div>
 
+                        <div class="input-wrap mt-20">
+                            <label>Upload Payment Proof</label>
+                            <div class="drop-zone" id="dropZone">
+                                <input type="file" id="fileInput" hidden accept="image/*">
+                                <div class="dz-content">
+                                    <i class='bx bx-cloud-upload'></i>
+                                    <p>Choose file or drag & drop</p>
+                                    <span>PNG, JPG up to 10MB</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="item-status">
-
-                        <span class="badge success">
-                            Active
-                        </span>
-
-                        <p class="profit" id="deployBotProfit">
-                            +$0.00
-                        </p>
-
-                    </div>
-
                 </div>
 
+                <!-- Final Action -->
+                <button class="btn-primary-payment" id="submitBtn">
+                    <i class='bx bx-paper-plane'></i> Submit Payment Proof
+                </button>
+                
+                <p class="encryption-note">
+                    <i class='bx bx-lock-open-alt'></i> Protected by 256-bit SSL encryption
+                </p>
             </div>
-
         </section>
 
-        <!-- Right Column -->
-        <div class="side-column">
-
-            <!-- Recent Activity -->
-            <section class="content-card activity-card reveal">
-
-                <h2>Recent Activity</h2>
-
-                <div class="timeline">
-
-                    <div class="timeline-item">
-
-                        <div class="time-dot"></div>
-
-                        <p>
-                            <strong>
-                                Bot Started:
-                            </strong>
-
-                            <span id="recentBotActivity">
-                                Loading activity...
-                            </span>
-                        </p>
-
-                        <span>
-                            Just now
-                        </span>
-
-                    </div>
-
-                    <div class="timeline-item">
-
-                        <div class="time-dot green"></div>
-
-                        <p>
-                            <strong>
-                                AI Monitoring:
-                            </strong>
-
-                            Market analysis running successfully.
-                        </p>
-
-                        <span>
-                            Live
-                        </span>
-
-                    </div>
-
+        <!-- Trust Indicators -->
+        <footer class="trust-footer">
+            <div class="trust-box">
+                <i class='bx bx-headphone'></i>
+                <div>
+                    <h4>24/7 Support</h4>
+                    <p>Live help available</p>
                 </div>
-
-            </section>
-
-            <!-- Quick Actions -->
-            <section class="content-card actions-card reveal">
-
-                <h2>Quick Actions</h2>
-
-                <div class="action-buttons">
-
-                    <a href="botTrading.html" class="action-btn">
-                        <i class="fas fa-plus"></i>
-                        New Investment
-                    </a>
-
-                    <a href="withdraw.html" class="action-btn">
-                        <i class="fas fa-download"></i>
-                        Withdraw Funds
-                    </a>
-
-                    <a href="depositfunds.html" class="action-btn">
-                        <i class="fas fa-upload"></i>
-                        Deposit Funds
-                    </a>
-
+            </div>
+            <div class="trust-box">
+                <i class='bx bx-bolt-circle'></i>
+                <div>
+                    <h4>Instant Processing</h4>
+                    <p>Verified within minutes</p>
                 </div>
-
-            </section>
-
-        </div>
-
+            </div>
+            <div class="trust-box">
+                <i class='bx bx-shield-alt-2'></i>
+                <div>
+                    <h4>Bank-Grade Security</h4>
+                    <p>Enterprise protection</p>
+                </div>
+            </div>
+        </footer>
     </div>
-
 </main>
-
     </div>
 
-    <script src="assets/js/deploybot.js"></script>
+    <script src="assets/js/premiumPayment.js"></script>
 </body>
 
 </html>
