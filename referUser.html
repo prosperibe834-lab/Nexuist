@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexuist | Professional Trading</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/referUser.css">
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -148,7 +149,7 @@
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:layout-grid-line"></span> OVERVIEW</h3>
-                    <a href="index.html" class="nav-item active">
+                    <a href="index.html" class="nav-item">
                         <span class="iconify" data-icon="solar:widget-2-outline"></span>
                         Dashboard
                     </a>
@@ -211,12 +212,12 @@
                             Markets</div>
                         <span class="badge solid-red"><span class="dot"></span> Live</span>
                     </a>
-                    <a href="copytrading.html" class="nav-item">
+                    <a href="copy.html" class="nav-item">
                         <div class="item-left"><span class="iconify" data-icon="ri:user-follow-line"></span> Copy
                             Trading</div>
                         <span class="badge solid-purple">Pro</span>
                     </a>
-                    <a href="botTrading.html" class="nav-item">
+                    <a href="ai.html" class="nav-item">
                         <div class="item-left"><span class="iconify" data-icon="ri:robot-2-line"></span> AI Trading Bots
                         </div>
                         <span class="badge solid-blue">AI</span>
@@ -235,14 +236,14 @@
 
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:wallet-3-line"></span> WALLET & FUNDS</h3>
-                    <a href="depositfunds.html" class="nav-item">
+                    <a href="deposit.html" class="nav-item">
                         <span class="iconify" data-icon="ri:add-circle-line"></span> Deposit Funds
                     </a>
                     <a href="withdraw.html" class="nav-item">
                         <span class="iconify" data-icon="solar:card-send-outline"></span>
                         Withdraw Funds
                     </a>
-                    <a href="internal-transfer.html" class="nav-item">
+                    <a href="transfer.html" class="nav-item">
                         <span class="iconify" data-icon="ri:arrow-left-right-line"></span> Internal Transfer
                     </a>
                 </div>
@@ -287,7 +288,7 @@
 
                             </div>
 
-                            <a href="verify-account.html" class="acm-verify-link">
+                            <a href="verification.html" class="acm-verify-link">
 
                                 <span class="iconify" data-icon="solar:shield-check-outline"></span>
 
@@ -318,7 +319,7 @@
                         Growth & Rewards
                     </h3>
 
-                    <a href="signals.html" class="nav-item">
+                    <a href="referUser.html" class="nav-item active">
                         <div class="item-left">
                             <span class="iconify" data-icon="solar:users-group-rounded-outline"></span>
                             Referral Program
@@ -333,7 +334,7 @@
                         Support Center
                     </h3>
 
-                    <a href="support.html" class="nav-item">
+                    <a href="signals.html" class="nav-item">
                         <div class="item-left">
                             <span class="iconify" data-icon="solar:chat-round-dots-outline"></span>
                             Support Center
@@ -376,134 +377,166 @@
             </div>
         </aside>
 
-        <main class="content-area">
-            <div class="page-header">
-                <div class="welcome-text">
-                    <h1>Welcome back, marine military!</h1>
-                    <p>Your investment dashboard overview</p>
-                </div>
-                <div class="header-buttons">
-                    <a href="wallet.html" class="btn btn-outline-purple">
-                        <span class="iconify" data-icon="ri:link"></span> Connect Wallet
-                    </a>
-                    <a href="invest.html" class="btn btn-solid-green">
-                        <span class="iconify" data-icon="ri:line-chart-line"></span> Invest Now
-                    </a>
-                </div>
-            </div>
+        <!-- Main Content -->
+        <main class="nexuist-referral-portal">
+            <div class="referral-container animate-fade-in">
+                <header class="ref-header">
+                    <div class="brand-badge">Nexuist Network</div>
+                    <h1>Invite & Earn Rewards</h1>
+                    <p>Grow the ecosystem and earn up to 15% commission on every trade your referrals make.</p>
+                </header>
 
-            <div class="banner demo-banner">
-                <div class="banner-left">
-                    <div class="icon-box"><span class="iconify" data-icon="ri:graduation-cap-line"></span></div>
-                    <div>
-                        <h2>Demo Account Active</h2>
-                        <p>Demo Balance: $100,000.00</p>
-                    </div>
-                </div>
-                <a href="live-trade.html" class="btn btn-white">
-                    <span class="iconify" data-icon="ri:play-line"></span> Switch to Demo Trading
-                </a>
-            </div>
-
-            <div class="stats-grid">
-                <div class="card balance-card">
-                    <div class="card-head">
-                        <div class="title">
-                            <span class="iconify" data-icon="ri:wallet-3-line"></span>
-                            <h3>Account Balance</h3>
-                        </div>
-                        <button class="icon-btn" id="toggleBalanceBtn">
-                            <span class="iconify" id="eyeIcon" data-icon="ri:eye-line"></span>
-                        </button>
-                    </div>
-                    <p class="subtitle">Your available funds</p>
-                    <h1 class="main-amount" id="balanceAmount">$0.00</h1>
-
-                    <div class="status-tags">
-                        <span class="tag tag-success"><span class="iconify" data-icon="ri:checkbox-circle-line"></span>
-                            Available for Withdrawal</span>
-                        <span class="tag tag-danger"><span class="iconify" data-icon="ri:error-warning-line"></span>
-                            Unverified</span>
-                    </div>
-
-                    <p class="last-updated">Last updated: May 07, 2026 11:23 AM</p>
-
-                    <div class="card-actions">
-                        <a href="deposit.html" class="btn btn-dark"><span class="iconify"
-                                data-icon="ri:add-circle-line"></span> Deposit</a>
-                        <a href="withdraw.html" class="btn btn-dark"><span class="iconify"
-                                data-icon="ri:arrow-right-up-line"></span> Withdraw</a>
-                    </div>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Profit</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:money-dollar-circle-line"></span>
+                <div class="stats-grid">
+                    <div class="stat-card glass-morph">
+                        <div class="stat-icon blue"><i class='bx bx-group'></i></div>
+                        <div class="stat-info">
+                            <span class="label">Total Referrals</span>
+                            <h2 class="value">124</h2>
+                            <span class="trend up"><i class='bx bx-trending-up'></i> +12% this month</span>
                         </div>
                     </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> Last period</p>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Deposit</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:arrow-down-line"></span></div>
+                    <div class="stat-card glass-morph">
+                        <div class="stat-icon green"><i class='bx bx-wallet'></i></div>
+                        <div class="stat-info">
+                            <span class="label">Total Earnings</span>
+                            <h2 class="value">$1,240.50</h2>
+                            <span class="trend up"><i class='bx bx-trending-up'></i> +8.3% this month</span>
+                        </div>
                     </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Withdrawal</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:arrow-up-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Bonus</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:gift-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
-            </div>
-
-            <div class="card flex-card">
-                <div class="flex-left">
-                    <div class="icon-box dark-box"><span class="iconify" data-icon="ri:shield-check-line"></span></div>
-                    <div>
-                        <h3>Identity Verification</h3>
-                        <p>Complete verification to access all features</p>
+                    <div class="stat-card glass-morph">
+                        <div class="stat-icon purple"><i class='bx bx-medal'></i></div>
+                        <div class="stat-info">
+                            <span class="label">Current Tier</span>
+                            <h2 class="value">Silver</h2>
+                            <div class="tier-progress">
+                                <div class="progress-bar" style="width: 65%;"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <a href="verify.html" class="btn btn-blue">View Details <span class="iconify"
-                        data-icon="ri:arrow-down-s-line" style="transform: rotate(-90deg);"></span></a>
-            </div>
 
-            <div class="card flex-card promo-card" id="promoCard">
-                <button class="close-promo" id="closePromoBtn"><span class="iconify"
-                        data-icon="ri:close-line"></span></button>
-                <div class="flex-left">
-                    <div class="icon-box dark-box border-purple"><span class="iconify text-purple"
-                            data-icon="ri:wallet-3-fill"></span></div>
-                    <div>
-                        <h3>Connect Your Wallet to Start Earning</h3>
-                        <p class="text-purple-light">Connect your cryptocurrency wallet to unlock daily earning
-                            opportunities of up to <strong>$3000 per day</strong>.</p>
+                <section class="ref-tools glass-morph">
+
+                    <div class="qr-trigger-wrapper glass-morph">
+                        <div class="tools-header">
+                            <div class="tools-text">
+                                <h3>Share via QR Code</h3>
+                                <p>Invite friends by letting them scan your unique code.</p>
+                            </div>
+                            <button class="btn-qr-main" onclick="openQRModal()">
+                                <i class='bx bx-qr-scan'></i> Generate QR
+                            </button>
+                        </div>
                     </div>
-                </div>
+
+                    <div id="referralQRModal" class="nexuist-modal-overlay">
+                        <div class="qr-modal-card animate-pop-in">
+                            <button class="close-x" onclick="closeQRModal()">&times;</button>
+
+                            <div class="modal-body">
+                                <div class="qr-brand-icon">
+                                    <i class='bx bxs-user-plus'></i>
+                                </div>
+                                <h2>Your Referral QR</h2>
+                                <p>Scanning this link will automatically apply your referral ID: <strong>Tokyo</strong>
+                                </p>
+
+                                <div class="qr-secure-zone">
+                                    <div id="qrcode-canvas"></div>
+                                    <div class="qr-id-tag">REF: TOKYO</div>
+                                </div>
+
+                                <div class="qr-modal-actions">
+                                    <button class="btn-download-qr" onclick="downloadReferralQR()">
+                                        <i class='bx bxs-download'></i> Save to Gallery
+                                    </button>
+                                    <button class="btn-copy-fallback" onclick="copyRefLink()">
+                                        <i class='bx bx-link-alt'></i> Copy Link
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="modal-footer-brand">
+                                <i class='bx bxs-shield-checked'></i> Nexuist Secure Referral
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="link-box">
+                        <div class="input-wrapper">
+                            <label>Unique Referral Link</label>
+                            <div class="copy-input">
+                                <input type="text" value="https://nexuist.app/ref/Tokyo" id="refLink" readonly>
+                                <button onclick="copyRefLink()" id="copyBtn"><i class='bx bx-copy'></i></button>
+                            </div>
+                        </div>
+                        <div class="input-wrapper">
+                            <label>Referral ID</label>
+                            <div class="copy-input">
+                                <input type="text" value="Tokyo" id="refID" readonly>
+                                <button onclick="copyRefID()"><i class='bx bx-copy'></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="share-socials">
+                        <span>Direct Share:</span>
+                        <div class="social-icons">
+                            <a href="https://api.whatsapp.com/send?text=Join%20Nexuist%20and%20start%20earning!%20Use%20my%20link:%20https://nexuist.app/ref/Tokyo"
+                                target="_blank" class="social-link" title="Share on WhatsApp">
+                                <i class='bx bxl-whatsapp' onclick="shareToSocial('whatsapp')"></i> </a>
+
+                            <a href="https://t.me/share/url?url=https://nexuist.app/ref/Tokyo&text=Join%20Nexuist%20and%20start%20earning%20rewards!"
+                                target="_blank" class="social-link" title="Share on Telegram">
+                                <i class='bx bxl-telegram' onclick="shareToSocial('telegram')"></i> </a>
+
+                            <a href="https://twitter.com/intent/tweet?text=Join%20the%20Nexuist%20ecosystem%20and%20earn%20rewards.%20Sign%20up%20here:%20https://nexuist.app/ref/Tokyo"
+                                target="_blank" class="social-link" title="Share on X">
+                                <i class='bx bxl-twitter' onclick="shareToSocial('twitter')"></i> </a>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="tier-section glass-morph">
+                    <h3>Commission Tiers</h3>
+                    <div class="tier-list">
+                        <div class="tier-item active">
+                            <div class="tier-rank"><i class='bx bxs-bolt-circle'></i> Starter</div>
+                            <div class="tier-req">0-9 Referrals</div>
+                            <div class="tier-reward">5% Comm.</div>
+                        </div>
+                        <div class="tier-item">
+                            <div class="tier-rank bronze"><i class='bx bxs-award'></i> Bronze</div>
+                            <div class="tier-req">10-24 Referrals</div>
+                            <div class="tier-reward">7% Comm.</div>
+                        </div>
+                        <div class="tier-item highlight">
+                            <div class="tier-rank silver"><i class='bx bxs-medal'></i> Silver</div>
+                            <div class="tier-req">25-49 Referrals</div>
+                            <div class="tier-reward">10% Comm.</div>
+                            <span class="next-label">Goal</span>
+                        </div>
+                        <div class="tier-item">
+                            <div class="tier-rank gold"><i class='bx bxs-star'></i> Gold</div>
+                            <div class="tier-req">50-99 Referrals</div>
+                            <div class="tier-reward">12% Comm.</div>
+                        </div>
+                        <div class="tier-item">
+                            <div class="tier-rank elite"><i class='bx bxs-diamond'></i> Elite</div>
+                            <div class="tier-req">100+ Referrals</div>
+                            <div class="tier-reward">15% Comm.</div>
+                        </div>
+                    </div>
+                </section>
             </div>
 
         </main>
+
+
     </div>
 
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/referUser.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </body>
 
 </html>

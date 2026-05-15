@@ -18,11 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Simulate real loading behavior
     const interval = setInterval(() => {
         progress += Math.random() * 15; // Random jump for realism
-        
+
         if (progress >= 100) {
             progress = 100;
             clearInterval(interval);
-            
+
             // Fade out the preloader
             setTimeout(() => {
                 preloader.classList.add("preloader-hidden");
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Update bar and text
         loadBar.style.width = progress + "%";
-        
+
         // Update status message based on progress
         if (progress > (messageIndex + 1) * 20 && messageIndex < messages.length - 1) {
             messageIndex++;
@@ -77,16 +77,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function setupDropdown(btnId, menuId) {
         const btn = document.getElementById(btnId);
         const menu = document.getElementById(menuId);
-        
+
         if (btn && menu) {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-                
+
                 // Close all other dropdowns first
                 document.querySelectorAll('.dropdown-menu').forEach(m => {
                     if (m.id !== menuId) m.classList.remove('show');
                 });
-                
+
                 menu.classList.toggle('show');
             });
         }
@@ -164,10 +164,10 @@ qtDropdownBtn.addEventListener("click", () => {
 
 window.addEventListener("click", (e) => {
 
-    if(
+    if (
         !qtDropdownBtn.contains(e.target) &&
         !qtDropdownMenu.contains(e.target)
-    ){
+    ) {
         qtDropdownMenu.classList.remove("active");
         qtDropdownBtn.classList.remove("active");
     }
@@ -218,19 +218,37 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === modal) closeModal();
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.btn-subscribe').forEach(button => {
-        button.addEventListener('click', () => {
-            const card = button.closest('.sig-card');
-            const name = encodeURIComponent(card.getAttribute('data-name'));
-            const price = encodeURIComponent(card.getAttribute('data-price'));
-            const method = encodeURIComponent(document.querySelector('.modal-select')?.value || 'USDT');
+    // Complete Subscription Button
+const completeBtn = document.querySelector('.btn-complete');
 
-            // Redirects to payment.html with data in the URL
-            window.location.href = `payment.html?name=${name}&price=${price}&method=${method}`;
-        });
+let selectedName = '';
+let selectedPrice = '';
+
+// Attach click to all subscribe buttons
+document.querySelectorAll('.btn-subscribe').forEach(button => {
+    button.addEventListener('click', () => {
+        const card = button.closest('.sig-card');
+
+        selectedName = card.getAttribute('data-name');
+        selectedPrice = card.getAttribute('data-price');
+
+        displayName.innerText = selectedName;
+        displayPrice.value = selectedPrice;
+
+        modal.style.display = 'flex';
     });
 });
+
+// Redirect to payment page
+completeBtn.addEventListener('click', () => {
+
+    const paymentMethod = document.querySelector('.modal-select').value;
+
+    window.location.href =
+        `premiumPayment.html?name=${encodeURIComponent(selectedName)}&price=${encodeURIComponent(selectedPrice)}&method=${encodeURIComponent(paymentMethod)}`;
+
+});
+
 });
 
 

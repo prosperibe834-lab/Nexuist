@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileMenuBtn && sidebar) {
         mobileMenuBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            sidebar.classList.toggle('show');
+            sidebar.classList.toggle('active');
         });
     }
 
@@ -105,9 +105,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // Close Sidebar on Mobile if clicking outside
-        if (window.innerWidth <= 900 && sidebar.classList.contains('show')) {
+        if (window.innerWidth <= 900 && sidebar.classList.contains('active')) {
             if (!sidebar.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                sidebar.classList.remove('show');
+                sidebar.classList.remove('active');
             }
         }
     });
@@ -187,89 +187,86 @@ acmVerifyBtn.addEventListener("click", () => {
 
 
 // Main section starts here
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Extract Data from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const price = urlParams.get('price') || '5,300';
-    const method = urlParams.get('method') || 'Ethereum';
-
-    // 2. Update UI with dynamic data
-    document.getElementById('displayPrice').innerText = price;
-    document.getElementById('displayMethod').innerText = method;
-    document.getElementById('sub-title').innerText = `${method} Deposit`;
-
-    // 3. Copy Functionality
-    window.copyAddr = () => {
-        const addr = document.getElementById('walletAddr');
-        addr.select();
-        navigator.clipboard.writeText(addr.value).then(() => {
-            const btn = document.querySelector('.copy-btn');
-            btn.innerHTML = "<i class='bx bx-check'></i> Copied";
-            setTimeout(() => {
-                btn.innerHTML = "<i class='bx bx-copy-alt'></i> Copy";
-            }, 2000);
-        });
-    };
-
-    // 4. File Upload UI Update
-    const dropZone = document.getElementById('dropZone');
-    const fileInput = document.getElementById('fileInput');
-
-    dropZone.onclick = () => fileInput.click();
-
-    fileInput.onchange = (e) => {
-        if (e.target.files.length > 0) {
-            const fileName = e.target.files[0].name;
-            dropZone.querySelector('p').innerText = "File: " + fileName;
-            dropZone.style.borderColor = "#10b981";
-            dropZone.querySelector('i').style.color = "#10b981";
-        }
-    };
-
-    // 5. Final Submission Action
-    document.getElementById('submitBtn').onclick = function () {
-        this.innerHTML = "<i class='bx bx-loader-circle bx-spin'></i> Processing...";
-        this.style.opacity = "0.7";
-        this.style.pointerEvents = "none";
-
-        setTimeout(() => {
-            alert("Payment Proof Submitted Successfully! Your deposit will be confirmed within 1-30 minutes.");
-            window.location.href = "index.html"; // Returns to dashboard
-        }, 2500);
-    };
-
-    // ================================
-    // GET PAYMENT DATA FROM URL
-    // ================================
-
-    document.addEventListener("DOMContentLoaded", () => {
-
-        const params = new URLSearchParams(window.location.search);
-
-        const name = params.get("name");
-        const price = params.get("price");
-        const method = params.get("method");
-
-        // Display Method
-        const displayMethod = document.getElementById("displayMethod");
-
-        if (displayMethod && method) {
-            displayMethod.textContent = method;
-        }
-
-        // Display Subtitle
-        const subTitle = document.getElementById("sub-title");
-
-        if (subTitle && name) {
-            subTitle.textContent = name + " Payment";
-        }
-
-        // Display Price
-        const displayPrice = document.getElementById("displayPrice");
-
-        if (displayPrice && price) {
-            displayPrice.textContent = Number(price).toLocaleString();
-        }
-
+function nextSection(step) {
+    // Hide all sections
+    document.querySelectorAll('.form-section').forEach(section => {
+        section.classList.remove('active');
     });
-});
+
+    // Show targeted section
+    document.getElementById('section-' + step).classList.add('active');
+
+    // Update Stepper UI
+    updateStepper(step);
+}
+
+function updateStepper(step) {
+    // Reset stepper
+    document.querySelectorAll('.v-step').forEach((el, index) => {
+        if (index + 1 <= step) {
+            el.classList.add('active');
+        } else {
+            el.classList.remove('active');
+        }
+    });
+
+    // Update lines
+    if (step >= 2) document.getElementById('line-1').classList.add('active');
+    else document.getElementById('line-1').classList.remove('active');
+
+    if (step >= 3) document.getElementById('line-2').classList.add('active');
+    else document.getElementById('line-2').classList.remove('active');
+}
+
+
+// Function to handle image preview
+function setupUploadPreview(inputId, previewId, zoneId) {
+    const input = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
+    const zone = document.getElementById(zoneId);
+    const content = zone.querySelector('.upload-content');
+
+    input.addEventListener('change', function () {
+        const file = this.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                // Hide the original text/icon
+                content.style.display = 'none';
+
+                // Create and show the image
+                preview.innerHTML = `
+                    <img src="${e.target.result}" class="img-preview animate-zoom">
+                    <div class="change-file"><i class='bx bx-refresh'></i> Change Image</div>
+                `;
+
+                // Add success border
+                zone.style.borderColor = '#10b981';
+                zone.style.background = 'rgba(16, 185, 129, 0.05)';
+            }
+
+            reader.readAsDataURL(file);
+        }
+    });
+}
+
+// Initialize for both front and back
+setupUploadPreview('file-front', 'preview-front', 'zone-front');
+setupUploadPreview('file-back', 'preview-back', 'zone-back');
+
+
+document.getElementById('kycForm').onsubmit = function (e) {
+    e.preventDefault();
+
+    const submitBtn = document.querySelector('.btn-submit');
+    submitBtn.innerHTML = "<i class='bx bx-loader-alt bx-spin'></i> Processing...";
+    submitBtn.style.opacity = "0.7";
+    submitBtn.style.pointerEvents = "none";
+
+    // Simulate Server Delay
+    setTimeout(() => {
+        document.getElementById('kycModal').style.display = 'flex';
+    }, 2000);
+};

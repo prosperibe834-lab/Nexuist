@@ -18,11 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Simulate real loading behavior
     const interval = setInterval(() => {
         progress += Math.random() * 15; // Random jump for realism
-
+        
         if (progress >= 100) {
             progress = 100;
             clearInterval(interval);
-
+            
             // Fade out the preloader
             setTimeout(() => {
                 preloader.classList.add("preloader-hidden");
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Update bar and text
         loadBar.style.width = progress + "%";
-
+        
         // Update status message based on progress
         if (progress > (messageIndex + 1) * 20 && messageIndex < messages.length - 1) {
             messageIndex++;
@@ -77,16 +77,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function setupDropdown(btnId, menuId) {
         const btn = document.getElementById(btnId);
         const menu = document.getElementById(menuId);
-
+        
         if (btn && menu) {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-
+                
                 // Close all other dropdowns first
                 document.querySelectorAll('.dropdown-menu').forEach(m => {
                     if (m.id !== menuId) m.classList.remove('show');
                 });
-
+                
                 menu.classList.toggle('show');
             });
         }
@@ -164,10 +164,10 @@ qtDropdownBtn.addEventListener("click", () => {
 
 window.addEventListener("click", (e) => {
 
-    if (
+    if(
         !qtDropdownBtn.contains(e.target) &&
         !qtDropdownMenu.contains(e.target)
-    ) {
+    ){
         qtDropdownMenu.classList.remove("active");
         qtDropdownBtn.classList.remove("active");
     }
@@ -187,89 +187,91 @@ acmVerifyBtn.addEventListener("click", () => {
 
 
 // Main section starts here
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Extract Data from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const price = urlParams.get('price') || '5,300';
-    const method = urlParams.get('method') || 'Ethereum';
+function copyRefLink() {
+    const copyText = document.getElementById("refLink");
+    copyText.select();
+    document.execCommand("copy");
+    
+    // Change icon temporarily to show success
+    const btn = document.getElementById("copyBtn");
+    const originalIcon = btn.innerHTML;
+    btn.innerHTML = "<i class='bx bx-check'></i>";
+    btn.style.background = "#10b981";
+    
+    setTimeout(() => {
+        btn.innerHTML = originalIcon;
+        btn.style.background = "#2563eb";
+    }, 2000);
+}
 
-    // 2. Update UI with dynamic data
-    document.getElementById('displayPrice').innerText = price;
-    document.getElementById('displayMethod').innerText = method;
-    document.getElementById('sub-title').innerText = `${method} Deposit`;
+function copyRefID() {
+    const copyText = document.getElementById("refID");
+    copyText.select();
+    document.execCommand("copy");
+    alert("Referral ID Copied!");
+}
 
-    // 3. Copy Functionality
-    window.copyAddr = () => {
-        const addr = document.getElementById('walletAddr');
-        addr.select();
-        navigator.clipboard.writeText(addr.value).then(() => {
-            const btn = document.querySelector('.copy-btn');
-            btn.innerHTML = "<i class='bx bx-check'></i> Copied";
-            setTimeout(() => {
-                btn.innerHTML = "<i class='bx bx-copy-alt'></i> Copy";
-            }, 2000);
-        });
-    };
+function toggleQR() {
+    // Placeholder for your QR Modal logic
+    alert("Generating encrypted QR code...");
+}
 
-    // 4. File Upload UI Update
-    const dropZone = document.getElementById('dropZone');
-    const fileInput = document.getElementById('fileInput');
 
-    dropZone.onclick = () => fileInput.click();
+let qrContainer = null;
 
-    fileInput.onchange = (e) => {
-        if (e.target.files.length > 0) {
-            const fileName = e.target.files[0].name;
-            dropZone.querySelector('p').innerText = "File: " + fileName;
-            dropZone.style.borderColor = "#10b981";
-            dropZone.querySelector('i').style.color = "#10b981";
-        }
-    };
+function openQRModal() {
+    const modal = document.getElementById('referralQRModal');
+    const canvas = document.getElementById('qrcode-canvas');
+    const referralLink = "https://nexuist.app/ref/Tokyo";
 
-    // 5. Final Submission Action
-    document.getElementById('submitBtn').onclick = function () {
-        this.innerHTML = "<i class='bx bx-loader-circle bx-spin'></i> Processing...";
-        this.style.opacity = "0.7";
-        this.style.pointerEvents = "none";
-
-        setTimeout(() => {
-            alert("Payment Proof Submitted Successfully! Your deposit will be confirmed within 1-30 minutes.");
-            window.location.href = "index.html"; // Returns to dashboard
-        }, 2500);
-    };
-
-    // ================================
-    // GET PAYMENT DATA FROM URL
-    // ================================
-
-    document.addEventListener("DOMContentLoaded", () => {
-
-        const params = new URLSearchParams(window.location.search);
-
-        const name = params.get("name");
-        const price = params.get("price");
-        const method = params.get("method");
-
-        // Display Method
-        const displayMethod = document.getElementById("displayMethod");
-
-        if (displayMethod && method) {
-            displayMethod.textContent = method;
-        }
-
-        // Display Subtitle
-        const subTitle = document.getElementById("sub-title");
-
-        if (subTitle && name) {
-            subTitle.textContent = name + " Payment";
-        }
-
-        // Display Price
-        const displayPrice = document.getElementById("displayPrice");
-
-        if (displayPrice && price) {
-            displayPrice.textContent = Number(price).toLocaleString();
-        }
-
+    modal.style.display = 'flex';
+    
+    // Clear and redraw to prevent duplicates
+    canvas.innerHTML = "";
+    qrContainer = new QRCode(canvas, {
+        text: referralLink,
+        width: 180,
+        height: 180,
+        colorDark : "#0f172a",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
     });
-});
+}
+
+function closeQRModal() {
+    document.getElementById('referralQRModal').style.display = 'none';
+}
+
+function downloadReferralQR() {
+    const canvasEl = document.querySelector('#qrcode-canvas canvas');
+    if (canvasEl) {
+        const link = document.createElement('a');
+        link.download = 'Nexuist-Referral-Tokyo.png';
+        link.href = canvasEl.toDataURL("image/png");
+        link.click();
+    }
+}
+
+function shareToSocial(platform) {
+    // 1. Get the current referral link from your input box
+    const refLink = document.getElementById('refLink').value;
+    const message = encodeURIComponent("Join Nexuist and start earning rewards! Use my link: ");
+    
+    let url = "";
+
+    // 2. Build the URL based on the platform clicked
+    switch(platform) {
+        case 'whatsapp':
+            url = `https://api.whatsapp.com/send?text=${message}${refLink}`;
+            break;
+        case 'telegram':
+            url = `https://t.me/share/url?url=${refLink}&text=${message}`;
+            break;
+        case 'twitter':
+            url = `https://twitter.com/intent/tweet?text=${message}${refLink}`;
+            break;
+    }
+
+    // 3. Open the share window
+    window.open(url, '_blank');
+}

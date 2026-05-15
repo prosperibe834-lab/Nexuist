@@ -46,14 +46,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. Mobile Sidebar Toggle ---
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const sidebar = document.getElementById('sidebar');
+const sidebar = document.getElementById('sidebar');
 
-    if (mobileMenuBtn && sidebar) {
-        mobileMenuBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            sidebar.classList.toggle('show');
-        });
-    }
+if (mobileMenuBtn && sidebar) {
+
+    mobileMenuBtn.addEventListener('click', (e) => {
+
+        e.stopPropagation();
+
+        sidebar.classList.toggle('active');
+
+    });
+
+}
+
 
     // --- 2. Sidebar Submenu Toggle (Investment Plans) ---
     const investPlansBtn = document.getElementById('investPlansBtn');
@@ -96,21 +102,26 @@ document.addEventListener('DOMContentLoaded', () => {
     setupDropdown('profileBtn', 'profileMenu');
 
     // Close Dropdowns & Sidebar on clicking outside
-    document.addEventListener('click', (e) => {
-        // Close Dropdowns
-        document.querySelectorAll('.dropdown-menu').forEach(menu => {
-            if (menu.classList.contains('show')) {
-                menu.classList.remove('show');
-            }
-        });
+// Close Sidebar on outside click
+document.addEventListener('click', (e) => {
 
-        // Close Sidebar on Mobile if clicking outside
-        if (window.innerWidth <= 900 && sidebar.classList.contains('show')) {
-            if (!sidebar.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-                sidebar.classList.remove('show');
-            }
+    if (
+        window.innerWidth <= 900 &&
+        sidebar.classList.contains('active')
+    ) {
+
+        if (
+            !sidebar.contains(e.target) &&
+            !mobileMenuBtn.contains(e.target)
+        ) {
+
+            sidebar.classList.remove('active');
+
         }
-    });
+
+    }
+
+});
 
     // Prevent clicks inside dropdown from closing it
     document.querySelectorAll('.dropdown-menu').forEach(menu => {
@@ -188,88 +199,51 @@ acmVerifyBtn.addEventListener("click", () => {
 
 // Main section starts here
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Extract Data from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const price = urlParams.get('price') || '5,300';
-    const method = urlParams.get('method') || 'Ethereum';
+    const form = document.getElementById('supportForm');
+    const sendBtn = document.getElementById('sendBtn');
+    const messageBox = document.getElementById('userMessage');
+    const charCount = document.getElementById('currentChars');
+    const inputs = form.querySelectorAll('input, textarea');
 
-    // 2. Update UI with dynamic data
-    document.getElementById('displayPrice').innerText = price;
-    document.getElementById('displayMethod').innerText = method;
-    document.getElementById('sub-title').innerText = `${method} Deposit`;
+    // 1. Character Counter & Button Validation
+    inputs.forEach(input => {
+        input.addEventListener('input', () => {
+            // Update character count
+            if (input.id === 'userMessage') {
+                charCount.innerText = input.value.length;
+            }
 
-    // 3. Copy Functionality
-    window.copyAddr = () => {
-        const addr = document.getElementById('walletAddr');
-        addr.select();
-        navigator.clipboard.writeText(addr.value).then(() => {
-            const btn = document.querySelector('.copy-btn');
-            btn.innerHTML = "<i class='bx bx-check'></i> Copied";
-            setTimeout(() => {
-                btn.innerHTML = "<i class='bx bx-copy-alt'></i> Copy";
-            }, 2000);
+            // Check if all fields are filled
+            const allFilled = Array.from(inputs).every(i => i.value.trim() !== "");
+            if (allFilled) {
+                sendBtn.classList.remove('disabled');
+                sendBtn.disabled = false;
+            } else {
+                sendBtn.classList.add('disabled');
+                sendBtn.disabled = true;
+            }
         });
-    };
+    });
 
-    // 4. File Upload UI Update
-    const dropZone = document.getElementById('dropZone');
-    const fileInput = document.getElementById('fileInput');
+    // 2. Form Submission & Modal
+    form.onsubmit = (e) => {
+        e.preventDefault();
 
-    dropZone.onclick = () => fileInput.click();
-
-    fileInput.onchange = (e) => {
-        if (e.target.files.length > 0) {
-            const fileName = e.target.files[0].name;
-            dropZone.querySelector('p').innerText = "File: " + fileName;
-            dropZone.style.borderColor = "#10b981";
-            dropZone.querySelector('i').style.color = "#10b981";
-        }
-    };
-
-    // 5. Final Submission Action
-    document.getElementById('submitBtn').onclick = function () {
-        this.innerHTML = "<i class='bx bx-loader-circle bx-spin'></i> Processing...";
-        this.style.opacity = "0.7";
-        this.style.pointerEvents = "none";
+        // Simulate sending
+        sendBtn.innerHTML = "<i class='bx bx-loader-alt bx-spin'></i> Sending...";
 
         setTimeout(() => {
-            alert("Payment Proof Submitted Successfully! Your deposit will be confirmed within 1-30 minutes.");
-            window.location.href = "index.html"; // Returns to dashboard
-        }, 2500);
+            document.getElementById('successModal').style.display = 'flex';
+            form.reset();
+            sendBtn.innerHTML = "<span>Send Message</span><i class='bx bx-paper-plane'></i>";
+            sendBtn.classList.add('disabled');
+            sendBtn.disabled = true;
+            charCount.innerText = "0";
+        }, 1500);
     };
-
-    // ================================
-    // GET PAYMENT DATA FROM URL
-    // ================================
-
-    document.addEventListener("DOMContentLoaded", () => {
-
-        const params = new URLSearchParams(window.location.search);
-
-        const name = params.get("name");
-        const price = params.get("price");
-        const method = params.get("method");
-
-        // Display Method
-        const displayMethod = document.getElementById("displayMethod");
-
-        if (displayMethod && method) {
-            displayMethod.textContent = method;
-        }
-
-        // Display Subtitle
-        const subTitle = document.getElementById("sub-title");
-
-        if (subTitle && name) {
-            subTitle.textContent = name + " Payment";
-        }
-
-        // Display Price
-        const displayPrice = document.getElementById("displayPrice");
-
-        if (displayPrice && price) {
-            displayPrice.textContent = Number(price).toLocaleString();
-        }
-
-    });
 });
+
+// Close Modal Function
+function closeSupportModal() {
+    document.getElementById('successModal').style.display = 'none';
+}

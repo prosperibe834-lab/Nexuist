@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexuist | Professional Trading</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/kyc-form.css">
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -148,7 +149,7 @@
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:layout-grid-line"></span> OVERVIEW</h3>
-                    <a href="index.html" class="nav-item active">
+                    <a href="index.html" class="nav-item">
                         <span class="iconify" data-icon="solar:widget-2-outline"></span>
                         Dashboard
                     </a>
@@ -235,14 +236,14 @@
 
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:wallet-3-line"></span> WALLET & FUNDS</h3>
-                    <a href="depositfunds.html" class="nav-item">
+                    <a href="deposit.html" class="nav-item">
                         <span class="iconify" data-icon="ri:add-circle-line"></span> Deposit Funds
                     </a>
                     <a href="withdraw.html" class="nav-item">
                         <span class="iconify" data-icon="solar:card-send-outline"></span>
                         Withdraw Funds
                     </a>
-                    <a href="internal-transfer.html" class="nav-item">
+                    <a href="transfer.html" class="nav-item">
                         <span class="iconify" data-icon="ri:arrow-left-right-line"></span> Internal Transfer
                     </a>
                 </div>
@@ -287,7 +288,7 @@
 
                             </div>
 
-                            <a href="verify-account.html" class="acm-verify-link">
+                            <a href="verification.html" class="acm-verify-link">
 
                                 <span class="iconify" data-icon="solar:shield-check-outline"></span>
 
@@ -302,7 +303,7 @@
 
 
                     <!-- PROFILE SETTINGS -->
-                    <a href="profilesetting.html" class="acm-nav-link">
+                    <a href="portfolio.html" class="acm-nav-link">
 
                         <span class="iconify" data-icon="solar:settings-outline"></span>
 
@@ -333,7 +334,7 @@
                         Support Center
                     </h3>
 
-                    <a href="support.html" class="nav-item">
+                    <a href="signals.html" class="nav-item">
                         <div class="item-left">
                             <span class="iconify" data-icon="solar:chat-round-dots-outline"></span>
                             Support Center
@@ -376,134 +377,188 @@
             </div>
         </aside>
 
-        <main class="content-area">
-            <div class="page-header">
-                <div class="welcome-text">
-                    <h1>Welcome back, marine military!</h1>
-                    <p>Your investment dashboard overview</p>
-                </div>
-                <div class="header-buttons">
-                    <a href="wallet.html" class="btn btn-outline-purple">
-                        <span class="iconify" data-icon="ri:link"></span> Connect Wallet
-                    </a>
-                    <a href="invest.html" class="btn btn-solid-green">
-                        <span class="iconify" data-icon="ri:line-chart-line"></span> Invest Now
-                    </a>
-                </div>
-            </div>
+        <!-- Main Content -->
 
-            <div class="banner demo-banner">
-                <div class="banner-left">
-                    <div class="icon-box"><span class="iconify" data-icon="ri:graduation-cap-line"></span></div>
-                    <div>
-                        <h2>Demo Account Active</h2>
-                        <p>Demo Balance: $100,000.00</p>
+        <main class="nexuist-verification-portal">
+            <div class="verification-wrapper animate-fade-in">
+                <header class="v-header">
+                    <div class="secure-tag"><i class='bx bxs-lock-alt'></i> Secure Verification Process</div>
+                    <h1>Account Verification Hub</h1>
+                    <p>Verify your identity to unlock advanced trading features and enterprise-grade security.</p>
+                </header>
+
+                <nav class="v-stepper">
+                    <div class="v-step active" id="step-1-label">
+                        <div class="v-circle">1</div>
+                        <span>Personal Info</span>
                     </div>
-                </div>
-                <a href="live-trade.html" class="btn btn-white">
-                    <span class="iconify" data-icon="ri:play-line"></span> Switch to Demo Trading
-                </a>
-            </div>
+                    <div class="v-line" id="line-1"></div>
+                    <div class="v-step" id="step-2-label">
+                        <div class="v-circle">2</div>
+                        <span>Address</span>
+                    </div>
+                    <div class="v-line" id="line-2"></div>
+                    <div class="v-step" id="step-3-label">
+                        <div class="v-circle">3</div>
+                        <span>Documents</span>
+                    </div>
+                </nav>
 
-            <div class="stats-grid">
-                <div class="card balance-card">
-                    <div class="card-head">
-                        <div class="title">
-                            <span class="iconify" data-icon="ri:wallet-3-line"></span>
-                            <h3>Account Balance</h3>
+                <div class="v-card glass-morph">
+                    <form id="kycForm">
+
+                        <div class="form-section active" id="section-1">
+                            <div class="section-title">
+                                <i class='bx bx-user-circle'></i>
+                                <div>
+                                    <h3>Personal Information</h3>
+                                    <p>Provide your details exactly as they appear on your ID.</p>
+                                </div>
+                            </div>
+                            <div class="v-grid">
+                                <div class="v-input">
+                                    <label>First Name *</label>
+                                    <input type="text" placeholder="John" required>
+                                </div>
+                                <div class="v-input">
+                                    <label>Last Name *</label>
+                                    <input type="text" placeholder="Doe" required>
+                                </div>
+                                <div class="v-input">
+                                    <label>Email Address *</label>
+                                    <input type="email" placeholder="john@example.com" required>
+                                </div>
+                                <div class="v-input">
+                                    <label>Phone Number *</label>
+                                    <input type="tel" placeholder="+1 234 567 890" required>
+                                </div>
+                            </div>
+                            <div class="v-actions">
+                                <button type="button" class="btn-next" onclick="nextSection(2)">Continue to Address <i
+                                        class='bx bx-right-arrow-alt'></i></button>
+                            </div>
                         </div>
-                        <button class="icon-btn" id="toggleBalanceBtn">
-                            <span class="iconify" id="eyeIcon" data-icon="ri:eye-line"></span>
-                        </button>
-                    </div>
-                    <p class="subtitle">Your available funds</p>
-                    <h1 class="main-amount" id="balanceAmount">$0.00</h1>
 
-                    <div class="status-tags">
-                        <span class="tag tag-success"><span class="iconify" data-icon="ri:checkbox-circle-line"></span>
-                            Available for Withdrawal</span>
-                        <span class="tag tag-danger"><span class="iconify" data-icon="ri:error-warning-line"></span>
-                            Unverified</span>
-                    </div>
-
-                    <p class="last-updated">Last updated: May 07, 2026 11:23 AM</p>
-
-                    <div class="card-actions">
-                        <a href="deposit.html" class="btn btn-dark"><span class="iconify"
-                                data-icon="ri:add-circle-line"></span> Deposit</a>
-                        <a href="withdraw.html" class="btn btn-dark"><span class="iconify"
-                                data-icon="ri:arrow-right-up-line"></span> Withdraw</a>
-                    </div>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Profit</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:money-dollar-circle-line"></span>
+                        <div class="form-section" id="section-2">
+                            <div class="section-title">
+                                <i class='bx bx-map-pin'></i>
+                                <div>
+                                    <h3>Residential Address</h3>
+                                    <p>Enter your current verified living address.</p>
+                                </div>
+                            </div>
+                            <div class="v-grid">
+                                <div class="v-input full-width">
+                                    <label>Street Address *</label>
+                                    <input type="text" placeholder="123 Fintech Way" required>
+                                </div>
+                                <div class="v-input">
+                                    <label>City *</label>
+                                    <input type="text" placeholder="New York" required>
+                                </div>
+                                <div class="v-input">
+                                    <label>State/Province *</label>
+                                    <input type="text" placeholder="NY" required>
+                                </div>
+                            </div>
+                            <div class="v-actions">
+                                <button type="button" class="btn-back" onclick="nextSection(1)">Previous</button>
+                                <button type="button" class="btn-next" onclick="nextSection(3)">Continue to Documents <i
+                                        class='bx bx-right-arrow-alt'></i></button>
+                            </div>
                         </div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> Last period</p>
+
+                        <div class="form-section" id="section-3">
+                            <div class="section-title">
+                                <i class='bx bx-id-card'></i>
+                                <div>
+                                    <h3>Document Upload</h3>
+                                    <p>Upload clear photos of your government-issued ID.</p>
+                                </div>
+                            </div>
+
+                            <div class="doc-selector">
+                                <label class="doc-option">
+                                    <input type="radio" name="docType" checked>
+                                    <div class="doc-box">
+                                        <i class='bx bx-globe'></i>
+                                        <span>Passport</span>
+                                        <small>Most accepted globally</small>
+                                    </div>
+                                </label>
+
+                                <label class="doc-option">
+                                    <input type="radio" name="docType">
+                                    <div class="doc-box">
+                                        <i class='bx bx-credit-card-front'></i>
+                                        <span>National ID</span>
+                                        <small>Government issued ID</small>
+                                    </div>
+                                </label>
+
+                                <label class="doc-option">
+                                    <input type="radio" name="docType">
+                                    <div class="doc-box">
+                                        <i class='bx bxs-id-card'></i>
+                                        <span>Driver's License</span>
+                                        <small>Valid driving license</small>
+                                    </div>
+                                </label>
+                            </div>
+
+                            <div class="upload-grid">
+                                <div class="upload-zone" id="zone-front"
+                                    onclick="document.getElementById('file-front').click()">
+                                    <input type="file" id="file-front" hidden accept="image/*" required>
+                                    <div class="upload-content">
+                                        <i class='bx bx-cloud-upload'></i>
+                                        <p>Front Side</p>
+                                        <span>PNG, JPG up to 10MB</span>
+                                    </div>
+                                    <div class="preview-container" id="preview-front"></div>
+                                </div>
+
+                                <div class="upload-zone" id="zone-back"
+                                    onclick="document.getElementById('file-back').click()">
+                                    <input type="file" id="file-back" hidden accept="image/*" required>
+                                    <div class="upload-content">
+                                        <i class='bx bx-cloud-upload'></i>
+                                        <p>Back Side</p>
+                                        <span>PNG, JPG up to 10MB</span>
+                                    </div>
+                                    <div class="preview-container" id="preview-back"></div>
+                                </div>
+                            </div>
+
+                            <div class="v-actions">
+                                <button type="button" class="btn-back" onclick="nextSection(2)">Previous</button>
+                                <button type="submit" class="btn-submit">Submit Application <i
+                                        class='bx bx-check-shield'></i></button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
 
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Deposit</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:arrow-down-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Withdrawal</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:arrow-up-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Bonus</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:gift-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
+                <p class="privacy-note"><i class='bx bx-shield-alt-2'></i> Your data is encrypted and stored securely
+                    following international PCI-DSS standards.</p>
             </div>
-
-            <div class="card flex-card">
-                <div class="flex-left">
-                    <div class="icon-box dark-box"><span class="iconify" data-icon="ri:shield-check-line"></span></div>
-                    <div>
-                        <h3>Identity Verification</h3>
-                        <p>Complete verification to access all features</p>
-                    </div>
-                </div>
-                <a href="verify.html" class="btn btn-blue">View Details <span class="iconify"
-                        data-icon="ri:arrow-down-s-line" style="transform: rotate(-90deg);"></span></a>
-            </div>
-
-            <div class="card flex-card promo-card" id="promoCard">
-                <button class="close-promo" id="closePromoBtn"><span class="iconify"
-                        data-icon="ri:close-line"></span></button>
-                <div class="flex-left">
-                    <div class="icon-box dark-box border-purple"><span class="iconify text-purple"
-                            data-icon="ri:wallet-3-fill"></span></div>
-                    <div>
-                        <h3>Connect Your Wallet to Start Earning</h3>
-                        <p class="text-purple-light">Connect your cryptocurrency wallet to unlock daily earning
-                            opportunities of up to <strong>$3000 per day</strong>.</p>
-                    </div>
-                </div>
-            </div>
-
         </main>
+
+        <div id="kycModal" class="v-modal">
+            <div class="modal-card animate-zoom">
+                <div class="v-success-icon">
+                    <i class='bx bx-check-circle animate-pulse'></i>
+                </div>
+                <h2>Submission Received</h2>
+                <p>Your identity verification is being processed by our automated system. You will receive an update in
+                    1-30 minutes.</p>
+                <button onclick="window.location.reload()" class="btn-done">Return to Dashboard</button>
+            </div>
+        </div>
+
     </div>
 
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/kyc-form.js"></script>
 </body>
 
 </html>

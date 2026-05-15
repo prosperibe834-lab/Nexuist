@@ -18,11 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Simulate real loading behavior
     const interval = setInterval(() => {
         progress += Math.random() * 15; // Random jump for realism
-
+        
         if (progress >= 100) {
             progress = 100;
             clearInterval(interval);
-
+            
             // Fade out the preloader
             setTimeout(() => {
                 preloader.classList.add("preloader-hidden");
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Update bar and text
         loadBar.style.width = progress + "%";
-
+        
         // Update status message based on progress
         if (progress > (messageIndex + 1) * 20 && messageIndex < messages.length - 1) {
             messageIndex++;
@@ -77,16 +77,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function setupDropdown(btnId, menuId) {
         const btn = document.getElementById(btnId);
         const menu = document.getElementById(menuId);
-
+        
         if (btn && menu) {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
-
+                
                 // Close all other dropdowns first
                 document.querySelectorAll('.dropdown-menu').forEach(m => {
                     if (m.id !== menuId) m.classList.remove('show');
                 });
-
+                
                 menu.classList.toggle('show');
             });
         }
@@ -164,10 +164,10 @@ qtDropdownBtn.addEventListener("click", () => {
 
 window.addEventListener("click", (e) => {
 
-    if (
+    if(
         !qtDropdownBtn.contains(e.target) &&
         !qtDropdownMenu.contains(e.target)
-    ) {
+    ){
         qtDropdownMenu.classList.remove("active");
         qtDropdownBtn.classList.remove("active");
     }
@@ -187,89 +187,25 @@ acmVerifyBtn.addEventListener("click", () => {
 
 
 // Main section starts here
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Extract Data from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const price = urlParams.get('price') || '5,300';
-    const method = urlParams.get('method') || 'Ethereum';
-
-    // 2. Update UI with dynamic data
-    document.getElementById('displayPrice').innerText = price;
-    document.getElementById('displayMethod').innerText = method;
-    document.getElementById('sub-title').innerText = `${method} Deposit`;
-
-    // 3. Copy Functionality
-    window.copyAddr = () => {
-        const addr = document.getElementById('walletAddr');
-        addr.select();
-        navigator.clipboard.writeText(addr.value).then(() => {
-            const btn = document.querySelector('.copy-btn');
-            btn.innerHTML = "<i class='bx bx-check'></i> Copied";
-            setTimeout(() => {
-                btn.innerHTML = "<i class='bx bx-copy-alt'></i> Copy";
-            }, 2000);
-        });
-    };
-
-    // 4. File Upload UI Update
-    const dropZone = document.getElementById('dropZone');
-    const fileInput = document.getElementById('fileInput');
-
-    dropZone.onclick = () => fileInput.click();
-
-    fileInput.onchange = (e) => {
-        if (e.target.files.length > 0) {
-            const fileName = e.target.files[0].name;
-            dropZone.querySelector('p').innerText = "File: " + fileName;
-            dropZone.style.borderColor = "#10b981";
-            dropZone.querySelector('i').style.color = "#10b981";
-        }
-    };
-
-    // 5. Final Submission Action
-    document.getElementById('submitBtn').onclick = function () {
-        this.innerHTML = "<i class='bx bx-loader-circle bx-spin'></i> Processing...";
-        this.style.opacity = "0.7";
-        this.style.pointerEvents = "none";
-
-        setTimeout(() => {
-            alert("Payment Proof Submitted Successfully! Your deposit will be confirmed within 1-30 minutes.");
-            window.location.href = "index.html"; // Returns to dashboard
-        }, 2500);
-    };
-
-    // ================================
-    // GET PAYMENT DATA FROM URL
-    // ================================
-
-    document.addEventListener("DOMContentLoaded", () => {
-
-        const params = new URLSearchParams(window.location.search);
-
-        const name = params.get("name");
-        const price = params.get("price");
-        const method = params.get("method");
-
-        // Display Method
-        const displayMethod = document.getElementById("displayMethod");
-
-        if (displayMethod && method) {
-            displayMethod.textContent = method;
-        }
-
-        // Display Subtitle
-        const subTitle = document.getElementById("sub-title");
-
-        if (subTitle && name) {
-            subTitle.textContent = name + " Payment";
-        }
-
-        // Display Price
-        const displayPrice = document.getElementById("displayPrice");
-
-        if (displayPrice && price) {
-            displayPrice.textContent = Number(price).toLocaleString();
-        }
-
+// Tab Switching logic
+document.querySelectorAll('.nav-item').forEach(button => {
+    button.addEventListener('click', () => {
+        document.querySelector('.nav-item.active').classList.remove('active');
+        button.classList.add('active');
     });
+});
+
+// Form Submission Feedback
+document.getElementById('profileForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.btn-save');
+    const originalContent = btn.innerHTML;
+    
+    btn.style.background = '#10b981';
+    btn.innerHTML = '<span>Profile Updated!</span> <i class="bx bx-check-circle"></i>';
+    
+    setTimeout(() => {
+        btn.style.background = '#3b82f6';
+        btn.innerHTML = originalContent;
+    }, 3000);
 });

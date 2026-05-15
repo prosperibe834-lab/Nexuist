@@ -5,39 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexuist | Professional Trading</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/verify-account.css">
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
 
 
     <div id="fintech-preloader">
-        <div class="loader-container">
-            <div class="loader-logo">
-                <div class="logo-hexagon">
-                    <span class="iconify" data-icon="ri:shield-flash-line"></span>
-                </div>
-                <h2 class="loader-brand-name">Nexuist</h2>
+    <div class="loader-container">
+        <div class="loader-logo">
+            <div class="logo-hexagon">
+                <span class="iconify" data-icon="ri:shield-flash-line"></span>
             </div>
+            <h2 class="loader-brand-name">Nexuist</h2>
+        </div>
 
-            <div class="loader-progress-wrapper">
-                <div class="loader-progress-bar" id="load-bar">
-                    <div class="shimmer-effect"></div>
-                </div>
-            </div>
-
-            <div class="loader-status">
-                <span class="status-dot"></span>
-                <p id="status-text">Initializing encrypted connection...</p>
+        <div class="loader-progress-wrapper">
+            <div class="loader-progress-bar" id="load-bar">
+                <div class="shimmer-effect"></div>
             </div>
         </div>
 
-        <div class="glow glow-1"></div>
-        <div class="glow glow-2"></div>
+        <div class="loader-status">
+            <span class="status-dot"></span>
+            <p id="status-text">Initializing encrypted connection...</p>
+        </div>
     </div>
-    <!-- Preloader ends here -->
+    
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+</div>
+<!-- Preloader ends here -->
 
     <header class="top-header">
         <div class="header-left">
@@ -148,7 +149,7 @@
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:layout-grid-line"></span> OVERVIEW</h3>
-                    <a href="index.html" class="nav-item active">
+                    <a href="index.html" class="nav-item">
                         <span class="iconify" data-icon="solar:widget-2-outline"></span>
                         Dashboard
                     </a>
@@ -211,12 +212,12 @@
                             Markets</div>
                         <span class="badge solid-red"><span class="dot"></span> Live</span>
                     </a>
-                    <a href="copytrading.html" class="nav-item">
+                    <a href="copy.html" class="nav-item">
                         <div class="item-left"><span class="iconify" data-icon="ri:user-follow-line"></span> Copy
                             Trading</div>
                         <span class="badge solid-purple">Pro</span>
                     </a>
-                    <a href="botTrading.html" class="nav-item">
+                    <a href="ai.html" class="nav-item">
                         <div class="item-left"><span class="iconify" data-icon="ri:robot-2-line"></span> AI Trading Bots
                         </div>
                         <span class="badge solid-blue">AI</span>
@@ -235,14 +236,14 @@
 
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:wallet-3-line"></span> WALLET & FUNDS</h3>
-                    <a href="depositfunds.html" class="nav-item">
+                    <a href="deposit.html" class="nav-item">
                         <span class="iconify" data-icon="ri:add-circle-line"></span> Deposit Funds
                     </a>
                     <a href="withdraw.html" class="nav-item">
                         <span class="iconify" data-icon="solar:card-send-outline"></span>
                         Withdraw Funds
                     </a>
-                    <a href="internal-transfer.html" class="nav-item">
+                    <a href="transfer.html" class="nav-item">
                         <span class="iconify" data-icon="ri:arrow-left-right-line"></span> Internal Transfer
                     </a>
                 </div>
@@ -270,7 +271,7 @@
                         </button>
 
                         <!-- SUBMENU -->
-                        <div class="acm-dropdown-menu" id="acmVerifyMenu">
+                        <div class="acm-dropdown-menu active" id="acmVerifyMenu">
 
                             <div class="acm-info-box">
 
@@ -287,7 +288,7 @@
 
                             </div>
 
-                            <a href="verify-account.html" class="acm-verify-link">
+                            <a href="verify-account.html" class="acm-verify-link active">
 
                                 <span class="iconify" data-icon="solar:shield-check-outline"></span>
 
@@ -302,7 +303,7 @@
 
 
                     <!-- PROFILE SETTINGS -->
-                    <a href="profilesetting.html" class="acm-nav-link">
+                    <a href="portfolio.html" class="acm-nav-link">
 
                         <span class="iconify" data-icon="solar:settings-outline"></span>
 
@@ -333,7 +334,7 @@
                         Support Center
                     </h3>
 
-                    <a href="support.html" class="nav-item">
+                    <a href="signals.html" class="nav-item">
                         <div class="item-left">
                             <span class="iconify" data-icon="solar:chat-round-dots-outline"></span>
                             Support Center
@@ -374,136 +375,102 @@
                 </a>
 
             </div>
-        </aside>
+        </aside> 
 
-        <main class="content-area">
-            <div class="page-header">
-                <div class="welcome-text">
-                    <h1>Welcome back, marine military!</h1>
-                    <p>Your investment dashboard overview</p>
-                </div>
-                <div class="header-buttons">
-                    <a href="wallet.html" class="btn btn-outline-purple">
-                        <span class="iconify" data-icon="ri:link"></span> Connect Wallet
-                    </a>
-                    <a href="invest.html" class="btn btn-solid-green">
-                        <span class="iconify" data-icon="ri:line-chart-line"></span> Invest Now
-                    </a>
-                </div>
+        <!-- Main Content -->
+         <main class="nexuist-kyc-hub">
+    <div class="kyc-container animate-slide-in">
+        <header class="kyc-dashboard-header">
+            <div class="header-left">
+                <div class="nexuist-badge">Nexuist Ecosystem</div>
+                <h1>Identity Verification</h1>
+                <p>Verify your account to access all premium features and security protocols.</p>
             </div>
+            <div class="status-indicator warning-pulse">
+                <i class='bx bx-error-alt'></i> Verification Required
+            </div>
+        </header>
 
-            <div class="banner demo-banner">
+        <section class="kyc-main-card glass-morph">
+            
+            <div class="kyc-status-banner">
                 <div class="banner-left">
-                    <div class="icon-box"><span class="iconify" data-icon="ri:graduation-cap-line"></span></div>
+                    <i class='bx bx-user-plus'></i>
                     <div>
-                        <h2>Demo Account Active</h2>
-                        <p>Demo Balance: $100,000.00</p>
+                        <h3>Start Verification</h3>
+                        <p>Begin the professional 3-step process to secure your account.</p>
                     </div>
                 </div>
-                <a href="live-trade.html" class="btn btn-white">
-                    <span class="iconify" data-icon="ri:play-line"></span> Switch to Demo Trading
-                </a>
+                <div class="banner-right">
+                    <span class="active-step">Level 1</span>
+                    <span class="step-label">Account Security</span>
+                </div>
             </div>
 
-            <div class="stats-grid">
-                <div class="card balance-card">
-                    <div class="card-head">
-                        <div class="title">
-                            <span class="iconify" data-icon="ri:wallet-3-line"></span>
-                            <h3>Account Balance</h3>
+            <div class="kyc-content-area">
+                <div class="kyc-graphic">
+                    <i class='bx bxs-user-account animate-pulse-icon'></i>
+                </div>
+                <div class="kyc-prompt">
+                    <h2>Enhance Your Experience</h2>
+                    <p>Unlock trading, investing, and advanced security features. A simple 3-step process to confirm your identity and secure your digital assets.</p>
+                    
+                    <a href="kyc-form.html" class="btn-start-verification" id="startKycBtn">
+                        <i class='bx bx-check-double'></i> Begin Verification
+                    </a>
+                </div>
+            </div>
+
+            <div class="benefits-accordion">
+                <button class="accordion-trigger" id="toggleBenefits">
+                    <i class='bx bx-chevron-down'></i> Learn more about Verification
+                </button>
+                <div class="accordion-content" id="benefitsContent">
+                    <div class="benefits-grid">
+                        <div class="benefit-item">
+                            <i class='bx bx-shield-quarter'></i>
+                            <div><h4>Security & Compliance</h4><p>Ensure regulatory compliance and account protection.</p></div>
                         </div>
-                        <button class="icon-btn" id="toggleBalanceBtn">
-                            <span class="iconify" id="eyeIcon" data-icon="ri:eye-line"></span>
-                        </button>
-                    </div>
-                    <p class="subtitle">Your available funds</p>
-                    <h1 class="main-amount" id="balanceAmount">$0.00</h1>
-
-                    <div class="status-tags">
-                        <span class="tag tag-success"><span class="iconify" data-icon="ri:checkbox-circle-line"></span>
-                            Available for Withdrawal</span>
-                        <span class="tag tag-danger"><span class="iconify" data-icon="ri:error-warning-line"></span>
-                            Unverified</span>
-                    </div>
-
-                    <p class="last-updated">Last updated: May 07, 2026 11:23 AM</p>
-
-                    <div class="card-actions">
-                        <a href="deposit.html" class="btn btn-dark"><span class="iconify"
-                                data-icon="ri:add-circle-line"></span> Deposit</a>
-                        <a href="withdraw.html" class="btn btn-dark"><span class="iconify"
-                                data-icon="ri:arrow-right-up-line"></span> Withdraw</a>
-                    </div>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Profit</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:money-dollar-circle-line"></span>
+                        <div class="benefit-item">
+                            <i class='bx bx-bolt-circle'></i>
+                            <div><h4>Full Platform Access</h4><p>Unlock trading and advanced investment features.</p></div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class='bx bx-fingerprint'></i>
+                            <div><h4>Identity Protection</h4><p>Protect your digital assets with advanced protocols.</p></div>
+                        </div>
+                        <div class="benefit-item">
+                            <i class='bx bx-tachometer'></i>
+                            <div><h4>Quick Process</h4><p>A seamless, digital 3-step verification process.</p></div>
                         </div>
                     </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> Last period</p>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Deposit</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:arrow-down-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Withdrawal</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:arrow-up-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Bonus</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:gift-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
                 </div>
             </div>
+        </section>
 
-            <div class="card flex-card">
-                <div class="flex-left">
-                    <div class="icon-box dark-box"><span class="iconify" data-icon="ri:shield-check-line"></span></div>
-                    <div>
-                        <h3>Identity Verification</h3>
-                        <p>Complete verification to access all features</p>
-                    </div>
-                </div>
-                <a href="verify.html" class="btn btn-blue">View Details <span class="iconify"
-                        data-icon="ri:arrow-down-s-line" style="transform: rotate(-90deg);"></span></a>
-            </div>
-
-            <div class="card flex-card promo-card" id="promoCard">
-                <button class="close-promo" id="closePromoBtn"><span class="iconify"
-                        data-icon="ri:close-line"></span></button>
-                <div class="flex-left">
-                    <div class="icon-box dark-box border-purple"><span class="iconify text-purple"
-                            data-icon="ri:wallet-3-fill"></span></div>
-                    <div>
-                        <h3>Connect Your Wallet to Start Earning</h3>
-                        <p class="text-purple-light">Connect your cryptocurrency wallet to unlock daily earning
-                            opportunities of up to <strong>$3000 per day</strong>.</p>
+        <footer class="kyc-support-footer glass-morph">
+            <div class="support-content">
+                <i class='bx bx-support main-support-icon'></i>
+                <div class="support-text">
+                    <h3>Need Verification Help?</h3>
+                    <p>Our dedicated support team is available 24/7 to assist you with the process.</p>
+                    <div class="support-options">
+                        <span><i class='bx bx-message-square-detail'></i> Live Chat</span>
+                        <span><i class='bx bx-envelope'></i> Email Support</span>
+                        <span><i class='bx bx-time'></i> 24/7</span>
                     </div>
                 </div>
             </div>
-
-        </main>
+            <a href="support.html" class="btn-get-support">
+                Contact Support <i class='bx bx-paper-plane'></i>
+            </a>
+        </footer>
+    </div>
+</main>
+        
     </div>
 
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/verify-account.js"></script>
 </body>
 
 </html>
