@@ -212,5 +212,13 @@ document.querySelectorAll(`
 
 
 git add .
-git commit -m "added some pages"
+git commit -m "made some pages responsive"
 git push
+
+
+
+
+
+
+
+

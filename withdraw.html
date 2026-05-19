@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexuist | Professional Trading</title>
-    <link rel="stylesheet" href="assets/css/profilesetting.css">
+    <link rel="stylesheet" href="assets/css/withdraw.css">
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -239,7 +238,7 @@
                     <a href="deposit.html" class="nav-item">
                         <span class="iconify" data-icon="ri:add-circle-line"></span> Deposit Funds
                     </a>
-                    <a href="withdraw.html" class="nav-item">
+                    <a href="withdraw.html" class="nav-item active">
                         <span class="iconify" data-icon="solar:card-send-outline"></span>
                         Withdraw Funds
                     </a>
@@ -303,7 +302,7 @@
 
 
                     <!-- PROFILE SETTINGS -->
-                    <a href="profilesetting.html" class="acm-nav-link active">
+                    <a href="portfolio.html" class="acm-nav-link">
 
                         <span class="iconify" data-icon="solar:settings-outline"></span>
 
@@ -379,141 +378,10 @@
 
         <!-- Main Content -->
          
-        <div class="nex-profile-wrapper animate-fade-in">
-    <header class="nex-header">
-        <div class="header-meta">
-            <h1>Account Settings</h1>
-            <p>Manage your digital identity and security preferences</p>
-        </div>
-        <button class="btn-back" onclick="history.back()">
-            <i class='bx bx-left-arrow-alt'></i> Back to Dashboard
-        </button>
-    </header>
-
-    <div class="nex-grid">
-        <aside class="nex-sidebar">
-            <div class="profile-card glass-card">
-                <div class="avatar-wrapper">
-                    <div class="avatar-main">MM</div>
-                    <button class="edit-avatar"><i class='bx bxs-camera'></i></button>
-                </div>
-                <div class="user-meta">
-                    <h3>Marine Military</h3>
-                    <span>marinemilitary80@gmail.com</span>
-                </div>
-                <div class="security-meter">
-                    <div class="meter-header">
-                        <span>Security Level: <strong>Strong</strong></span>
-                        <span>85%</span>
-                    </div>
-                    <div class="meter-bar"><div class="fill" style="width: 85%"></div></div>
-                </div>
-            </div>
-
-            <nav class="nex-nav glass-card">
-                <button class="nav-item active"><i class='bx bx-user'></i> Personal Info</button>
-                <button class="nav-item"><i class='bx bx-shield-quarter'></i> Security & 2FA</button>
-                <button class="nav-item"><i class='bx bx-bell'></i> Notifications</button>
-                <button class="nav-item text-danger"><i class='bx bx-log-out'></i> Terminate Sessions</button>
-            </nav>
-
-        </aside>
-
-        <main class="nex-main">
-            <div class="glass-card form-container">
-                <div class="form-header">
-                    <h2>Personal Information</h2>
-                    <p>Verified account details for Nexuist services.</p>
-                </div>
-
-                <form id="profileForm" class="nex-form">
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label>Full Name</label>
-                            <div class="input-wrap">
-                                <i class='bx bx-user'></i>
-                                <input type="text" value="Marine Military" placeholder="Enter full name">
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <label>Username</label>
-                            <div class="input-wrap readonly">
-                                <i class='bx bx-at'></i>
-                                <input type="text" value="Tokyo">
-                                <i class='bx bx-lock-alt lock-icon'></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label>Email Address</label>
-                            <div class="input-wrap readonly">
-                                <i class='bx bx-envelope'></i>
-                                <input type="email" value="marinemilitary80@gmail.com">
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <label>Phone Number</label>
-                            <div class="input-wrap">
-                                <i class='bx bx-phone'></i>
-                                <input type="tel" value="+1 023 979 5648">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="input-group full-width">
-                        <label>Country / Region</label>
-                        <div class="input-wrap">
-                            <i class='bx bx-globe'></i>
-                            <select class="country-select">
-                                <option selected>United States of America</option>
-                                <option>United Kingdom</option>
-                                <option>Canada</option>
-                                <option>Germany</option>
-                                <option>Australia</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="submit" class="btn-save">
-                            <span>Save Changes</span>
-                            <i class='bx bx-check-double'></i>
-                        </button>
-                    </div>
-                </form>
-            </div><br>
-
-            <div class="glass-card activity-container">
-                <div class="activity-header">
-                    <h3>Recent Activity</h3>
-                </div>
-                <div class="activity-list">
-                    <div class="activity-item">
-                        <div class="act-icon login"><i class='bx bx-log-in-circle'></i></div>
-                        <div class="act-info">
-                            <p>Account Login</p>
-                            <span>Detected from 192.110.102.83 • 55 mins ago</span>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="act-icon update"><i class='bx bx-refresh'></i></div>
-                        <div class="act-info">
-                            <p>Profile Updated</p>
-                            <span>Settings changed successfully • Tue, May 3, 2026</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-        </main>
-    </div>
-</div>
+        
     </div>
 
-    <script src="assets/js/profilesetting.js"></script>
+    <script src="assets/js/withdraw.js"></script>
 </body>
 
 </html>

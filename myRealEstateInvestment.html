@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexuist | Professional Trading</title>
-    <link rel="stylesheet" href="assets/css/profilesetting.css">
+    <link rel="stylesheet" href="assets/css/myRealEstateInvestment.css">
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -15,30 +15,30 @@
 
 
     <div id="fintech-preloader">
-    <div class="loader-container">
-        <div class="loader-logo">
-            <div class="logo-hexagon">
-                <span class="iconify" data-icon="ri:shield-flash-line"></span>
+        <div class="loader-container">
+            <div class="loader-logo">
+                <div class="logo-hexagon">
+                    <span class="iconify" data-icon="ri:shield-flash-line"></span>
+                </div>
+                <h2 class="loader-brand-name">Nexuist</h2>
             </div>
-            <h2 class="loader-brand-name">Nexuist</h2>
+
+            <div class="loader-progress-wrapper">
+                <div class="loader-progress-bar" id="load-bar">
+                    <div class="shimmer-effect"></div>
+                </div>
+            </div>
+
+            <div class="loader-status">
+                <span class="status-dot"></span>
+                <p id="status-text">Initializing encrypted connection...</p>
+            </div>
         </div>
 
-        <div class="loader-progress-wrapper">
-            <div class="loader-progress-bar" id="load-bar">
-                <div class="shimmer-effect"></div>
-            </div>
-        </div>
-
-        <div class="loader-status">
-            <span class="status-dot"></span>
-            <p id="status-text">Initializing encrypted connection...</p>
-        </div>
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
     </div>
-    
-    <div class="glow glow-1"></div>
-    <div class="glow glow-2"></div>
-</div>
-<!-- Preloader ends here -->
+    <!-- Preloader ends here -->
 
     <header class="top-header">
         <div class="header-left">
@@ -217,7 +217,7 @@
                             Trading</div>
                         <span class="badge solid-purple">Pro</span>
                     </a>
-                    <a href="ai.html" class="nav-item">
+                    <a href="botTrading.html" class="nav-item">
                         <div class="item-left"><span class="iconify" data-icon="ri:robot-2-line"></span> AI Trading Bots
                         </div>
                         <span class="badge solid-blue">AI</span>
@@ -303,7 +303,7 @@
 
 
                     <!-- PROFILE SETTINGS -->
-                    <a href="profilesetting.html" class="acm-nav-link active">
+                    <a href="portfolio.html" class="acm-nav-link">
 
                         <span class="iconify" data-icon="solar:settings-outline"></span>
 
@@ -346,8 +346,13 @@
 
             <div class="sidebar-footer">
 
-                <a href="credit.html" class="apply-credit">
+                <a href="loan.html" class="apply-credit">
                     <span class="iconify" data-icon="ri:add-box-line"></span> Apply for Credit
+                    <span class="badge solid-green">Fast</span>
+                </a>
+
+                <a href="loanHistory.html" class="apply-credit">
+                    <span class="iconify" data-icon="ri:add-box-line"></span> Credit History
                     <span class="badge solid-green">Fast</span>
                 </a>
             </div>
@@ -375,145 +380,194 @@
                 </a>
 
             </div>
-        </aside> 
-
-        <!-- Main Content -->
-         
-        <div class="nex-profile-wrapper animate-fade-in">
-    <header class="nex-header">
-        <div class="header-meta">
-            <h1>Account Settings</h1>
-            <p>Manage your digital identity and security preferences</p>
-        </div>
-        <button class="btn-back" onclick="history.back()">
-            <i class='bx bx-left-arrow-alt'></i> Back to Dashboard
-        </button>
-    </header>
-
-    <div class="nex-grid">
-        <aside class="nex-sidebar">
-            <div class="profile-card glass-card">
-                <div class="avatar-wrapper">
-                    <div class="avatar-main">MM</div>
-                    <button class="edit-avatar"><i class='bx bxs-camera'></i></button>
-                </div>
-                <div class="user-meta">
-                    <h3>Marine Military</h3>
-                    <span>marinemilitary80@gmail.com</span>
-                </div>
-                <div class="security-meter">
-                    <div class="meter-header">
-                        <span>Security Level: <strong>Strong</strong></span>
-                        <span>85%</span>
-                    </div>
-                    <div class="meter-bar"><div class="fill" style="width: 85%"></div></div>
-                </div>
-            </div>
-
-            <nav class="nex-nav glass-card">
-                <button class="nav-item active"><i class='bx bx-user'></i> Personal Info</button>
-                <button class="nav-item"><i class='bx bx-shield-quarter'></i> Security & 2FA</button>
-                <button class="nav-item"><i class='bx bx-bell'></i> Notifications</button>
-                <button class="nav-item text-danger"><i class='bx bx-log-out'></i> Terminate Sessions</button>
-            </nav>
-
         </aside>
 
-        <main class="nex-main">
-            <div class="glass-card form-container">
-                <div class="form-header">
-                    <h2>Personal Information</h2>
-                    <p>Verified account details for Nexuist services.</p>
+        <!-- Main Content -->
+        <div class="dashboard-layout">
+            <main class="main-content-area">
+                <div class="portfolio-header animate-fade-in">
+                    <div class="header-left">
+
+                        <div class="breadcrumb-container">
+                            <div class="breadcrumb">
+                                <a href="index.html" class="breadcrumb-item">
+                                    <i class='bx bx-home-alt icon-main'></i>
+                                    <span>Home</span>
+                                </a>
+
+                                <i class='bx bx-chevron-right separator'></i>
+
+                                <a href="realestate.html" class="breadcrumb-item">
+                                    <i class='bx bx-building-house icon-main'></i>
+                                    <span>Real Estate</span>
+                                </a>
+
+                                <i class='bx bx-chevron-right separator'></i>
+
+                                <div class="breadcrumb-item active-page">
+                                    <i class='bx bx-wallet icon-main'></i>
+                                    <span>My Investments</span>
+                                </div>
+                            </div>
+                        </div>
+                        <h2>My Real Estate Investments</h2>
+                        <p>Track, manage, and optimize your tokenized property portfolio allocation.</p>
+                    </div>
+                    <a href="realestate.html" class="btn-browse-properties">
+                        <i class='bx bx-plus'></i> Browse Properties
+                    </a>
                 </div>
 
-                <form id="profileForm" class="nex-form">
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label>Full Name</label>
-                            <div class="input-wrap">
-                                <i class='bx bx-user'></i>
-                                <input type="text" value="Marine Military" placeholder="Enter full name">
-                            </div>
+                <div class="metrics-grid">
+                    <div class="metric-card card-slide-up" style="--delay: 1;">
+                        <div class="metric-icon-wrapper blue-bg">
+                            <i class='bx bx-wallet'></i>
                         </div>
-                        <div class="input-group">
-                            <label>Username</label>
-                            <div class="input-wrap readonly">
-                                <i class='bx bx-at'></i>
-                                <input type="text" value="Tokyo">
-                                <i class='bx bx-lock-alt lock-icon'></i>
-                            </div>
+                        <div class="metric-data">
+                            <span class="label">Total Invested</span>
+                            <h3 id="statTotalInvested">$0.00</h3>
+                            <span class="subtext text-green"><i class='bx bx-trending-up'></i> Live Portfolio</span>
                         </div>
                     </div>
 
-                    <div class="input-row">
-                        <div class="input-group">
-                            <label>Email Address</label>
-                            <div class="input-wrap readonly">
-                                <i class='bx bx-envelope'></i>
-                                <input type="email" value="marinemilitary80@gmail.com">
-                            </div>
+                    <div class="metric-card card-slide-up" style="--delay: 2;">
+                        <div class="metric-icon-wrapper green-bg">
+                            <i class='bx bx-line-chart'></i>
                         </div>
-                        <div class="input-group">
-                            <label>Phone Number</label>
-                            <div class="input-wrap">
-                                <i class='bx bx-phone'></i>
-                                <input type="tel" value="+1 023 979 5648">
-                            </div>
+                        <div class="metric-data">
+                            <span class="label">Total Profit Earned</span>
+                            <h3 id="statTotalProfit" class="text-green">$0.00</h3>
+                            <span class="subtext" id="statAvgApy">0.0% Avg. Estimated APY</span>
                         </div>
                     </div>
 
-                    <div class="input-group full-width">
-                        <label>Country / Region</label>
-                        <div class="input-wrap">
-                            <i class='bx bx-globe'></i>
-                            <select class="country-select">
-                                <option selected>United States of America</option>
-                                <option>United Kingdom</option>
-                                <option>Canada</option>
-                                <option>Germany</option>
-                                <option>Australia</option>
-                            </select>
+                    <div class="metric-card card-slide-up" style="--delay: 3;">
+                        <div class="metric-icon-wrapper purple-bg">
+                            <i class='bx bx-pie-chart-alt-2'></i>
                         </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="submit" class="btn-save">
-                            <span>Save Changes</span>
-                            <i class='bx bx-check-double'></i>
-                        </button>
-                    </div>
-                </form>
-            </div><br>
-
-            <div class="glass-card activity-container">
-                <div class="activity-header">
-                    <h3>Recent Activity</h3>
-                </div>
-                <div class="activity-list">
-                    <div class="activity-item">
-                        <div class="act-icon login"><i class='bx bx-log-in-circle'></i></div>
-                        <div class="act-info">
-                            <p>Account Login</p>
-                            <span>Detected from 192.110.102.83 • 55 mins ago</span>
-                        </div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="act-icon update"><i class='bx bx-refresh'></i></div>
-                        <div class="act-info">
-                            <p>Profile Updated</p>
-                            <span>Settings changed successfully • Tue, May 3, 2026</span>
+                        <div class="metric-data">
+                            <span class="label">Active Assets</span>
+                            <h3 id="statActiveCount">0 Properties</h3>
+                            <span class="subtext" id="statTotalTokens">0.00 Total Tokens Owned</span>
                         </div>
                     </div>
                 </div>
+
+                <div class="portfolio-split-frame">
+
+                    <div class="frame-left-column animate-fade-in">
+
+                        <div class="fintech-panel panel-chart">
+                            <div class="panel-header">
+                                <h4><i class='bx bx-pulse'></i> Portfolio Yield Growth projection</h4>
+                                <span class="timeline-pill">12 Month Forecast</span>
+                            </div>
+                            <div class="chart-mockup-container">
+                                <div class="chart-track-line"></div>
+                                <div class="chart-node highlight-blue" style="left: 10%; bottom: 20%;"
+                                    data-tip="Month 1"></div>
+                                <div class="chart-node highlight-blue" style="left: 30%; bottom: 35%;"
+                                    data-tip="Month 4"></div>
+                                <div class="chart-node highlight-blue" style="left: 50%; bottom: 42%;"
+                                    data-tip="Month 6"></div>
+                                <div class="chart-node highlight-blue" style="left: 75%; bottom: 68%;"
+                                    data-tip="Month 9"></div>
+                                <div class="chart-node highlight-main-node" style="left: 95%; bottom: 85%;"
+                                    data-tip="Target Compound"></div>
+
+                                <div class="grid-line" style="bottom: 25%;"></div>
+                                <div class="grid-line" style="bottom: 50%;"></div>
+                                <div class="grid-line" style="bottom: 75%;"></div>
+                            </div>
+                            <div class="chart-labels">
+                                <span>Jan</span><span>Apr</span><span>Jul</span><span>Oct</span><span>Dec</span>
+                            </div>
+                        </div>
+
+                        <div class="fintech-panel">
+                            <div class="panel-header">
+                                <h4><i class='bx bx-list-ul'></i> Active Asset Ledger</h4>
+                                <button class="btn-panel-action" id="btnClearStorage">Clear Simulation</button>
+                            </div>
+
+                            <div class="empty-state-wrapper hidden" id="emptyStateContainer">
+                                <div class="empty-house-icon">
+                                    <i class='bx bx-home-alt-validate'></i>
+                                </div>
+                                <h5>No investments active yet</h5>
+                                <p>Start building your modern tokenized fractional property real estate portfolio today.
+                                </p>
+                                <a href="realestate.html" class="btn-action-primary">Browse Active Asset Markets</a>
+                            </div>
+
+                            <div class="table-responsive-wrapper" id="tableContentContainer">
+                                <table class="holdings-data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Property Name</th>
+                                            <th>Amount Deposited</th>
+                                            <th>Tokens Minted</th>
+                                            <th>Estimated APY</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="holdingsTableBody">
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="frame-right-column animate-fade-in">
+                        <div class="fintech-panel">
+                            <div class="panel-header">
+                                <h4><i class='bx bx-shield-quarter'></i> Security & Compliance Verification</h4>
+                            </div>
+                            <div class="compliance-badge-item">
+                                <i class='bx bx-check-shield text-green'></i>
+                                <div>
+                                    <h6>Smart Contract Audited</h6>
+                                    <p>Fractional tokenization allocation vault fully verified.</p>
+                                </div>
+                            </div>
+                            <div class="compliance-badge-item">
+                                <i class='bx bx-refresh text-blue'></i>
+                                <div>
+                                    <h6>Daily Yield Disbursal</h6>
+                                    <p>Accrued dividend values refresh on balance structures at 00:00 UTC.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="fintech-panel balance-multiplier-panel">
+                            <h5>Maximize Passive Returns</h5>
+                            <p>Compound your earned rewards instantly back into high-yield property tokens
+                                automatically.</p>
+                            <button class="btn-premium-action">Enable Auto-Compounding</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </main>
+        </div>
+
+    </div>
+
+
+    <div class="toast-notification" id="compoundingToast">
+        <div class="toast-content">
+            <i class='bx bx-check-circle toast-icon'></i>
+            <div class="toast-text">
+                <h5>Auto-Compounding Enabled</h5>
+                <p>Your daily rental yields will now automatically reinvest!</p>
             </div>
-
-
-        </main>
-    </div>
-</div>
+        </div>
     </div>
 
-    <script src="assets/js/profilesetting.js"></script>
+    
+    <script src="assets/js/myRealEstateInvestment.js"></script>
 </body>
 
 </html>
