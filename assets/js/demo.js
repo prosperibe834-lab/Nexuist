@@ -187,3 +187,50 @@ acmVerifyBtn.addEventListener("click", () => {
 
 
 // Main section starts here
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Gather Required Application DOM Nodes
+    const virtualBalanceDisplay = document.getElementById("virtualBalanceDisplay");
+    const statTotalTrades = document.getElementById("statTotalTrades");
+    const statWinRate = document.getElementById("statWinRate");
+    const statTotalPnL = document.getElementById("statTotalPnL");
+    const statActiveTrades = document.getElementById("statActiveTrades");
+    const positionBadgeCount = document.getElementById("positionBadgeCount");
+    const resetTriggers = document.querySelectorAll(".resetAccountTrigger");
+
+    // 2. Attach Click Action Events to All Reset Target Configurations
+    resetTriggers.forEach(trigger => {
+        trigger.addEventListener("click", (e) => {
+            e.preventDefault();
+            
+            // Execute Account State Environment Wipe
+            executeVirtualBalanceReset();
+        });
+    });
+
+    // 3. Functional Environment Execution Logic Engine
+    function executeVirtualBalanceReset() {
+        // Safe check to verify display metric target layer is mounted
+        if (virtualBalanceDisplay) {
+            
+            // Re-initialize core platform variables to factory states
+            virtualBalanceDisplay.textContent = "$100,000.00";
+            
+            if (statTotalTrades) statTotalTrades.textContent = "0";
+            if (statWinRate) statWinRate.textContent = "0%";
+            if (statActiveTrades) statActiveTrades.textContent = "0";
+            if (positionBadgeCount) positionBadgeCount.textContent = "0 Active";
+            
+            if (statTotalPnL) {
+                statTotalPnL.textContent = "$0.00";
+                statTotalPnL.className = "neutral-pnl"; // Clear tracking colors
+            }
+
+            // Trigger structural text flash animation
+            virtualBalanceDisplay.classList.remove("balance-flash");
+            void virtualBalanceDisplay.offsetWidth; // Force DOM browser reflow update
+            virtualBalanceDisplay.classList.add("balance-flash");
+
+            console.log("Demo trading profile database metrics successfully purged and re-allocated.");
+        }
+    }
+});

@@ -187,3 +187,105 @@ acmVerifyBtn.addEventListener("click", () => {
 
 
 // Main section starts here
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. DOM Form Node Extractions
+    const demoTradeForm = document.getElementById("demoTradeForm");
+    const assetSelector = document.getElementById("assetSelector");
+    const leverageSelector = document.getElementById("leverageSelector");
+    const tradeAmountInput = document.getElementById("tradeAmountInput");
+    const tradeDirectionInput = document.getElementById("tradeDirectionInput");
+    
+    const directionNodes = document.querySelectorAll(".direction-node");
+    
+    // Receipt Elements
+    const summaryAsset = document.getElementById("summaryAsset");
+    const summaryNotionalValue = document.getElementById("summaryNotionalValue");
+    const summaryMaxRisk = document.getElementById("summaryMaxRisk");
+    
+    // Reset triggers
+    const terminalResetBtn = document.getElementById("terminalResetBtn");
+    const terminalAvailableBalance = document.getElementById("terminalAvailableBalance");
+
+    // 2. Interactive Vectors Toggle Setup
+    directionNodes.forEach(node => {
+        node.addEventListener("click", () => {
+            // Drop selected nodes arrays validation layout
+            directionNodes.forEach(n => n.classList.remove("is-active", "is-selected"));
+            
+            // Add custom visual state triggers
+            node.classList.add("is-selected");
+            const directionValue = node.getAttribute("data-direction");
+            tradeDirectionInput.value = directionValue;
+            
+            triggerReceiptCalculations();
+        });
+    });
+
+    // 3. Attach Change Listener Matrix Loops
+    if(assetSelector) assetSelector.addEventListener("change", triggerReceiptCalculations);
+    if(leverageSelector) leverageSelector.addEventListener("change", triggerReceiptCalculations);
+    if(tradeAmountInput) tradeAmountInput.addEventListener("input", triggerReceiptCalculations);
+
+    // 4. Mathematical Equation Matrix Calculations Engine
+    function triggerReceiptCalculations() {
+        const selectedOption = assetSelector.options[assetSelector.selectedIndex];
+        const assetCode = assetSelector.value;
+        const amount = parseFloat(tradeAmountInput.value) || 0;
+        const leverage = parseFloat(leverageSelector.value) || 1;
+        
+        // Output code tag string visibility
+        if(assetCode) {
+            summaryAsset.textContent = `TICKET: ${assetCode} / USD`;
+        } else {
+            summaryAsset.textContent = "ASSET: NONE";
+        }
+
+        // Calculate Notional Size (Principal Allocation multiplied by selected Leverage)
+        let notionalSize = amount * leverage;
+        summaryNotionalValue.textContent = `$${notionalSize.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+
+        // Maximum Margin Risk mapping calculations parameters
+        let localizedRisk = amount; // In regular options structures, risk isolation equals initial allocation margin
+        summaryMaxRisk.textContent = `$${localizedRisk.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+    }
+
+    // 5. Submit Order Interceptor
+    if(demoTradeForm) {
+        demoTradeForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            
+            if(!tradeDirectionInput.value) {
+                alert("Execution Refused: Please configure your trade vector direction (BUY/SELL).");
+                return;
+            }
+
+            // High Fidelity Success Notification Stream
+            alert(`Order Dispatched Successfully!\nInstrument: ${assetSelector.value}\nDirection: ${tradeDirectionInput.value}\nMargin Allocation: $${tradeAmountInput.value}\nLeverage: ${leverageSelector.value}x`);
+            
+            // Reset fields
+            demoTradeForm.reset();
+            directionNodes.forEach(n => n.classList.remove("is-selected"));
+            tradeDirectionInput.value = "";
+            triggerReceiptCalculations();
+        });
+    }
+
+    // 6. Interactive Simulator Reset Engine 
+    if(terminalResetBtn) {
+        terminalResetBtn.addEventListener("click", () => {
+            if(confirm("Are you sure you want to completely restore the virtual execution simulation matrix?")) {
+                if(terminalAvailableBalance) {
+                    terminalAvailableBalance.textContent = "$100,000.00";
+                    
+                    // Flash notification effect
+                    terminalAvailableBalance.style.color = "#10b981";
+                    setTimeout(() => { terminalAvailableBalance.style.color = ""; }, 500);
+                }
+                if(demoTradeForm) demoTradeForm.reset();
+                directionNodes.forEach(n => n.classList.remove("is-selected"));
+                if(tradeDirectionInput) tradeDirectionInput.value = "";
+                triggerReceiptCalculations();
+            }
+        });
+    }
+});

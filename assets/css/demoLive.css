@@ -1190,705 +1190,611 @@ ul {
 
 }
 
-/* Deposit style starts here */
-/* --- LAYOUT ISOLATION --- */
-.nexuist-main-content {
-    width: 100%;
+
+/* Main section starts here  */
+/* --- LAYOUT SPACE ADJUSTMENT MATRICES --- */
+.investment-container {
     padding: 30px;
-    max-width: 1100px;
+    max-width: 1400px;
     margin: 0 auto;
-    box-sizing: border-box;
-    overflow-y: auto;
-    /* Prevent main page from breaking */
+    margin-left: var(--sidebar-width, 260px);
+    width: calc(100% - var(--sidebar-width, 260px));
 }
 
-/* Header */
-.deposit-header-v2 {
+.hidden-view {
+    display: none !important;
+}
+
+/* --- TERMINAL ACTIONS BANNER & FILTERS --- */
+.terminal-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 40px;
+    gap: 24px;
+    margin-bottom: 25px;
 }
 
-.header-text h1 {
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 5px;
+.search-input-wrapper {
+    position: relative;
+    width: 320px;
+}
+
+.search-left-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #475569;
+    font-size: 1.15rem;
+}
+
+#marketSearchInput {
+    width: 100%;
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 12px 16px 12px 42px;
+    border-radius: 6px;
     color: #fff;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.2s ease;
 }
 
-.header-text p {
-    color: var(--text-secondary);
+#marketSearchInput:focus {
+    border-color: #2563eb;
+    background: #0b0f19;
 }
 
-.security-badge {
-    background: rgba(16, 185, 129, 0.1);
-    color: var(--color-green);
-    padding: 8px 15px;
-    border-radius: 50px;
-    font-size: 13px;
+.category-filter-deck {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+}
+
+.filter-tab {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: #94a3b8;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.filter-tab:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.filter-tab.is-active {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* --- PREMIUM DATATABLE DESIGNS --- */
+.market-table-container {
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.fintech-market-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.fintech-market-table th {
+    background: #0b0f19;
+    padding: 16px 24px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.fintech-market-table td {
+    padding: 16px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    color: #fff;
+    font-size: 0.92rem;
+    vertical-align: middle;
+}
+
+.fintech-market-table tbody tr {
+    transition: background 0.2s ease;
+}
+
+.fintech-market-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.asset-meta-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.asset-symbol-block h5 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 2px;
+}
+
+.asset-symbol-block span {
+    font-size: 0.78rem;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+.asset-icon-box {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.icon-crypto {
+    color: #f59e0b;
+    background: rgba(245, 158, 11, 0.06);
+}
+
+.icon-stocks {
+    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.06);
+}
+
+.icon-forex {
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.06);
+}
+
+.icon-commodities {
+    color: #eab308;
+    background: rgba(234, 179, 8, 0.06);
+}
+
+.icon-bonds {
+    color: #a855f7;
+    background: rgba(168, 85, 247, 0.06);
+}
+
+.change-pos {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.change-neg {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.table-trade-btn {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s;
+}
+
+.table-trade-btn:hover {
+    background: #3b82f6;
+}
+
+/* --- TRADING TERMINAL SCREEN WORKSPACE --- */
+.terminal-back-bar {
+    margin-bottom: 20px;
+}
+
+.back-link-btn {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-/* Method Grid */
-.method-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
+.back-link-btn:hover {
+    color: #fff;
 }
 
-.gate-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    padding: 20px;
-    border-radius: 16px;
+.terminal-workspace-layout {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 25px;
+    align-items: start;
+}
+
+.terminal-left-column {
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 25px;
+}
+
+.asset-ticker-banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+    margin-bottom: 20px;
+}
+
+.ticker-identity {
     display: flex;
     align-items: center;
-    cursor: pointer;
-    transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 14px;
 }
 
-.gate-card:hover {
-    background: var(--bg-card-hover);
-    border-color: var(--color-blue);
-    transform: translateY(-5px);
-}
-
-.gate-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
+.ticker-avatar {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.03);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
-    margin-right: 15px;
+    font-size: 1.5rem;
 }
 
-.usdt {
-    background: rgba(38, 161, 123, 0.15);
-    color: #26a17b;
+.ticker-identity h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #fff;
 }
 
-.btc {
-    background: rgba(247, 147, 26, 0.15);
-    color: #f7931a;
+.ticker-identity span {
+    font-size: 0.8rem;
+    color: #64748b;
 }
 
-.eth {
-    background: rgba(98, 126, 234, 0.15);
-    color: #627eea;
+.ticker-pricing h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
 }
 
-.bank {
-    background: rgba(37, 99, 235, 0.15);
-    color: var(--color-blue);
-}
-
-.gate-details h3 {
-    font-size: 16px;
-    margin-bottom: 2px;
-}
-
-.gate-details span {
-    font-size: 12px;
-    color: var(--text-secondary);
-}
-
-.gate-card i.bx-chevron-right {
-    margin-left: auto;
-    color: var(--border-color);
-}
-
-
-/* --- DEPOSIT CONTAINER & ELEMENT WRAPPER --- */
-.deposit-card-wrapper {
-    max-width: 650px;
-    margin: 40px auto;
-    padding: 0 15px;
-    animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes slideUpFade {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* --- QUICK SELECT PILLS --- */
-.quick-deposit-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 12px;
+/* Advanced Digital Neon Grid Simulated Chart Area */
+.technical-chart-box {
+    height: 340px;
+    background: #070a12;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
     margin-bottom: 20px;
-    padding: 0 5px;
 }
 
-.quick-title {
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--text-secondary);
+.chart-matrix-grid {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.chart-overlay-labels {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    font-size: 0.8rem;
+    color: #475569;
     display: flex;
     align-items: center;
     gap: 6px;
 }
 
-.quick-title i {
-    color: var(--color-purple);
-    font-size: 1.1rem;
-}
-
-.quick-pill-container {
-    display: flex;
-    gap: 10px;
-}
-
-.quick-amount-pill {
-    background: var(--bg-card);
-    border: 1px solid var(--border-light);
-    color: var(--text-primary);
-    padding: 8px 18px;
-    border-radius: var(--radius-sm);
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.quick-amount-pill:hover {
-    background: linear-gradient(135deg, #1e1b4b 0%, #311042 100%);
-    border-color: rgba(124, 58, 237, 0.4);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-
-.quick-amount-pill:active {
-    transform: translateY(0);
-}
-
-/* --- THE MAIN DEPOSIT CARD --- */
-.deposit-billing-card {
-    background: linear-gradient(145deg, var(--bg-card) 0%, rgba(15, 21, 36, 0.95) 100%);
-    border: 1px solid var(--border-light);
-    border-radius: var(--radius-lg);
-    padding: 35px;
-    box-shadow: 0 20px 40px rgba(5, 8, 16, 0.5);
-    position: relative;
-    overflow: hidden;
-}
-
-.deposit-billing-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, var(--color-blue) 0%, var(--color-purple) 100%);
-}
-
-.card-status-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 8px;
-}
-
-.form-heading {
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: -0.3px;
-    background: linear-gradient(120deg, #fff 60%, #e0e7ff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.secure-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    background: rgba(16, 185, 129, 0.08);
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    color: var(--color-green);
-    padding: 5px 12px;
-    border-radius: 30px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-}
-
-.form-subtext {
-    font-size: 0.9rem;
-    color: var(--text-secondary);
-    line-height: 1.5;
-    margin-bottom: 30px;
-}
-
-/* --- PREMIUM INPUT FIELDS --- */
-.form-group {
-    margin-bottom: 30px;
-}
-
-.custom-field-label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #e2e8f0;
-    margin-bottom: 10px;
-}
-
-.required-asterisk {
-    color: var(--color-red);
-    font-weight: bold;
-}
-
-.premium-input-frame {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.currency-symbol-addon {
-    position: absolute;
-    left: 18px;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    pointer-events: none;
-    transition: var(--transition);
-}
-
-.deposit-numeric-input {
-    width: 100%;
-    background: rgba(5, 8, 16, 0.4);
-    border: 1px solid var(--border-color);
-    color: #fff;
-    padding: 16px 70px 16px 38px;
-    border-radius: var(--radius-md);
-    font-size: 1.25rem;
-    font-weight: 600;
-    outline: none;
-    transition: var(--transition);
-}
-
-.deposit-numeric-input:focus {
-    border-color: var(--color-blue);
-    background: rgba(5, 8, 16, 0.6);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-}
-
-/* Highlights the dollar sign on input focus */
-.deposit-numeric-input:focus ~ .currency-symbol-addon {
-    color: #fff;
-}
-
-.currency-tag-suffix {
-    position: absolute;
-    right: 18px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-light);
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--text-secondary);
-    pointer-events: none;
-}
-
-.field-help-hint {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    margin-top: 8px;
-    line-height: 1.4;
-}
-
-/* --- EXECUTE ACTION BUTTON --- */
-.execute-deposit-btn {
-    width: 100%;
-    background: linear-gradient(90deg, var(--color-blue) 0%, var(--color-blue-hover) 100%);
-    color: #fff;
-    border: none;
-    padding: 16px;
-    border-radius: var(--radius-md);
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: var(--transition);
-    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.2);
-}
-
-.execute-deposit-btn:hover {
-    background: linear-gradient(90deg, #3b82f6 0%, var(--color-blue) 100%);
-    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
-    transform: translateY(-2px);
-}
-
-.execute-deposit-btn:active {
-    transform: translateY(0);
-}
-
-.execute-deposit-btn i {
-    font-size: 1.3rem;
-    transition: var(--transition);
-}
-
-.execute-deposit-btn:hover i {
-    transform: translateX(4px);
-}
-
-/* --- RESPONSIVE ADJUSTMENTS --- */
-@media (max-width: 576px) {
-    .quick-deposit-header { flex-direction: column; align-items: flex-start; }
-    .quick-pill-container { width: 100%; justify-content: space-between; }
-    .quick-amount-pill { flex-grow: 1; text-align: center; padding: 8px 10px; font-size: 0.85rem; }
-    .deposit-billing-card { padding: 25px 20px; }
-    .form-heading { font-size: 1.2rem; }
-}
-
-
-/* Step Control */
-.deposit-view {
-    display: none;
-}
-
-.deposit-view.active {
-    display: block;
-    animation: fadeIn 0.4s ease-out;
-}
-
-/* Payment Panel */
-.payment-workspace {
+.market-statistics-panel {
     display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 40px;
-    background: var(--bg-card);
-    padding: 40px;
-    border-radius: 24px;
-    border: 1px solid var(--border-color);
-}
-
-.qr-panel {
-    text-align: center;
-}
-
-.qr-frame {
-    background: #fff;
-    padding: 15px;
-    border-radius: 20px;
-    margin-bottom: 15px;
-    display: inline-block;
-}
-
-.qr-frame img {
-    width: 180px;
-    height: 180px;
-    display: block;
-}
-
-.qr-panel p {
-    font-size: 13px;
-    color: var(--text-secondary);
-}
-
-.network-badge {
-    background: #1e293b;
-    padding: 5px 12px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    background: rgba(0, 0, 0, 0.15);
+    padding: 16px;
     border-radius: 6px;
-    font-size: 12px;
-    margin: 10px 0 25px;
-    display: inline-block;
 }
 
-.copy-box label {
-    font-size: 12px;
-    color: var(--text-secondary);
-    margin-bottom: 8px;
-    display: block;
-}
-
-.input-group {
-    background: var(--bg-main);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    display: flex;
-    overflow: hidden;
-    margin-bottom: 25px;
-}
-
-.input-group input {
-    background: transparent;
-    border: none;
-    padding: 15px;
-    color: #fff;
-    flex: 1;
-    font-family: monospace;
-    font-size: 14px;
-}
-
-.input-group button {
-    background: rgba(255, 255, 255, 0.05);
-    border: none;
-    color: #fff;
-    width: 50px;
-    cursor: pointer;
-    font-size: 20px;
-}
-
-.upload-box {
-    border: 2px dashed var(--border-color);
-    padding: 30px;
-    border-radius: 16px;
+.stat-capsule {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    transition: 0.3s;
+    gap: 4px;
 }
 
-.upload-box:hover {
-    border-color: var(--color-blue);
-    background: rgba(37, 99, 235, 0.05);
+.cap-lbl {
+    font-size: 0.75rem;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.upload-box i {
-    font-size: 32px;
-    color: var(--color-blue);
-    margin-bottom: 10px;
-}
-
-.pay-btn {
-    width: 100%;
-    padding: 16px;
-    background: var(--color-blue);
-    color: #fff;
-    border: none;
-    border-radius: 12px;
+.cap-val {
+    font-size: 1rem;
     font-weight: 600;
-    margin-top: 25px;
-    cursor: pointer;
+    color: #fff;
 }
 
-.pay-btn:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
+.text-green {
+    color: #10b981;
 }
 
-/* Modal */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(5px);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
+.text-red {
+    color: #ef4444;
 }
 
-.modal-card {
-    background: var(--bg-card);
-    padding: 50px;
-    border-radius: 30px;
-    text-align: center;
-    max-width: 450px;
-    border: 1px solid var(--border-color);
+/* Order Side Executions Panel Panel Form Elements */
+.order-execution-panel {
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 25px;
 }
 
-.check-container {
-    width: 80px;
-    height: 80px;
-    background: var(--color-green);
-    border-radius: 50%;
+.panel-heading {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 40px;
-    margin: 0 auto 20px;
+    gap: 6px;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.panel-heading i {
+    color: #2563eb;
 }
 
-@media (max-width: 900px) {
-    .payment-workspace {
-        grid-template-columns: 1fr;
+.order-type-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.order-dir-btn {
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.2);
+    padding: 12px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: #94a3b8;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.order-dir-btn.btn-buy.active {
+    background: #10b981;
+    border-color: #10b981;
+    color: #fff;
+}
+
+.order-dir-btn.btn-sell.active {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: #fff;
+}
+
+.form-group-row {
+    margin-bottom: 18px;
+}
+
+.field-label {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #cbd5e1;
+    margin-bottom: 6px;
+}
+
+.custom-select-field {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #fff;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    outline: none;
+    cursor: pointer;
+}
+
+.input-addon-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.addon-prefix {
+    position: absolute;
+    left: 14px;
+    color: #475569;
+    font-weight: 600;
+}
+
+.matrix-number-input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #fff;
+    padding: 12px 12px 12px 28px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    outline: none;
+}
+
+.quick-allocation-deck {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 12px 0 20px 0;
+}
+
+.quick-amt-node {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: #cbd5e1;
+    padding: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.quick-amt-node:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.ticket-summary-card {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+}
+
+.ticket-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+}
+
+.ticket-row:last-of-type {
+    margin-bottom: 0;
+}
+
+.t-lbl {
+    color: #64748b;
+}
+
+.t-val {
+    font-weight: 600;
+    color: #fff;
+}
+
+.execute-order-btn {
+    width: 100%;
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.execute-order-btn:hover {
+    background: #3b82f6;
+}
+
+/* --- RESPONSIVE MOBILE VIEWPORT MEDIA QUERIES --- */
+@media (max-width: 1150px) {
+    .investment-container {
+        margin-left: 0;
+        width: 100%;
         padding: 20px;
     }
 }
 
-/* This ensures the main content doesn't go under or over the sidebar */
-main,
-.nexuist-main-content {
-    margin-left: var(--sidebar-width);
-    /* Pushes content to the right */
-    width: calc(100% - var(--sidebar-width));
-    /* Occupies only the remaining space */
-    min-height: 100vh;
-    padding: 40px;
-    box-sizing: border-box;
-    /* Crucial: includes padding in the width calculation */
-    transition: var(--transition);
-    /* Smoothly moves if sidebar toggles */
-}
+@media (max-width: 950px) {
+    .terminal-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
 
-/* Mobile Responsive: If sidebar hides on mobile, reset margin */
-@media (max-width: 768px) {
-
-    main,
-    .nexuist-main-content {
-        margin-left: 0;
+    .search-input-wrapper {
         width: 100%;
+    }
+
+    .terminal-workspace-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .market-statistics-panel {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
     }
 }
 
-.dashboard-wrapper {
-    display: flex;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-    /* Prevents the whole body from scrolling */
+@media (max-width: 650px) {
+
+    .fintech-market-table th:nth-child(3),
+    .fintech-market-table td:nth-child(3),
+    .fintech-market-table th:nth-child(4),
+    .fintech-market-table td:nth-child(4) {
+        display: none;
+    }
 }
 
-.sidebar {
-    width: var(--sidebar-width);
-    flex-shrink: 0;
-    /* Prevents sidebar from squishing */
-    height: 100%;
-    background: var(--bg-sidebar);
-}
 
-.nexuist-main-content {
-    flex-grow: 1;
-    /* Takes up all remaining space */
-    height: 100%;
-    overflow-y: auto;
-    /* Only the main content scrolls, sidebar stays fixed */
-    padding: 30px;
-    background: var(--bg-main);
-}
 
-/* =========================================
-   FINAL RESPONSIVE + OVERFLOW FIX
-========================================= */
 
-html,
-body {
-    width: 100%;
-    overflow-x: hidden !important;
-}
+/* ============================= */
+/* RESPONSIVE HEADER + SIDEBAR */
+/* ============================= */
 
-/* MAIN LAYOUT FIX */
-.main-layout {
-    width: 100%;
-    overflow-x: hidden;
-}
+@media (max-width: 992px) {
 
-/* CONTENT AREA FIX */
-.nexuist-main-content {
-    width: calc(100% - var(--sidebar-width));
-    margin-left: var(--sidebar-width);
-    min-width: 0;
-    overflow-x: hidden;
-    padding: 25px;
-}
-
-/* FIX HEADER OVERFLOW */
-.top-header {
-    width: 100%;
-    overflow: hidden;
-}
-
-.header-left,
-.header-right {
-    min-width: 0;
-}
-
-.logo-area,
-.crypto-ticker,
-.header-actions {
-    min-width: 0;
-}
-
-/* SIDEBAR FIX */
-.sidebar {
-    overflow-x: hidden;
-}
-
-/* FIX ALL IMAGES */
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-/* PAYMENT GRID FIX */
-.method-grid {
-    width: 100%;
-}
-
-/* PAYMENT WORKSPACE FIX */
-.payment-workspace {
-    width: 100%;
-    overflow: hidden;
-}
-
-/* INPUT FIX */
-.input-group input {
-    width: 100%;
-    min-width: 0;
-}
-
-/* DROPDOWN FIX */
-.dropdown-menu,
-.qt-dropdown-menu {
-    max-width: calc(100vw - 20px);
-}
-
-/* MOBILE STYLES */
-@media (max-width: 900px) {
-
-    /* MOBILE HEADER */
-    .top-header {
-        padding: 0 14px;
+    .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .desktop-only {
         display: none !important;
     }
 
-    .mobile-menu-btn {
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
+    .top-header {
+        padding: 0 15px;
+    }
+
+    .header-left {
+        gap: 12px;
     }
 
     .header-right {
         gap: 10px;
-    }
-
-    .header-actions {
-        gap: 8px;
     }
 
     .logo-text p {
@@ -1896,106 +1802,132 @@ img {
     }
 
     .logo-text h2 {
-        font-size: 14px;
+        font-size: 15px;
     }
 
-    /* SIDEBAR MOBILE */
+    .qt-dropdown-btn {
+        padding: 10px 12px;
+    }
+
+    .qt-user-sub {
+        display: none;
+    }
+
+    .qt-user-title {
+        font-size: 12px;
+    }
+
+    /* SIDEBAR */
+
     .sidebar {
         position: fixed;
         top: var(--header-height);
         left: -100%;
         width: 280px;
-        max-width: 85%;
         height: calc(100vh - var(--header-height));
-        z-index: 9999;
-        transition: 0.35s ease;
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+        z-index: 2000;
+        transition: 0.3s ease;
     }
 
-    .sidebar.show {
+    .sidebar.active {
         left: 0;
     }
 
-    /* CONTENT FULL WIDTH */
-    .nexuist-main-content {
+    /* MAIN CONTENT */
+
+    .investment-container {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 20px 15px;
+    }
+
+    .main-layout {
+        display: block;
+    }
+
+    /* HEADER SECTION */
+
+    .stock-dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+        padding: 24px 18px;
+    }
+
+    .header-content h1 {
+        font-size: 1.5rem;
+        line-height: 1.3;
+    }
+
+    .header-content p {
+        font-size: 14px;
+    }
+
+    .header-stats {
         width: 100%;
-        margin-left: 0;
+        flex-direction: row;
+        gap: 12px;
+    }
+
+    .stat-bubble {
+        flex: 1;
+        width: 100%;
         padding: 18px;
     }
 
-    /* HEADER STACK */
-    .deposit-header-v2 {
+    .stat-bubble h3 {
+        font-size: 1.3rem;
+    }
+
+    /* INSIGHTS GRID */
+
+    .insights-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .allocation-canvas {
+        flex-direction: column;
+        height: auto;
+    }
+
+    /* PLANS */
+
+    .plans-super-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* FEATURES */
+
+    .features-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    /* FOOTER STRIP */
+
+    .sector-strip {
         flex-direction: column;
         align-items: flex-start;
-        gap: 15px;
     }
 
-    .header-text h1 {
-        font-size: 24px;
+    .sector-icons {
+        gap: 14px;
     }
 
-    /* PAYMENT GRID */
-    .method-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .gate-card {
-        width: 100%;
-    }
-
-    /* PAYMENT WORKSPACE */
-    .payment-workspace {
-        grid-template-columns: 1fr;
-        padding: 20px;
-        gap: 25px;
-    }
-
-    .qr-frame img {
-        width: 160px;
-        height: 160px;
-    }
-
-    .action-panel {
-        width: 100%;
-        min-width: 0;
-    }
-
-    .input-group {
-        width: 100%;
-    }
-
-    .input-group input {
-        font-size: 12px;
-    }
-
-    /* BUTTON FIX */
-    .pay-btn {
-        width: 100%;
-    }
-
-    /* MODAL FIX */
-    .modal-card {
-        width: calc(100% - 30px);
-        padding: 30px 20px;
-    }
-
-    /* DROPDOWN FIX */
-    .qt-dropdown-menu {
-        right: 0;
-        left: auto;
-    }
-
-    /* FIX LONG TEXT */
-    * {
-        word-wrap: break-word;
-    }
 }
 
-/* EXTRA SMALL DEVICES */
-@media (max-width: 480px) {
+
+/* ============================= */
+/* MOBILE SMALL DEVICES */
+/* ============================= */
+
+@media (max-width: 576px) {
 
     .top-header {
-        padding: 0 10px;
+        height: 65px;
+    }
+
+    :root {
+        --header-height: 65px;
     }
 
     .logo-img {
@@ -2003,66 +1935,108 @@ img {
         height: 28px;
     }
 
-    .avatar {
-        width: 28px;
-        height: 28px;
-        font-size: 12px;
+    .logo-text h2 {
+        font-size: 14px;
     }
 
-    .header-actions {
-        gap: 5px;
+    .qt-dropdown-btn {
+        padding: 8px 10px;
+    }
+
+    .qt-user-title {
+        font-size: 11px;
     }
 
     .icon-btn {
         font-size: 18px;
     }
 
-    .nexuist-main-content {
-        padding: 14px;
+    .avatar {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
     }
 
-    .gate-card {
-        padding: 16px;
+    .investment-container {
+        padding: 15px 12px;
     }
 
-    .gate-details h3 {
-        font-size: 14px;
+    .stock-dashboard-header {
+        padding: 20px 15px;
+        border-radius: 14px;
     }
 
-    .gate-details span {
-        font-size: 11px;
+    .header-content h1 {
+        font-size: 1.3rem;
     }
 
-    .payment-workspace {
-        padding: 15px;
-        border-radius: 18px;
+    .tag-row {
+        gap: 8px;
     }
 
-    .upload-box {
-        padding: 20px;
+    .tag {
+        font-size: 12px;
+        padding: 6px 10px;
     }
 
-    .modal-card h2 {
-        font-size: 20px;
+    .header-stats {
+        flex-direction: column;
     }
 
-    .modal-card p {
+    .stat-bubble {
+        width: 100%;
+    }
+
+    .insights-card {
+        padding: 18px;
+    }
+
+    .css-doughnut {
+        width: 110px;
+        height: 110px;
+    }
+
+    .doughnut-center {
+        width: 78px;
+        height: 78px;
+    }
+
+    .plan-card {
+        border-radius: 14px;
+    }
+
+    .plan-header {
+        padding: 18px;
+    }
+
+    .plan-body {
+        padding: 18px;
+    }
+
+    .features-block {
+        padding: 22px 18px;
+    }
+
+    .feature-card p {
         font-size: 13px;
     }
+
+    .sector-icon {
+        font-size: 13px;
+    }
+
 }
 
-/* FIX SCROLLBAR ISSUE */
-body.sidebar-open {
-    overflow: hidden;
-}
 
-/* OVERLAY FOR MOBILE SIDEBAR */
+/* ============================= */
+/* SIDEBAR OVERLAY */
+/* ============================= */
+
 .sidebar-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(2px);
-    z-index: 9998;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1500;
     opacity: 0;
     visibility: hidden;
     transition: 0.3s ease;
@@ -2073,335 +2047,213 @@ body.sidebar-open {
     visibility: visible;
 }
 
-/* FIX BUTTON OVERFLOW */
-button,
-input,
-select,
-textarea {
-    max-width: 100%;
-}
 
-/* FIX FLEX OVERFLOW */
-* {
-    min-width: 0;
-}
-
-/* ===== HEADER RESPONSIVE FIX ===== */
-
-.top-header {
-    overflow: visible !important;
-}
-
-.header-right {
-    gap: 12px;
-    flex-wrap: nowrap;
-}
-
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: nowrap;
-}
-
-/* ===== DROPDOWNS ABOVE CONTENT ===== */
-
-.qt-dropdown-wrapper,
-.notification-wrapper,
-.user-profile {
-    position: relative;
-    z-index: 3000;
-}
-
-.qt-dropdown-menu,
-.dropdown-menu {
-    z-index: 99999 !important;
-}
-
-/* ===== QUICK TRADE FIX ===== */
-
-.qt-dropdown-menu {
-    top: calc(100% + 12px);
-    right: 0;
-}
-
-/* ===== PROFILE FIX ===== */
-
-.profile-btn {
-    padding: 6px 10px;
-    border-radius: 12px;
-    transition: 0.3s ease;
-}
-
-.profile-btn:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.user-info {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.2;
-}
-
-/* ===== NOTIFICATION FIX ===== */
-
-.notification-wrapper .icon-btn {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.04);
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.notification-wrapper .icon-btn:hover {
-    background: rgba(255, 255, 255, 0.08);
-}
-
-/* ===== BADGE POSITION FIX ===== */
-
-.red-badge {
-    top: -2px;
-    right: -2px;
-}
-
-/* ===== DROPDOWN STYLING ===== */
-
-.dropdown-menu {
-    margin-top: 8px;
-    backdrop-filter: blur(20px);
-}
-
-/* ===== FIX MAIN CONTENT BLOCKING DROPDOWN ===== */
-
-.main-layout,
-.nexuist-main-content {
-    overflow-x: hidden;
-}
-
-/* ===== DESKTOP HEADER CLUSTER FIX ===== */
-
-.top-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-}
-
-.header-left {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    flex: 1;
-    min-width: 0;
-}
-
-.header-right {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 12px;
-    flex-shrink: 0;
-}
-
-/* Prevent ticker from pushing everything */
-.crypto-ticker {
-    flex-wrap: nowrap;
-    overflow: hidden;
-    white-space: nowrap;
-    max-width: 280px;
-}
-
-/* Prevent balance box from becoming too wide */
-.top-balance-box {
-    min-width: 120px;
-    max-width: 140px;
-    overflow: hidden;
-}
-
-/* Fix logo section */
-.logo-area {
-    flex-shrink: 0;
-}
-
-/* Fix profile section */
-.profile-btn {
-    flex-shrink: 0;
-}
-
-/* Prevent header items from stacking weirdly */
-.header-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-}
-
-/* Tablet Fix */
-@media (max-width: 1200px) {
-
-    .crypto-ticker {
-        display: none;
-    }
-
-    .top-balance-box {
-        display: none;
-    }
-
-}
-
-/* Medium Desktop Fix */
-@media (max-width: 992px) {
-
-    .top-balance-box {
-        display: none;
-    }
-
-}
-
-/* ===== MOBILE FIX ===== */
+/* ===== MOBILE SIDEBAR TOGGLE FIX ===== */
 
 @media (max-width: 992px) {
 
-    .header-right {
-        gap: 8px;
+    .mobile-menu-btn {
+        display: block;
     }
 
-    .header-actions {
-        gap: 8px;
+    .sidebar {
+        position: fixed;
+        top: var(--header-height);
+        left: -100%;
+        width: 280px;
+        height: calc(100vh - var(--header-height));
+
+        z-index: 9999;
+
+        transition: 0.3s ease;
     }
 
-    .qt-dropdown-btn {
-        padding: 10px;
+    .sidebar.show {
+        left: 0;
     }
 
-    .qt-user-sub {
-        display: none;
+    /* Optional overlay effect */
+    body.sidebar-open {
+        overflow: hidden;
     }
 
-    .profile-btn {
-        padding: 5px;
-    }
-
-    .user-info {
-        display: none;
-    }
-
-    .dropdown-menu {
-        right: 0;
-        width: 220px;
-        max-width: calc(100vw - 20px);
-    }
-
-    .qt-dropdown-menu {
-        width: 220px;
-        max-width: calc(100vw - 20px);
+    .investment-container {
+        margin-left: 0;
+        width: 100%;
     }
 
 }
 
-/* ===== EXTRA SMALL DEVICES ===== */
 
-@media (max-width: 600px) {
 
-    .top-header {
-        padding: 0 12px;
+/* ==========================================================================
+   PREMIUM FINTECH RESPONSIVENESS PATCH
+   ========================================================================== */
+
+/* --- GLOBAL APP CONTAINMENT (DYNAMIC SIDEBAR OVERRIDES) --- */
+@media screen and (max-width: 1200px) {
+    .investment-container {
+        margin-left: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 24px !important;
+        box-sizing: border-box !important;
     }
-
-    .logo-text p {
-        display: none;
-    }
-
-    .qt-user-title {
-        font-size: 12px;
-    }
-
-    .qt-dropdown-btn {
-        padding: 8px 10px;
-    }
-
-    .notification-wrapper .icon-btn {
-        width: 38px;
-        height: 38px;
-    }
-
-    .avatar {
-        width: 30px;
-        height: 30px;
-        font-size: 12px;
-    }
-
 }
 
-/* ===== FIX HORIZONTAL OVERFLOW ===== */
-
-html,
-body {
-    overflow-x: hidden !important;
-    max-width: 100%;
+@media screen and (max-width: 768px) {
+    .investment-container {
+        padding: 16px !important;
+    }
 }
 
-/* ===== ENSURE DROPDOWNS SHOW ABOVE EVERYTHING ===== */
+/* --- HERO LIQUIDITY GLASS CARD FLEX MATRIX --- */
+@media screen and (max-width: 992px) {
+    .liquidity-glass-card {
+        grid-template-columns: 1fr !important;
+        /* Forces layout stacked down */
+        padding: 30px 24px !important;
+        gap: 24px !important;
+    }
 
-.top-header * {
-    overflow: visible;
+    .liquidity-actions {
+        width: 100% !important;
+        flex-direction: row !important;
+        /* Buttons sit side-by-side on tablets */
+        gap: 12px !important;
+    }
+
+    .liquidity-actions .fin-btn {
+        flex: 1 !important;
+        width: auto !important;
+    }
 }
 
-/* ===== HIDE NEXUIST TEXT ON PHONE ===== */
+@media screen and (max-width: 600px) {
+    .liquidity-info h2 {
+        font-size: 2.2rem !important;
+        /* Avoid currency text clipping text overflows */
+        word-break: break-all !important;
+    }
 
-@media (max-width: 768px) {
+    .liquidity-actions {
+        flex-direction: column !important;
+        /* Stack down buttons on absolute small phones */
+    }
 
-    .logo-text {
+    .liquidity-actions .fin-btn {
+        width: 100% !important;
+    }
+
+    .card-features-footer {
+        flex-direction: column !important;
+        gap: 12px !important;
+        align-items: flex-start !important;
+    }
+}
+
+/* --- SPLIT DESK AND THE DYNAMIC TERMINAL GRID CORES --- */
+@media screen and (max-width: 992px) {
+
+    /* Converts side-by-side terminal configuration tools and split decks into stacks */
+    .dashboard-split-deck,
+    .terminal-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+    }
+
+    .terminal-side-deck {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 20px !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .terminal-side-deck {
+        grid-template-columns: 1fr !important;
+        /* Individual blocks fall stacked on mobile layout screen views */
+    }
+
+    .market-statistics-panel {
+        grid-template-columns: repeat(2, 1fr) !important;
+        /* Stats grid displays clean 2x2 matrix boxes */
+        gap: 12px !important;
+    }
+}
+
+/* --- DOUBLE COLUMN INPUT LAYOUTS --- */
+@media screen and (max-width: 576px) {
+
+    .allocation-matrix-grid,
+    .direction-toggle-deck {
+        grid-template-columns: 1fr !important;
+        /* Stacks buy/sell indicators and leverage boxes natively */
+        gap: 12px !important;
+    }
+
+    .direction-node {
+        padding: 12px !important;
+    }
+}
+
+/* --- HEADERS AND CONTROLS LAYOUT FLEX MATRICES --- */
+@media screen and (max-width: 768px) {
+
+    .demo-dashboard-header,
+    .terminal-header {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 16px !important;
+        text-align: left !important;
+    }
+
+    .header-action-group {
+        width: 100% !important;
+        display: flex !important;
+        gap: 10px !important;
+    }
+
+    .header-action-group .fin-btn {
+        flex: 1 !important;
+        padding: 12px 10px !important;
+        font-size: 0.85rem !important;
+    }
+
+    .search-input-wrapper {
+        width: 100% !important;
+        /* Real-time filter search bar expands fully horizontally */
+    }
+}
+
+/* --- THE MARKETS LIVE ASSETS LIST TABLE FIX --- */
+@media screen and (max-width: 720px) {
+
+    /* Hide lower priority columns on mobile screen views so data stays structured and never horizontally scrolls */
+    .fintech-market-table th:nth-child(3),
+    .fintech-market-table td:nth-child(3),
+    /* Hides 24h Change percentage loop column */
+    .fintech-market-table th:nth-child(4),
+    .fintech-market-table td:nth-child(4) {
+        /* Hides Cap sizing column loop */
         display: none !important;
     }
 
-    .logo-area {
-        gap: 0 !important;
+    .fintech-market-table th,
+    .fintech-market-table td {
+        padding: 12px 14px !important;
+        /* Give padding breathing space to asset row cards */
     }
 
+    .asset-symbol-block h5 {
+        font-size: 0.88rem !important;
+    }
 }
 
-
-/* --- PREMIUM FINTECH BACK BUTTON --- */
-.back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border-light);
-    color: var(--text-secondary);
-    padding: 10px 20px;
-    border-radius: var(--radius-sm);
-    font-size: 0.9rem;
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition);
-    outline: none;
-    margin-bottom: 25px; /* Ensures clean separation from structural cards below it */
-}
-
-/* Hover State Animations */
-.back-link:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.15);
-    color: var(--text-primary);
-}
-
-/* Target the Boxicon inside the button for micro-interactions */
-.back-link i {
-    font-size: 1.2rem;
-    transition: transform 0.2s ease;
-}
-
-/* Micro-interaction: The arrow smoothly shifts left on hover */
-.back-link:hover i {
-    transform: translateX(-4px);
-}
-
-/* Active Pressed State */
-.back-link:active {
-    transform: scale(0.98);
-    background: rgba(0, 0, 0, 0.2);
+/* --- TRADINGVIEW INTEGRATION FRAME RESIZER --- */
+@media screen and (max-width: 576px) {
+    .technical-chart-box {
+        height: 260px !important;
+        /* Adjust chart workspace box ratio height dynamically for smaller devices */
+    }
 }

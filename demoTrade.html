@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexuist | Professional Trading</title>
-    <link rel="stylesheet" href="assets/css/depositfunds.css">
+    <link rel="stylesheet" href="assets/css/demoTrade.css">
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -203,12 +203,12 @@
 
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:stock-line"></span> TRADING & MARKETS</h3>
-                    <a href="demo.html" class="nav-item">
+                    <a href="demo.html" class="nav-item active">
                         <div class="item-left"><span class="iconify" data-icon="ri:graduation-cap-line"></span> Demo
                             Trading</div>
                         <span class="badge outline-green">Practice</span>
                     </a>
-                    <a href="live.html" class="nav-item">
+                    <a href="livemarkets.html" class="nav-item">
                         <div class="item-left"><span class="iconify" data-icon="ri:bar-chart-box-line"></span> Live
                             Markets</div>
                         <span class="badge solid-red"><span class="dot"></span> Live</span>
@@ -237,7 +237,7 @@
 
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:wallet-3-line"></span> WALLET & FUNDS</h3>
-                    <a href="depositfunds.html" class="nav-item active">
+                    <a href="deposit.html" class="nav-item">
                         <span class="iconify" data-icon="ri:add-circle-line"></span> Deposit Funds
                     </a>
                     <a href="withdraw.html" class="nav-item">
@@ -378,175 +378,181 @@
             </div>
         </aside>
 
-
-        <!-- deposit section starts here -->
-        <!-- Add these to your <head> for Icons and QR -->
-
-        <div class="nexuist-main-content">
-            <div class="deposit-header-v2">
-                <div class="header-text">
-                    <h1>Deposit Funds</h1>
-                    <p>Select a gateway to fund your Nexuist investment account.</p>
+        <!-- Main Content -->
+        <main class="investment-container">
+            <header class="terminal-header">
+                <div class="terminal-title">
+                    <span class="badge-sandbox"><i class="bx bx-terminal"></i> Sandbox Environment</span>
+                    <h1>Execute Virtual Trade</h1>
+                    <p>Deploy hypothetical configurations to real-time market order-flow simulation paths.</p>
                 </div>
-                <div class="security-badge">
-                    <i class='bx bxs-shield-quarter'></i>
-                    <span>Secured by Nexuist Node</span>
+                <div class="terminal-balance-capsule">
+                    <div class="capsule-label">Available Balance</div>
+                    <div class="capsule-value" id="terminalAvailableBalance">$100,000.00</div>
                 </div>
-            </div>
+            </header>
 
-            <div class="deposit-card-wrapper">
-    <div class="quick-deposit-header">
-        <span class="quick-title"><i class="bx bx-bolt-circle"></i> Quick Select Allocation:</span>
-        <div class="quick-pill-container">
-            <button type="button" class="quick-amount-pill" onclick="setDepositAmount(100)">$100</button>
-            <button type="button" class="quick-amount-pill" onclick="setDepositAmount(500)">$500</button>
-            <button type="button" class="quick-amount-pill" onclick="setDepositAmount(1000)">$1,000</button>
-            <button type="button" class="quick-amount-pill" onclick="setDepositAmount(5000)">$5,000</button>
-        </div>
-    </div>
+            <div class="terminal-grid">
 
-    <form class="deposit-billing-card" id="depositForm" onsubmit="handleFormSubmit(event)">
-        <div class="card-status-bar">
-            <h3 class="form-heading">Secure Fund Allocation</h3>
-            <span class="secure-badge"><i class="bx bx-shield-quarter"></i> End-to-End Encrypted</span>
-        </div>
-        
-        <p class="form-subtext">The incoming capital will be initialized and bound directly to your selected high-yield contract layer.</p>
+                <form class="terminal-panel order-form" id="demoTradeForm" onsubmit="event.preventDefault();">
+                    <h3 class="panel-heading"><i class="bx bx-slider-alt"></i> Position Parameters</h3>
 
-        <div class="form-group">
-            <label for="depositAmount" class="custom-field-label">
-                Amount to Deposit <span class="required-asterisk">*</span>
-            </label>
-            <div class="premium-input-frame">
-                <span class="currency-symbol-addon">$</span>
-                <input 
-                    type="number" 
-                    id="depositAmount" 
-                    class="deposit-numeric-input" 
-                    placeholder="0.00" 
-                    min="1" 
-                    step="any"
-                    required
-                >
-                <span class="currency-tag-suffix">USD</span>
-            </div>
-            <p class="field-help-hint">Ensure your structural funding wallet holds sufficient gas overheads for deployment.</p>
-        </div>
-
-        <!-- <button type="submit" class="execute-deposit-btn">
-            <span>Proceed with Deposit</span>
-            <i class="bx bx-right-arrow-alt"></i>
-        </button> -->
-    </form>
-</div>
-
-            <!-- Payment Grid (Step 1) -->
-            <div id="step-selection" class="deposit-view active">
-                <div class="method-grid">
-                    <!-- USDT Card -->
-                    <div class="gate-card"
-                        onclick="openGateway('USDT', 'Tether (TRC20)', 'T9xRV872vzPqW82Lkp90SvcW', 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=T9xRV872vzPqW82Lkp90SvcW')">
-                        <div class="gate-icon usdt"><i class='bx bxs-dollar-circle'></i></div>
-                        <div class="gate-details">
-                            <h3>USDT</h3>
-                            <span>Instant • 0% Fee</span>
+                    <div class="form-group-row">
+                        <label class="field-label">Select Active Instrument <span class="required">*</span></label>
+                        <div class="select-input-wrapper">
+                            <i class="bx bx-search-alt-2 select-left-icon"></i>
+                            <select class="custom-select-field" id="assetSelector" required>
+                                <option value="" disabled selected>Choose an asset to trade...</option>
+                                <option value="BTC" data-price="67450">BTC / USD (Bitcoin)</option>
+                                <option value="ETH" data-price="3480">ETH / USD (Ethereum)</option>
+                                <option value="AAPL" data-price="185">AAPL (Apple Inc. Equity)</option>
+                                <option value="NVDA" data-price="875">NVDA (NVIDIA Corporation)</option>
+                                <option value="EURUSD" data-price="1.08">EUR / USD (Euro / US Dollar)</option>
+                            </select>
                         </div>
-                        <i class='bx bx-chevron-right'></i>
                     </div>
 
-                    <!-- BTC Card -->
-                    <div class="gate-card"
-                        onclick="openGateway('BTC', 'Bitcoin Network', 'bc1qxy2kgdy6jrsqxms6pazf', 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bc1qxy2kgdy6jrsqxms6pazf')">
-                        <div class="gate-icon btc"><i class='bx bxl-bitcoin'></i></div>
-                        <div class="gate-details">
-                            <h3>Bitcoin</h3>
-                            <span>3 Confirmations</span>
+                    <div class="form-group-row">
+                        <label class="field-label">Execution Vector Direction <span class="required">*</span></label>
+                        <div class="direction-toggle-deck">
+                            <button type="button" class="direction-node node-buy" data-direction="BUY">
+                                <div class="node-indicator-ring"><i class="bx bx-trending-up"></i></div>
+                                <div class="node-meta">
+                                    <span class="action-heading">BUY / LONG</span>
+                                    <span class="action-sub">Speculate Price Appreciates</span>
+                                </div>
+                            </button>
+
+                            <button type="button" class="direction-node node-sell" data-direction="SELL">
+                                <div class="node-indicator-ring"><i class="bx bx-trending-down"></i></div>
+                                <div class="node-meta">
+                                    <span class="action-heading">SELL / SHORT</span>
+                                    <span class="action-sub">Speculate Price Depreciates</span>
+                                </div>
+                            </button>
                         </div>
-                        <i class='bx bx-chevron-right'></i>
+                        <input type="hidden" id="tradeDirectionInput" required>
                     </div>
 
-                    <!-- ETH Card -->
-                    <div class="gate-card"
-                        onclick="openGateway('ETH', 'Ethereum (ERC20)', '0x71C7656EC7ab88b098defB751B7401B5f6d8976F', 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=0x71C7656EC7ab88b098defB751B7401B5f6d8976F')">
-                        <div class="gate-icon eth"><span class="iconify" data-icon="cryptocurrency-color:eth"></span>
+                    <div class="allocation-matrix-grid">
+                        <div class="form-group-row">
+                            <label class="field-label">Investment Principal <span class="required">*</span></label>
+                            <div class="input-addon-container">
+                                <span class="addon-prefix">$</span>
+                                <input type="number" class="matrix-number-input" id="tradeAmountInput" min="10"
+                                    max="100000" placeholder="0.00" required>
+                            </div>
+                            <span class="input-hint-caption">Max Allowed Allocation: <span
+                                    id="maxLabel">$100,000.00</span></span>
                         </div>
-                        <div class="gate-details">
-                            <h3>Ethereum</h3>
-                            <span>Secure Gateway</span>
-                        </div>
-                        <i class='bx bx-chevron-right'></i>
-                    </div>
 
-                    <!-- Bank Card -->
-                    <div class="gate-card"
-                        onclick="openGateway('Bank', 'Manual Transfer', 'Nexuist Ltd - 102349582', 'https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg')">
-                        <div class="gate-icon bank"><i class='bx bxs-bank'></i></div>
-                        <div class="gate-details">
-                            <h3>Bank Transfer</h3>
-                            <span>All Currencies</span>
-                        </div>
-                        <i class='bx bx-chevron-right'></i>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Payment Detail (Step 2) -->
-            <div id="step-payment" class="deposit-view">
-                <button class="back-link" onclick="goBack()"><i class='bx bx-left-arrow-alt'></i> Change Method</button>
-
-                <div class="payment-workspace">
-                    <div class="qr-panel">
-                        <div class="qr-frame">
-                            <img id="qr-img" src="" alt="QR Code">
-                        </div>
-                        <p>Scan to pay automatically</p>
-                    </div>
-
-                    <div class="action-panel">
-                        <h2 id="coin-title">USDT</h2>
-                        <span id="network-title" class="network-badge">TRC20 Network</span>
-
-                        <div class="copy-box">
-                            <label>Destination Address</label>
-                            <div class="input-group">
-                                <input type="text" id="addr-input" readonly>
-                                <button onclick="copyText()"><i class='bx bx-copy-alt'></i></button>
+                        <div class="form-group-row">
+                            <label class="field-label">Leverage Multiplier <span class="required">*</span></label>
+                            <div class="select-input-wrapper">
+                                <i class="bx bx-shield-quarter select-left-icon"></i>
+                                <select class="custom-select-field" id="leverageSelector" required>
+                                    <option value="1">1x (Spot / No Leverage)</option>
+                                    <option value="5">5x (Conservative Leverage)</option>
+                                    <option value="10">10x (Balanced Leverage)</option>
+                                    <option value="20">20x (Advanced Core Risk)</option>
+                                    <option value="50">50x (Max High-Volatility Loop)</option>
+                                </select>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="upload-section">
-                            <input type="file" id="receipt-upload" hidden onchange="receiptNamed()">
-                            <label for="receipt-upload" class="upload-box">
-                                <i class='bx bx-cloud-upload'></i>
-                                <span>Click to upload Receipt</span>
-                                <small id="file-name">Supports JPG, PNG, PDF</small>
-                            </label>
+                    <div class="form-group-row">
+                        <label class="field-label">Contract Execution Window <span class="required">*</span></label>
+                        <div class="select-input-wrapper">
+                            <i class="bx bx-time-five select-left-icon"></i>
+                            <select class="custom-select-field" id="durationSelector" required>
+                                <option value="5">5 Minutes Contract Loop</option>
+                                <option value="15">15 Minutes Contract Loop</option>
+                                <option value="60">1 Hour Automated Expiry</option>
+                                <option value="1440">24 Hours Standard Cycle</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="ticket-summary-card">
+                        <div class="ticket-header">
+                            <span><i class="bx bx-receipt"></i> Pre-Execution Ticket</span>
+                            <span class="ticker-live-dot" id="summaryAsset">ASSET: NONE</span>
+                        </div>
+                        <div class="ticket-body">
+                            <div class="ticket-row">
+                                <span class="t-lbl">Notional Position Value</span>
+                                <span class="t-val" id="summaryNotionalValue">$0.00</span>
+                            </div>
+                            <div class="ticket-row">
+                                <span class="t-lbl">Calculated Maximum System Risk</span>
+                                <span class="t-val risk-alert-color" id="summaryMaxRisk">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="execute-order-btn" id="submitOrderBtn">
+                        <i class="bx bx-play-circle"></i> Transmit Order to Sandbox
+                    </button>
+                </form>
+
+                <div class="terminal-side-deck">
+
+                    <div class="terminal-panel tips-panel">
+                        <h4 class="side-panel-heading"><i class="bx bx-bulb text-yellow"></i> Architecture Intelligence
+                        </h4>
+                        <ul class="fintech-bullet-list">
+                            <li>
+                                <div class="bullet-indicator dot-blue"></div>
+                                <div class="bullet-content">
+                                    <h6>Risk Exposure Mitigation</h6>
+                                    <p>Never lock more than 5% of aggregate liquidity arrays into singular order
+                                        structures, even inside isolated demo environments.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="bullet-indicator dot-green"></div>
+                                <div class="bullet-content">
+                                    <h6>Fractional Incremental Calibration</h6>
+                                    <p>Scale initial operations utilizing conservative multiplier metrics to map
+                                        real-time performance profiles without liquidity slippage.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="bullet-indicator dot-yellow"></div>
+                                <div class="bullet-content">
+                                    <h6>Leverage Isolation Warnings</h6>
+                                    <p>Elevated multipliers scale net distributions linearly but compress absolute
+                                        liquidity distances from potential liquidation limits.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="terminal-panel micro-account-panel">
+                        <h4 class="side-panel-heading"><i class="bx bx-user-circle"></i> Sandbox Identity Parameters
+                        </h4>
+                        <div class="meta-profile-strip">
+                            <span class="meta-lbl">Account Routing Mode</span>
+                            <span class="meta-val mode-badge-demo">DEMO ACTIVE</span>
+                        </div>
+                        <div class="meta-profile-strip">
+                            <span class="meta-lbl">Base Operating Currency</span>
+                            <span class="meta-val">USD ($)</span>
                         </div>
 
-                        <button class="pay-btn" id="submit-btn" disabled onclick="triggerSuccess()">Confirm
-                            Transaction</button>
+                        <button type="button" class="terminal-reset-btn" id="terminalResetBtn">
+                            <i class="bx bx-refresh"></i> Reset Simulator Matrix
+                        </button>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Success Modal -->
-        <div class="modal-overlay" id="finish-modal">
-            <div class="modal-card">
-                <div class="check-container">
-                    <i class='bx bx-check-double'></i>
-                </div>
-                <h2>Payment Logged</h2>
-                <p>Our auditors will verify your transfer. Funds will be added to your balance in <strong>1-60
-                        minutes</strong>.</p>
-                <button onclick="closeFinal()">Dashboard</button>
             </div>
-        </div>
-
+        </main>
 
     </div>
 
-    <script src="assets/js/depositfunds.js"></script>
+    <script src="assets/js/demoTrade.js"></script>
 </body>
 
 </html>

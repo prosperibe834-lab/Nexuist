@@ -315,3 +315,42 @@ function closeFinal() {
     location.reload();
 
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const amountInput = document.getElementById("depositAmount");
+
+    // 1. Automatically extract parameters sent from the main investment cards click
+    const urlParams = new URLSearchParams(window.location.search);
+    const passedAmount = urlParams.get('amount');
+    const passedPlanName = urlParams.get('planName');
+
+    if (passedAmount && amountInput) {
+        amountInput.value = parseFloat(passedAmount);
+        
+        // Optional: Log or display a notice showing which plan the user is executing
+        if (passedPlanName) {
+            console.log(`Initialized funding payload for plan: ${decodeURIComponent(passedPlanName)}`);
+        }
+    }
+});
+
+// 2. Action controller for clicking the Quick Select Pill buttons ($100, $500, etc.)
+function setDepositAmount(value) {
+    const amountInput = document.getElementById("depositAmount");
+    if (amountInput) {
+        amountInput.value = value;
+        // Focus the input to let the user see the update prominently
+        amountInput.focus();
+    }
+}
+
+// 3. Prevent page refresh and handle secure routing form data delivery 
+function handleFormSubmit(event) {
+    event.preventDefault();
+    const finalDepositAmount = document.getElementById("depositAmount").value;
+    
+    alert(`Secure gateway routing initiated for: $${parseFloat(finalDepositAmount).toLocaleString()}`);
+    
+    // Process payment gateway logic hook or backend post streams below:
+    // event.target.submit();
+}

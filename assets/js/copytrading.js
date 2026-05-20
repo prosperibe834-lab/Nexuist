@@ -206,3 +206,40 @@ document.getElementById('refresh-btn').addEventListener('click', function() {
         // document.querySelector('.stat-value').innerText = "$1,250.00";
     }, 1000); 
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const triggerBtn = document.getElementById("openHowItWorksBtn");
+    const modalWrapper = document.getElementById("howItWorksModal");
+    const closeBtn = document.getElementById("closeHowItWorksBtn");
+
+    // 1. Open Modal Target Engine
+    if (triggerBtn && modalWrapper) {
+        triggerBtn.addEventListener("click", (e) => {
+            e.preventDefault(); // Prevents link href anchors breaking document routing
+            modalWrapper.classList.add("is-active");
+            document.body.style.overflow = "hidden"; // Prevent background body scroll leaking
+        });
+    }
+
+    // 2. Direct Window Dismissal Button Trigger
+    if (closeBtn && modalWrapper) {
+        closeBtn.addEventListener("click", () => {
+            dismissHowItWorksModal();
+        });
+    }
+
+    // 3. Ambient Close Backdrop Wrapper Click Target Fix
+    if (modalWrapper) {
+        modalWrapper.addEventListener("click", (e) => {
+            if (e.target === modalWrapper) {
+                dismissHowItWorksModal();
+            }
+        });
+    }
+
+    // Dismissal Handler Utility Function
+    function dismissHowItWorksModal() {
+        modalWrapper.classList.remove("is-active");
+        document.body.style.overflow = ""; // Restores ecosystem container scrolling
+    }
+});

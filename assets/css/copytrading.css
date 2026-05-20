@@ -1799,3 +1799,239 @@ body{
     }
 
 }
+
+/* --- THE FINTECH MODAL OVERLAY BACKDROP --- */
+.fin-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 8, 16, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 9999; /* Absolute topmost layer visibility */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Modal Active Target Trigger State */
+.fin-modal-overlay.is-active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* --- THE MAIN STRUCTURE CONTAINER WINDOW --- */
+.fin-modal-window {
+    background: linear-gradient(145deg, var(--bg-card) 0%, #0b101e 100%);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 950px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+    transform: scale(0.95) translateY(10px);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.fin-modal-overlay.is-active .fin-modal-window {
+    transform: scale(1) translateY(0);
+}
+
+/* --- MODAL BANNER HEADER --- */
+.fin-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 35px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-title-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.header-icon-glow {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--color-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+.header-title-group h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: #fff;
+}
+
+.close-modal-x {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 2rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: var(--transition);
+}
+
+.close-modal-x:hover {
+    color: var(--color-red);
+    transform: rotate(90deg);
+}
+
+/* --- DUAL INTERACTION GRID AREA --- */
+.fin-modal-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 35px;
+    padding: 35px;
+}
+
+/* LEFT COLUMN: THE PATHWAY STEP TIMELINE NODES */
+.steps-lane {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.step-card-node {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+}
+
+.node-number {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Brand Node Color Array Variants */
+.num-blue { background: rgba(37, 99, 235, 0.15); color: #60a5fa; border: 1px solid rgba(37, 99, 235, 0.3); }
+.num-green { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+.num-purple { background: rgba(124, 58, 237, 0.15); color: #c084fc; border: 1px solid rgba(124, 58, 237, 0.3); }
+.num-orange { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+
+.node-text h5 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.node-text p {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+/* RIGHT COLUMN: INSTITUTIONAL ADVANTAGES & DISCLAIMERS */
+.benefits-lane {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.benefits-glass-wrapper {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 24px;
+}
+
+.benefits-glass-wrapper h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 18px;
+}
+
+.premium-check-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+}
+
+.premium-check-list li {
+    font-size: 0.88rem;
+    color: #cbd5e1;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.4;
+}
+
+.premium-check-list li i {
+    color: var(--color-green);
+    font-size: 1.1rem;
+    margin-top: 1px;
+}
+
+/* PREMIUM ADVISORY HOOD CARD */
+.advisory-warning-card {
+    background: rgba(239, 68, 68, 0.03);
+    border-left: 3px solid var(--color-red);
+    border-top: 1px solid rgba(239, 68, 68, 0.08);
+    border-right: 1px solid rgba(239, 68, 68, 0.08);
+    border-bottom: 1px solid rgba(239, 68, 68, 0.08);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 20px;
+}
+
+.advisory-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fca5a5;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+
+.advisory-header i {
+    font-size: 1.1rem;
+}
+
+.advisory-warning-card p {
+    font-size: 0.82rem;
+    color: #f87171;
+    line-height: 1.5;
+}
+
+/* --- RESPONSIVE MODAL MEDIA BREAKPOINTS --- */
+@media (max-width: 850px) {
+    .fin-modal-grid { grid-template-columns: 1fr; gap: 30px; padding: 25px; }
+    .fin-modal-header { padding: 20px 25px; }
+}
+
+@media (max-width: 576px) {
+    .header-title-group h3 { font-size: 1.15rem; }
+    .node-text h5 { font-size: 1rem; }
+    .node-text p { font-size: 0.85rem; }
+}

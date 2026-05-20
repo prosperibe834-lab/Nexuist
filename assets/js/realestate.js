@@ -323,4 +323,11 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("click", (e) => {
         if (e.target === modal) modal.classList.remove("active");
     });
+
+    const myInvestmentBtn = document.querySelector('.btn-my-investments');
+
+myInvestmentBtn.addEventListener('click', () => {
+    window.location.href = 'myRealEstateInvestment.html';
+});
+
 });
