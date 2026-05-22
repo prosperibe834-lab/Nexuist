@@ -188,39 +188,111 @@ acmVerifyBtn.addEventListener("click", () => {
 
 // Main section starts here
 document.addEventListener("DOMContentLoaded", function () {
-    const verificationForm = document.getElementById("withdrawal-verification-form");
-    const codeInput = document.getElementById("verification-code");
-    const submitBtn = document.getElementById("verify-submit-btn");
+    // DOM Cache Elements Selection
+    const searchInput = document.getElementById("noti-search");
+    const tabButtons = document.querySelectorAll(".filter-tabs .tab-btn");
+    const notiItems = document.querySelectorAll(".noti-list .noti-item");
+    const unreadCountBadge = document.getElementById("unread-count");
+    const showingCountText = document.getElementById("showing-count-text");
+    const markAllBtn = document.getElementById("mark-all-read-btn");
 
-    if (verificationForm) {
-        verificationForm.addEventListener("submit", function (e) {
-            e.preventDefault();
+    let currentFilter = "all";
+    let searchQuery = "";
 
-            const rawValue = codeInput.value.trim();
-            if (!rawValue) return;
+    // Run Calculations on Initialization Sequence
+    updateStatusMetrics();
 
-            // Update UI State to reflect a secure processing pipeline execution
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = "<i class='bx bx-loader-alt animate-spin'></i> Authorization Processing...";
-            submitBtn.style.opacity = "0.7";
+    // 1. Search Query Input Event Listener
+    searchInput.addEventListener("input", function (e) {
+        searchQuery = e.target.value.toLowerCase().trim();
+        evaluateVisibilityFilterEngine();
+    });
 
-            // Simulate server authentication delay round-trip tracking network latency
-            setTimeout(() => {
-                alert(`Security Pipeline Input Accepted! Validating internal transaction context node reference token: ${rawValue}`);
-                
-                // Return button status to baseline configuration after completion processing sequence
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = "<i class='bx bx-check-shield'></i> Verify & Continue";
-                submitBtn.style.opacity = "1";
-            }, 2500);
+    // 2. Tab Filter Switching Listener Loop
+    tabButtons.forEach(button => {
+        button.addEventListener("click", function () {
+            tabButtons.forEach(btn => btn.classList.remove("active"));
+            this.classList.add("active");
+            currentFilter = this.getAttribute("data-filter");
+            evaluateVisibilityFilterEngine();
         });
+    });
+
+    // 3. Row Action Controllers (Mark Read/Delete Toggle)
+    document.getElementById("notifications-wrapper").addEventListener("click", function (e) {
+        const item = e.target.closest(".noti-item");
+        if (!item) return;
+
+        // Toggle Single Item Read/Unread State logic
+        if (e.target.closest(".read-toggle-btn")) {
+            const btn = item.querySelector(".read-toggle-btn i");
+            if (item.classList.contains("unread")) {
+                item.classList.remove("unread");
+                item.setAttribute("data-status", "read");
+                if(btn) { btn.className = "bx bx-undo"; }
+                item.querySelector(".read-toggle-btn").setAttribute("title", "Mark as unread");
+            } else {
+                item.classList.add("unread");
+                item.setAttribute("data-status", "unread");
+                if(btn) { btn.className = "bx bx-check"; }
+                item.querySelector(".read-toggle-btn").setAttribute("title", "Mark as read");
+            }
+            updateStatusMetrics();
+            evaluateVisibilityFilterEngine();
+        }
+
+        // Delete Row Action logic
+        if (e.target.closest(".delete-btn")) {
+            item.style.transform = "scale(0.95)";
+            item.style.opacity = "0";
+            setTimeout(() => {
+                item.remove();
+                updateStatusMetrics();
+            }, 200);
+        }
+    });
+
+    // 4. Global Bulk State Action Configuration
+    markAllBtn.addEventListener("click", function () {
+        const structuralItems = document.querySelectorAll(".noti-list .noti-item");
+        structuralItems.forEach(item => {
+            item.classList.remove("unread");
+            item.setAttribute("data-status", "read");
+            const btn = item.querySelector(".read-toggle-btn i");
+            if(btn) { btn.className = "bx bx-undo"; }
+        });
+        updateStatusMetrics();
+        evaluateVisibilityFilterEngine();
+    });
+
+    // Core Filtering Engine Rule Calculator Matrix
+    function evaluateVisibilityFilterEngine() {
+        let visibleCount = 0;
+        const totalItems = document.querySelectorAll(".noti-list .noti-item");
+
+        totalItems.forEach(item => {
+            const statusMatch = (currentFilter === "all") || (item.getAttribute("data-status") === currentFilter);
+            const textContent = item.querySelector(".noti-message").textContent.toLowerCase();
+            const tagContent = item.querySelector(".noti-type-tag").textContent.toLowerCase();
+            const searchMatch = textContent.includes(searchQuery) || tagContent.includes(searchQuery);
+
+            if (statusMatch && searchMatch) {
+                item.style.display = "flex";
+                visibleCount++;
+            } else {
+                item.style.display = "none";
+            }
+        });
+
+        showingCountText.textContent = `Showing ${visibleCount} of ${totalItems.length} notifications`;
     }
 
-    const verifyBtn = document.getElementById("verify-submit-btn");
-
-verifyBtn.addEventListener("click", function(e){
-    e.preventDefault();
-
-    window.location.href = "settlement.html";
-});
+    // Badge Metric Updates Counter Utility
+    function updateStatusMetrics() {
+        const activeUnreadCount = document.querySelectorAll(".noti-list .noti-item.unread").length;
+        const currentTotalItems = document.querySelectorAll(".noti-list .noti-item").length;
+        
+        unreadCountBadge.textContent = activeUnreadCount;
+        showingCountText.textContent = `Showing ${currentTotalItems} of ${currentTotalItems} notifications`;
+    }
 });

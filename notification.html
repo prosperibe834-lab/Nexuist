@@ -5,40 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexuist | Professional Trading</title>
-    <link rel="stylesheet" href="assets/css/withdraw.css">
-    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link rel="stylesheet" href="assets/css/notification.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+        <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
 </head>
 
 <body>
 
 
     <div id="fintech-preloader">
-        <div class="loader-container">
-            <div class="loader-logo">
-                <div class="logo-hexagon">
-                    <span class="iconify" data-icon="ri:shield-flash-line"></span>
-                </div>
-                <h2 class="loader-brand-name">Nexuist</h2>
+    <div class="loader-container">
+        <div class="loader-logo">
+            <div class="logo-hexagon">
+                <span class="iconify" data-icon="ri:shield-flash-line"></span>
             </div>
+            <h2 class="loader-brand-name">Nexuist</h2>
+        </div>
 
-            <div class="loader-progress-wrapper">
-                <div class="loader-progress-bar" id="load-bar">
-                    <div class="shimmer-effect"></div>
-                </div>
-            </div>
-
-            <div class="loader-status">
-                <span class="status-dot"></span>
-                <p id="status-text">Initializing encrypted connection...</p>
+        <div class="loader-progress-wrapper">
+            <div class="loader-progress-bar" id="load-bar">
+                <div class="shimmer-effect"></div>
             </div>
         </div>
 
-        <div class="glow glow-1"></div>
-        <div class="glow glow-2"></div>
+        <div class="loader-status">
+            <span class="status-dot"></span>
+            <p id="status-text">Initializing encrypted connection...</p>
+        </div>
     </div>
-    <!-- Preloader ends here -->
+    
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+</div>
+<!-- Preloader ends here -->
 
     <header class="top-header">
         <div class="header-left">
@@ -239,7 +239,7 @@
                     <a href="deposit.html" class="nav-item">
                         <span class="iconify" data-icon="ri:add-circle-line"></span> Deposit Funds
                     </a>
-                    <a href="withdraw.html" class="nav-item active">
+                    <a href="withdraw.html" class="nav-item">
                         <span class="iconify" data-icon="solar:card-send-outline"></span>
                         Withdraw Funds
                     </a>
@@ -375,106 +375,117 @@
                 </a>
 
             </div>
-        </aside>
+        </aside> 
 
         <!-- Main Content -->
+         <div class="notifications-container">
+    <div class="noti-header">
+        <div class="noti-title-area">
+            <h2>Notifications <span class="noti-badge" id="unread-count">13</span></h2>
+            <p>Your personal notification center for staying updated with important system alerts and messages.</p>
+        </div>
+        <div class="noti-header-actions">
+            <button class="action-btn secondary-btn" id="mark-all-read-btn">
+                <i class="bx bx-check-double"></i> Mark all as read
+            </button>
+        </div>
+    </div>
 
-        <div class="withdrawal-interface-wrapper">
+    <div class="noti-controls">
+        <div class="filter-tabs">
+            <button class="tab-btn active" data-filter="all">All</button>
+            <button class="tab-btn" data-filter="unread">Unread</button>
+            <button class="tab-btn" data-filter="read">Read</button>
+        </div>
+        <div class="search-wrapper">
+            <i class="bx bx-search search-icon"></i>
+            <input type="text" id="noti-search" placeholder="Search notifications, IPs, or assets...">
+        </div>
+    </div>
 
-            <aside class="withdrawal-status-aside">
-                <div class="status-card current">
-                    <div class="status-icon success">
-                        <i class='bx bx-check-shield'></i>
+    <div class="noti-list" id="notifications-wrapper">
+        
+        <div class="noti-item unread" data-status="unread">
+            <div class="noti-item-left">
+                <div class="icon-avatar login-status">
+                    <i class="bx bx-info-circle"></i>
+                </div>
+                <div class="noti-details">
+                    <div class="noti-main-text">
+                        <span class="noti-type-tag tag-login">New Login</span>
+                        <p class="noti-message">New login detected from IP: <span class="highlight">102.90.82.69</span> on Android Phone - Chrome.</p>
                     </div>
-                    <div class="status-info">
-                        <h3>Security Validation</h3>
-                        <p>Pending your validation code to process final release.</p>
+                    <div class="noti-meta">
+                        <span class="meta-time"><i class="bx bx-time-five"></i> 2026-05-20 20:44:27</span>
+                        <span class="meta-relative">1 day ago</span>
                     </div>
                 </div>
-
-                <div class="status-card pending">
-                    <div class="status-icon">
-                        <i class='bx bx-time-five'></i>
-                    </div>
-                    <div class="status-info">
-                        <h3>Compliance Review</h3>
-                        <p>Verification is queued for network compliance mapping.</p>
-                    </div>
-                </div>
-
-                <div class="status-card future">
-                    <div class="status-icon">
-                        <i class='bx bx-paper-plane'></i>
-                    </div>
-                    <div class="status-info">
-                        <h3>Fund Dispatch</h3>
-                        <p>Funds will be released upon successful validation.</p>
-                    </div>
-                </div>
-            </aside>
-
-            <div class="withdrawal-main-panels">
-
-                <article class="withdrawal-advisory-card">
-                    <header class="advisory-header">
-                        <i class='bx bx-info-circle warning-icon'></i>
-                        <h2>Validation Protocol Required</h2>
-                    </header>
-                    <div class="advisory-body">
-                        <p>To authorize this transaction, a cryptographic verification sequence has been generated. This
-                            unique protocol must be supplied directly from our dedicated institutional support
-                            terminals.</p>
-
-                        <div class="contact-block">
-                            <h3>Contact Institutional Support</h3>
-                            <div class="contact-links">
-                                <a href="support.html" class="btn-support-connect">
-                                    <i class='bx bx-support'></i> Live Secure Chat
-                                </a>
-                                <a href="mailto:support@Nexuistcodes.site" class="btn-email-connect">
-                                    <i class='bx bx-envelope'></i> support@Nexuistcodes.site
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-
-                <form id="withdrawal-verification-form" class="withdrawal-input-panel">
-                    <div class="input-panel-header">
-                        <i class='bx bx-lock-open-alt security-icon'></i>
-                        <h2>Enter Verification Code</h2>
-                        <p>Paste the precise numerical sequence provided by your dedicated account officer.</p>
-                    </div>
-
-                    <div class="input-field-group">
-                        <div class="interactive-input-container">
-                            <i class='bx bx-dialpad field-icon'></i>
-                            <input type="text" id="verification-code" placeholder="Enter your verification code here"
-                                required autocomplete="off">
-                        </div>
-                        <span class="field-info">
-                            <i class='bx bx-check-circle'></i> This code was provided by our customer support team
-                        </span>
-                    </div>
-
-                    <div class="input-panel-actions">
-                        <button type="submit" class="btn-action-execute-verify" id="verify-submit-btn">
-                            <i class='bx bx-check-shield'></i> Verify & Continue
-                        </button>
-                    </div>
-                </form>
-
-                <footer class="transaction-summary-tooltip">
-                    <i class='bx bxs-coin-stack'></i>
-                    <p>Current Pending Transaction ID: <strong id="current-tid">NEXU-WIT-8472</strong></p>
-                </footer>
             </div>
+            <div class="noti-item-actions">
+                <button class="icon-action-btn view-btn" title="View details"><i class="bx bx-show"></i></button>
+                <button class="icon-action-btn read-toggle-btn" title="Mark as read"><i class="bx bx-check"></i></button>
+                <button class="icon-action-btn delete-btn" title="Delete"><i class="bx bx-trash"></i></button>
+            </div>
+        </div>
 
+        <div class="noti-item unread" data-status="unread">
+            <div class="noti-item-left">
+                <div class="icon-avatar success-status">
+                    <i class="bx bx-check-circle"></i>
+                </div>
+                <div class="noti-details">
+                    <div class="noti-main-text">
+                        <span class="noti-type-tag tag-success">Demo Trade Opened</span>
+                        <p class="noti-message">Demo trade opened for <span class="highlight">BSC-USD/USD</span> with 1x leverage. Amount: <span class="highlight-money">$1.03</span></p>
+                    </div>
+                    <div class="noti-meta">
+                        <span class="meta-time"><i class="bx bx-time-five"></i> 2026-05-19 15:28:00</span>
+                        <span class="meta-relative">2 days ago</span>
+                    </div>
+                </div>
+            </div>
+            <div class="noti-item-actions">
+                <button class="icon-action-btn view-btn" title="View details"><i class="bx bx-show"></i></button>
+                <button class="icon-action-btn read-toggle-btn" title="Mark as read"><i class="bx bx-check"></i></button>
+                <button class="icon-action-btn delete-btn" title="Delete"><i class="bx bx-trash"></i></button>
+            </div>
+        </div>
+
+        <div class="noti-item" data-status="read">
+            <div class="noti-item-left">
+                <div class="icon-avatar registration-status">
+                    <i class="bx bx-user-plus"></i>
+                </div>
+                <div class="noti-details">
+                    <div class="noti-main-text">
+                        <span class="noti-type-tag tag-registration">Welcome to Nexuist</span>
+                        <p class="noti-message">Thank you for registering. Your account has been successfully created.</p>
+                    </div>
+                    <div class="noti-meta">
+                        <span class="meta-time"><i class="bx bx-time-five"></i> 2026-05-17 11:18:55</span>
+                        <span class="meta-relative">3 days ago</span>
+                    </div>
+                </div>
+            </div>
+            <div class="noti-item-actions">
+                <button class="icon-action-btn view-btn" title="View details"><i class="bx bx-show"></i></button>
+                <button class="icon-action-btn read-toggle-btn" title="Mark as unread"><i class="bx bx-undo"></i></button>
+                <button class="icon-action-btn delete-btn" title="Delete"><i class="bx bx-trash"></i></button>
+            </div>
         </div>
 
     </div>
 
-    <script src="assets/js/withdraw.js"></script>
+    <div class="noti-footer">
+        <p id="showing-count-text">Showing 3 of 3 notifications</p>
+    </div>
+</div>
+        
+    </div>
+
+    <script src="assets/js/notification.js"></script>
+        <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+
 </body>
 
 </html>

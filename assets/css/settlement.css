@@ -1487,7 +1487,7 @@ ul {
 
 /* Main section starts here  */
 /* ==========================================================================
-   PREMIUM SECURITY WITHDRAWAL DASHBOARD INTERFACE
+   FINTECH INPUT FORM & TRANSACTION MODAL ARCHITECTURE
    ========================================================================== */
 
 :root {
@@ -1498,272 +1498,237 @@ ul {
     --text-primary: #ffffff;
     --text-secondary: #8496ae;
     --accent-blue: #3b82f6;
-    --accent-amber: #f59e0b;
     --accent-emerald: #10b981;
+    --accent-amber: #f59e0b;
 }
 
-/* Master Grid Structure Context Layout */
-.withdrawal-interface-wrapper {
-    display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: 24px;
+/* Base Wrapper Matrix Settings */
+.fintech-form-wrapper {
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     color: var(--text-primary);
-    max-width: 1200px;
-    margin: 0 auto;
+    box-sizing: border-box;
 }
 
-/* ==========================================================================
-   LEFT COLUMN: TIMELINE TRACK RULES
-   ========================================================================== */
-.withdrawal-status-aside {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.status-card {
+.secure-checkout-card {
     background-color: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 16px;
-    display: flex;
-    gap: 14px;
-    align-items: flex-start;
-    opacity: 0.4;
-    transition: all 0.3s ease;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.2);
 }
 
-.status-card.current {
-    opacity: 1;
-    border-color: var(--accent-blue);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.08);
+/* Header Text Blocks */
+.form-card-header {
+    margin-bottom: 28px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
 }
 
-.status-card.pending {
-    opacity: 0.7;
-}
-
-.status-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.03);
-    border: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    color: var(--text-secondary);
-    flex-shrink: 0;
-}
-
-.status-card.current .status-icon.success {
-    background-color: rgba(245, 158, 11, 0.1);
-    border-color: rgba(245, 158, 11, 0.2);
-    color: var(--accent-amber);
-}
-
-.status-info h3 {
-    font-size: 14px;
-    font-weight: 600;
-    margin: 0 0 4px 0;
-}
-
-.status-info p {
-    font-size: 12px;
-    color: var(--text-secondary);
-    margin: 0;
-    line-height: 1.4;
-}
-
-/* ==========================================================================
-   RIGHT COLUMN: MAIN INTERACTION CARD STYLES
-   ========================================================================== */
-.withdrawal-main-panels {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-/* 1. Official FinTech Advisory Alert Banner Container */
-.withdrawal-advisory-card {
-    background-color: rgba(245, 158, 11, 0.03);
-    border: 1px solid rgba(245, 158, 11, 0.15);
-    border-radius: 12px;
-    padding: 20px;
-}
-
-.advisory-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-}
-
-.warning-icon {
-    font-size: 22px;
-    color: var(--accent-amber);
-}
-
-.advisory-header h2 {
-    font-size: 16px;
-    font-weight: 600;
-    margin: 0;
-    color: var(--accent-amber);
-}
-
-.advisory-body p {
-    font-size: 14px;
-    color: #cbd5e1;
-    line-height: 1.6;
-    margin: 0 0 20px 0;
-}
-
-/* Institutional Contact Anchor Elements Block */
-.contact-block h3 {
-    font-size: 12px;
-    font-weight: 500;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-    letter-spacing: 0.5px;
-    margin: 0 0 10px 0;
-}
-
-.contact-links {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-}
-
-.contact-links a {
+.security-badge-pill {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    font-weight: 500;
-    text-decoration: none;
-    padding: 8px 14px;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-}
-
-.btn-support-connect {
-    background-color: transparent;
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-}
-
-.btn-support-connect:hover {
-    background-color: var(--bg-card-hover);
-    border-color: var(--text-secondary);
-}
-
-.btn-email-connect {
-    background-color: transparent;
-    color: var(--accent-amber);
-    border: 1px solid rgba(245, 158, 11, 0.2);
-}
-
-.btn-email-connect:hover {
-    background-color: rgba(245, 158, 11, 0.05);
-    border-color: var(--accent-amber);
-}
-
-/* 2. Verification Form Panel Rules */
-.withdrawal-input-panel {
-    background-color: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 30px;
-}
-
-.input-panel-header {
-    text-align: center;
-    margin-bottom: 24px;
-}
-
-.security-icon {
-    font-size: 32px;
-    color: var(--accent-blue);
+    gap: 6px;
+    background-color: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    color: var(--accent-emerald);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
     margin-bottom: 12px;
 }
 
-.input-panel-header h2 {
-    font-size: 18px;
+.form-card-header h2 {
+    font-size: 20px;
     font-weight: 600;
     margin: 0 0 6px 0;
 }
 
-.input-panel-header p {
+.form-card-header p {
     font-size: 13px;
     color: var(--text-secondary);
     margin: 0;
+    line-height: 1.5;
 }
 
-/* Secure Field Forms Container */
-.input-field-group {
+/* Row-Blocks Grid Structure Alignment */
+.form-input-block {
     display: flex;
     flex-direction: column;
     gap: 8px;
-    max-width: 480px;
-    margin: 0 auto 24px auto;
+    margin-bottom: 24px;
 }
 
-.interactive-input-container {
-    position: relative;
-    width: 100%;
-}
-
-.field-icon {
-    position: absolute;
-    left: 14px;
-    top: 50%;
-    transform: translateY(-50%);
+.block-input-label {
+    font-size: 13px;
+    font-weight: 500;
     color: var(--text-secondary);
-    font-size: 18px;
 }
 
-#verification-code {
+/* Dynamic Interactive Target Tiles Grid Layout Engine */
+.custom-select-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.wallet-select-tile {
+    position: relative;
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+}
+
+.wallet-select-tile input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.wallet-select-tile:hover {
+    border-color: var(--text-secondary);
+    background-color: var(--bg-card-hover);
+}
+
+.wallet-select-tile.active-tile {
+    border-color: var(--accent-blue);
+    background-color: rgba(59, 130, 246, 0.03);
+}
+
+.tile-icon-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.text-emerald { color: var(--accent-emerald); }
+.text-amber { color: var(--accent-amber); }
+
+.tile-meta-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+}
+
+.tile-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.tile-subtext {
+    font-size: 11px;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-truncation: ellipsis;
+}
+
+.selection-check {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    font-size: 16px;
+    color: var(--accent-blue);
+    display: none;
+}
+
+.wallet-select-tile.active-tile .selection-check {
+    display: block;
+}
+
+/* No-Overflow Resilient Input Architecture Field Sets */
+.input-inner-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
     width: 100%;
     box-sizing: border-box;
+}
+
+.prefix-addon-icon {
+    position: absolute;
+    left: 14px;
+    color: var(--text-secondary);
+    font-size: 18px;
+    pointer-events: none;
+}
+
+.input-inner-wrapper input {
+    width: 100%;
+    box-sizing: border-box; /* Force full dimensional parsing normalization boundary */
     background-color: var(--bg-surface);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 14px 14px 14px 44px;
+    padding: 14px 14px 14px 42px;
     color: var(--text-primary);
     font-size: 14px;
     outline: none;
     transition: all 0.2s ease;
 }
 
-#verification-code:focus {
+.input-inner-wrapper input:focus {
     border-color: var(--accent-blue);
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
-.field-info {
-    font-size: 12px;
+/* Explicit internal inline layout actions formatting */
+.max-amount-inline-btn {
+    position: absolute;
+    right: 10px;
+    background-color: var(--border-color);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--accent-blue);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.max-amount-inline-btn:hover {
+    background-color: var(--bg-card-hover);
+    color: var(--text-primary);
+}
+
+.input-assist-caption {
+    font-size: 11px;
     color: var(--text-secondary);
-    display: flex;
-    align-items: center;
-    gap: 6px;
 }
 
-/* Execution Button Trigger Component Styles */
-.input-panel-actions {
-    display: flex;
-    justify-content: center;
+/* Primary Form Action Submit Button Component */
+.form-submission-footer {
+    margin-top: 32px;
 }
 
-.btn-action-execute-verify {
+.btn-execute-payout-trigger {
     width: 100%;
-    max-width: 480px;
+    box-sizing: border-box;
     background-color: var(--accent-blue);
     color: var(--text-primary);
     border: none;
     border-radius: 8px;
-    padding: 14px 20px;
+    padding: 16px;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -1774,79 +1739,291 @@ ul {
     transition: background-color 0.2s ease;
 }
 
-.btn-action-execute-verify:hover {
+.btn-execute-payout-trigger:hover {
     background-color: #2563eb;
 }
 
-/* 3. Bottom Transaction Meta Data Information Row */
-.transaction-summary-tooltip {
+/* ==========================================================================
+   MODAL WINDOW VIEWPORT ANIMATED INTERFACES
+   ========================================================================== */
+.global-overlay-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(10, 14, 22, 0.85);
+    backdrop-filter: blur(6px);
+    z-index: 99999;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--text-secondary);
+    padding: 20px;
+    box-sizing: border-box;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
 
-.transaction-summary-tooltip strong {
+.global-overlay-modal.modal-open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-alert-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 32px;
+    width: 100%;
+    max-width: 440px;
+    box-sizing: border-box;
+    text-align: center;
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.global-overlay-modal.modal-open .modal-alert-card {
+    transform: scale(1);
+}
+
+/* Success Graphic Pulser Rings Engines */
+.success-vector-animation {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkmark-icon-avatar {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(16, 185, 129, 0.1);
+    border: 2px solid var(--accent-emerald);
+    color: var(--accent-emerald);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    z-index: 2;
+}
+
+.pulse-ring-ambient {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: rgba(16, 185, 129, 0.2);
+    animation: alert-pulse-loop 2s infinite;
+    z-index: 1;
+}
+
+.modal-title-headline {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 10px 0;
+}
+
+.modal-paragraph-descriptor {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0 0 24px 0;
+}
+
+.time-countdown-highlight {
+    color: var(--accent-amber);
+    font-weight: 600;
+}
+
+/* Micro-statement parameters configuration alignment */
+.modal-statement-ledger {
+    background-color: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 14px;
+    margin-bottom: 24px;
+}
+
+.statement-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    padding: 4px 0;
+}
+
+.lbl-st { color: var(--text-secondary); }
+.val-st { color: var(--text-primary); font-weight: 500; }
+.monospaced { font-family: monospace; }
+.text-truncate {
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Modal Actions Dismiss Setup Components */
+.btn-dismiss-modal {
+    width: 100%;
+    background-color: var(--border-color);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     color: var(--text-primary);
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-dismiss-modal:hover {
+    background-color: var(--bg-card-hover);
+}
+
+@keyframes alert-pulse-loop {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.4); opacity: 0; }
 }
 
 /* ==========================================================================
-   RESPONSIVE LAYOUT BREAKPOINTS OVERRIDES ENGINE
+   RESPONSIVE DESIGN SYSTEM MEDIA BREAKPOINTS
    ========================================================================== */
-
-@media (max-width: 992px) {
-    .withdrawal-interface-wrapper {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .withdrawal-status-aside {
-        flex-direction: row;
-        overflow-x: auto;
-        padding-bottom: 8px;
-    }
-    
-    .status-card {
-        flex: 1;
-        min-width: 260px;
-    }
-}
-
-@media (max-width: 576px) {
-    .withdrawal-status-aside {
-        display: none; /* Safely hide timelines tracking bar on phones to maximize action field workspace */
-    }
-    
-    .withdrawal-input-panel {
+@media (max-width: 768px) {
+    .secure-checkout-card {
         padding: 20px;
     }
-}
 
-/* =========================================
-   DESKTOP MAIN CONTENT ALIGNMENT FIX
-========================================= */
-
-.withdrawal-interface-wrapper{
-    margin-left: calc(var(--sidebar-width) + 24px);
-    width: calc(100% - var(--sidebar-width) - 48px);
-    max-width: unset;
-    padding: 24px;
-}
-
-/* FIX OVERFLOW */
-.withdrawal-main-panels{
-    min-width: 0;
-}
-
-/* TABLET + MOBILE */
-@media (max-width: 992px){
-
-    .withdrawal-interface-wrapper{
-        margin-left: 0;
-        width: 100%;
-        padding: 15px;
+    .custom-select-grid {
+        grid-template-columns: 1fr; /* Stack source list items row structures on mobile */
+        gap: 10px;
     }
-
 }
+
+/* ==========================================================================
+   PREMIUM WALLET SELECTION GRID HOVER & ACTIVE SYSTEM
+   ========================================================================== */
+
+.custom-select-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.wallet-select-tile {
+    position: relative;
+    background-color: #151d28;
+    border: 1px solid #222f42;
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-sizing: border-box;
+}
+
+/* Force inner text elements to let clicks pass through directly to the parent label */
+.wallet-select-tile > * {
+    pointer-events: none;
+}
+
+/* Hide the native ugly browser radio circle out of sight safely */
+.wallet-select-tile input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+/* Hover States styling context */
+.wallet-select-tile:hover {
+    background-color: #1c2635;
+    border-color: #8496ae;
+    transform: translateY(-1px);
+}
+
+/* THE ACTIVE TRIGGER FIX: Styles the tile perfectly when the input is checked */
+.wallet-select-tile:has(input[type="radio"]:checked),
+.wallet-select-tile.active-tile {
+    border-color: #3b82f6 !important;
+    background-color: rgba(59, 130, 246, 0.04) !important;
+    box-shadow: 0 0 0 1px #3b82f6;
+}
+
+/* Icon Badges Sub-Layouts */
+.tile-icon-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.03);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+}
+
+.text-emerald { color: #10b981; }
+.text-amber { color: #f59e0b; }
+
+.tile-meta-details {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    overflow: hidden;
+}
+
+.tile-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.tile-subtext {
+    font-size: 12px;
+    color: #8496ae;
+    white-space: nowrap;
+}
+
+/* High-end Fintech Checkmark Display Logic */
+.selection-check {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #3b82f6;
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Reveal the checkmark badge instantly when the radio state registers true */
+.wallet-select-tile:has(input[type="radio"]:checked) .selection-check,
+.wallet-select-tile.active-tile .selection-check {
+    opacity: 1 !important;
+}
+
+/* Responsive breakpoint framework adjustment */
+@media (max-width: 768px) {
+    .custom-select-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px;
+    }
+}
+
+.fintech-form-wrapper {
+    width: 100%;
+    max-width: 680px;
+    margin: 0 auto;
+}
+

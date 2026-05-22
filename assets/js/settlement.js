@@ -188,39 +188,112 @@ acmVerifyBtn.addEventListener("click", () => {
 
 // Main section starts here
 document.addEventListener("DOMContentLoaded", function () {
-    const verificationForm = document.getElementById("withdrawal-verification-form");
-    const codeInput = document.getElementById("verification-code");
-    const submitBtn = document.getElementById("verify-submit-btn");
+    const payoutForm = document.getElementById("main-payout-execution-form");
+    const tileRadioGroup = document.querySelectorAll("input[name='source_wallet']");
+    const useMaxBtn = document.getElementById("trigger-max-amount");
+    const amountInput = document.getElementById("payout-amount");
+    const submitBtn = document.getElementById("submit-payout-btn");
+    
+    // Modal Selectors
+    const successModal = document.getElementById("success-state-modal");
+    const closeModalBtn = document.getElementById("close-success-modal-btn");
+    const modalRefHash = document.getElementById("mdl-ref-hash");
+    const modalPoolType = document.getElementById("mdl-pool-type");
 
-    if (verificationForm) {
-        verificationForm.addEventListener("submit", function (e) {
-            e.preventDefault();
+    // 1. Dynamic Toggle States styling tracking for custom select tiles
+    tileRadioGroup.forEach(radio => {
+        radio.addEventListener("change", function () {
+            // Drop current active structural layouts tags on alternate selections
+            document.querySelectorAll(".wallet-select-tile").forEach(tile => {
+                tile.classList.remove("active-tile");
+            });
+            // Assign active layout identifier back onto target visual node
+            if (this.checked) {
+                this.closest(".wallet-select-tile").classList.add("active-tile");
+            }
+        });
+    });
 
-            const rawValue = codeInput.value.trim();
-            if (!rawValue) return;
-
-            // Update UI State to reflect a secure processing pipeline execution
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = "<i class='bx bx-loader-alt animate-spin'></i> Authorization Processing...";
-            submitBtn.style.opacity = "0.7";
-
-            // Simulate server authentication delay round-trip tracking network latency
-            setTimeout(() => {
-                alert(`Security Pipeline Input Accepted! Validating internal transaction context node reference token: ${rawValue}`);
-                
-                // Return button status to baseline configuration after completion processing sequence
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = "<i class='bx bx-check-shield'></i> Verify & Continue";
-                submitBtn.style.opacity = "1";
-            }, 2500);
+    // 2. Inline Utility Button Max Value Assignment Handler Logic
+    if (useMaxBtn && amountInput) {
+        useMaxBtn.addEventListener("click", function () {
+            const activeWallet = document.querySelector("input[name='source_wallet']:checked").value;
+            if (activeWallet === "usdt_main") {
+                amountInput.value = "4812.50";
+            } else {
+                amountInput.value = "0.248";
+            }
         });
     }
 
-    const verifyBtn = document.getElementById("verify-submit-btn");
+    // 3. Form Dispatch Interception Sequence Implementation
+    if (payoutForm) {
+        payoutForm.addEventListener("submit", function (e) {
+            e.preventDefault();
 
-verifyBtn.addEventListener("click", function(e){
-    e.preventDefault();
+            // Read operational parameters states 
+            const selectedWalletInput = document.querySelector("input[name='source_wallet']:checked");
+            const walletLabel = selectedWalletInput.closest(".wallet-select-tile").querySelector(".tile-title").textContent;
+            const targetAddressValue = document.getElementById("destination-address").value.trim();
 
-    window.location.href = "settlement.html";
+            // Set UI processing load state markers 
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = "<i class='bx bx-loader-alt bx-spin'></i> Routing to Clearing Network...";
+
+            // Simulate financial data round-trip communication payload matrix latency
+            setTimeout(() => {
+                // Populate custom modal payload elements dynamically before execution opening array
+                if (modalRefHash) modalRefHash.textContent = targetAddressValue || "N/A";
+                if (modalPoolType) modalPoolType.textContent = walletLabel || "USDT Balance";
+
+                // Open overlay window cleanly
+                if (successModal) {
+                    successModal.classList.add("modal-open");
+                }
+
+                // Reset processing button state variables configuration
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = "<i class='bx bx-send'></i> Review & Execute Release";
+                payoutForm.reset();
+                
+                // Keep structural layout classes active normalized matching fallback defaults
+                document.querySelectorAll(".wallet-select-tile").forEach((tile, index) => {
+                    if (index === 0) tile.classList.add("active-tile");
+                });
+            }, 2000);
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+    const walletTiles = document.querySelectorAll(".wallet-select-tile");
+
+    walletTiles.forEach(tile => {
+        tile.addEventListener("click", function (e) {
+            // Find the embedded radio button within this specific card frame
+            const targetRadio = this.querySelector("input[type='radio']");
+            
+            if (targetRadio) {
+                // Check the radio input track programmatically
+                targetRadio.checked = true;
+
+                // Scrub the active styling layer off all options in the module container
+                walletTiles.forEach(item => item.classList.remove("active-tile"));
+
+                // Affix the active dashboard visual properties onto the chosen option card
+                this.classList.add("active-tile");
+                
+                // Fire an optional tracking event to sync up max balance utility calculations
+                targetRadio.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+        });
+    });
 });
+
+    // 4. Modal Window Termination Mechanics
+    if (closeModalBtn && successModal) {
+        closeModalBtn.addEventListener("click", function () {
+            successModal.classList.remove("modal-open");
+        });
+    }
+
 });
