@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nexuist Secure Terminal Login</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/login.css">
+</head>
+<body>
+
+    <div id="fintech-preloader">
+        <div class="loader-container">
+            <div class="loader-logo">
+                <div class="logo-hexagon">
+                    <span class="iconify" data-icon="ri:shield-flash-line"></span>
+                </div>
+                <h2 class="loader-brand-name">Nexuist</h2>
+            </div>
+
+            <div class="loader-progress-wrapper">
+                <div class="loader-progress-bar" id="load-bar">
+                    <div class="shimmer-effect"></div>
+                </div>
+            </div>
+
+            <div class="loader-status">
+                <span class="status-dot"></span>
+                <p id="status-text">Initializing encrypted connection...</p>
+            </div>
+        </div>
+
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+    <!-- Preloader ends here -->
+
+<div class="nexuist-auth-wrapper">
+    <div class="auth-card animate-fade-up">
+        
+        <div class="auth-brand-section">
+            <div class="brand-logo">
+                <i class='bx bx-trending-up logo-icon'></i>
+                <span class="brand-text">NEXUIST</span>
+            </div>
+            <p class="brand-tagline">Access your secure institutional portal</p>
+        </div>
+
+        <form id="nexuist-login-form" novalidate>
+            
+            <div class="form-grid-layout">
+                <div class="input-field-group">
+                    <label for="login-identity">Username or Email Address <span class="req">*</span></label>
+                    <div class="interactive-input-container">
+                        <i class='bx bx-user field-icon'></i>
+                        <input type="text" id="login-identity" placeholder="Enter username or email" required>
+                    </div>
+                </div>
+
+                <div class="input-field-group">
+                    <div class="label-with-action-row">
+                        <label for="login-password">Password <span class="req">*</span></label>
+                        <a href="forgot-password.html" class="contextual-action-link">Forgot Password?</a>
+                    </div>
+                    <div class="interactive-input-container">
+                        <i class='bx bx-lock-alt field-icon'></i>
+                        <input type="password" id="login-password" placeholder="Enter your passkey" required>
+                        <button type="button" class="password-visibility-toggle-btn" aria-label="Toggle password visibility">
+                            <i class='bx bx-hide'></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="session-management-wrapper">
+                <label class="custom-checkbox-container">
+                    <input type="checkbox" id="login-remember-me">
+                    <span class="checkbox-checkmark-box"></span>
+                    <span class="checkbox-label-text">Remember this secure terminal device for 30 days</span>
+                </label>
+            </div>
+
+            <div class="footer-step-actions-bar">
+                <button type="submit" class="btn btn-action-submit-execution" id="login-submit-btn">
+                    <span>Secure Sign In</span>
+                    <i class='bx bx-log-in-circle'></i>
+                </button>
+            </div>
+
+        </form>
+
+        <footer class="auth-card-footer-links">
+            <p>New to the institutional portal? <a href="signup.html" class="signup-redirect-link">Create an account here</a></p>
+            
+            <div class="security-standards-row">
+                <span><i class='bx bx-shield-quarter'></i> SSL Secured</span>
+                <span><i class='bx bx-lock'></i> AES 256-bit</span>
+                <span><i class='bx bx-buildings'></i> Tier-1 Venue</span>
+            </div>
+
+            <p class="copyright-notice-text">
+                &copy; 2026 Nexuist. All rights reserved. | Unauthorized access tracking systems are actively engaged across all nodes.
+            </p>
+        </footer>
+
+    </div>
+</div>
+
+<script src="./assets/js/login.js"></script>
+</body>
+</html>

@@ -212,7 +212,7 @@ document.querySelectorAll(`
 
 
 git add .
-git commit -m "i added many pages to make it look nice"
+git commit -m "i added 4 files"
 git push
 
 

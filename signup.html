@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Join Nexuist | Premium Multi-Asset Registration</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/signup.css">
+</head>
+<body>
+
+    <div id="fintech-preloader">
+        <div class="loader-container">
+            <div class="loader-logo">
+                <div class="logo-hexagon">
+                    <span class="iconify" data-icon="ri:shield-flash-line"></span>
+                </div>
+                <h2 class="loader-brand-name">Nexuist</h2>
+            </div>
+
+            <div class="loader-progress-wrapper">
+                <div class="loader-progress-bar" id="load-bar">
+                    <div class="shimmer-effect"></div>
+                </div>
+            </div>
+
+            <div class="loader-status">
+                <span class="status-dot"></span>
+                <p id="status-text">Initializing encrypted connection...</p>
+            </div>
+        </div>
+
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+    <!-- Preloader ends here -->
+
+<div class="nexuist-auth-wrapper">
+    <div class="auth-card animate-fade-up">
+        
+        <div class="auth-brand-section">
+            <div class="brand-logo">
+                <i class='bx bx-trending-up logo-icon'></i>
+                <span class="brand-text">NEXUIST</span>
+            </div>
+            <p class="brand-tagline">Start your professional trading journey</p>
+            
+            <div class="live-counter-badge">
+                <i class='bx bx-group'></i>
+                <span><strong>1M+ Traders</strong> Community</span>
+            </div>
+        </div>
+
+        <nav class="funnel-steps-indicator" aria-label="Registration Progress">
+            <div class="step-node active" id="step-node-1">
+                <div class="node-circle">1</div>
+                <div class="node-label">
+                    <span>Personal Info</span>
+                    <small>Basic details</small>
+                </div>
+            </div>
+            <div class="step-node" id="step-node-2">
+                <div class="node-circle">2</div>
+                <div class="node-label">
+                    <span>Location</span>
+                    <small>Regional settings</small>
+                </div>
+            </div>
+            <div class="step-node" id="step-node-3">
+                <div class="node-circle">3</div>
+                <div class="node-label">
+                    <span>Security</span>
+                    <small>Account protection</small>
+                </div>
+            </div>
+        </nav>
+
+        <form id="nexuist-signup-form" novalidate>
+            
+            <fieldset class="form-step-panel active" id="form-panel-1">
+                <div class="panel-meta-title group-personal">
+                    <i class='bx bx-user-pin'></i>
+                    <div>
+                        <h2>Personal Information</h2>
+                        <p>Create your trading profile</p>
+                    </div>
+                </div>
+
+                <div class="form-grid-layout">
+                    <div class="input-field-group">
+                        <label for="reg-username">Trading Username <span class="req">*</span></label>
+                        <div class="interactive-input-container">
+                            <i class='bx bx-user field-icon'></i>
+                            <input type="text" id="reg-username" name="username" placeholder="Choose username" required>
+                            <i class='bx bx-check-circle validation-status-icon'></i>
+                        </div>
+                    </div>
+
+                    <div class="input-field-group">
+                        <label for="reg-fullname">Full Name <span class="req">*</span></label>
+                        <div class="interactive-input-container">
+                            <i class='bx bx-id-card field-icon'></i>
+                            <input type="text" id="reg-fullname" name="fullname" placeholder="Enter full name" required>
+                            <i class='bx bx-check-circle validation-status-icon'></i>
+                        </div>
+                    </div>
+
+                    <div class="input-field-group">
+                        <label for="reg-email">Email Address <span class="req">*</span></label>
+                        <div class="interactive-input-container">
+                            <i class='bx bx-envelope field-icon'></i>
+                            <input type="email" id="reg-email" name="email" placeholder="your.email@example.com" required>
+                            <i class='bx bx-check-circle validation-status-icon'></i>
+                        </div>
+                    </div>
+
+                    <div class="input-field-group">
+                        <label for="reg-phone">Phone Number <span class="req">*</span></label>
+                        <div class="interactive-input-container phone-input-hybrid">
+                            <div class="phone-country-selector" id="phone-dropdown-trigger" role="combobox" aria-expanded="false" aria-haspopup="listbox">
+                                <img src="https://flagcdn.com/w20/us.png" alt="US" id="phone-active-flag">
+                                <span id="phone-active-code">+1</span>
+                                <i class='bx bx-chevron-down toggle-arrow'></i>
+                            </div>
+                            <input type="tel" id="reg-phone" name="phone" placeholder="(555) 123-4567" required>
+                            <i class='bx bx-check-circle validation-status-icon'></i>
+
+                            <div class="custom-dropdown-listbox" id="phone-dropdown-listbox" role="listbox">
+                                <div class="listbox-search-sticky">
+                                    <i class='bx bx-search'></i>
+                                    <input type="text" class="listbox-search-input" placeholder="Search country or dial code...">
+                                </div>
+                                <ul class="options-scroller" id="phone-options-container"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-step-actions-bar">
+                    <span class="step-counter-label">Step 1 of 3</span>
+                    <button type="button" class="btn btn-action-next next-step-trigger">
+                        <span>Continue</span>
+                        <i class='bx bx-right-arrow-alt'></i>
+                    </button>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-step-panel" id="form-panel-2">
+                <div class="panel-meta-title group-location">
+                    <i class='bx bx-globe'></i>
+                    <div>
+                        <h2>Location</h2>
+                        <p>Set your regional trading preferences</p>
+                    </div>
+                </div>
+
+                <div class="form-grid-layout single-column-max">
+                    <div class="input-field-group">
+                        <label>Country <span class="req">*</span></label>
+                        <div class="interactive-input-container">
+                            <div class="jurisdiction-custom-selector" id="jurisdiction-trigger" role="combobox" aria-expanded="false" aria-haspopup="listbox">
+                                <div class="trigger-current-display">
+                                    <i class='bx bx-map-pin context-flag-icon' id="jur-placeholder-icon"></i>
+                                    <img src="" alt="Flag" id="jur-active-flag" style="display: none;">
+                                    <span id="jur-active-name">Select your country</span>
+                                </div>
+                                <i class='bx bx-chevron-down toggle-arrow'></i>
+                            </div>
+
+                            <div class="custom-dropdown-listbox" id="jurisdiction-listbox" role="listbox">
+                                <div class="listbox-search-sticky">
+                                    <i class='bx bx-search'></i>
+                                    <input type="text" class="listbox-search-input" placeholder="Search country profile...">
+                                </div>
+                                <ul class="options-scroller" id="jurisdiction-options-container"></ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="regional-info-card">
+                        <div class="info-card-header">
+                            <i class='bx bx-info-circle'></i>
+                            <h3>Regional Trading Information</h3>
+                        </div>
+                        <p>Your location helps us provide region-specific features, compliance, and optimal server connections for faster trading execution.</p>
+                    </div>
+                </div>
+
+                <div class="footer-step-actions-bar">
+                    <button type="button" class="btn btn-action-back prev-step-trigger">
+                        <i class='bx bx-left-arrow-alt'></i>
+                        <span>Previous Step</span>
+                    </button>
+                    <span class="step-counter-label">Step 2 of 3</span>
+                    <button type="button" class="btn btn-action-next next-step-trigger">
+                        <span>Continue</span>
+                        <i class='bx bx-right-arrow-alt'></i>
+                    </button>
+                </div>
+            </fieldset>
+
+            <fieldset class="form-step-panel" id="form-panel-3">
+                <div class="panel-meta-title group-security">
+                    <i class='bx bx-shield-quarter'></i>
+                    <div>
+                        <h2>Account Security</h2>
+                        <p>Secure your trading account</p>
+                    </div>
+                </div>
+
+                <div class="form-grid-layout">
+                    <div class="input-field-group">
+                        <label for="reg-password">Password <span class="req">*</span></label>
+                        <div class="interactive-input-container">
+                            <i class='bx bx-lock-alt field-icon'></i>
+                            <input type="password" id="reg-password" name="password" placeholder="Create strong password" required>
+                            <button type="button" class="password-visibility-toggle-btn"><i class='bx bx-hide'></i></button>
+                        </div>
+                    </div>
+
+                    <div class="input-field-group">
+                        <label for="reg-confirm-password">Confirm Password <span class="req">*</span></label>
+                        <div class="interactive-input-container">
+                            <i class='bx bx-check-shield field-icon'></i>
+                            <input type="password" id="reg-confirm-password" placeholder="Confirm your password" required>
+                            <button type="button" class="password-visibility-toggle-btn"><i class='bx bx-hide'></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="math-captcha-validation-card">
+                    <h4>Simple Math Verification <span class="req">*</span></h4>
+                    <div class="challenge-math-container">
+                        <p>What is the answer to this simple math?</p>
+                        <div class="equation-box">
+                            <span id="captcha-num1">6</span> + <span id="captcha-num2">10</span> = ?
+                        </div>
+                    </div>
+                    <div class="interactive-input-container">
+                        <i class='bx bx-calculator field-icon'></i>
+                        <input type="number" id="reg-captcha-input" placeholder="Enter the answer (numbers only)" required>
+                    </div>
+                    <p class="captcha-disclaimer-text">Just solve this simple math problem to verify you're human. Much easier than typing random codes!</p>
+                </div>
+
+                <div class="password-metrics-checklist-box">
+                    <h4>Password Requirements:</h4>
+                    <ul class="metrics-list-tracker">
+                        <li id="rule-length" class="invalid"><i class='bx bx-check'></i> At least 8 characters long</li>
+                        <li id="rule-case" class="invalid"><i class='bx bx-check'></i> Contains uppercase and lowercase letters</li>
+                        <li id="rule-number" class="invalid"><i class='bx bx-check'></i> Includes at least one number or special character</li>
+                    </ul>
+                </div>
+
+                <div class="legal-consent-card-wrapper">
+                    <label class="custom-checkbox-container">
+                        <input type="checkbox" id="reg-consent-terms" required>
+                        <span class="checkbox-checkmark-box"></span>
+                        <span class="checkbox-label-text">
+                            I agree to Nexuist's <a href="#" class="legal-link">Terms and Conditions</a> and acknowledge that I have read and understood the <a href="#" class="legal-link">Privacy Policy</a>
+                        </span>
+                    </label>
+                    <p class="sub-consent-notice">By creating an account, you confirm that you are at least 18 years old and agree to receive trading updates and market insights.</p>
+                </div>
+
+                <div class="footer-step-actions-bar">
+                    <button type="button" class="btn btn-action-back prev-step-trigger">
+                        <i class='bx bx-left-arrow-alt'></i>
+                        <span>Previous Step</span>
+                    </button>
+                    <span class="step-counter-label">Step 3 of 3</span>
+                    <button type="submit" class="btn btn-action-submit-execution" id="submit-btn-loader">
+                        <i class='bx bx-user-plus'></i>
+                        <span>Create Trading Account</span>
+                    </button>
+                </div>
+            </fieldset>
+
+        </form>
+
+        <footer class="auth-card-footer-links">
+            <p>Already have an account? <a href="login.html" class="login-redirect-link">Sign In here</a></p>
+            
+            <div class="security-standards-row">
+                <span><i class='bx bx-shield-quarter' ></i> SSL Secured</span>
+                <span><i class='bx bx-lock' ></i> 256-bit Encryption</span>
+                <span><i class='bx bx-building-house' ></i> Regulated Platform</span>
+            </div>
+
+            <p class="copyright-notice-text">
+                &copy; 2026 Nexuist. All rights reserved. | Licensed and regulated trading platform.
+            </p>
+        </footer>
+
+    </div>
+</div>
+
+<script src="./assets/js/signup.js"></script>
+</body>
+</html>

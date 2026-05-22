@@ -1,0 +1,459 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --bg-main: #0b101e;
+    --bg-card: #151b2b;
+    --bg-card-hover: #1a2235;
+    --text-primary: #ffffff;
+    --text-secondary: #9ca3af;
+    --border-color: #1f2937;
+    --border-light: rgba(255, 255, 255, 0.08);
+    
+    --color-blue: #2563eb;
+    --color-purple: #7c3aed;
+    --color-green: #10b981;
+    --color-red: #ef4444;
+    
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ANTI-OVERFLOW MOBILE VIEWS DEFAULTS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
+
+/* Preloader starts here */
+/* --- PREMIUM FINTECH PRELOADER --- */
+#fintech-preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #070b14; /* Deepest black from your header */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* Over everything */
+    transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.loader-container {
+    text-align: center;
+    z-index: 10;
+    width: 280px;
+}
+
+/* Logo Animation */
+.loader-logo {
+    margin-bottom: 40px;
+    animation: loaderPulse 2s infinite ease-in-out;
+}
+
+.logo-hexagon {
+    width: 64px;
+    height: 64px;
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    color: white;
+    font-size: 32px;
+    box-shadow: 0 0 30px rgba(37, 99, 235, 0.3);
+}
+
+.loader-brand-name {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: white;
+}
+
+/* Progress Bar Styling */
+.loader-progress-wrapper {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.loader-progress-bar {
+    width: 0%; /* Controlled by JS */
+    height: 100%;
+    background: #2563eb;
+    border-radius: 10px;
+    position: relative;
+    transition: width 0.3s ease;
+}
+
+.shimmer-effect {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: shimmer 1.5s infinite;
+}
+
+/* Status Text Messaging */
+.loader-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    background: #10b981;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #10b981;
+}
+
+#status-text {
+    font-size: 12px;
+    color: #9ca3af;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Ambient Background Glows */
+.glow {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.15;
+    z-index: 1;
+}
+
+.glow-1 { top: -50px; right: -50px; background: #2563eb; }
+.glow-2 { bottom: -50px; left: -50px; background: #7c3aed; }
+
+/* Animations */
+@keyframes shimmer {
+    100% { left: 100%; }
+}
+
+@keyframes loaderPulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(0.95); opacity: 0.8; }
+}
+
+/* Hidden Class */
+.preloader-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.nexuist-auth-wrapper {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem 1rem;
+    background: radial-gradient(circle at 50% 100%, rgba(124, 58, 237, 0.06) 0%, transparent 60%), var(--bg-main);
+}
+
+.auth-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: 24px;
+    width: 100%;
+    max-width: 480px; /* Slimmer card configuration optimized for authentication */
+    padding: 2.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* ANIMATION SEQUENCE TRANSITIONS */
+@keyframes loginFadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+    animation: loginFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* BRAND HEADER AREA */
+.auth-brand-section {
+    text-align: center;
+    margin-bottom: 2.25rem;
+}
+
+.brand-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.35rem;
+}
+
+.logo-icon {
+    font-size: 2rem;
+    color: var(--color-blue);
+    background: linear-gradient(135deg, var(--color-blue), var(--color-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.brand-text {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.brand-tagline {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* INTERFACE FORM CONTAINER OBJECTS */
+.form-grid-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.input-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.label-with-action-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.input-field-group label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.req { color: var(--color-red); }
+
+/* PASSKEY LINK DECORATIVE SYSTEMS */
+.contextual-action-link {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-blue);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.contextual-action-link:hover {
+    color: #60a5fa;
+    text-decoration: underline;
+}
+
+.interactive-input-container {
+    position: relative;
+    width: 100%;
+}
+
+/* THE RADICAL NO-ZOOM MOBILE OVERFLOW REMEDY */
+.interactive-input-container input {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    padding: 0.8rem 1rem 0.8rem 2.5rem;
+    font-size: 16px; /* Critical rule to prevent iOS Safari/Android Webview viewport shifting on element selection */
+    outline: none;
+    transition: var(--transition);
+}
+
+.interactive-input-container input:focus {
+    border-color: var(--color-blue);
+    background-color: rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.interactive-input-container .field-icon {
+    position: absolute;
+    left: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+    pointer-events: none;
+    transition: var(--transition);
+}
+
+.interactive-input-container input:focus ~ .field-icon {
+    color: var(--color-blue);
+}
+
+/* PASSWORD SHIELD ICON TOGGLE TOOL */
+.password-visibility-toggle-btn {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.password-visibility-toggle-btn:hover {
+    color: var(--text-primary);
+}
+
+/* OPTIONAL CLIENT SESSION REMEMBER CHECKS */
+.session-management-wrapper {
+    margin-top: 1.25rem;
+}
+
+.custom-checkbox-container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.6rem;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.custom-checkbox-container input { display: none; }
+
+.checkbox-checkmark-box {
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+    transition: var(--transition);
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.custom-checkbox-container input:checked ~ .checkbox-checkmark-box {
+    background: var(--color-blue);
+    border-color: var(--color-blue);
+}
+
+.checkbox-checkmark-box::after {
+    content: '';
+    position: absolute;
+    display: none;
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 7px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.custom-checkbox-container input:checked ~ .checkbox-checkmark-box::after {
+    display: block;
+}
+
+.checkbox-label-text {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+/* ACTIONS DISPATCH ENGINES */
+.footer-step-actions-bar {
+    margin-top: 1.75rem;
+}
+
+.btn {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: var(--transition);
+}
+
+.btn-action-submit-execution {
+    background: linear-gradient(135deg, var(--color-blue), var(--color-purple));
+    color: white;
+}
+
+.btn-action-submit-execution:hover {
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
+    transform: translateY(-1px);
+}
+
+/* INTERFACE SYSTEM FOOTER METRICS */
+.auth-card-footer-links {
+    margin-top: 1.75rem;
+    text-align: center;
+    border-top: 1px solid var(--border-light);
+    padding-top: 1.25rem;
+}
+
+.auth-card-footer-links p { font-size: 0.85rem; color: var(--text-secondary); }
+.signup-redirect-link { color: var(--color-blue); text-decoration: none; font-weight: 600; }
+.signup-redirect-link:hover { text-decoration: underline; }
+
+.security-standards-row {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    margin: 1.25rem 0;
+}
+
+.security-standards-row span {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.security-standards-row i {
+    color: var(--color-blue);
+}
+
+.copyright-notice-text {
+    font-size: 0.68rem;
+    color: rgba(255, 255, 255, 0.15);
+    line-height: 1.4;
+}
+
+/* COMPACT PHONE SYSTEM BALANCERS */
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 1.75rem 1.25rem;
+        border-radius: 20px;
+    }
+}

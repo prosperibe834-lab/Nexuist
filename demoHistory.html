@@ -5,38 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexuist | Professional Trading</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/demoHistory.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
 
 <body>
 
 
     <div id="fintech-preloader">
-        <div class="loader-container">
-            <div class="loader-logo">
-                <div class="logo-hexagon">
-                    <span class="iconify" data-icon="ri:shield-flash-line"></span>
-                </div>
-                <h2 class="loader-brand-name">Nexuist</h2>
+    <div class="loader-container">
+        <div class="loader-logo">
+            <div class="logo-hexagon">
+                <span class="iconify" data-icon="ri:shield-flash-line"></span>
             </div>
+            <h2 class="loader-brand-name">Nexuist</h2>
+        </div>
 
-            <div class="loader-progress-wrapper">
-                <div class="loader-progress-bar" id="load-bar">
-                    <div class="shimmer-effect"></div>
-                </div>
-            </div>
-
-            <div class="loader-status">
-                <span class="status-dot"></span>
-                <p id="status-text">Initializing encrypted connection...</p>
+        <div class="loader-progress-wrapper">
+            <div class="loader-progress-bar" id="load-bar">
+                <div class="shimmer-effect"></div>
             </div>
         </div>
 
-        <div class="glow glow-1"></div>
-        <div class="glow glow-2"></div>
+        <div class="loader-status">
+            <span class="status-dot"></span>
+            <p id="status-text">Initializing encrypted connection...</p>
+        </div>
     </div>
-    <!-- Preloader ends here -->
+    
+    <div class="glow glow-1"></div>
+    <div class="glow glow-2"></div>
+</div>
+<!-- Preloader ends here -->
 
     <header class="top-header">
         <div class="header-left">
@@ -81,12 +83,12 @@
 
                     <div class="qt-dropdown-menu" id="qtDropdownMenu">
 
-                        <a href="depositfunds.html" class="qt-dropdown-item">
+                        <a href="#" class="qt-dropdown-item">
                             <span class="iconify qt-menu-icon" data-icon="solar:wallet-money-outline"></span>
                             <span>Deposit Funds</span>
                         </a>
 
-                        <a href="withdraw.html" class="qt-dropdown-item">
+                        <a href="#" class="qt-dropdown-item">
                             <span class="iconify qt-menu-icon" data-icon="solar:card-send-outline"></span>
                             <span>Withdraw Funds</span>
                         </a>
@@ -125,11 +127,11 @@
                         <span class="iconify arrow desktop-only" data-icon="ri:arrow-down-s-line"></span>
                     </button>
                     <div class="dropdown-menu profile-menu" id="profileMenu">
-                        <a href="profilesetting.html" class="menu-item"><span class="iconify" data-icon="ri:user-line"></span> My
+                        <a href="#" class="menu-item"><span class="iconify" data-icon="ri:user-line"></span> My
                             Profile</a>
                         <a href="#" class="menu-item"><span class="iconify" data-icon="ri:settings-4-line"></span>
                             Settings</a>
-                        <a href="explore.html" class="menu-item text-red"><span class="iconify"
+                        <a href="#" class="menu-item text-red"><span class="iconify"
                                 data-icon="ri:logout-box-r-line"></span> Logout</a>
                     </div>
                 </div>
@@ -147,7 +149,7 @@
             <nav class="sidebar-nav">
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:layout-grid-line"></span> OVERVIEW</h3>
-                    <a href="index.html" class="nav-item active">
+                    <a href="index.html" class="nav-item">
                         <span class="iconify" data-icon="solar:widget-2-outline"></span>
                         Dashboard
                     </a>
@@ -160,7 +162,7 @@
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:briefcase-line"></span> PORTFOLIO &
                         INVESTMENTS</h3>
                     <div class="nav-dropdown-container">
-                        <a href="" class="nav-item has-dropdown" id="investPlansBtn">
+                        <a href="#" class="nav-item has-dropdown" id="investPlansBtn">
                             <div class="item-left">
                                 <span class="iconify" data-icon="ri:focus-3-line"></span> Investment Plans
                             </div>
@@ -173,17 +175,17 @@
                                 All Plans
                             </a>
 
-                            <a href="stockMarket.html" class="nav-item sub-item">
+                            <a href="active-plans.html" class="nav-item sub-item">
                                 <span class="iconify submenu-icon" data-icon="solar:chart-square-outline"></span>
                                 Stock Market
                             </a>
 
-                            <a href="cryptoInvest.html" class="nav-item sub-item">
+                            <a href="active-plans.html" class="nav-item sub-item">
                                 <span class="iconify submenu-icon" data-icon="mdi:currency-btc"></span>
                                 Crypto Investment
                             </a>
 
-                            <a href="realestate.html" class="nav-item sub-item">
+                            <a href="active-plans.html" class="nav-item sub-item">
                                 <span class="iconify submenu-icon" data-icon="solar:buildings-2-outline"></span>
                                 Real Estate
                             </a>
@@ -200,7 +202,7 @@
 
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:stock-line"></span> TRADING & MARKETS</h3>
-                    <a href="demo.html" class="nav-item">
+                    <a href="demo.html" class="nav-item active">
                         <div class="item-left"><span class="iconify" data-icon="ri:graduation-cap-line"></span> Demo
                             Trading</div>
                         <span class="badge outline-green">Practice</span>
@@ -210,12 +212,12 @@
                             Markets</div>
                         <span class="badge solid-red"><span class="dot"></span> Live</span>
                     </a>
-                    <a href="copytrading.html" class="nav-item">
+                    <a href="copy.html" class="nav-item">
                         <div class="item-left"><span class="iconify" data-icon="ri:user-follow-line"></span> Copy
                             Trading</div>
                         <span class="badge solid-purple">Pro</span>
                     </a>
-                    <a href="botTrading.html" class="nav-item">
+                    <a href="ai.html" class="nav-item">
                         <div class="item-left"><span class="iconify" data-icon="ri:robot-2-line"></span> AI Trading Bots
                         </div>
                         <span class="badge solid-blue">AI</span>
@@ -234,14 +236,14 @@
 
                 <div class="nav-section">
                     <h3 class="nav-title"><span class="iconify" data-icon="ri:wallet-3-line"></span> WALLET & FUNDS</h3>
-                    <a href="depositfunds.html" class="nav-item">
+                    <a href="deposit.html" class="nav-item">
                         <span class="iconify" data-icon="ri:add-circle-line"></span> Deposit Funds
                     </a>
                     <a href="withdraw.html" class="nav-item">
                         <span class="iconify" data-icon="solar:card-send-outline"></span>
                         Withdraw Funds
                     </a>
-                    <a href="internal-transfer.html" class="nav-item">
+                    <a href="transfer.html" class="nav-item">
                         <span class="iconify" data-icon="ri:arrow-left-right-line"></span> Internal Transfer
                     </a>
                 </div>
@@ -286,7 +288,7 @@
 
                             </div>
 
-                            <a href="verify-account.html" class="acm-verify-link">
+                            <a href="verification.html" class="acm-verify-link">
 
                                 <span class="iconify" data-icon="solar:shield-check-outline"></span>
 
@@ -301,7 +303,7 @@
 
 
                     <!-- PROFILE SETTINGS -->
-                    <a href="profilesetting.html" class="acm-nav-link">
+                    <a href="portfolio.html" class="acm-nav-link">
 
                         <span class="iconify" data-icon="solar:settings-outline"></span>
 
@@ -317,7 +319,7 @@
                         Growth & Rewards
                     </h3>
 
-                    <a href="referUser.html" class="nav-item">
+                    <a href="signals.html" class="nav-item">
                         <div class="item-left">
                             <span class="iconify" data-icon="solar:users-group-rounded-outline"></span>
                             Referral Program
@@ -332,7 +334,7 @@
                         Support Center
                     </h3>
 
-                    <a href="support.html" class="nav-item">
+                    <a href="signals.html" class="nav-item">
                         <div class="item-left">
                             <span class="iconify" data-icon="solar:chat-round-dots-outline"></span>
                             Support Center
@@ -344,19 +346,15 @@
 
             <div class="sidebar-footer">
 
-                <a href="loan.html" class="apply-credit">
+                <a href="credit.html" class="apply-credit">
                     <span class="iconify" data-icon="ri:add-box-line"></span> Apply for Credit
                     <span class="badge solid-green">Fast</span>
-                </a>
-
-                <a href="loanHistory.html" class="apply-credit">
-                    <span class="iconify" data-icon="ri:file-list-3-line"></span> Credit History
                 </a>
             </div>
 
             <div class="contact-wrapper">
 
-                <a href="support.html" class="contact-btn">
+                <a href="contact.html" class="contact-btn">
 
                     <span class="iconify contact-icon" data-icon="solar:phone-calling-outline"></span>
 
@@ -377,136 +375,206 @@
                 </a>
 
             </div>
-        </aside>
+        </aside> 
 
-        <main class="content-area">
-            <div class="page-header">
-                <div class="welcome-text">
-                    <h1>Welcome back, marine military!</h1>
-                    <p>Your investment dashboard overview</p>
+        <!-- Main Content -->
+         <div class="nexuist-dashboard-container">
+    <header class="nexuist-main-header">
+        <div class="header-title-block">
+            <h1>Demo Trading History</h1>
+            <p>Review your past demo trades and track your performance</p>
+        </div>
+        <div class="header-actions">
+            <div class="balance-display">
+                <i class='bx bx-wallet'></i>
+                <span>Balance: <strong id="header-balance">$99,998.97</strong></span>
+            </div>
+            <a href="demo.html" class="btn btn-primary">
+                <i class='bx bx-plus-circle'></i> New Trade
+            </a>
+            <a href="index.html" class="btn btn-secondary">
+                <i class='bx bx-grid-alt'></i> Dashboard
+            </a>
+        </div>
+    </header>
+
+    <section class="metrics-grid">
+        <div class="metric-card animate-fade-in">
+            <div class="metric-info">
+                <span class="metric-label">Total Trades</span>
+                <h3 class="metric-value" id="stat-total-trades">1</h3>
+            </div>
+            <div class="metric-icon icon-blue">
+                <i class='bx bx-trending-up'></i>
+            </div>
+        </div>
+        <div class="metric-card animate-fade-in">
+            <div class="metric-info">
+                <span class="metric-label">Win Rate</span>
+                <h3 class="metric-value" id="stat-win-rate">0%</h3>
+            </div>
+            <div class="metric-icon icon-green">
+                <i class='bx bx-target-lock'></i>
+            </div>
+        </div>
+        <div class="metric-card animate-fade-in">
+            <div class="metric-info">
+                <span class="metric-label">Total P&L</span>
+                <h3 class="metric-value success-text" id="stat-total-pnl">$0.00</h3>
+            </div>
+            <div class="metric-icon icon-emerald">
+                <i class='bx bx-dollar'></i>
+            </div>
+        </div>
+        <div class="metric-card animate-fade-in">
+            <div class="metric-info">
+                <span class="metric-label">Active Trades</span>
+                <h3 class="metric-value" id="stat-active-trades">1</h3>
+            </div>
+            <div class="metric-icon icon-orange">
+                <i class='bx bx-pulse'></i>
+            </div>
+        </div>
+    </section>
+
+    <section class="filter-panel animate-fade-in">
+        <div class="filter-panel-header">
+            <div class="panel-title">
+                <i class='bx bx-filter-alt'></i>
+                <span>Advanced Search Filters</span>
+            </div>
+            <button type="button" class="toggle-filters-btn" id="toggle-filter-view">
+                <span class="btn-text">Hide Filters</span>
+                <i class='bx bx-chevron-up'></i>
+            </button>
+        </div>
+        
+        <form id="filter-form" class="filter-form-content">
+            <div class="filter-inputs-grid">
+                <div class="form-group">
+                    <label for="filter-status">Status</label>
+                    <select id="filter-status" name="status">
+                        <option value="all">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="closed">Closed</option>
+                    </select>
                 </div>
-                <div class="header-buttons">
-                    <a href="wallet.html" class="btn btn-outline-purple">
-                        <span class="iconify" data-icon="ri:link"></span> Connect Wallet
-                    </a>
-                    <a href="invest.html" class="btn btn-solid-green">
-                        <span class="iconify" data-icon="ri:line-chart-line"></span> Invest Now
-                    </a>
+                <div class="form-group">
+                    <label for="filter-type">Trade Type</label>
+                    <select id="filter-type" name="type">
+                        <option value="all">All Types</option>
+                        <option value="buy">Buy</option>
+                        <option value="sell">Sell</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="filter-result">Result</label>
+                    <select id="filter-result" name="result">
+                        <option value="all">All Results</option>
+                        <option value="profit">Profit</option>
+                        <option value="loss">Loss</option>
+                        <option value="break-even">Break Even</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="filter-per-page">Per Page</label>
+                    <select id="filter-per-page" name="perPage">
+                        <option value="10">10</option>
+                        <option value="20" selected>20</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+                <div class="form-group md-col-2">
+                    <label for="filter-asset">Asset Pair</label>
+                    <div class="input-with-icon">
+                        <i class='bx bx-search-alt'></i>
+                        <input type="text" id="filter-asset" placeholder="e.g., BTC, ETH, BSC-USD">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="filter-from-date">From Date</label>
+                    <input type="date" id="filter-from-date">
+                </div>
+                <div class="form-group">
+                    <label for="filter-to-date">To Date</label>
+                    <input type="date" id="filter-to-date">
                 </div>
             </div>
-
-            <div class="banner demo-banner">
-                <div class="banner-left">
-                    <div class="icon-box"><span class="iconify" data-icon="ri:graduation-cap-line"></span></div>
-                    <div>
-                        <h2>Demo Account Active</h2>
-                        <p>Demo Balance: $100,000.00</p>
-                    </div>
-                </div>
-                <a href="demo.html" class="btn btn-white">
-                    <span class="iconify" data-icon="ri:play-line"></span> Switch to Demo Trading
-                </a>
+            <div class="filter-actions-footer">
+                <button type="submit" class="btn btn-action-primary">
+                    <i class='bx bx-check-double'></i> Apply Filters
+                </button>
+                <button type="button" id="reset-filters-btn" class="btn btn-action-secondary">
+                    <i class='bx bx-refresh'></i> Clear Filters
+                </button>
             </div>
+        </form>
+    </section>
 
-            <div class="stats-grid">
-                <div class="card balance-card">
-                    <div class="card-head">
-                        <div class="title">
-                            <span class="iconify" data-icon="ri:wallet-3-line"></span>
-                            <h3>Account Balance</h3>
-                        </div>
-                        <button class="icon-btn" id="toggleBalanceBtn">
-                            <span class="iconify" id="eyeIcon" data-icon="ri:eye-line"></span>
-                        </button>
-                    </div>
-                    <p class="subtitle">Your available funds</p>
-                    <h1 class="main-amount" id="balanceAmount">$0.00</h1>
-
-                    <div class="status-tags">
-                        <span class="tag tag-success"><span class="iconify" data-icon="ri:checkbox-circle-line"></span>
-                            Available for Withdrawal</span>
-                        <span class="tag tag-danger"><span class="iconify" data-icon="ri:error-warning-line"></span>
-                            Unverified</span>
-                    </div>
-
-                    <p class="last-updated">Last updated: May 07, 2026 11:23 AM</p>
-
-                    <div class="card-actions">
-                        <a href="depositfunds.html" class="btn btn-dark"><span class="iconify"
-                                data-icon="ri:add-circle-line"></span> Deposit</a>
-                        <a href="withdraw.html" class="btn btn-dark"><span class="iconify"
-                                data-icon="ri:arrow-right-up-line"></span> Withdraw</a>
-                    </div>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Profit</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:money-dollar-circle-line"></span>
-                        </div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> Last period</p>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Deposit</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:arrow-down-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Total Withdrawal</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:arrow-up-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
-
-                <div class="card mini-card">
-                    <div class="mini-card-top">
-                        <p>Bonus</p>
-                        <div class="icon-circle"><span class="iconify" data-icon="ri:gift-line"></span></div>
-                    </div>
-                    <h2>$0.00</h2>
-                    <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
-                </div>
-            </div>
-
-            <div class="card flex-card">
-                <div class="flex-left">
-                    <div class="icon-box dark-box"><span class="iconify" data-icon="ri:shield-check-line"></span></div>
-                    <div>
-                        <h3>Identity Verification</h3>
-                        <p>Complete verification to access all features</p>
-                    </div>
-                </div>
-                <a href="verify.html" class="btn btn-blue">View Details <span class="iconify"
-                        data-icon="ri:arrow-down-s-line" style="transform: rotate(-90deg);"></span></a>
-            </div>
-
-            <div class="card flex-card promo-card" id="promoCard">
-                <button class="close-promo" id="closePromoBtn"><span class="iconify"
-                        data-icon="ri:close-line"></span></button>
-                <div class="flex-left">
-                    <div class="icon-box dark-box border-purple"><span class="iconify text-purple"
-                            data-icon="ri:wallet-3-fill"></span></div>
-                    <div>
-                        <h3>Connect Your Wallet to Start Earning</h3>
-                        <p class="text-purple-light">Connect your cryptocurrency wallet to unlock daily earning
-                            opportunities of up to <strong>$3000 per day</strong>.</p>
-                    </div>
-                </div>
-            </div>
-
-        </main>
+    <section class="table-container-wrapper animate-fade-in">
+        <div class="table-header-meta">
+            <h3>Execution Records</h3>
+            <span class="badge" id="trade-count-badge">1 Trade Found</span>
+        </div>
+        
+        <div class="responsive-table-scroller">
+            <table class="nexuist-table" id="trading-table">
+                <thead>
+                    <tr>
+                        <th>Asset</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Leverage</th>
+                        <th>Entry Price</th>
+                        <th>Current Price</th>
+                        <th>P&L</th>
+                        <th>Status</th>
+                        <th>Date Execution</th>
+                        <th class="text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body-target">
+                    <tr data-asset="BSC-USD/USD" data-type="sell" data-status="active" data-date="2026-05-20" data-pnl="0.00">
+                        <td>
+                            <div class="asset-cell">
+                                <i class='bx bx-coin-stack'></i>
+                                <span>BSC-USD/USD</span>
+                            </div>
+                        </td>
+                        <td><span class="badge badge-danger">Sell</span></td>
+                        <td><strong>$1.03</strong></td>
+                        <td class="text-secondary">1x</td>
+                        <td>$1.0010</td>
+                        <td>$1.0010</td>
+                        <td>
+                            <div class="pnl-cell neutral">
+                                <span class="pnl-amount">+$0.00</span>
+                                <span class="pnl-percent">(+0.00%)</span>
+                            </div>
+                        </td>
+                        <td><span class="status-indicator status-active">Active</span></td>
+                        <td class="date-cell">
+                            <span>May 20, 2026</span>
+                            <small>15:28</small>
+                        </td>
+                        <td class="text-right">
+                            <button class="btn-table-action btn-close-trade" title="Close Position">
+                                <i class='bx bx-x-circle'></i> Close
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-footer-pagination">
+            <span id="pagination-info">Showing 1 trade record</span>
+        </div>
+    </section>
+</div>
+        
     </div>
 
-    <script src="assets/js/script.js"></script>
+    <script src="assets/js/demoHistory.js"></script>
         <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
 
 </body>
