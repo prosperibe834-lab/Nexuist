@@ -212,10 +212,12 @@ document.querySelectorAll(`
 
 
 git add .
-git commit -m "change some sites"
+git commit -m "i added admin page"
 git push
 
 
+
+like there are many things i cant remember to tell u thats in the site although i havent finish it yet how can i send u the site maybe u will see all the stuffs in there and know all the things thats sopose to be in the admin
 
 
 /* ============================= */
