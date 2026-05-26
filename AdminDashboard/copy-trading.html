@@ -102,7 +102,7 @@
                 </ul>
             </li>
             <li>
-                <a href="internal-transfers">
+                <a href="internal-transfers.html">
                     <i class='bx bx-transfer-alt'></i>
                     <span class="link_name">Internal Transfers</span>
                 </a>
@@ -245,7 +245,263 @@
         </header>
 
         <!-- Main starts here -->
+<div class="nx-ct-workspace-container nx-ct-animate-fade-in">
 
+    <div class="nx-ct-workspace-header">
+        <div class="nx-ct-title-block">
+            <h2><i class='bx bx-git-branch'></i> Master Mirror Routing</h2>
+            <p class="nx-ct-subtitle">Instantly syndicate live institutional order flows and quantitative strategies directly to your ledger allocation</p>
+        </div>
+
+        <div class="nx-ct-header-actions">
+            <div class="nx-ct-search-box">
+                <i class='bx bx-search'></i>
+                <input type="text" id="trader-search-input" placeholder="Filter masters by name, token or strategy...">
+            </div>
+            <div class="nx-ct-tabs-wrapper">
+                <button class="nx-ct-tab-btn active" data-filter="all">All Traders</button>
+                <button class="nx-ct-tab-btn" data-filter="low-risk">Low Risk</button>
+                <button class="nx-ct-tab-btn" data-filter="high-yield">High Alpha</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="nx-ct-main-layout">
+        
+        <div class="nx-ct-cards-matrix" id="master-traders-grid">
+            
+            <div class="nx-ct-trader-card" data-risk="low-risk" data-name="Alpha Engine v4" data-roi="142.4">
+                <div class="trader-card-header">
+                    <div class="trader-profile-info">
+                        <div class="trader-avatar-wrapper color-primary">
+                            <i class='bx bx-analyse'></i>
+                        </div>
+                        <div>
+                            <h3>Alpha Engine v4</h3>
+                            <span class="trader-handle">@apex-algo</span>
+                        </div>
+                    </div>
+                    <span class="badge-pill label-low">Low Risk</span>
+                </div>
+
+                <div class="trader-performance-stats">
+                    <div class="stat-box">
+                        <span class="stat-label">30D Return</span>
+                        <span class="stat-value color-green">+142.4%</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Copiers</span>
+                        <span class="stat-value">3,842</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Win Rate</span>
+                        <span class="stat-value">91.8%</span>
+                    </div>
+                </div>
+
+                <div class="trader-sparkline-box">
+                    <div class="sparkline-bar" style="height: 40%"></div>
+                    <div class="sparkline-bar" style="height: 55%"></div>
+                    <div class="sparkline-bar" style="height: 48%"></div>
+                    <div class="sparkline-bar" style="height: 70%"></div>
+                    <div class="sparkline-bar" style="height: 85%"></div>
+                    <div class="sparkline-bar" style="height: 78%"></div>
+                    <div class="sparkline-bar" style="height: 95%"></div>
+                </div>
+
+                <div class="trader-footer-meta">
+                    <span>AUM: <strong>$2.4M</strong></span>
+                    <button class="nx-ct-action-btn trigger-copy-modal" data-master="Alpha Engine v4" data-roi="142.4" data-risk="Low Risk">
+                        <i class='bx bx-copy-alt'></i> Mirror Trades
+                    </button>
+                </div>
+            </div>
+
+            <div class="nx-ct-trader-card trending-master" data-risk="high-yield" data-name="Ether Alpha Scalper" data-roi="289.1">
+                <div class="featured-ribbon"><i class='bx bx-trending-up'></i> High Velocity</div>
+                <div class="trader-card-header">
+                    <div class="trader-profile-info">
+                        <div class="trader-avatar-wrapper color-secondary">
+                            <i class='bx bx-unite'></i>
+                        </div>
+                        <div>
+                            <h3>Ether Alpha Scalper</h3>
+                            <span class="trader-handle">@eth-whale</span>
+                        </div>
+                    </div>
+                    <span class="badge-pill label-high">High Risk</span>
+                </div>
+
+                <div class="trader-performance-stats">
+                    <div class="stat-box">
+                        <span class="stat-label">30D Return</span>
+                        <span class="stat-value color-green">+289.1%</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Copiers</span>
+                        <span class="stat-value">1,209</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Win Rate</span>
+                        <span class="stat-value">84.3%</span>
+                    </div>
+                </div>
+
+                <div class="trader-sparkline-box">
+                    <div class="sparkline-bar" style="height: 20%"></div>
+                    <div class="sparkline-bar" style="height: 15%"></div>
+                    <div class="sparkline-bar" style="height: 50%"></div>
+                    <div class="sparkline-bar" style="height: 42%"></div>
+                    <div class="sparkline-bar" style="height: 80%"></div>
+                    <div class="sparkline-bar" style="height: 72%"></div>
+                    <div class="sparkline-bar" style="height: 100%"></div>
+                </div>
+
+                <div class="trader-footer-meta">
+                    <span>AUM: <strong>$890K</strong></span>
+                    <button class="nx-ct-action-btn trigger-copy-modal" data-master="Ether Alpha Scalper" data-roi="289.1" data-risk="High Risk">
+                        <i class='bx bx-copy-alt'></i> Mirror Trades
+                    </button>
+                </div>
+            </div>
+
+            <div class="nx-ct-trader-card" data-risk="low-risk" data-name="Delta Stable Yield" data-roi="64.8">
+                <div class="trader-card-header">
+                    <div class="trader-profile-info">
+                        <div class="trader-avatar-wrapper color-accent">
+                            <i class='bx bx-shield-quarter'></i>
+                        </div>
+                        <div>
+                            <h3>Delta Stable Yield</h3>
+                            <span class="trader-handle">@delta-neutral</span>
+                        </div>
+                    </div>
+                    <span class="badge-pill label-low">Low Risk</span>
+                </div>
+
+                <div class="trader-performance-stats">
+                    <div class="stat-box">
+                        <span class="stat-label">30D Return</span>
+                        <span class="stat-value color-green">+64.8%</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Copiers</span>
+                        <span class="stat-value">5,110</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Win Rate</span>
+                        <span class="stat-value">96.2%</span>
+                    </div>
+                </div>
+
+                <div class="trader-sparkline-box">
+                    <div class="sparkline-bar" style="height: 50%"></div>
+                    <div class="sparkline-bar" style="height: 55%"></div>
+                    <div class="sparkline-bar" style="height: 60%"></div>
+                    <div class="sparkline-bar" style="height: 62%"></div>
+                    <div class="sparkline-bar" style="height: 68%"></div>
+                    <div class="sparkline-bar" style="height: 72%"></div>
+                    <div class="sparkline-bar" style="height: 80%"></div>
+                </div>
+
+                <div class="trader-footer-meta">
+                    <span>AUM: <strong>$4.1M</strong></span>
+                    <button class="nx-ct-action-btn trigger-copy-modal" data-master="Delta Stable Yield" data-roi="64.8" data-risk="Low Risk">
+                        <i class='bx bx-copy-alt'></i> Mirror Trades
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="nx-ct-terminal-panel">
+            <div class="terminal-panel-header">
+                <h3><i class='bx bx-terminal'></i> Live Syndicated Execution</h3>
+                <p>Real-time block events processed by active master pipelines</p>
+            </div>
+            
+            <div class="terminal-log-stream" id="live-positions-feed">
+                <div class="terminal-log-row position-entry-animation">
+                    <span class="log-timestamp">18:52:10</span>
+                    <div class="log-body">
+                        <strong>@apex-algo</strong> opened <strong>BUY BTC/USDT</strong> position
+                        <span class="log-tag-green">Replicated</span>
+                    </div>
+                </div>
+                <div class="terminal-log-row position-entry-animation">
+                    <span class="log-timestamp">18:45:32</span>
+                    <div class="log-body">
+                        <strong>@eth-whale</strong> closed <strong>SELL ETH/USDT</strong> order
+                        <span class="log-tag-green">+$420.50</span>
+                    </div>
+                </div>
+                <div class="terminal-log-row position-entry-animation">
+                    <span class="log-timestamp">18:12:04</span>
+                    <div class="log-body">
+                        <strong>@delta-neutral</strong> balanced hedge parity weights
+                        <span class="log-tag-muted">Synced</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="modal-copy-execution" class="nx-ct-modal-overlay">
+    <div class="nx-ct-modal-card">
+        <div class="nx-ct-modal-header">
+            <h3><i class='bx bx-git-commit'></i> Initialize Copy Routing</h3>
+            <button class="nx-ct-modal-close-btn">&times;</button>
+        </div>
+        <div class="nx-ct-modal-body">
+            
+            <div class="nx-ct-target-summary-card">
+                <div>
+                    <h4 id="modal-trader-name">Alpha Engine v4</h4>
+                    <span id="modal-trader-risk" class="badge-pill label-low">Low Risk</span>
+                </div>
+                <div class="text-right">
+                    <span class="summary-label">Historical ROI</span>
+                    <span id="modal-trader-roi" class="summary-value">+142.4%</span>
+                </div>
+            </div>
+
+            <form id="nexuist-copy-routing-form" onsubmit="event.preventDefault();">
+                <div class="nx-ct-form-group">
+                    <div class="label-row-meta">
+                        <label>Copy Allocation Capital</label>
+                        <span id="modal-allocation-feedback" class="neon-numerical-value">$2,500</span>
+                    </div>
+                    <input type="range" min="100" max="25000" step="100" value="2500" id="modal-allocation-slider" class="nx-ct-slider">
+                    <div class="slider-bounds">
+                        <span>Min: $100</span>
+                        <span>Max: $25,000</span>
+                    </div>
+                </div>
+
+                <div class="nx-ct-form-group">
+                    <label class="toggle-control-label">
+                        <input type="checkbox" id="modal-slippage-protection" checked>
+                        <span class="checkbox-box"></span>
+                        <div>
+                            <strong>High-Velocity Slippage Shield</strong>
+                            <p>Reject position replication if current margin execution slips beyond 0.05%</p>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="nx-ct-wallet-verification-box">
+                    <span><i class='bx bx-wallet'></i> Available Asset Pool Balance</span>
+                    <strong id="ct-user-liquidity-pool">$14,205.00</strong>
+                </div>
+
+                <button type="submit" class="nx-ct-submit-execution-btn">
+                    <i class='bx bx-play-circle'></i> Deploy Mirror Protocol
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
     </main>
 
     <script src="./js/copy-trading.js"></script>

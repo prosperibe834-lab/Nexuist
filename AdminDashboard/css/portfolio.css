@@ -708,773 +708,893 @@ html[data-theme="light"] .sidebar .nav-links .switch-thumb {
 
 /* Main Styling starts here */
 /* =========================================================
-   NEXUIST PORTFOLIO SYNCHRONIZATION ARCHITECTURE STYLES
+   NEXUIST ADMIN USER MANAGEMENT HUB FRAMEWORK
 ========================================================= */
 
-/* --- LAYOUT AND STRUCTURAL CONTROLS --- */
-.nx-ct-animate-fade-in {
-    animation: nxCtFadeIn 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+.nx-hub-animate-fade-in {
+    animation: hubFadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-@keyframes nxCtFadeIn {
+@keyframes hubFadeIn {
     from {
         opacity: 0;
-        transform: translateY(16px);
-        filter: blur(5px);
+        transform: translateY(8px);
     }
 
     to {
         opacity: 1;
         transform: translateY(0);
-        filter: blur(0);
     }
 }
 
-.nx-ct-workspace-container {
-    width: 100%;
-    padding: 8px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+.nx-hub-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 10px 16px;
 }
 
-/* --- WORKSPACE TITLE CONTROLS STRIP --- */
-.nx-ct-workspace-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.nx-ct-title-block h2 {
+.nx-hub-title-block h2 {
     font-size: 22px;
     font-weight: 700;
     color: var(--text-primary);
     display: flex;
     align-items: center;
     gap: 10px;
-    letter-spacing: -0.3px;
 }
 
-.nx-ct-title-block h2 i {
-    color: var(--secondary-color);
+.nx-hub-title-block h2 i {
+    color: var(--primary-color);
 }
 
-.nx-ct-subtitle {
+.nx-hub-subtitle {
     font-size: 13px;
     color: var(--text-secondary);
-    margin-top: 2px;
+    margin-top: 4px;
 }
 
-/* Filter Actions controls headers wrapper */
-.nx-ct-header-actions {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-wrap: wrap;
-}
-
-.nx-ct-search-box {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    padding: 8px 14px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 260px;
-}
-
-.nx-ct-search-box i {
-    color: var(--text-muted);
-    font-size: 16px;
-}
-
-.nx-ct-search-box input {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--text-primary);
-    font-size: 13px;
-    width: 100%;
-}
-
-.nx-ct-tabs-wrapper {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    padding: 4px;
-    border-radius: 10px;
-    display: flex;
-    gap: 4px;
-}
-
-.nx-ct-tab-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    padding: 8px 14px;
-    font-size: 12.5px;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: var(--transition-normal);
-}
-
-.nx-ct-tab-btn:hover {
-    color: var(--text-primary);
-}
-
-.nx-ct-tab-btn.active {
-    background: var(--bg-card);
-    color: var(--text-primary);
-    box-shadow: 0 4px 12px var(--glass-shadow);
-}
-
-/* --- SPLIT GRID-MATRIX ENVIRONMENT DESIGN --- */
-.nx-ct-main-layout {
+/* CENTRAL TWO-COLUMN ARCHITECTURE */
+.nx-hub-layout {
     display: grid;
-    grid-template-columns: 1fr 340px;
+    grid-template-columns: 320px 1fr;
     gap: 24px;
+    margin-top: 24px;
     align-items: start;
 }
 
-.nx-ct-cards-matrix {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-}
-
-/* =========================================================
-   PREMIUM PLATFORM MASTER TRADER CARDS SYSTEM
-========================================================= */
-.nx-ct-trader-card {
+/* LEFT SIDEBAR CONTROLS */
+.nx-hub-sidebar {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 24px;
-    position: relative;
-    box-shadow: 0 12px 30px var(--glass-shadow);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    overflow: hidden;
-    transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
-}
-
-.nx-ct-trader-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--primary-color);
-    box-shadow: var(--glow-primary);
-}
-
-.nx-ct-trader-card.trending-master {
-    border-color: rgba(0, 212, 255, 0.25);
-    background: linear-gradient(180deg, var(--bg-card) 0%, rgba(0, 212, 255, 0.01) 100%);
-}
-
-/* Featured Header Ribbon */
-.featured-ribbon {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: var(--secondary-color);
-    color: #070b14;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 4px 12px;
-    border-bottom-left-radius: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.trader-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.trader-profile-info {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.trader-avatar-wrapper {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-}
-
-.trader-avatar-wrapper.color-primary {
-    background: rgba(108, 99, 255, 0.12);
-    color: var(--primary-color);
-}
-
-.trader-avatar-wrapper.color-secondary {
-    background: rgba(0, 212, 255, 0.12);
-    color: var(--secondary-color);
-}
-
-.trader-avatar-wrapper.color-accent {
-    background: rgba(139, 92, 246, 0.12);
-    color: var(--accent-color);
-}
-
-.trader-profile-info h3 {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.trader-handle {
-    font-size: 12px;
-    color: var(--text-muted);
-}
-
-/* Risk Status Indicators */
-.badge-pill {
-    font-size: 10px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 30px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.label-low {
-    background: rgba(16, 185, 129, 0.1);
-    color: #10b981;
-}
-
-.label-high {
-    background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
-}
-
-/* Grid Performance Metrics Row */
-.trader-performance-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    padding: 12px;
-    text-align: center;
-}
-
-.stat-box {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.stat-box:not(:last-child) {
-    border-right: 1px solid var(--border-color);
-}
-
-.stat-label {
-    font-size: 11px;
-    color: var(--text-muted);
-    font-weight: 500;
-}
-
-.stat-value {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-primary);
-}
-
-.stat-value.color-green {
-    color: #10b981;
-}
-
-/* Pure CSS Sparkline Graphics Engines */
-.trader-sparkline-box {
-    height: 45px;
-    display: flex;
-    align-items: flex-end;
-    gap: 6px;
-    padding: 4px 0;
-    border-bottom: 1px dashed var(--border-color);
-}
-
-.sparkline-bar {
-    flex: 1;
-    background: linear-gradient(180deg, var(--primary-color) 0%, rgba(108, 99, 255, 0.1) 100%);
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    opacity: 0.85;
-    transition: opacity 0.2s;
-}
-
-.trending-master .sparkline-bar {
-    background: linear-gradient(180deg, var(--secondary-color) 0%, rgba(0, 212, 255, 0.1) 100%);
-}
-
-.nx-ct-trader-card:hover .sparkline-bar {
-    opacity: 1;
-}
-
-.trader-footer-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
-    color: var(--text-secondary);
-}
-
-.trader-footer-meta strong {
-    color: var(--text-primary);
-}
-
-.nx-ct-action-btn {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    padding: 8px 14px;
-    font-size: 12px;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: var(--transition-normal);
-}
-
-.nx-ct-action-btn:hover {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-    color: #fff;
-    box-shadow: var(--glow-primary);
-}
-
-/* =========================================================
-   REAL-TIME ORDER FLOW STREAM TERMINAL PANEL
-========================================================= */
-.nx-ct-terminal-panel {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 20px;
-    box-shadow: 0 12px 30px var(--glass-shadow);
+    padding: 16px;
     display: flex;
     flex-direction: column;
     gap: 16px;
+    box-shadow: 0 10px 30px var(--glass-shadow);
 }
 
-.terminal-panel-header h3 {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-primary);
+.nx-hub-search-wrapper {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 8px;
 }
 
-.terminal-panel-header h3 i {
-    color: var(--accent-color);
+.nx-hub-search-wrapper input {
+    width: 100%;
+    padding: 10px 12px 10px 38px;
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 13px;
+    outline: none;
 }
 
-.terminal-panel-header p {
-    font-size: 11px;
+.search-icon-input {
+    position: absolute;
+    left: 12px;
     color: var(--text-muted);
-    margin-top: 2px;
-    line-height: 1.4;
+    font-size: 16px;
 }
 
-.terminal-log-stream {
+.nx-hub-user-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    max-height: 420px;
+    gap: 10px;
+    max-height: 600px;
     overflow-y: auto;
-    padding-right: 2px;
 }
 
-/* Real-Time Entry Animation Nodes */
-.terminal-log-row {
+/* USER INTERACTIVE CARDS */
+.nx-hub-user-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
-    padding: 10px 12px;
-    border-radius: 8px;
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.nx-hub-user-card:hover {
+    background: var(--bg-hover);
+}
+
+.nx-hub-user-card.active-hub-node {
+    background: rgba(108, 99, 255, 0.08);
+    border-color: var(--primary-color);
+}
+
+.hub-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    color: #fff;
+    flex-shrink: 0;
+}
+
+.bg-gradient-blue {
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+}
+
+.bg-gradient-purple {
+    background: linear-gradient(135deg, #8b5cf6, #ec4899);
+}
+
+.hub-user-meta {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 2px;
 }
 
-.position-entry-animation {
-    animation: logEntryPulse 0.4s ease-out forwards;
-}
-
-@keyframes logEntryPulse {
-    from {
-        opacity: 0;
-        transform: translateX(10px);
-        background: var(--bg-hover);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.log-timestamp {
-    font-size: 10px;
+.hub-user-name {
+    font-size: 13.5px;
+    color: var(--text-primary);
     font-weight: 600;
+}
+
+.hub-user-uid {
+    font-size: 11px;
     color: var(--text-muted);
+}
+
+.hub-user-balance {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 2px;
     font-family: monospace;
 }
 
-.log-body {
-    font-size: 12px;
-    color: var(--text-secondary);
-    line-height: 1.4;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-}
-
-.log-body strong {
-    color: var(--text-primary);
-    font-weight: 600;
-}
-
-.log-tag-green {
-    background: rgba(16, 185, 129, 0.12);
-    color: #10b981;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-
-.log-tag-muted {
-    background: var(--glass-bg);
-    color: var(--text-muted);
-    font-size: 10px;
-    font-weight: 600;
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-
-/* =========================================================
-   OVERLAY DIALOG SYSTEM: PORTFOLIO MIRROR MODAL
-========================================================= */
-.nx-ct-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(7, 11, 20, 0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    z-index: 2000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.25s ease, visibility 0.25s ease;
-}
-
-.nx-ct-modal-overlay.modal-active {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
-.nx-ct-modal-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    width: 100%;
-    max-width: 440px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-    transform: scale(0.96);
-    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-}
-
-.nx-ct-modal-overlay.modal-active .nx-ct-modal-card {
-    transform: scale(1);
-}
-
-.nx-ct-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 18px 24px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.nx-ct-modal-header h3 {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.nx-ct-modal-header h3 i {
-    color: var(--primary-color);
-}
-
-.nx-ct-modal-close-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 24px;
-    cursor: pointer;
-    line-height: 1;
-}
-
-.nx-ct-modal-body {
-    padding: 24px;
+/* RIGHT FOCUS CANVAS DISPLAY */
+.nx-hub-main-workspace {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-.nx-ct-target-summary-card {
-    background: var(--bg-secondary);
+.nx-hub-profile-banner {
+    background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 16px;
+    border-radius: var(--radius-md);
+    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 10px 30px var(--glass-shadow);
 }
 
-.nx-ct-target-summary-card h4 {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 4px;
-}
-
-.summary-label {
-    font-size: 11px;
-    color: var(--text-muted);
-    display: block;
-}
-
-.summary-value {
-    font-size: 16px;
+.banner-eyebrow {
+    font-size: 10px;
     font-weight: 700;
-    color: #10b981;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
 }
 
-.text-right {
-    text-align: right;
+.profile-banner-identity h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 4px;
 }
 
-.nx-ct-form-group {
+.profile-banner-identity p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.profile-banner-actions {
     display: flex;
-    flex-direction: column;
     gap: 10px;
 }
 
-.label-row-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    font-size: 13px;
+.btn-hub-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 12.5px;
     font-weight: 600;
-    color: var(--text-secondary);
-}
-
-.neon-numerical-value {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--secondary-color);
-}
-
-/* High-Fidelity Custom Range Slider */
-.nx-ct-slider {
-    width: 100%;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 6px;
-    background: var(--bg-main);
-    border-radius: 4px;
-    outline: none;
-}
-
-.nx-ct-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--primary-color);
     cursor: pointer;
-    box-shadow: var(--glow-primary);
-    transition: transform 0.1s;
+    border: none;
+    transition: opacity 0.2s ease;
 }
 
-.nx-ct-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
+.btn-hub-action:hover {
+    opacity: 0.9;
 }
 
-.slider-bounds {
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    color: var(--text-muted);
-}
-
-/* Premium Checkbox Toggle Configuration */
-.toggle-control-label {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    cursor: pointer;
-}
-
-.toggle-control-label input {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.checkbox-box {
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--border-color);
-    border-radius: 4px;
-    background: var(--bg-main);
-    display: block;
-    flex-shrink: 0;
-    margin-top: 2px;
-    position: relative;
-    transition: var(--transition-normal);
-}
-
-.toggle-control-label input:checked+.checkbox-box {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-.toggle-control-label input:checked+.checkbox-box::after {
-    content: '\2713';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-.toggle-control-label strong {
-    font-size: 13px;
+.btn-hub-action.secondary {
+    background: var(--bg-secondary);
     color: var(--text-primary);
-    display: block;
+    border: 1px solid var(--border-color);
 }
 
-.toggle-control-label p {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 2px;
-    line-height: 1.4;
+.btn-hub-action.danger {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
 }
 
-/* In-Form Assets Status Modules */
-.nx-ct-wallet-verification-box {
-    background: rgba(0, 212, 255, 0.02);
-    border: 1px solid rgba(0, 212, 255, 0.08);
-    border-radius: 8px;
-    padding: 12px 14px;
+/* STAT METRICS STRIPS */
+.nx-hub-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.nx-hub-stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 18px;
+    box-shadow: 0 10px 30px var(--glass-shadow);
+}
+
+.stat-card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 13px;
+    font-size: 11px;
+    font-weight: 600;
     color: var(--text-secondary);
+    margin-bottom: 12px;
 }
 
-.nx-ct-wallet-verification-box strong {
+.nx-hub-stat-card h2 {
+    font-size: 24px;
+    font-weight: 700;
     color: var(--text-primary);
+    font-family: monospace;
 }
 
-.nx-ct-submit-execution-btn {
-    background: var(--primary-color);
-    color: #ffffff;
-    border: none;
-    padding: 14px;
-    border-radius: 8px;
+.warning-glow h2 {
+    color: #fbbf24;
+}
+
+.success-glow h2 {
+    color: #10b981;
+}
+
+/* DATA AND TABLES GRID SPLIT */
+.nx-hub-details-split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.nx-hub-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    box-shadow: 0 10px 30px var(--glass-shadow);
+}
+
+.panel-header-block h3 {
     font-size: 14px;
     font-weight: 600;
-    cursor: pointer;
+    color: var(--text-primary);
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 8px;
-    box-shadow: var(--glow-primary);
-    transition: var(--transition-normal);
+    margin-bottom: 16px;
 }
 
-.nx-ct-submit-execution-btn:hover {
-    background: var(--primary-hover);
+.portfolio-active-pool-box {
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
 }
 
-/* --- ADAPTIVE RESPONSIVENESS OVERRIDES --- */
-@media (max-width: 1140px) {
-    .nx-ct-main-layout {
+.pool-tag {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.portfolio-active-pool-box h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 4px;
+}
+
+.pool-stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-color);
+}
+
+.pool-stats-row span {
+    font-size: 11px;
+    color: var(--text-secondary);
+    display: block;
+}
+
+.pool-stats-row strong {
+    font-size: 15px;
+    color: var(--text-primary);
+    font-family: monospace;
+}
+
+.pool-stats-row .txt-green {
+    color: #10b981;
+}
+
+.pool-stats-row .txt-purple {
+    color: #8b5cf6;
+}
+
+/* DATA TABLES MATRIX WITH SAFE OVERFLOW SWIPING */
+.nx-hub-table-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    display: block !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+
+.nx-hub-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.nx-hub-table th {
+    padding: 10px;
+    font-size: 11px;
+    color: var(--text-secondary);
+    border-bottom: 1px solid var(--border-color);
+    text-transform: uppercase;
+}
+
+.nx-hub-table td {
+    padding: 12px 10px;
+    font-size: 13px;
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.code-hash {
+    font-family: monospace;
+    background: var(--bg-main);
+    padding: 3px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.gateway-cell {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.gateway-cell i {
+    color: #f59e0b;
+    font-size: 14px;
+}
+
+.txt-amount {
+    font-family: monospace;
+    color: #10b981;
+}
+
+.txt-time {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+/* Verification Status Pills */
+.status-pill {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.status-pill.state-pending {
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+}
+
+.status-pill.state-successful {
+    background: rgba(16, 185, 129, 0.12);
+    color: #10b981;
+}
+
+/* RESPONSIVE DESIGN ADJUSTMENTS FOR LAPTOPS/PHONES */
+@media (max-width: 1150px) {
+    .nx-hub-layout {
         grid-template-columns: 1fr;
     }
 
-    .nx-ct-terminal-panel {
-        order: 2;
+    .nx-hub-user-list {
+        flex-direction: row;
+        overflow-x: auto;
+        max-height: none;
+        padding-bottom: 6px;
     }
 
-    .nx-ct-cards-matrix {
-        order: 1;
+    .nx-hub-user-card {
+        min-width: 260px;
     }
 }
 
 @media (max-width: 768px) {
-    .nx-ct-cards-matrix {
+    .nx-hub-metrics-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .nx-hub-profile-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+
+    .nx-hub-table {
+        min-width: 550px !important;
+    }
+}
+
+/* POPUP MODAL BACKGROUND BLUR RING OVERLAYS */
+.hub-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(10, 14, 22, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.hub-modal-content {
+    background: #1a2234;
+    border: 1px solid #2e3a54;
+    border-radius: 12px;
+    padding: 24px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.hub-modal-content h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.hub-modal-content p {
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.hub-modal-content textarea {
+    width: 100%;
+    height: 120px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    color: #ffffff;
+    padding: 12px;
+    font-size: 13px;
+    outline: none;
+    resize: none;
+    margin-bottom: 16px;
+}
+
+.modal-actions-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.btn-modal-cancel {
+    background: transparent;
+    border: 1px solid #334155;
+    color: #94a3b8;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-modal-confirm {
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.btn-modal-confirm.success {
+    background: #10b981;
+}
+
+.btn-modal-confirm.danger {
+    background: #ef4444;
+}
+
+
+
+/* =========================================================
+   MOBILE & RESPONSIVE OVERFLOW FIXES
+   PASTE THIS AT THE VERY BOTTOM OF YOUR CSS
+========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* MAIN CONTAINER */
+.nx-hub-container {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    padding: 15px;
+}
+
+/* FIX GRID OVERFLOW */
+.nx-hub-layout {
+    width: 100%;
+    align-items: stretch;
+}
+
+/* FIX SIDEBAR */
+.nx-hub-sidebar {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* FIX USER CARD CONTENT */
+.nx-hub-user-card {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.hub-user-meta {
+    min-width: 0;
+    flex: 1;
+}
+
+.hub-user-name,
+.hub-user-uid,
+.hub-user-balance {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* FIX MAIN WORKSPACE */
+.nx-hub-main-workspace {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+/* PROFILE BANNER FIX */
+.nx-hub-profile-banner {
+    width: 100%;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.profile-banner-identity {
+    min-width: 0;
+    flex: 1;
+}
+
+.profile-banner-identity h3,
+.profile-banner-identity p {
+    word-break: break-word;
+}
+
+/* ACTION BUTTONS */
+.profile-banner-actions {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 10px;
+}
+
+.profile-banner-actions .btn-hub-action {
+    flex: 1 1 160px;
+    justify-content: center;
+}
+
+/* METRICS GRID */
+.nx-hub-metrics-grid {
+    width: 100%;
+}
+
+.nx-hub-stat-card {
+    min-width: 0;
+}
+
+.nx-hub-stat-card h2 {
+    font-size: clamp(18px, 4vw, 24px);
+    word-break: break-word;
+}
+
+/* PERFORMANCE STATS */
+.pool-stats-row {
+    width: 100%;
+}
+
+.pool-stats-row div {
+    min-width: 0;
+}
+
+.pool-stats-row strong {
+    word-break: break-word;
+}
+
+/* TABLE FIX */
+.nx-hub-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.nx-hub-table {
+    min-width: 700px;
+}
+
+/* MODAL FIX */
+.hub-modal-content {
+    width: calc(100% - 30px);
+    max-width: 480px;
+}
+
+/* =========================================
+   TABLET RESPONSIVE
+========================================= */
+@media (max-width: 1150px) {
+
+    .nx-hub-layout {
         grid-template-columns: 1fr;
     }
 
-    .nx-ct-workspace-header {
+    .nx-hub-user-list {
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding-bottom: 8px;
+        scrollbar-width: thin;
+    }
+
+    .nx-hub-user-card {
+        min-width: 260px;
+        flex-shrink: 0;
+    }
+
+    .nx-hub-main-workspace {
+        width: 100%;
+    }
+}
+
+/* =========================================
+   MOBILE RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+
+    .nx-hub-container {
+        padding: 12px;
+    }
+
+    .nx-hub-header {
+        width: 100%;
+    }
+
+    .nx-hub-title-block h2 {
+        font-size: 18px;
+        line-height: 1.4;
+        flex-wrap: wrap;
+    }
+
+    .nx-hub-subtitle {
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .nx-hub-profile-banner {
+        padding: 16px;
         flex-direction: column;
         align-items: flex-start;
-        gap: 16px;
     }
 
-    .nx-ct-header-actions {
+    .profile-banner-actions {
         width: 100%;
+    }
+
+    .profile-banner-actions .btn-hub-action {
+        width: 100%;
+    }
+
+    .nx-hub-metrics-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .pool-stats-row {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .nx-hub-panel {
+        padding: 16px;
+    }
+
+    .nx-hub-table {
+        min-width: 650px;
+    }
+
+    .hub-modal-content {
+        padding: 18px;
+    }
+
+    .modal-actions-row {
         flex-direction: column;
-        align-items: stretch;
     }
 
-    .nx-ct-search-box {
-        min-width: 100%;
-    }
-
-    .nx-ct-tabs-wrapper {
+    .btn-modal-cancel,
+    .btn-modal-confirm {
         width: 100%;
-        justify-content: center;
+    }
+}
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+@media (max-width: 480px) {
+
+    .nx-hub-container {
+        padding: 10px;
     }
 
-    .nx-ct-tab-btn {
-        flex: 1;
-        text-align: center;
+    .nx-hub-user-card {
+        min-width: 220px;
+    }
+
+    .hub-avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 12px;
+    }
+
+    .hub-user-name {
+        font-size: 12px;
+    }
+
+    .hub-user-balance {
+        font-size: 11px;
+    }
+
+    .profile-banner-identity h3 {
+        font-size: 18px;
+    }
+
+    .nx-hub-stat-card h2 {
+        font-size: 18px;
+    }
+
+    .pool-stats-row strong {
+        font-size: 14px;
+    }
+
+    .nx-hub-table {
+        min-width: 600px;
+    }
+}
+
+/* =========================================
+   FINAL MOBILE TABLE OVERFLOW FIX
+========================================= */
+
+@media (max-width: 768px) {
+
+    /* Main container fix */
+    .nx-hub-container,
+    .nx-hub-main-workspace,
+    .nx-hub-panel,
+    .nx-hub-details-split {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+    }
+
+    /* Table wrapper */
+    .nx-hub-table-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        display: block !important;
+        -webkit-overflow-scrolling: touch !important;
+        padding-bottom: 8px !important;
+    }
+
+    /* FORCE TABLE WIDTH */
+    .nx-hub-table {
+        width: 900px !important;
+        min-width: 900px !important;
+        border-collapse: collapse !important;
+    }
+
+    /* Prevent text squeezing */
+    .nx-hub-table th,
+    .nx-hub-table td {
+        white-space: nowrap !important;
+    }
+
+    /* Optional scrollbar styling */
+    .nx-hub-table-wrapper::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .nx-hub-table-wrapper::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 20px;
     }
 }

@@ -117,3 +117,148 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 });
+
+// Main Section starts here
+// =========================================================
+    // NEXUIST COPY TRADING PROTOCOL INTERACTION AUTOMATION LOGIC
+    // =========================================================
+    const ctSearchBoxInput = document.getElementById("trader-search-input");
+    const ctFilterTabButtons = document.querySelectorAll(".nx-ct-tab-btn");
+    const ctMasterTraderCards = document.querySelectorAll(".nx-ct-trader-card");
+    const ctLivePositionsFeed = document.getElementById("live-positions-feed");
+
+    const modalCopyWindow = document.getElementById("modal-copy-execution");
+    const modalCloseTriggerBtn = document.querySelector(".nx-ct-modal-close-btn");
+    const openCopyModalButtons = document.querySelectorAll(".trigger-copy-modal");
+
+    const modalAllocationSlider = document.getElementById("modal-allocation-slider");
+    const modalAllocationFeedback = document.getElementById("modal-allocation-feedback");
+    const routingExecutionForm = document.getElementById("nexuist-copy-routing-form");
+
+    // --- LIVE SEARCH AND RISKS PARAMETER FILTER ENGINE ---
+    function filterMasterTradersMatrix() {
+        const structuralQuery = ctSearchBoxInput ? ctSearchBoxInput.value.toLowerCase().trim() : "";
+        const activeTabFilter = document.querySelector(".nx-ct-tab-btn.active").getAttribute("data-filter");
+
+        ctMasterTraderCards.forEach(card => {
+            const masterRiskProfile = card.getAttribute("data-risk");
+            const masterName = card.getAttribute("data-name").toLowerCase();
+            
+            const matchSearch = masterName.includes(structuralQuery);
+            const matchFilter = (activeTabFilter === "all" || masterRiskProfile === activeTabFilter);
+
+            if (matchSearch && matchFilter) {
+                card.style.display = "flex";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
+
+    if (ctSearchBoxInput) {
+        ctSearchBoxInput.addEventListener("input", filterMasterTradersMatrix);
+    }
+
+    if (ctFilterTabButtons.length > 0) {
+        ctFilterTabButtons.forEach(button => {
+            button.addEventListener("click", () => {
+                ctFilterTabButtons.forEach(btn => btn.classList.remove("active"));
+                button.classList.add("active");
+                filterMasterTradersMatrix();
+            });
+        });
+    }
+
+    // --- LIVE MIRROR ORDER REPLICATION SIMULATOR ---
+    const simulatedOrdersPool = [
+        { master: "@apex-algo", action: "opened BUY ETH/USDT", result: "Replicated", type: "sync" },
+        { master: "@eth-whale", action: "closed BUY BTC/USDT", result: "+$890.10", type: "profit" },
+        { master: "@delta-neutral", action: "opened SELL SOL/USDT", result: "Replicated", type: "sync" },
+        { master: "@apex-algo", action: "closed SELL LINK/USDT", result: "+$124.00", type: "profit" }
+    ];
+
+    setInterval(() => {
+        if (!ctLivePositionsFeed) return;
+
+        const dateObject = new Date();
+        const timestamp = dateObject.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const pickRandomOrder = simulatedOrdersPool[Math.floor(Math.random() * simulatedOrdersPool.length)];
+
+        const outputRow = document.createElement("div");
+        outputRow.className = "terminal-log-row position-entry-animation";
+
+        const tagClass = pickRandomOrder.type === "profit" ? "log-tag-green" : "log-tag-muted";
+
+        outputRow.innerHTML = `
+            <span class="log-timestamp">${timestamp}</span>
+            <div class="log-body">
+                <strong>${pickRandomOrder.master}</strong> ${pickRandomOrder.action}
+                <span class="${tagClass}">${pickRandomOrder.result}</span>
+            </div>
+        `;
+
+        ctLivePositionsFeed.insertBefore(outputRow, ctLivePositionsFeed.firstChild);
+
+        // Cap log rows count inside the stream layout block to avoid memory leaks
+        if (ctLivePositionsFeed.children.length > 15) {
+            ctLivePositionsFeed.removeChild(ctLivePositionsFeed.lastChild);
+        }
+    }, 7000); // Poll fresh mirror events sequentially every 7 seconds
+
+    // --- ALLOCATION PARAMETERS INTERACTIVE MODAL OVERLAY ---
+    if (openCopyModalButtons.length > 0 && modalCopyWindow) {
+        openCopyModalButtons.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const masterName = btn.getAttribute("data-master");
+                const masterRoi = btn.getAttribute("data-roi");
+                const masterRisk = btn.getAttribute("data-risk");
+
+                document.getElementById("modal-trader-name").textContent = masterName;
+                document.getElementById("modal-trader-roi").textContent = `+${masterRoi}%`;
+                
+                const riskPillNode = document.getElementById("modal-trader-risk");
+                riskPillNode.textContent = masterRisk;
+                riskPillNode.className = `badge-pill ${masterRisk.includes("Low") ? "label-low" : "label-high"}`;
+
+                modalCopyWindow.classList.add("modal-active");
+            });
+        });
+    }
+
+    if (modalCloseTriggerBtn && modalCopyWindow) {
+        modalCloseTriggerBtn.addEventListener("click", () => {
+            modalCopyWindow.classList.remove("modal-active");
+        });
+    }
+
+    if (modalCopyWindow) {
+        modalCopyWindow.addEventListener("click", (e) => {
+            if (e.target === modalCopyWindow) modalCopyWindow.classList.remove("modal-active");
+        });
+    }
+
+    // Interactive slider text output formatter link
+    if (modalAllocationSlider && modalAllocationFeedback) {
+        modalAllocationSlider.addEventListener("input", () => {
+            const numericValue = parseInt(modalAllocationSlider.value);
+            modalAllocationFeedback.textContent = `$${numericValue.toLocaleString()}`;
+        });
+    }
+
+    // --- FORM SUBSCRIPTION DISPATCH PROCESSOR ---
+    if (routingExecutionForm) {
+        routingExecutionForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const inputCapital = parseFloat(modalAllocationSlider.value);
+            const userLiquidity = parseFloat(document.getElementById("ct-user-liquidity-pool").textContent.replace(/[^0-9.-]+/g, ""));
+
+            if (inputCapital > userLiquidity) {
+                alert("Syndication Aborted: Requested allocation value exceeds available wallet pool balance reserves.");
+                return;
+            }
+
+            alert(`Mirror Protocol Initialized successfully! Trades executed by your target master pipeline are now synchronized to your allocation.`);
+            modalCopyWindow.classList.remove("modal-active");
+        });
+    }

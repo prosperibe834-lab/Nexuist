@@ -707,774 +707,373 @@ html[data-theme="light"] .sidebar .nav-links .switch-thumb {
 }
 
 /* Main Styling starts here */
-/* =========================================================
-   NEXUIST PORTFOLIO SYNCHRONIZATION ARCHITECTURE STYLES
-========================================================= */
+/* =========================================================================
+   NEXUIST DASHBOARD FRAMEWORK - FIXED WIDTH STABLE SYSTEM ACCESS MATRIX STYLES
+========================================================================= */
 
-/* --- LAYOUT AND STRUCTURAL CONTROLS --- */
-.nx-ct-animate-fade-in {
-    animation: nxCtFadeIn 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes nxCtFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(16px);
-        filter: blur(5px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-    }
-}
-
-.nx-ct-workspace-container {
-    width: 100%;
-    padding: 8px 0;
+/* --- 1. LAYOUT CONSTRAINTS AND WRAPPERS --- */
+.admin-matrix-container {
+    padding: 2rem 2.5rem;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 2rem;
+    background-color: var(--bg-main);
+    min-height: 100vh;
+    box-sizing: border-box;
+    width: 100%;
+    transition: background-color var(--transition-normal);
 }
 
-/* --- WORKSPACE TITLE CONTROLS STRIP --- */
-.nx-ct-workspace-header {
+/* --- 2. MATRIX BRAND HEADER BLOCK --- */
+.matrix-page-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.nx-ct-title-block h2 {
-    font-size: 22px;
-    font-weight: 700;
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    letter-spacing: -0.3px;
-}
-
-.nx-ct-title-block h2 i {
-    color: var(--secondary-color);
-}
-
-.nx-ct-subtitle {
-    font-size: 13px;
-    color: var(--text-secondary);
-    margin-top: 2px;
-}
-
-/* Filter Actions controls headers wrapper */
-.nx-ct-header-actions {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-wrap: wrap;
-}
-
-.nx-ct-search-box {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    padding: 8px 14px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 260px;
-}
-
-.nx-ct-search-box i {
-    color: var(--text-muted);
-    font-size: 16px;
-}
-
-.nx-ct-search-box input {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--text-primary);
-    font-size: 13px;
+    gap: 1.5rem;
     width: 100%;
 }
 
-.nx-ct-tabs-wrapper {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    padding: 4px;
-    border-radius: 10px;
-    display: flex;
-    gap: 4px;
+.matrix-title-block h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.4rem;
 }
 
-.nx-ct-tab-btn {
-    background: transparent;
-    border: none;
+.matrix-title-block p {
+    font-size: 0.9rem;
     color: var(--text-secondary);
-    padding: 8px 14px;
-    font-size: 12.5px;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: var(--transition-normal);
+    max-width: 850px;
+    line-height: 1.5;
 }
 
-.nx-ct-tab-btn:hover {
-    color: var(--text-primary);
-}
-
-.nx-ct-tab-btn.active {
-    background: var(--bg-card);
-    color: var(--text-primary);
-    box-shadow: 0 4px 12px var(--glass-shadow);
-}
-
-/* --- SPLIT GRID-MATRIX ENVIRONMENT DESIGN --- */
-.nx-ct-main-layout {
-    display: grid;
-    grid-template-columns: 1fr 340px;
-    gap: 24px;
-    align-items: start;
-}
-
-.nx-ct-cards-matrix {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-}
-
-/* =========================================================
-   PREMIUM PLATFORM MASTER TRADER CARDS SYSTEM
-========================================================= */
-.nx-ct-trader-card {
+.matrix-active-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
     background: var(--bg-card);
     border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 24px;
-    position: relative;
-    box-shadow: 0 12px 30px var(--glass-shadow);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    overflow: hidden;
-    transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
-}
-
-.nx-ct-trader-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--primary-color);
-    box-shadow: var(--glow-primary);
-}
-
-.nx-ct-trader-card.trending-master {
-    border-color: rgba(0, 212, 255, 0.25);
-    background: linear-gradient(180deg, var(--bg-card) 0%, rgba(0, 212, 255, 0.01) 100%);
-}
-
-/* Featured Header Ribbon */
-.featured-ribbon {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: var(--secondary-color);
-    color: #070b14;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 4px 12px;
-    border-bottom-left-radius: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.trader-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.trader-profile-info {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.trader-avatar-wrapper {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-}
-
-.trader-avatar-wrapper.color-primary {
-    background: rgba(108, 99, 255, 0.12);
-    color: var(--primary-color);
-}
-
-.trader-avatar-wrapper.color-secondary {
-    background: rgba(0, 212, 255, 0.12);
-    color: var(--secondary-color);
-}
-
-.trader-avatar-wrapper.color-accent {
-    background: rgba(139, 92, 246, 0.12);
-    color: var(--accent-color);
-}
-
-.trader-profile-info h3 {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.trader-handle {
-    font-size: 12px;
-    color: var(--text-muted);
-}
-
-/* Risk Status Indicators */
-.badge-pill {
-    font-size: 10px;
-    font-weight: 700;
-    padding: 4px 10px;
+    padding: 0.65rem 1.25rem;
     border-radius: 30px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    color: var(--secondary-color);
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
+.matrix-active-count i { font-size: 1.1rem; }
 
-.label-low {
-    background: rgba(16, 185, 129, 0.1);
-    color: #10b981;
-}
-
-.label-high {
-    background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
-}
-
-/* Grid Performance Metrics Row */
-.trader-performance-stats {
+/* --- 3. PREMIUM ROLE DISTRIBUTION CARDS --- */
+.role-tiers-distribution-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.tier-overview-card {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: 0 4px 25px var(--glass-shadow);
+    position: relative;
+}
+
+/* Cascade layout entrance animation configurations for desktop screens */
+@keyframes matrixFadeSlideUp {
+    0% { opacity: 0; transform: translateY(15px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.tier-overview-card:nth-child(1) { animation: matrixFadeSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.tier-overview-card:nth-child(2) { animation: matrixFadeSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.tier-overview-card:nth-child(3) { animation: matrixFadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+
+.tier-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tier-badge-icon {
+    width: 40px;
+    height: 40px;
     border-radius: 10px;
-    padding: 12px;
-    text-align: center;
-}
-
-.stat-box {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.stat-box:not(:last-child) {
-    border-right: 1px solid var(--border-color);
-}
-
-.stat-label {
-    font-size: 11px;
-    color: var(--text-muted);
-    font-weight: 500;
-}
-
-.stat-value {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-primary);
-}
-
-.stat-value.color-green {
-    color: #10b981;
-}
-
-/* Pure CSS Sparkline Graphics Engines */
-.trader-sparkline-box {
-    height: 45px;
-    display: flex;
-    align-items: flex-end;
-    gap: 6px;
-    padding: 4px 0;
-    border-bottom: 1px dashed var(--border-color);
-}
-
-.sparkline-bar {
-    flex: 1;
-    background: linear-gradient(180deg, var(--primary-color) 0%, rgba(108, 99, 255, 0.1) 100%);
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    opacity: 0.85;
-    transition: opacity 0.2s;
-}
-
-.trending-master .sparkline-bar {
-    background: linear-gradient(180deg, var(--secondary-color) 0%, rgba(0, 212, 255, 0.1) 100%);
-}
-
-.nx-ct-trader-card:hover .sparkline-bar {
-    opacity: 1;
-}
-
-.trader-footer-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
-    color: var(--text-secondary);
-}
-
-.trader-footer-meta strong {
-    color: var(--text-primary);
-}
-
-.nx-ct-action-btn {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    padding: 8px 14px;
-    font-size: 12px;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 6px;
-    transition: var(--transition-normal);
-}
-
-.nx-ct-action-btn:hover {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-    color: #fff;
-    box-shadow: var(--glow-primary);
-}
-
-/* =========================================================
-   REAL-TIME ORDER FLOW STREAM TERMINAL PANEL
-========================================================= */
-.nx-ct-terminal-panel {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 20px;
-    box-shadow: 0 12px 30px var(--glass-shadow);
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.terminal-panel-header h3 {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.terminal-panel-header h3 i {
-    color: var(--accent-color);
-}
-
-.terminal-panel-header p {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 2px;
-    line-height: 1.4;
-}
-
-.terminal-log-stream {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    max-height: 420px;
-    overflow-y: auto;
-    padding-right: 2px;
-}
-
-/* Real-Time Entry Animation Nodes */
-.terminal-log-row {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    padding: 10px 12px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.position-entry-animation {
-    animation: logEntryPulse 0.4s ease-out forwards;
-}
-
-@keyframes logEntryPulse {
-    from {
-        opacity: 0;
-        transform: translateX(10px);
-        background: var(--bg-hover);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.log-timestamp {
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--text-muted);
-    font-family: monospace;
-}
-
-.log-body {
-    font-size: 12px;
-    color: var(--text-secondary);
-    line-height: 1.4;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-}
-
-.log-body strong {
-    color: var(--text-primary);
-    font-weight: 600;
-}
-
-.log-tag-green {
-    background: rgba(16, 185, 129, 0.12);
-    color: #10b981;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-
-.log-tag-muted {
-    background: var(--glass-bg);
-    color: var(--text-muted);
-    font-size: 10px;
-    font-weight: 600;
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-
-/* =========================================================
-   OVERLAY DIALOG SYSTEM: PORTFOLIO MIRROR MODAL
-========================================================= */
-.nx-ct-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(7, 11, 20, 0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    z-index: 2000;
-    display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 20px;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.25s ease, visibility 0.25s ease;
+    font-size: 1.25rem;
 }
 
-.nx-ct-modal-overlay.modal-active {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
+.tier-tag {
+    font-size: 0.725rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    padding: 0.25rem 0.65rem;
+    border-radius: 4px;
 }
 
-.nx-ct-modal-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    width: 100%;
-    max-width: 440px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-    transform: scale(0.96);
-    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-}
+/* Individualized Variant Core Design Color Definitions */
+.superuser-variant .tier-badge-icon { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.15); }
+.superuser-variant .tier-tag { background: rgba(239, 68, 68, 0.08); color: #ef4444; }
+.superuser-variant { border-top: 3px solid #ef4444 !important; }
 
-.nx-ct-modal-overlay.modal-active .nx-ct-modal-card {
-    transform: scale(1);
-}
+.compliance-variant .tier-badge-icon { background: rgba(139, 92, 246, 0.1); color: var(--accent-color); border: 1px solid rgba(139, 92, 246, 0.15); }
+.compliance-variant .tier-tag { background: rgba(139, 92, 246, 0.08); color: var(--accent-color); }
+.compliance-variant { border-top: 3px solid var(--accent-color) !important; }
 
-.nx-ct-modal-header {
+.support-variant .tier-badge-icon { background: rgba(0, 212, 255, 0.1); color: var(--secondary-color); border: 1px solid rgba(0, 212, 255, 0.15); }
+.support-variant .tier-tag { background: rgba(0, 212, 255, 0.08); color: var(--secondary-color); }
+.support-variant { border-top: 3px solid var(--secondary-color) !important; }
+
+.tier-overview-card h3 { font-size: 1.25rem; font-weight: 600; color: var(--text-primary); }
+.tier-overview-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; min-height: 68px; }
+.tier-footer-meta { font-size: 0.75rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 0.75rem; font-weight: 500; }
+
+/* --- 4. FIXED VERTICAL WORKSPACE BLOCK REWRITES --- */
+.matrix-split-layout {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 18px 24px;
+    flex-direction: column;
+    gap: 2rem;
+    width: 100%;
+}
+
+.inner-panel-action-block, .inner-panel-registry-logs {
+    background: var(--bg-card);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    box-shadow: 0 4px 30px var(--glass-shadow);
+    box-sizing: border-box;
+    width: 100%;
+    animation: matrixFadeSlideUp 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.block-header-segment {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.2rem;
+    margin-bottom: 1.8rem;
+}
+.block-header-segment h2 { font-size: 1.25rem; font-weight: 600; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem; }
+.block-header-segment h2 i { color: var(--primary-color); }
+.block-header-segment p { font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.25rem; }
+
+/* --- 5. EXCLUSIVE ROW ALIGNMENT PROVISIONING FORM MATRIX --- */
+.panel-form-matrix { width: 100%; box-sizing: border-box; }
+
+.panel-form-grid.admin-provision-row {
+    display: grid !important;
+    grid-template-columns: 1.2fr 1.2fr 0.8fr !important; /* Side-by-side spacing setup */
+    gap: 1.25rem !important;
+    align-items: flex-end !important; /* Snaps input fields and button to an identical horizontal plane */
+    width: 100% !important;
+}
+
+.admin-provision-row .form-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    width: 100% !important;
+}
+
+.admin-provision-row .form-group.button-group {
+    height: 100% !important;
+    justify-content: flex-end !important;
+}
+
+.admin-provision-row label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.input-wrapper-iconic {
+    position: relative;
+    width: 100%;
+}
+.input-wrapper-iconic i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    pointer-events: none;
+}
+
+.admin-provision-row .form-input,
+.admin-provision-row .form-select {
+    width: 100% !important;
+    height: 46px !important;
+    background: rgba(0, 0, 0, 0.15) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 8px !important;
+    padding: 0 1rem 0 2.5rem !important; /* Clear room for icons */
+    color: var(--text-primary) !important;
+    font-size: 0.9rem !important;
+    outline: none !important;
+    box-sizing: border-box !important;
+    transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+.admin-provision-row .form-select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") !important; background-repeat: no-repeat !important; background-position: calc(100% - 1rem) 50% !important; background-size: 16px !important; }
+
+.admin-provision-row .form-input:focus,
+.admin-provision-row .form-select:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 8px rgba(108, 99, 255, 0.15) !important;
+}
+
+/* Button sizing adjustments */
+.admin-provision-row .action-btn.btn-primary {
+    width: 100% !important;
+    height: 46px !important;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color)) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.5rem !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 4px 15px rgba(108, 99, 255, 0.2) !important;
+    transition: all var(--transition-normal) !important;
+}
+.admin-provision-row .action-btn.btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary-hover), #9b6cff) !important;
+    box-shadow: var(--glow-primary) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* --- 6. REAL-TIME AUDIT REGISTRY RECORDS TABLE DATA VIEW --- */
+.registry-table-outer {
+    width: 100%;
+    overflow-x: auto; /* Activates horizontal scrolling safely inside the card block container */
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.registry-data-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.875rem;
+    min-width: 850px; /* Prevents columns from compressing on tablet and split view ports */
+}
+
+.registry-data-table th {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 1rem 1.25rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
     border-bottom: 1px solid var(--border-color);
 }
 
-.nx-ct-modal-header h3 {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    gap: 8px;
+.registry-data-table td {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+    color: #cbd5e1;
 }
+.registry-data-table tr:last-child td { border-bottom: none; }
+.registry-data-table tr:hover td { background: rgba(255, 255, 255, 0.01); }
 
-.nx-ct-modal-header h3 i {
-    color: var(--primary-color);
-}
+.admin-handle-cell { display: flex; align-items: center; gap: 0.5rem; font-weight: 500; color: #ffffff; white-space: nowrap; }
+.admin-handle-cell i { color: var(--text-muted); font-size: 1.1rem; }
+.font-mono { font-family: 'Courier New', Courier, monospace; font-size: 0.85rem; color: var(--secondary-color); white-space: nowrap; }
 
-.nx-ct-modal-close-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 24px;
-    cursor: pointer;
-    line-height: 1;
-}
-
-.nx-ct-modal-body {
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.nx-ct-target-summary-card {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.nx-ct-target-summary-card h4 {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 4px;
-}
-
-.summary-label {
-    font-size: 11px;
-    color: var(--text-muted);
-    display: block;
-}
-
-.summary-value {
-    font-size: 16px;
-    font-weight: 700;
-    color: #10b981;
-}
-
-.text-right {
-    text-align: right;
-}
-
-.nx-ct-form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.label-row-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-secondary);
-}
-
-.neon-numerical-value {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--secondary-color);
-}
-
-/* High-Fidelity Custom Range Slider */
-.nx-ct-slider {
-    width: 100%;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 6px;
-    background: var(--bg-main);
+/* Jurisdiction Dynamic Status Badges */
+.role-pill {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
     border-radius: 4px;
-    outline: none;
-}
-
-.nx-ct-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    cursor: pointer;
-    box-shadow: var(--glow-primary);
-    transition: transform 0.1s;
-}
-
-.nx-ct-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-}
-
-.slider-bounds {
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    color: var(--text-muted);
-}
-
-/* Premium Checkbox Toggle Configuration */
-.toggle-control-label {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    cursor: pointer;
-}
-
-.toggle-control-label input {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.checkbox-box {
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--border-color);
-    border-radius: 4px;
-    background: var(--bg-main);
-    display: block;
-    flex-shrink: 0;
-    margin-top: 2px;
-    position: relative;
-    transition: var(--transition-normal);
-}
-
-.toggle-control-label input:checked+.checkbox-box {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-.toggle-control-label input:checked+.checkbox-box::after {
-    content: '\2713';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-.toggle-control-label strong {
-    font-size: 13px;
-    color: var(--text-primary);
-    display: block;
-}
-
-.toggle-control-label p {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 2px;
-    line-height: 1.4;
-}
-
-/* In-Form Assets Status Modules */
-.nx-ct-wallet-verification-box {
-    background: rgba(0, 212, 255, 0.02);
-    border: 1px solid rgba(0, 212, 255, 0.08);
-    border-radius: 8px;
-    padding: 12px 14px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 13px;
-    color: var(--text-secondary);
-}
-
-.nx-ct-wallet-verification-box strong {
-    color: var(--text-primary);
-}
-
-.nx-ct-submit-execution-btn {
-    background: var(--primary-color);
-    color: #ffffff;
-    border: none;
-    padding: 14px;
-    border-radius: 8px;
-    font-size: 14px;
+    font-size: 0.725rem;
     font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    box-shadow: var(--glow-primary);
-    transition: var(--transition-normal);
+    white-space: nowrap;
+}
+.role-pill.pill-super { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.15); }
+.role-pill.pill-compliance { background: rgba(139, 92, 246, 0.1); color: var(--accent-color); border: 1px solid rgba(139, 92, 246, 0.15); }
+.role-pill.pill-support { background: rgba(0, 212, 255, 0.1); color: var(--secondary-color); border: 1px solid rgba(0, 212, 255, 0.15); }
+
+/* Animation flash for newly created admin row elements */
+.new-row-entry-flash { animation: registryFlashHighlight 2.5s ease-out forwards; }
+@keyframes registryFlashHighlight {
+    0% { background: rgba(108, 99, 255, 0.25); }
+    100% { background: transparent; }
 }
 
-.nx-ct-submit-execution-btn:hover {
-    background: var(--primary-hover);
+/* =========================================================================
+   7. PHONES & HANDHELD MOBILE DISPLAYS RESPONSIVE OVERRIDES
+========================================================================= */
+@media (max-width: 1200px) {
+    .role-tiers-distribution-grid { gap: 1rem; }
+    .tier-overview-card p { min-height: 85px; }
 }
 
-/* --- ADAPTIVE RESPONSIVENESS OVERRIDES --- */
-@media (max-width: 1140px) {
-    .nx-ct-main-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .nx-ct-terminal-panel {
-        order: 2;
-    }
-
-    .nx-ct-cards-matrix {
-        order: 1;
-    }
+@media (max-width: 992px) {
+    .role-tiers-distribution-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .tier-overview-card p { min-height: auto; }
 }
 
 @media (max-width: 768px) {
-    .nx-ct-cards-matrix {
-        grid-template-columns: 1fr;
+    /* Instantly drops active animations to avoid layout jitter or rendering slowdowns on mobile devices */
+    .tier-overview-card, 
+    .inner-panel-action-block, 
+    .inner-panel-registry-logs,
+    .action-btn.btn-primary {
+        animation: none !important;
+        transform: none !important;
+        transition: none !important;
+    }
+    
+    .action-btn.btn-primary:hover {
+        transform: none !important;
+        box-shadow: none !important;
     }
 
-    .nx-ct-workspace-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
+    html, body {
+        overflow-x: hidden !important;
+        width: 100% !important;
     }
 
-    .nx-ct-header-actions {
-        width: 100%;
-        flex-direction: column;
-        align-items: stretch;
+    .admin-matrix-container { padding: 1.25rem 0.85rem !important; gap: 1.5rem; }
+    
+    .matrix-page-header { flex-direction: column !important; align-items: flex-start !important; gap: 0.85rem; }
+    .matrix-active-count { width: 100%; justify-content: center; box-sizing: border-box; }
+
+    .inner-panel-action-block, .inner-panel-registry-logs { padding: 1.25rem 1rem !important; }
+
+    /* Stack input groups cleanly into vertical column formats */
+    .panel-form-grid.admin-provision-row {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+    
+    .admin-provision-row .form-input,
+    .admin-provision-row .form-select {
+        padding-left: 2.5rem !important;
+        height: 48px !important; /* Enhanced touch target sizes for easy tapping */
     }
 
-    .nx-ct-search-box {
-        min-width: 100%;
-    }
-
-    .nx-ct-tabs-wrapper {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .nx-ct-tab-btn {
-        flex: 1;
-        text-align: center;
+    .admin-provision-row .action-btn.btn-primary {
+        height: 48px !important;
+        width: 100% !important;
+        margin-top: 0.5rem !important;
     }
 }

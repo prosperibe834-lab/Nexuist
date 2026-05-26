@@ -707,774 +707,498 @@ html[data-theme="light"] .sidebar .nav-links .switch-thumb {
 }
 
 /* Main Styling starts here */
-/* =========================================================
-   NEXUIST PORTFOLIO SYNCHRONIZATION ARCHITECTURE STYLES
-========================================================= */
+/* =========================================
+   NEXUIST COMPLIANCE SIDEBAR MASTER-DETAIL LAYOUT
+========================================= */
 
-/* --- LAYOUT AND STRUCTURAL CONTROLS --- */
-.nx-ct-animate-fade-in {
-    animation: nxCtFadeIn 0.45s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes nxCtFadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(16px);
-        filter: blur(5px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-        filter: blur(0);
-    }
-}
-
-.nx-ct-workspace-container {
+.kyc-dashboard-wrapper {
     width: 100%;
-    padding: 8px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+    max-width: 100%;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* --- WORKSPACE TITLE CONTROLS STRIP --- */
-.nx-ct-workspace-header {
+.kyc-badge-icon {
+    width: 38px;
+    height: 38px;
+    background-color: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
+    justify-content: center;
+    color: var(--primary-color);
+    font-size: 1.4rem;
+    box-shadow: var(--glass-shadow);
 }
 
-.nx-ct-title-block h2 {
-    font-size: 22px;
+.kyc-title {
+    font-size: 1.65rem;
     font-weight: 700;
     color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    letter-spacing: -0.3px;
+    letter-spacing: -0.02em;
+    margin: 0;
 }
 
-.nx-ct-title-block h2 i {
-    color: var(--secondary-color);
-}
-
-.nx-ct-subtitle {
-    font-size: 13px;
+.kyc-subtitle {
     color: var(--text-secondary);
-    margin-top: 2px;
+    font-size: 0.92rem;
+    margin-top: 4px;
 }
 
-/* Filter Actions controls headers wrapper */
-.nx-ct-header-actions {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex-wrap: wrap;
-}
-
-.nx-ct-search-box {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    padding: 8px 14px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-width: 260px;
-}
-
-.nx-ct-search-box i {
-    color: var(--text-muted);
-    font-size: 16px;
-}
-
-.nx-ct-search-box input {
-    background: transparent;
-    border: none;
-    outline: none;
-    color: var(--text-primary);
-    font-size: 13px;
-    width: 100%;
-}
-
-.nx-ct-tabs-wrapper {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    padding: 4px;
-    border-radius: 10px;
-    display: flex;
-    gap: 4px;
-}
-
-.nx-ct-tab-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    padding: 8px 14px;
-    font-size: 12.5px;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: var(--transition-normal);
-}
-
-.nx-ct-tab-btn:hover {
-    color: var(--text-primary);
-}
-
-.nx-ct-tab-btn.active {
-    background: var(--bg-card);
-    color: var(--text-primary);
-    box-shadow: 0 4px 12px var(--glass-shadow);
-}
-
-/* --- SPLIT GRID-MATRIX ENVIRONMENT DESIGN --- */
-.nx-ct-main-layout {
+/* Master Grid: 30% User Queue Sidebar / 70% Interactive Active Details Document Vault */
+.kyc-layout-grid {
     display: grid;
-    grid-template-columns: 1fr 340px;
+    grid-template-columns: 320px 1fr;
     gap: 24px;
+    width: 100%;
     align-items: start;
 }
 
-.nx-ct-cards-matrix {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-}
-
-/* =========================================================
-   PREMIUM PLATFORM MASTER TRADER CARDS SYSTEM
-========================================================= */
-.nx-ct-trader-card {
-    background: var(--bg-card);
+/* User Application Queue Menu Styles */
+.kyc-users-sidebar {
+    background-color: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 24px;
-    position: relative;
-    box-shadow: 0 12px 30px var(--glass-shadow);
+    padding: 16px;
+    box-shadow: var(--glass-shadow);
+    max-height: calc(100vh - 180px);
     display: flex;
     flex-direction: column;
-    gap: 20px;
     overflow: hidden;
-    transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
 }
 
-.nx-ct-trader-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--primary-color);
-    box-shadow: var(--glow-primary);
+.search-box-container {
+    position: relative;
+    width: 100%;
 }
 
-.nx-ct-trader-card.trending-master {
-    border-color: rgba(0, 212, 255, 0.25);
-    background: linear-gradient(180deg, var(--bg-card) 0%, rgba(0, 212, 255, 0.01) 100%);
-}
-
-/* Featured Header Ribbon */
-.featured-ribbon {
+.search-icon {
     position: absolute;
-    top: 0;
-    right: 0;
-    background: var(--secondary-color);
-    color: #070b14;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 4px 12px;
-    border-bottom-left-radius: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-}
-
-.trader-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.trader-profile-info {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.trader-avatar-wrapper {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-}
-
-.trader-avatar-wrapper.color-primary {
-    background: rgba(108, 99, 255, 0.12);
-    color: var(--primary-color);
-}
-
-.trader-avatar-wrapper.color-secondary {
-    background: rgba(0, 212, 255, 0.12);
-    color: var(--secondary-color);
-}
-
-.trader-avatar-wrapper.color-accent {
-    background: rgba(139, 92, 246, 0.12);
-    color: var(--accent-color);
-}
-
-.trader-profile-info h3 {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.trader-handle {
-    font-size: 12px;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
     color: var(--text-muted);
+    font-size: 1.1rem;
 }
 
-/* Risk Status Indicators */
-.badge-pill {
-    font-size: 10px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 30px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.label-low {
-    background: rgba(16, 185, 129, 0.1);
-    color: #10b981;
-}
-
-.label-high {
-    background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
-}
-
-/* Grid Performance Metrics Row */
-.trader-performance-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    background: var(--bg-secondary);
+.kyc-search-input {
+    width: 100%;
+    background-color: var(--bg-main);
     border: 1px solid var(--border-color);
     border-radius: 10px;
-    padding: 12px;
-    text-align: center;
-}
-
-.stat-box {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.stat-box:not(:last-child) {
-    border-right: 1px solid var(--border-color);
-}
-
-.stat-label {
-    font-size: 11px;
-    color: var(--text-muted);
-    font-weight: 500;
-}
-
-.stat-value {
-    font-size: 14px;
-    font-weight: 700;
+    padding: 11px 14px 11px 40px;
     color: var(--text-primary);
+    font-size: 0.9rem;
+    outline: none;
+    transition: all var(--transition-normal);
 }
 
-.stat-value.color-green {
-    color: #10b981;
-}
-
-/* Pure CSS Sparkline Graphics Engines */
-.trader-sparkline-box {
-    height: 45px;
-    display: flex;
-    align-items: flex-end;
-    gap: 6px;
-    padding: 4px 0;
-    border-bottom: 1px dashed var(--border-color);
-}
-
-.sparkline-bar {
-    flex: 1;
-    background: linear-gradient(180deg, var(--primary-color) 0%, rgba(108, 99, 255, 0.1) 100%);
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    opacity: 0.85;
-    transition: opacity 0.2s;
-}
-
-.trending-master .sparkline-bar {
-    background: linear-gradient(180deg, var(--secondary-color) 0%, rgba(0, 212, 255, 0.1) 100%);
-}
-
-.nx-ct-trader-card:hover .sparkline-bar {
-    opacity: 1;
-}
-
-.trader-footer-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 12px;
-    color: var(--text-secondary);
-}
-
-.trader-footer-meta strong {
-    color: var(--text-primary);
-}
-
-.nx-ct-action-btn {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    padding: 8px 14px;
-    font-size: 12px;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: var(--transition-normal);
-}
-
-.nx-ct-action-btn:hover {
-    background: var(--primary-color);
+.kyc-search-input:focus {
     border-color: var(--primary-color);
-    color: #fff;
     box-shadow: var(--glow-primary);
 }
 
-/* =========================================================
-   REAL-TIME ORDER FLOW STREAM TERMINAL PANEL
-========================================================= */
-.nx-ct-terminal-panel {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 20px;
-    box-shadow: 0 12px 30px var(--glass-shadow);
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.terminal-panel-header h3 {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.terminal-panel-header h3 i {
-    color: var(--accent-color);
-}
-
-.terminal-panel-header p {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 2px;
-    line-height: 1.4;
-}
-
-.terminal-log-stream {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    max-height: 420px;
+.users-queue-list {
     overflow-y: auto;
-    padding-right: 2px;
-}
-
-/* Real-Time Entry Animation Nodes */
-.terminal-log-row {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    padding: 10px 12px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.position-entry-animation {
-    animation: logEntryPulse 0.4s ease-out forwards;
-}
-
-@keyframes logEntryPulse {
-    from {
-        opacity: 0;
-        transform: translateX(10px);
-        background: var(--bg-hover);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.log-timestamp {
-    font-size: 10px;
-    font-weight: 600;
-    color: var(--text-muted);
-    font-family: monospace;
-}
-
-.log-body {
-    font-size: 12px;
-    color: var(--text-secondary);
-    line-height: 1.4;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-}
-
-.log-body strong {
-    color: var(--text-primary);
-    font-weight: 600;
-}
-
-.log-tag-green {
-    background: rgba(16, 185, 129, 0.12);
-    color: #10b981;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-
-.log-tag-muted {
-    background: var(--glass-bg);
-    color: var(--text-muted);
-    font-size: 10px;
-    font-weight: 600;
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-
-/* =========================================================
-   OVERLAY DIALOG SYSTEM: PORTFOLIO MIRROR MODAL
-========================================================= */
-.nx-ct-modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(7, 11, 20, 0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    z-index: 2000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity 0.25s ease, visibility 0.25s ease;
-}
-
-.nx-ct-modal-overlay.modal-active {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
-.nx-ct-modal-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    width: 100%;
-    max-width: 440px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
-    transform: scale(0.96);
-    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-}
-
-.nx-ct-modal-overlay.modal-active .nx-ct-modal-card {
-    transform: scale(1);
-}
-
-.nx-ct-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 18px 24px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.nx-ct-modal-header h3 {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--text-primary);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.nx-ct-modal-header h3 i {
-    color: var(--primary-color);
-}
-
-.nx-ct-modal-close-btn {
-    background: transparent;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 24px;
-    cursor: pointer;
-    line-height: 1;
-}
-
-.nx-ct-modal-body {
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.nx-ct-target-summary-card {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.nx-ct-target-summary-card h4 {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 4px;
-}
-
-.summary-label {
-    font-size: 11px;
-    color: var(--text-muted);
-    display: block;
-}
-
-.summary-value {
-    font-size: 16px;
-    font-weight: 700;
-    color: #10b981;
-}
-
-.text-right {
-    text-align: right;
-}
-
-.nx-ct-form-group {
+    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    padding-right: 4px;
 }
 
-.label-row-meta {
+/* Scrollbar refinement for neat lists */
+.users-queue-list::-webkit-scrollbar {
+    width: 5px;
+}
+.users-queue-list::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 10px;
+}
+
+/* Interactive Queue Card Item Layout */
+.user-queue-card {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-secondary);
-}
-
-.neon-numerical-value {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--secondary-color);
-}
-
-/* High-Fidelity Custom Range Slider */
-.nx-ct-slider {
-    width: 100%;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 6px;
-    background: var(--bg-main);
-    border-radius: 4px;
-    outline: none;
-}
-
-.nx-ct-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    cursor: pointer;
-    box-shadow: var(--glow-primary);
-    transition: transform 0.1s;
-}
-
-.nx-ct-slider::-webkit-slider-thumb:hover {
-    transform: scale(1.2);
-}
-
-.slider-bounds {
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    color: var(--text-muted);
-}
-
-/* Premium Checkbox Toggle Configuration */
-.toggle-control-label {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    cursor: pointer;
-}
-
-.toggle-control-label input {
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.checkbox-box {
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--border-color);
-    border-radius: 4px;
-    background: var(--bg-main);
-    display: block;
-    flex-shrink: 0;
-    margin-top: 2px;
-    position: relative;
-    transition: var(--transition-normal);
-}
-
-.toggle-control-label input:checked+.checkbox-box {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-.toggle-control-label input:checked+.checkbox-box::after {
-    content: '\2713';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #fff;
-    font-size: 11px;
-    font-weight: 700;
-}
-
-.toggle-control-label strong {
-    font-size: 13px;
-    color: var(--text-primary);
-    display: block;
-}
-
-.toggle-control-label p {
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 2px;
-    line-height: 1.4;
-}
-
-/* In-Form Assets Status Modules */
-.nx-ct-wallet-verification-box {
-    background: rgba(0, 212, 255, 0.02);
-    border: 1px solid rgba(0, 212, 255, 0.08);
-    border-radius: 8px;
-    padding: 12px 14px;
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    font-size: 13px;
-    color: var(--text-secondary);
-}
-
-.nx-ct-wallet-verification-box strong {
-    color: var(--text-primary);
-}
-
-.nx-ct-submit-execution-btn {
-    background: var(--primary-color);
-    color: #ffffff;
-    border: none;
-    padding: 14px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
+    gap: 12px;
+    padding: 12px 14px;
+    background-color: var(--bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
     cursor: pointer;
+    transition: all var(--transition-normal);
+    position: relative;
+    user-select: none;
+}
+
+.user-queue-card:hover {
+    border-color: var(--text-muted);
+    background-color: var(--bg-hover);
+}
+
+.user-queue-card.active {
+    border-color: var(--primary-color);
+    background-color: rgba(108, 99, 255, 0.06);
+    box-shadow: var(--glow-primary);
+}
+
+.avatar-initials {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--bg-hover);
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 0.88rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.card-profile-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.profile-fullname {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-meta-row {
+    font-size: 0.76rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Dynamic State Review Badge Styling */
+.badge-pending-review {
+    background-color: rgba(245, 158, 11, 0.1);
+    color: #f59e0b;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 6px;
+    /* text-uppercase; */
+    letter-spacing: 0.02em;
+    display: inline-block;
+}
+
+.badge-approved {
+    background-color: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+}
+
+.badge-rejected {
+    background-color: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+/* Main Detail Profile Vault Layout Panel Components */
+.kyc-vault-panel {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    box-shadow: var(--glass-shadow);
+    min-height: 500px;
+}
+
+.vault-header-split {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.dossier-tag {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.dossier-username {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 4px 0;
+}
+
+.dossier-sub-info {
+    font-size: 0.86rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* Sub Layout Blocks: Profile Grid Data and Document Display Columns */
+.vault-workspace-split {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 24px;
+}
+
+.panel-sub-title {
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.panel-sub-title i {
+    color: var(--primary-color);
+}
+
+/* Ingestion Information Registration Sheet Display Elements */
+.attested-info-sheet {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.info-display-field {
+    background-color: var(--bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 10px 14px;
+}
+
+.field-label {
+    font-size: 0.74rem;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+    display: block;
+    font-weight: 500;
+}
+
+.field-value {
+    font-size: 0.92rem;
+    color: var(--text-primary);
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Risk Framework Intelligence Metrics Index */
+.compliance-metrics-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+}
+
+.metric-strip-card {
+    background-color: var(--bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 11px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.metric-strip-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.metric-strip-value {
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+/* Secure Document Imaging Box Frame Display Core */
+.document-vault-box {
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-main);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.vault-media-display {
+    width: 100%;
+    height: 220px;
+    position: relative;
+    background-color: #0d111d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.vault-img-render {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.document-vault-box:hover .vault-img-render {
+    transform: scale(1.03);
+}
+
+/* Simulated Encrypted File Proxy Grid Mesh view for fallback state handling */
+.secure-gradient-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #101726 0%, #1e1b4b 50%, #0f172a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.secure-lock-icon {
+    font-size: 3.5rem;
+    color: rgba(108, 99, 255, 0.15);
+    animation: pulseGlow 3s infinite ease-in-out;
+}
+
+.vault-footer {
+    padding: 14px;
+    background-color: var(--bg-card);
+    border-top: 1px solid var(--border-color);
+}
+
+.vault-filename {
+    font-size: 0.84rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.vault-file-meta {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin: 0 0 12px 0;
+}
+
+.vault-actions-row {
+    display: flex;
     gap: 8px;
+    width: 100%;
+}
+
+.vault-btn {
+    flex: 1;
+    background-color: var(--bg-main);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all var(--transition-normal);
+}
+
+.vault-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--text-muted);
+    background-color: var(--bg-hover);
+}
+
+.vault-btn.primary-action {
+    background-color: rgba(108, 99, 255, 0.1);
+    border-color: rgba(108, 99, 255, 0.2);
+    color: var(--primary-color);
+}
+
+.vault-btn.primary-action:hover {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border-color: var(--primary-color);
+}
+
+/* Administrative Decision Management Workflows Button Groups */
+.btn-kyc-reject {
+    background-color: transparent;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: all var(--transition-normal);
+}
+
+.btn-kyc-reject:hover {
+    background-color: rgba(239, 68, 68, 0.08);
+}
+
+.btn-kyc-approve {
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     box-shadow: var(--glow-primary);
-    transition: var(--transition-normal);
+    transition: all var(--transition-normal);
 }
 
-.nx-ct-submit-execution-btn:hover {
-    background: var(--primary-hover);
+.btn-kyc-approve:hover {
+    background-color: var(--primary-hover);
+    border-color: var(--primary-hover);
+    transform: translateY(-1px);
 }
 
-/* --- ADAPTIVE RESPONSIVENESS OVERRIDES --- */
-@media (max-width: 1140px) {
-    .nx-ct-main-layout {
-        grid-template-columns: 1fr;
-    }
+/* Micro-animations definitions */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulseGlow { 0%, 100% { opacity: 0.15; } 50% { opacity: 0.35; } }
 
-    .nx-ct-terminal-panel {
-        order: 2;
-    }
+.animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+.animate-slide-up { animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
 
-    .nx-ct-cards-matrix {
-        order: 1;
-    }
+/* Responsive break structures */
+@media (max-width: 1120px) {
+    .kyc-layout-grid { grid-template-columns: 1fr; }
+    .kyc-users-sidebar { max-height: 260px; }
+    .vault-workspace-split { grid-template-columns: 1fr; }
+}
+@media (max-width: 576px) {
+    .vault-header-split { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .vault-actions-row { flex-direction: column; }
 }
 
-@media (max-width: 768px) {
-    .nx-ct-cards-matrix {
-        grid-template-columns: 1fr;
-    }
-
-    .nx-ct-workspace-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 16px;
-    }
-
-    .nx-ct-header-actions {
-        width: 100%;
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .nx-ct-search-box {
-        min-width: 100%;
-    }
-
-    .nx-ct-tabs-wrapper {
-        width: 100%;
-        justify-content: center;
-    }
-
-    .nx-ct-tab-btn {
-        flex: 1;
-        text-align: center;
-    }
-}
