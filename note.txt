@@ -212,7 +212,7 @@ document.querySelectorAll(`
 
 
 git add .
-git commit -m "i added admin"
+git commit -m "i added admin auth"
 git push
 
 
@@ -564,181 +564,6 @@ am not seing the image why like many things are not working just rebuild it and 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-this is nice but next time time to be making the designs to be nice by having margins like let everything not be clustered. but i really love the design and how u made everything to be beautiful and functional. do for me loan page and send me the html css js code to paste at my main make it to be beautiful and very responsive these are my css files. hope u read the pdf well The admin dashboard should also include a complete loans.html management system because this is a fintech/investment platform.
-
-The Loans page should contain:
-
-
-
-Loan overview statistics cards
-
-Total active loans
-
-Pending loan requests
-
-Approved loans
-
-Rejected loans
-
-Total borrowed amount
-
-Total repayments
-
-Loan request management table:
-
-User name
-
-UID
-
-Loan amount
-
-Loan duration
-
-Interest rate
-
-Repayment date
-
-Loan status
-
-Date submitted
-
-Loan status badges:
-
-Pending
-
-Approved
-
-Rejected
-
-Overdue
-
-Paid
-
-Active
-
-Loan application review section:
-
-User financial information
-
-Credit score/risk level
-
-Investment balance
-
-Uploaded documents
-
-Employment/income info
-
-Wallet balance
-
-Transaction history
-
-Admin action buttons:
-
-Approve loan
-
-Reject loan
-
-Suspend loan
-
-Mark as paid
-
-Extend duration
-
-View full profile
-
-Repayment tracking system:
-
-Monthly repayment logs
-
-Remaining balance
-
-Interest calculations
-
-Late payment warnings
-
-Payment history timeline
-
-Risk analysis section:
-
-High-risk borrowers
-
-Missed repayments
-
-Fraud indicators
-
-Suspicious activity alerts
-
-Loan calculator module:
-
-Auto interest calculation
-
-Monthly repayment estimate
-
-ROI estimation
-
-Search and filters:
-
-Search by username, UID, or loan ID
-
-Filter by active/pending/paid/overdue/rejected
-
-Notification integration:
-
-New loan applications
-
-Loan approval alerts
-
-Missed repayment alerts
-
-Overdue notifications
-
-UI Requirements:
-
-
-
-Modern fintech admin interface
-
-Responsive on all devices
-
-Professional charts and analytics
-
-Animated cards and hover effects
-
-Dark/glassmorphism dashboard style
-
-Clean tables with scrolling support
-
-Status color indicators
-
 send me the html css js code to paste at my main /* =========================================
 
    NEXUIST FINTECH ROOT VARIABLES [cite: 1]
@@ -896,3 +721,4 @@ body {
     transition: background-color var(--transition-normal);
 
 }
+
