@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexuist Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/copy-trading.css">
+</head>
+
+<body>
+
+    <!-- Preloader starts here -->
+
+    <div id="nexuist-preloader">
+        <div class="loader-terminal-box">
+            <i class='bx bx-cube-alt loader-brand-icon'></i>
+            <div class="glow-bars-container">
+                <div class="glow-bar"></div>
+                <div class="glow-bar"></div>
+                <div class="glow-bar"></div>
+            </div>
+            <span class="loader-status-text">CONNECTING TO SECURE NODE...</span>
+        </div>
+    </div>
+
+    <!-- Preloader ends here -->
+
+    <nav class="sidebar" id="sidebar">
+        <div class="logo-details">
+            <i class='bx bx-cube-alt logo-icon'></i>
+            <span class="logo_name">NEXUIST</span>
+            <i class='bx bx-chevron-left' id="sidebar-toggle-btn"></i>
+        </div>
+
+        <ul class="nav-links">
+            <li>
+                <a href="index.html">
+                    <i class='bx bx-grid-alt'></i>
+                    <span class="link_name">Dashboard</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="index.html">Dashboard</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="users.html">
+                    <i class='bx bx-user-pin'></i>
+                    <span class="link_name">Users Management</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="users.html">Users Management</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="deposits.html">
+                    <i class='bx bx-credit-card'></i>
+                    <span class="link_name">Deposits</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="deposits.html">Deposits</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="withdrawals.html">
+                    <i class='bx bx-transfer'></i>
+                    <span class="link_name">Withdrawals</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="withdrawals.html">Withdrawals</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="investment-plans.html">
+                    <i class='bx bx-layer'></i>
+                    <span class="link_name">Investment Plans</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="investment-plans.html">Investment Plans</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="ai-bot.html">
+                    <i class='bx bx-bot'></i>
+                    <span class="link_name">AI Bot Trading</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="ai-bot.html">AI Bot Trading</a></li>
+                </ul>
+            </li>
+            <li class="active">
+                <a href="copy-trading.html">
+                    <i class='bx bx-copy-alt'></i>
+                    <span class="link_name">Copy Trading</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="copy-trading.html">Copy Trading</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="internal-transfers.html">
+                    <i class='bx bx-transfer-alt'></i>
+                    <span class="link_name">Internal Transfers</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="internal-transfers">Internal Transfers</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="performance">
+                    <i class='bx bx-line-chart-down'></i>
+                    <span class="link_name">Performance History</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="performance">Performance History</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="portfolio">
+                    <i class='bx bx-pie-chart-alt-2'></i>
+                    <span class="link_name">Portfolio Analytics</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="portfolio">Portfolio Analytics</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="statements">
+                    <i class='bx bx-file-find'></i>
+                    <span class="link_name">Account Statements</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="statements">Account Statements</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="kyc">
+                    <i class='bx bx-id-card'></i>
+                    <span class="link_name">KYC Verification</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="kyc">KYC Verification</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="loans">
+                    <i class='bx bx-money'></i>
+                    <span class="link_name">Loan Requests</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="loans">Loan Requests</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="notifications">
+                    <i class='bx bx-bell'></i>
+                    <span class="link_name">Notifications</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="notifications">Notifications</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="support">
+                    <i class='bx bx-support'></i>
+                    <span class="link_name">Messages & Support</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="support">Messages & Support</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="transactions">
+                    <i class='bx bx-receipt'></i>
+                    <span class="link_name">Transaction Logs</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="transactions">Transaction Logs</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="website-settings">
+                    <i class='bx bx-globe'></i>
+                    <span class="link_name">Website Settings</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="website-settings">Website Settings</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="security">
+                    <i class='bx bx-shield-quarter'></i>
+                    <span class="link_name">Security Logs</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="security">Security Logs</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="admin-settings">
+                    <i class='bx bx-cog'></i>
+                    <span class="link_name">Admin Settings</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="admin-settings">Admin Settings</a></li>
+                </ul>
+            </li>
+
+            <li class="control-items">
+                <div class="mode-toggle-wrapper">
+                    <div class="mode-text-wrapper">
+                        <i class='bx bx-moon mode-icon-indicator'></i>
+                        <span class="link_name mode-label">Dark Mode</span>
+                    </div>
+                    <div class="toggle-switch-track">
+                        <span class="switch-thumb"></span>
+                    </div>
+                </div>
+            </li>
+
+            <li class="logout-item">
+                <a href="logout">
+                    <i class='bx bx-log-out-circle'></i>
+                    <span class="link_name">Logout</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="logout">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <header class="top-header">
+            <div class="header-left">
+                <i class='bx bx-menu' id="mobile-hamburger-btn"></i>
+                <h1 id="page-title-display">Copy- Trading</h1>
+            </div>
+            <div class="header-right">
+            </div>
+        </header>
+
+        <!-- Main starts here -->
+<div class="nx-ct-workspace-container nx-ct-animate-fade-in">
+
+    <div class="nx-ct-workspace-header">
+        <div class="nx-ct-title-block">
+            <h2><i class='bx bx-git-branch'></i> Master Mirror Routing</h2>
+            <p class="nx-ct-subtitle">Instantly syndicate live institutional order flows and quantitative strategies directly to your ledger allocation</p>
+        </div>
+
+        <div class="nx-ct-header-actions">
+            <div class="nx-ct-search-box">
+                <i class='bx bx-search'></i>
+                <input type="text" id="trader-search-input" placeholder="Filter masters by name, token or strategy...">
+            </div>
+            <div class="nx-ct-tabs-wrapper">
+                <button class="nx-ct-tab-btn active" data-filter="all">All Traders</button>
+                <button class="nx-ct-tab-btn" data-filter="low-risk">Low Risk</button>
+                <button class="nx-ct-tab-btn" data-filter="high-yield">High Alpha</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="nx-ct-main-layout">
+        
+        <div class="nx-ct-cards-matrix" id="master-traders-grid">
+            
+            <div class="nx-ct-trader-card" data-risk="low-risk" data-name="Alpha Engine v4" data-roi="142.4">
+                <div class="trader-card-header">
+                    <div class="trader-profile-info">
+                        <div class="trader-avatar-wrapper color-primary">
+                            <i class='bx bx-analyse'></i>
+                        </div>
+                        <div>
+                            <h3>Alpha Engine v4</h3>
+                            <span class="trader-handle">@apex-algo</span>
+                        </div>
+                    </div>
+                    <span class="badge-pill label-low">Low Risk</span>
+                </div>
+
+                <div class="trader-performance-stats">
+                    <div class="stat-box">
+                        <span class="stat-label">30D Return</span>
+                        <span class="stat-value color-green">+142.4%</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Copiers</span>
+                        <span class="stat-value">3,842</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Win Rate</span>
+                        <span class="stat-value">91.8%</span>
+                    </div>
+                </div>
+
+                <div class="trader-sparkline-box">
+                    <div class="sparkline-bar" style="height: 40%"></div>
+                    <div class="sparkline-bar" style="height: 55%"></div>
+                    <div class="sparkline-bar" style="height: 48%"></div>
+                    <div class="sparkline-bar" style="height: 70%"></div>
+                    <div class="sparkline-bar" style="height: 85%"></div>
+                    <div class="sparkline-bar" style="height: 78%"></div>
+                    <div class="sparkline-bar" style="height: 95%"></div>
+                </div>
+
+                <div class="trader-footer-meta">
+                    <span>AUM: <strong>$2.4M</strong></span>
+                    <button class="nx-ct-action-btn trigger-copy-modal" data-master="Alpha Engine v4" data-roi="142.4" data-risk="Low Risk">
+                        <i class='bx bx-copy-alt'></i> Mirror Trades
+                    </button>
+                </div>
+            </div>
+
+            <div class="nx-ct-trader-card trending-master" data-risk="high-yield" data-name="Ether Alpha Scalper" data-roi="289.1">
+                <div class="featured-ribbon"><i class='bx bx-trending-up'></i> High Velocity</div>
+                <div class="trader-card-header">
+                    <div class="trader-profile-info">
+                        <div class="trader-avatar-wrapper color-secondary">
+                            <i class='bx bx-unite'></i>
+                        </div>
+                        <div>
+                            <h3>Ether Alpha Scalper</h3>
+                            <span class="trader-handle">@eth-whale</span>
+                        </div>
+                    </div>
+                    <span class="badge-pill label-high">High Risk</span>
+                </div>
+
+                <div class="trader-performance-stats">
+                    <div class="stat-box">
+                        <span class="stat-label">30D Return</span>
+                        <span class="stat-value color-green">+289.1%</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Copiers</span>
+                        <span class="stat-value">1,209</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Win Rate</span>
+                        <span class="stat-value">84.3%</span>
+                    </div>
+                </div>
+
+                <div class="trader-sparkline-box">
+                    <div class="sparkline-bar" style="height: 20%"></div>
+                    <div class="sparkline-bar" style="height: 15%"></div>
+                    <div class="sparkline-bar" style="height: 50%"></div>
+                    <div class="sparkline-bar" style="height: 42%"></div>
+                    <div class="sparkline-bar" style="height: 80%"></div>
+                    <div class="sparkline-bar" style="height: 72%"></div>
+                    <div class="sparkline-bar" style="height: 100%"></div>
+                </div>
+
+                <div class="trader-footer-meta">
+                    <span>AUM: <strong>$890K</strong></span>
+                    <button class="nx-ct-action-btn trigger-copy-modal" data-master="Ether Alpha Scalper" data-roi="289.1" data-risk="High Risk">
+                        <i class='bx bx-copy-alt'></i> Mirror Trades
+                    </button>
+                </div>
+            </div>
+
+            <div class="nx-ct-trader-card" data-risk="low-risk" data-name="Delta Stable Yield" data-roi="64.8">
+                <div class="trader-card-header">
+                    <div class="trader-profile-info">
+                        <div class="trader-avatar-wrapper color-accent">
+                            <i class='bx bx-shield-quarter'></i>
+                        </div>
+                        <div>
+                            <h3>Delta Stable Yield</h3>
+                            <span class="trader-handle">@delta-neutral</span>
+                        </div>
+                    </div>
+                    <span class="badge-pill label-low">Low Risk</span>
+                </div>
+
+                <div class="trader-performance-stats">
+                    <div class="stat-box">
+                        <span class="stat-label">30D Return</span>
+                        <span class="stat-value color-green">+64.8%</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Copiers</span>
+                        <span class="stat-value">5,110</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-label">Win Rate</span>
+                        <span class="stat-value">96.2%</span>
+                    </div>
+                </div>
+
+                <div class="trader-sparkline-box">
+                    <div class="sparkline-bar" style="height: 50%"></div>
+                    <div class="sparkline-bar" style="height: 55%"></div>
+                    <div class="sparkline-bar" style="height: 60%"></div>
+                    <div class="sparkline-bar" style="height: 62%"></div>
+                    <div class="sparkline-bar" style="height: 68%"></div>
+                    <div class="sparkline-bar" style="height: 72%"></div>
+                    <div class="sparkline-bar" style="height: 80%"></div>
+                </div>
+
+                <div class="trader-footer-meta">
+                    <span>AUM: <strong>$4.1M</strong></span>
+                    <button class="nx-ct-action-btn trigger-copy-modal" data-master="Delta Stable Yield" data-roi="64.8" data-risk="Low Risk">
+                        <i class='bx bx-copy-alt'></i> Mirror Trades
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="nx-ct-terminal-panel">
+            <div class="terminal-panel-header">
+                <h3><i class='bx bx-terminal'></i> Live Syndicated Execution</h3>
+                <p>Real-time block events processed by active master pipelines</p>
+            </div>
+            
+            <div class="terminal-log-stream" id="live-positions-feed">
+                <div class="terminal-log-row position-entry-animation">
+                    <span class="log-timestamp">18:52:10</span>
+                    <div class="log-body">
+                        <strong>@apex-algo</strong> opened <strong>BUY BTC/USDT</strong> position
+                        <span class="log-tag-green">Replicated</span>
+                    </div>
+                </div>
+                <div class="terminal-log-row position-entry-animation">
+                    <span class="log-timestamp">18:45:32</span>
+                    <div class="log-body">
+                        <strong>@eth-whale</strong> closed <strong>SELL ETH/USDT</strong> order
+                        <span class="log-tag-green">+$420.50</span>
+                    </div>
+                </div>
+                <div class="terminal-log-row position-entry-animation">
+                    <span class="log-timestamp">18:12:04</span>
+                    <div class="log-body">
+                        <strong>@delta-neutral</strong> balanced hedge parity weights
+                        <span class="log-tag-muted">Synced</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="modal-copy-execution" class="nx-ct-modal-overlay">
+    <div class="nx-ct-modal-card">
+        <div class="nx-ct-modal-header">
+            <h3><i class='bx bx-git-commit'></i> Initialize Copy Routing</h3>
+            <button class="nx-ct-modal-close-btn">&times;</button>
+        </div>
+        <div class="nx-ct-modal-body">
+            
+            <div class="nx-ct-target-summary-card">
+                <div>
+                    <h4 id="modal-trader-name">Alpha Engine v4</h4>
+                    <span id="modal-trader-risk" class="badge-pill label-low">Low Risk</span>
+                </div>
+                <div class="text-right">
+                    <span class="summary-label">Historical ROI</span>
+                    <span id="modal-trader-roi" class="summary-value">+142.4%</span>
+                </div>
+            </div>
+
+            <form id="nexuist-copy-routing-form" onsubmit="event.preventDefault();">
+                <div class="nx-ct-form-group">
+                    <div class="label-row-meta">
+                        <label>Copy Allocation Capital</label>
+                        <span id="modal-allocation-feedback" class="neon-numerical-value">$2,500</span>
+                    </div>
+                    <input type="range" min="100" max="25000" step="100" value="2500" id="modal-allocation-slider" class="nx-ct-slider">
+                    <div class="slider-bounds">
+                        <span>Min: $100</span>
+                        <span>Max: $25,000</span>
+                    </div>
+                </div>
+
+                <div class="nx-ct-form-group">
+                    <label class="toggle-control-label">
+                        <input type="checkbox" id="modal-slippage-protection" checked>
+                        <span class="checkbox-box"></span>
+                        <div>
+                            <strong>High-Velocity Slippage Shield</strong>
+                            <p>Reject position replication if current margin execution slips beyond 0.05%</p>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="nx-ct-wallet-verification-box">
+                    <span><i class='bx bx-wallet'></i> Available Asset Pool Balance</span>
+                    <strong id="ct-user-liquidity-pool">$14,205.00</strong>
+                </div>
+
+                <button type="submit" class="nx-ct-submit-execution-btn">
+                    <i class='bx bx-play-circle'></i> Deploy Mirror Protocol
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+    </main>
+
+    <script src="./js/copy-trading.js"></script>
+</body>
+
+</html>
