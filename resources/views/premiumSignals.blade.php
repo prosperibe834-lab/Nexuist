@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexuist | Professional Trading</title>
+    <link rel="stylesheet" href="{{ asset('assets/Frontend/css/premiumSignals.css') }}">
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+
+    <div id="fintech-preloader">
+        <div class="loader-container">
+            <div class="loader-logo">
+                <div class="logo-hexagon">
+                    <span class="iconify" data-icon="ri:shield-flash-line"></span>
+                </div>
+                <h2 class="loader-brand-name">Nexuist</h2>
+            </div>
+
+            <div class="loader-progress-wrapper">
+                <div class="loader-progress-bar" id="load-bar">
+                    <div class="shimmer-effect"></div>
+                </div>
+            </div>
+
+            <div class="loader-status">
+                <span class="status-dot"></span>
+                <p id="status-text">Initializing encrypted connection...</p>
+            </div>
+        </div>
+
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+    </div>
+    <!-- Preloader ends here -->
+
+    <header class="top-header">
+        <div class="header-left">
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span class="iconify" data-icon="ri:menu-line"></span>
+            </button>
+            <a href="/" class="logo-area">
+                <img src="{{ asset('assets/Frontend/image/mylog.jpeg') }}" alt="Nexuist Logo" class="logo-img">
+                <div class="logo-text">
+                    <h2>Nexuist</h2>
+                    <p>Professional Trading</p>
+                </div>
+            </a>
+
+            <div class="crypto-ticker desktop-only">
+                <span class="live-indicator"><span class="dot"></span> LIVE</span>
+                <span class="ticker-item">BTC: <strong class="red">$80,898</strong></span>
+                <span class="ticker-item">ETH: <strong class="red">$2,329</strong></span>
+            </div>
+        </div>
+
+        <div class="header-right">
+            <div class="top-balance-box desktop-only">
+                <span class="balance-label">ACCOUNT BALANCE</span>
+                <span class="balance-value">$0.00</span>
+            </div>
+
+            <div class="header-actions">
+
+                <div class="qt-dropdown-wrapper">
+
+                    <button class="qt-dropdown-btn" id="qtDropdownBtn">
+
+                        <div class="qt-user-details">
+                            <span class="qt-user-title">Quick Trade</span>
+                            <small class="qt-user-sub">Trading Panel</small>
+                        </div>
+
+                        <span class="iconify qt-arrow-icon" data-icon="solar:alt-arrow-down-outline"></span>
+
+                    </button>
+
+                    <div class="qt-dropdown-menu" id="qtDropdownMenu">
+
+                        <a href="#" class="qt-dropdown-item">
+                            <span class="iconify qt-menu-icon" data-icon="solar:wallet-money-outline"></span>
+                            <span>Deposit Funds</span>
+                        </a>
+
+                        <a href="#" class="qt-dropdown-item">
+                            <span class="iconify qt-menu-icon" data-icon="solar:card-send-outline"></span>
+                            <span>Withdraw Funds</span>
+                        </a>
+
+                        <a href="#" class="qt-dropdown-item">
+                            <span class="iconify qt-menu-icon" data-icon="solar:chart-square-outline"></span>
+                            <span>Trade Markets</span>
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+                <div class="notification-wrapper">
+                    <button class="icon-btn" id="notifBtn">
+                        <span class="iconify" data-icon="ri:notification-3-line"></span>
+                        <span class="badge red-badge">4</span>
+                    </button>
+                    <div class="dropdown-menu notif-menu" id="notifMenu">
+                        <div class="menu-header">Notifications</div>
+                        <a href="#" class="menu-item">System update complete</a>
+                        <a href="#" class="menu-item">Check new live markets</a>
+                    </div>
+                </div>
+
+
+
+                <div class="user-profile">
+                    <button class="profile-btn" id="profileBtn">
+                        <div class="avatar">M</div>
+                        <div class="user-info desktop-only">
+                            <span class="name">marine military</span>
+                            <span class="type">Trading Account</span>
+                        </div>
+                        <span class="iconify arrow desktop-only" data-icon="ri:arrow-down-s-line"></span>
+                    </button>
+                    <div class="dropdown-menu profile-menu" id="profileMenu">
+                        <a href="#" class="menu-item"><span class="iconify" data-icon="ri:user-line"></span> My
+                            Profile</a>
+                        <a href="#" class="menu-item"><span class="iconify" data-icon="ri:settings-4-line"></span>
+                            Settings</a>
+                        <a href="#" class="menu-item text-red"><span class="iconify"
+                                data-icon="ri:logout-box-r-line"></span> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span>LIVE MARKET</span>
+                <span class="live-tag"><span class="dot green-dot"></span> LIVE</span>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <h3 class="nav-title"><span class="iconify" data-icon="ri:layout-grid-line"></span> OVERVIEW</h3>
+                    <a href="/" class="nav-item">
+                        <span class="iconify" data-icon="solar:widget-2-outline"></span>
+                        Dashboard
+                    </a>
+                    <a href="/accountstatement" class="nav-item">
+                        <span class="iconify" data-icon="ri:file-list-3-line"></span> Account Statement
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-title"><span class="iconify" data-icon="ri:briefcase-line"></span> PORTFOLIO &
+                        INVESTMENTS</h3>
+                    <div class="nav-dropdown-container">
+                        <a href="#" class="nav-item has-dropdown" id="investPlansBtn">
+                            <div class="item-left">
+                                <span class="iconify" data-icon="ri:focus-3-line"></span> Investment Plans
+                            </div>
+                            <span class="iconify arrow" data-icon="ri:arrow-down-s-line"></span>
+                        </a>
+                        <div class="sidebar-submenu" id="investPlansMenu">
+
+                            <a href="plans.html" class="nav-item sub-item">
+                                <span class="iconify submenu-icon" data-icon="solar:layers-outline"></span>
+                                All Plans
+                            </a>
+
+                            <a href="active-plans.html" class="nav-item sub-item">
+                                <span class="iconify submenu-icon" data-icon="solar:chart-square-outline"></span>
+                                Stock Market
+                            </a>
+
+                            <a href="active-plans.html" class="nav-item sub-item">
+                                <span class="iconify submenu-icon" data-icon="mdi:currency-btc"></span>
+                                Crypto Investment
+                            </a>
+
+                            <a href="active-plans.html" class="nav-item sub-item">
+                                <span class="iconify submenu-icon" data-icon="solar:buildings-2-outline"></span>
+                                Real Estate
+                            </a>
+
+                        </div>
+                    </div>
+                    <a href="/portfolio" class="nav-item">
+                        <span class="iconify" data-icon="ri:pie-chart-line"></span> My Portfolio
+                    </a>
+                    <a href="/performance" class="nav-item">
+                        <span class="iconify" data-icon="ri:line-chart-line"></span> Performance History
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-title"><span class="iconify" data-icon="ri:stock-line"></span> TRADING & MARKETS</h3>
+                    <a href="/demo" class="nav-item">
+                        <div class="item-left"><span class="iconify" data-icon="ri:graduation-cap-line"></span> Demo
+                            Trading</div>
+                        <span class="badge outline-green">Practice</span>
+                    </a>
+                    <a href="/livemarkets" class="nav-item">
+                        <div class="item-left"><span class="iconify" data-icon="ri:bar-chart-box-line"></span> Live
+                            Markets</div>
+                        <span class="badge solid-red"><span class="dot"></span> Live</span>
+                    </a>
+                    <a href="copy.html" class="nav-item">
+                        <div class="item-left"><span class="iconify" data-icon="ri:user-follow-line"></span> Copy
+                            Trading</div>
+                        <span class="badge solid-purple">Pro</span>
+                    </a>
+                    <a href="/botTrading" class="nav-item">
+                        <div class="item-left"><span class="iconify" data-icon="ri:robot-2-line"></span> AI Trading Bots
+                        </div>
+                        <span class="badge solid-blue">AI</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-title"><span class="iconify" data-icon="ri:radar-line"></span> MARKET INTELLIGENCE
+                    </h3>
+                    <a href="/premiumSignals" class="nav-item active">
+                        <div class="item-left"><span class="iconify" data-icon="ri:flashlight-fill"></span> Premium
+                            Signals</div>
+                        <span class="badge solid-orange">Premium</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-title"><span class="iconify" data-icon="ri:wallet-3-line"></span> WALLET & FUNDS</h3>
+                    <a href="/deposit" class="nav-item">
+                        <span class="iconify" data-icon="ri:add-circle-line"></span> Deposit Funds
+                    </a>
+                    <a href="/withdraw" class="nav-item">
+                        <span class="iconify" data-icon="solar:card-send-outline"></span>
+                        Withdraw Funds
+                    </a>
+                    <a href="/transfer" class="nav-item">
+                        <span class="iconify" data-icon="ri:arrow-left-right-line"></span> Internal Transfer
+                    </a>
+                </div>
+
+                <div class="acm-section">
+
+                    <h3 class="acm-title">
+                        <span class="iconify" data-icon="solar:shield-user-outline"></span>
+                        Account Management
+                    </h3>
+
+                    <!-- DROPDOWN -->
+                    <div class="acm-dropdown-wrap">
+
+                        <button class="acm-dropdown-btn" id="acmVerifyBtn">
+
+                            <div class="acm-btn-left">
+                                <span class="iconify acm-main-icon" data-icon="solar:user-id-outline"></span>
+
+                                <span>Identity Verification</span>
+                            </div>
+
+                            <span class="iconify acm-arrow" data-icon="solar:alt-arrow-down-outline"></span>
+
+                        </button>
+
+                        <!-- SUBMENU -->
+                        <div class="acm-dropdown-menu" id="acmVerifyMenu">
+
+                            <div class="acm-info-box">
+
+                                <span class="iconify acm-info-icon" data-icon="solar:verified-check-outline"></span>
+
+                                <div class="acm-info-text">
+                                    <h4>Identity Verification</h4>
+
+                                    <p>
+                                        Complete your identity verification to unlock
+                                        full trading and withdrawal features.
+                                    </p>
+                                </div>
+
+                            </div>
+
+                            <a href="verification.html" class="acm-verify-link">
+
+                                <span class="iconify" data-icon="solar:shield-check-outline"></span>
+
+                                Verify Identity
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PROFILE SETTINGS -->
+                    <a href="/portfolio" class="acm-nav-link">
+
+                        <span class="iconify" data-icon="solar:settings-outline"></span>
+
+                        Profile Settings
+
+                    </a>
+
+                </div>
+
+                <div class="nav-section">
+                    <h3 class="nav-title">
+                        <span class="iconify" data-icon="solar:gift-outline"></span>
+                        Growth & Rewards
+                    </h3>
+
+                    <a href="signals.html" class="nav-item">
+                        <div class="item-left">
+                            <span class="iconify" data-icon="solar:users-group-rounded-outline"></span>
+                            Referral Program
+                        </div>
+
+                        <span class="badge solid-orange">5%</span>
+                    </a>
+                </div>
+                <div class="nav-section">
+                    <h3 class="nav-title">
+                        <span class="iconify" data-icon="solar:headphones-round-sound-outline"></span>
+                        Support Center
+                    </h3>
+
+                    <a href="signals.html" class="nav-item">
+                        <div class="item-left">
+                            <span class="iconify" data-icon="solar:chat-round-dots-outline"></span>
+                            Support Center
+                        </div>
+                    </a>
+                </div>
+
+            </nav>
+
+            <div class="sidebar-footer">
+
+                <a href="credit.html" class="apply-credit">
+                    <span class="iconify" data-icon="ri:add-box-line"></span> Apply for Credit
+                    <span class="badge solid-green">Fast</span>
+                </a>
+            </div>
+
+            <div class="contact-wrapper">
+
+                <a href="contact.html" class="contact-btn">
+
+                    <span class="iconify contact-icon" data-icon="solar:phone-calling-outline"></span>
+
+                    <span>Contact Support</span>
+
+                </a>
+
+            </div>
+
+            <div class="logout-wrapper">
+
+                <a href="/explore" class="logout-btn">
+
+                    <span class="iconify logout-icon" data-icon="solar:logout-2-outline"></span>
+
+                    <span>Log Out</span>
+
+                </a>
+
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <!-- BASIC SIDE NAV (Provided) -->
+        <nav class="side-nav">
+            <a href="#" class="logo">Nexuist</a>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-link"><i class='bx bxs-dashboard'></i> Dashboard</a></li>
+                <li><a href="#" class="nav-link active"><i class='bx bx-trending-up'></i> Trading Signals</a></li>
+                <li><a href="#" class="nav-link"><i class='bx bx-coin-stack'></i> Portfolio</a></li>
+                <li><a href="#" class="nav-link"><i class='bx bx-credit-card'></i> Subscription</a></li>
+            </ul>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <div class="nexuist-main-content">
+    <!-- Header Section -->
+    <div class="signals-header">
+        <div class="header-left">
+            <div class="title-with-icon">
+                <i class='bx bx-bar-chart-alt-2 main-icon'></i>
+                <h1>Premium Trading Signals</h1>
+            </div>
+            <p>Subscribe to professional trading signals and enhance your trading success</p>
+        </div>
+        <div class="available-badge">
+            <i class='bx bx-trending-up'></i>
+            <div class="badge-text">
+                <span class="count">6</span>
+                <span class="label">Available Signals</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid Section -->
+    <div class="signals-grid">
+        <!-- Card 1 -->
+        <div class="sig-card" data-name="Breakout Signals" data-price="3000.00">
+            <div class="card-header">
+                <i class='bx bx-broadcast'></i>
+                <h3>Breakout Signals</h3>
+                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
+            </div>
+            <div class="card-price">
+                <span class="currency">$</span>
+                <span class="amount">3,000.00</span>
+                <span class="period">/month</span>
+            </div>
+            <p class="sub-text">Professional trading signals subscription</p>
+            <ul class="feat-list">
+                <li><i class='bx bx-check'></i> Success Rate: 68.7%</li>
+                <li><i class='bx bx-check'></i> Real-time notifications</li>
+                <li><i class='bx bx-check'></i> Expert analysis</li>
+                <li><i class='bx bx-check'></i> 24/7 support</li>
+            </ul>
+            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="sig-card" data-name="Buying Oversold" data-price="3800.00">
+            <div class="card-header">
+                <i class='bx bx-bullseye'></i>
+                <h3>Buying Oversold</h3>
+                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
+            </div>
+            <div class="card-price">
+                <span class="currency">$</span>
+                <span class="amount">3,800.00</span>
+                <span class="period">/month</span>
+            </div>
+            <p class="sub-text">Professional trading signals subscription</p>
+            <ul class="feat-list">
+                <li><i class='bx bx-check'></i> Success Rate: 75%</li>
+                <li><i class='bx bx-check'></i> Real-time notifications</li>
+                <li><i class='bx bx-check'></i> Expert analysis</li>
+                <li><i class='bx bx-check'></i> 24/7 support</li>
+            </ul>
+            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="sig-card" data-name="Trend Signal" data-price="4000.00">
+            <div class="card-header">
+                <i class='bx bx-line-chart'></i>
+                <h3>Trend Signal</h3>
+                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
+            </div>
+            <div class="card-price">
+                <span class="currency">$</span>
+                <span class="amount">4,000.00</span>
+                <span class="period">/month</span>
+            </div>
+            <p class="sub-text">Professional trading signals subscription</p>
+            <ul class="feat-list">
+                <li><i class='bx bx-check'></i> Success Rate: 78.4%</li>
+                <li><i class='bx bx-check'></i> Real-time notifications</li>
+                <li><i class='bx bx-check'></i> Expert analysis</li>
+                <li><i class='bx bx-check'></i> 24/7 support</li>
+            </ul>
+            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="sig-card active-border" data-name="AntMiner-S7" data-price="5300.00">
+            <div class="card-header">
+                <i class='bx bx-chip'></i>
+                <h3>AntMiner-S7</h3>
+                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
+            </div>
+            <div class="card-price">
+                <span class="currency">$</span>
+                <span class="amount">5,300.00</span>
+                <span class="period">/month</span>
+            </div>
+            <p class="sub-text">Professional trading signals subscription</p>
+            <ul class="feat-list">
+                <li><i class='bx bx-check'></i> Success Rate: 85.4%</li>
+                <li><i class='bx bx-check'></i> Real-time notifications</li>
+                <li><i class='bx bx-check'></i> Expert analysis</li>
+                <li><i class='bx bx-check'></i> 24/7 support</li>
+            </ul>
+            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="sig-card" data-name="S9 Mining" data-price="6000.00">
+            <div class="card-header">
+                <i class='bx bx-server'></i>
+                <h3>S9 Mining</h3>
+                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
+            </div>
+            <div class="card-price">
+                <span class="currency">$</span>
+                <span class="amount">6,000.00</span>
+                <span class="period">/month</span>
+            </div>
+            <p class="sub-text">Professional trading signals subscription</p>
+            <ul class="feat-list">
+                <li><i class='bx bx-check'></i> Success Rate: 87.5%</li>
+                <li><i class='bx bx-check'></i> Real-time notifications</li>
+                <li><i class='bx bx-check'></i> Expert analysis</li>
+                <li><i class='bx bx-check'></i> 24/7 support</li>
+            </ul>
+            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="sig-card" data-name="Bitfury-B8" data-price="7000.00">
+            <div class="card-header">
+                <i class='bx bx-shield-quarter'></i>
+                <h3>Bitfury-B8</h3>
+                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
+            </div>
+            <div class="card-price">
+                <span class="currency">$</span>
+                <span class="amount">7,000.00</span>
+                <span class="period">/month</span>
+            </div>
+            <p class="sub-text">Professional trading signals subscription</p>
+            <ul class="feat-list">
+                <li><i class='bx bx-check'></i> Success Rate: 93.4%</li>
+                <li><i class='bx bx-check'></i> Real-time notifications</li>
+                <li><i class='bx bx-check'></i> Expert analysis</li>
+                <li><i class='bx bx-check'></i> 24/7 support</li>
+            </ul>
+            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Section (Outside main flow to avoid sidebar interference) -->
+<div class="modal-overlay" id="subModal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <div class="modal-title-group">
+                <div class="modal-icon"><i class='bx bx-pulse'></i></div>
+                <div>
+                    <h2>Subscribe to Signal</h2>
+                    <span id="display-name" class="modal-subtitle">Trend Signal</span>
+                </div>
+            </div>
+            <button class="close-modal" id="closeBtn"><i class='bx bx-x'></i></button>
+        </div>
+        <div class="modal-body">
+            <div class="input-group">
+                <label><i class='bx bx-credit-card'></i> Payment Method</label>
+                <select class="modal-select">
+                    <option>Bank Transfer</option>
+                    <option>USDT (Tether)</option>
+                    <option>Bitcoin</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label><i class='bx bx-dollar'></i> Subscription Amount ($)</label>
+                <div class="price-input-box">
+                    <input type="text" id="display-price" readonly>
+                    <span class="freq">/month</span>
+                </div>
+            </div>
+            <div class="modal-notice">
+                <i class='bx bx-info-circle'></i> Recurring monthly subscription. Cancel anytime.
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancel" id="cancelBtn">Cancel</button>
+            <button class="btn-complete"><i class='bx bx-check-circle'></i> Complete Subscription</button>
+        </div>
+
+        
+    </div>
+</div>
+
+    </div>
+
+    <script src="{{ asset('assets/Frontend/js/premiumSignals.js') }}"></script>
+</body>
+
+</html>

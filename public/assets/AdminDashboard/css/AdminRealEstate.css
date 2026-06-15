@@ -1,0 +1,1236 @@
+/* =========================================
+   NEXUIST FINTECH ROOT VARIABLES [cite: 1]
+========================================= */
+:root {
+    /* ===== PRIMARY BRAND COLORS ===== */
+    --primary-color: #6c63ff;
+    --primary-hover: #7c73ff;
+    --secondary-color: #00d4ff;
+    --accent-color: #8b5cf6;
+
+    /* ===== BACKGROUND COLORS ===== */
+    --bg-main: #0b101e;
+    --bg-secondary: #111827;
+    --bg-card: #151b2b;
+    --bg-sidebar: #0f1524;
+    --bg-header: #070b14;
+    --bg-hover: #1e293b;
+
+    /* ===== GLASS EFFECTS ===== */
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.06);
+    --glass-shadow: rgba(0, 0, 0, 0.5);
+
+    /* ===== TEXT COLORS ===== */
+    --text-primary: #ffffff;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+
+    /* ===== BORDER COLORS ===== */
+    --border-color: rgba(255, 255, 255, 0.08);
+
+    /* ===== GLOW EFFECTS ===== */
+    --glow-primary: 0 0 15px rgba(108, 99, 255, 0.35);
+
+    /* ===== DESIGN UTILITIES ===== */
+    --radius-md: 14px;
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --font-main: 'Inter', sans-serif;
+    --z-sidebar: 1000;
+}
+
+/* =========================================
+   LIGHT MODE OVERRIDES
+========================================= */
+html[data-theme="light"] {
+    --bg-main: #f8fafc;
+    --bg-secondary: #f1f5f9;
+    --bg-card: #ffffff;
+    --bg-sidebar: #ffffff;
+    --bg-header: #ffffff;
+    --bg-hover: #e2e8f0;
+
+    --glass-bg: rgba(15, 23, 42, 0.03);
+    --glass-border: rgba(15, 23, 42, 0.08);
+    --glass-shadow: rgba(15, 23, 42, 0.05);
+
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --border-color: rgba(15, 23, 42, 0.08);
+    --glow-primary: 0 4px 12px rgba(108, 99, 255, 0.15);
+}
+
+/* =========================================
+   BASE RESET & LAYOUT STRUCTURING
+========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-main);
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    transition: background-color var(--transition-normal);
+}
+
+/* Preloader starts here */
+/* =========================================
+   ADVANCED FINTECH PRELOADER
+========================================= */
+
+#nexuist-preloader {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    background: #05070f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+
+    opacity: 1;
+    visibility: visible;
+
+    transition:
+        opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+        visibility 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+
+    overflow: hidden;
+    padding: 20px;
+}
+
+/* =========================================
+   TERMINAL BOX
+========================================= */
+
+.loader-terminal-box {
+    width: 100%;
+    max-width: 320px;
+
+    padding: 30px 25px;
+
+    border-radius: 24px;
+
+    background: rgba(255, 255, 255, 0.03);
+
+    border: 1px solid rgba(255, 255, 255, 0.06);
+
+    backdrop-filter: blur(14px);
+
+    box-shadow:
+        0 0 40px rgba(0, 212, 255, 0.08),
+        0 0 80px rgba(108, 99, 255, 0.08);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+/* =========================================
+   ICON
+========================================= */
+
+.loader-brand-icon {
+    font-size: clamp(38px, 7vw, 60px);
+
+    color: #00d4ff;
+
+    margin-bottom: 22px;
+
+    filter: drop-shadow(0 0 18px rgba(0, 212, 255, 0.55));
+
+    animation: iconFloat 2s ease-in-out infinite;
+}
+
+/* =========================================
+   LOADING BARS
+========================================= */
+
+.glow-bars-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    height: 30px;
+
+    margin-bottom: 20px;
+}
+
+.glow-bar {
+    width: 5px;
+
+    height: 14px;
+
+    border-radius: 10px;
+
+    background: linear-gradient(to top, #6c63ff, #00d4ff);
+
+    box-shadow:
+        0 0 12px rgba(108, 99, 255, 0.5),
+        0 0 18px rgba(0, 212, 255, 0.25);
+
+    animation: barGrow 1s ease-in-out infinite;
+}
+
+.glow-bar:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.glow-bar:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.glow-bar:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+/* =========================================
+   STATUS TEXT
+========================================= */
+
+.loader-status-text {
+    font-size: clamp(10px, 2vw, 12px);
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    line-height: 1.6;
+
+    color: #94a3b8;
+
+    text-transform: uppercase;
+
+    word-break: break-word;
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes barGrow {
+
+    0%,
+    100% {
+        height: 14px;
+        opacity: 0.4;
+    }
+
+    50% {
+        height: 34px;
+        opacity: 1;
+        filter: brightness(1.2);
+    }
+}
+
+@keyframes iconFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* =========================================
+   HIDE STATE
+========================================= */
+
+#nexuist-preloader.loaded {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS
+========================================= */
+
+@media (max-width: 768px) {
+
+    .loader-terminal-box {
+        max-width: 280px;
+
+        padding: 25px 20px;
+
+        border-radius: 20px;
+    }
+
+    .glow-bars-container {
+        gap: 8px;
+    }
+
+    .glow-bar {
+        width: 4px;
+    }
+
+    .loader-status-text {
+        letter-spacing: 1.5px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .loader-terminal-box {
+        max-width: 240px;
+
+        padding: 22px 18px;
+    }
+
+    .loader-status-text {
+        font-size: 9px;
+
+        letter-spacing: 1px;
+    }
+
+    .glow-bars-container {
+        height: 24px;
+    }
+}
+
+/* Preloader ends here */
+
+/* =========================================
+   SIDEBAR STYLING [cite: 6]
+========================================= */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 260px;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: var(--z-sidebar);
+    transition: width var(--transition-normal), background var(--transition-normal);
+}
+
+/* Collapsed Sidebar State */
+.sidebar.close {
+    width: 78px;
+}
+
+/* Logo Area Layout */
+.sidebar .logo-details {
+    height: 70px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: relative;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar .logo-details i.logo-icon {
+    font-size: 28px;
+    color: var(--secondary-color);
+    min-width: 44px;
+    text-align: center;
+    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
+}
+
+.sidebar .logo-details .logo_name {
+    font-size: 20px;
+    color: var(--text-primary);
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: opacity var(--transition-normal);
+}
+
+.sidebar.close .logo-details .logo_name {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Chevron desktop toggle controller button */
+.sidebar .logo-details #sidebar-toggle-btn {
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 25px;
+    width: 25px;
+    background: var(--primary-color);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    box-shadow: var(--glow-primary);
+}
+
+.sidebar.close .logo-details #sidebar-toggle-btn {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Navigation List Processing */
+.sidebar .nav-links {
+    height: calc(100% - 70px);
+    padding: 15px 0 150px 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Hide side scroll rails neatly */
+.sidebar .nav-links::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar .nav-links::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 10px;
+}
+
+.sidebar .nav-links li {
+    position: relative;
+    list-style: none;
+    transition: var(--transition-normal);
+    padding: 4px 12px;
+}
+
+.sidebar .nav-links li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    height: 48px;
+    transition: var(--transition-normal);
+}
+
+/* Glassmorphic Active and Hover states [cite: 5] */
+.sidebar .nav-links li.active a,
+.sidebar .nav-links li a:hover {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), var(--glass-shadow);
+}
+
+.sidebar .nav-links li.active a i,
+.sidebar .nav-links li a:hover i {
+    color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(108, 99, 255, 0.4);
+}
+
+.sidebar .nav-links li.active a .link_name,
+.sidebar .nav-links li a:hover .link_name {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.sidebar .nav-links li i {
+    min-width: 54px;
+    text-align: center;
+    font-size: 20px;
+    color: var(--text-secondary);
+    transition: var(--transition-normal);
+}
+
+.sidebar .nav-links li .link_name {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    transition: var(--transition-normal);
+    white-space: nowrap;
+}
+
+/* Handles label clamping if desktop side drawer slides compressed */
+.sidebar.close .nav-links li .link_name {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Sub-menus configuration for collapsed system hover popovers */
+.sidebar .nav-links li .sub-menu {
+    padding: 6px 6px 14px 80px;
+    margin-top: -10px;
+    background: var(--bg-sidebar);
+    display: none;
+}
+
+.sidebar .nav-links li.showMenu .sub-menu {
+    display: block;
+}
+
+.sidebar .nav-links li .sub-menu a {
+    color: var(--text-secondary);
+    font-size: 15px;
+    padding: 5px 0;
+    transition: var(--transition-normal);
+}
+
+.sidebar .nav-links li .sub-menu a:hover {
+    color: var(--text-primary);
+}
+
+.sidebar.close .nav-links li .sub-menu {
+    position: absolute;
+    left: 100%;
+    top: -10px;
+    margin-top: 0;
+    padding: 10px 20px;
+    border-radius: 0 6px 6px 0;
+    opacity: 0;
+    display: block;
+    pointer-events: none;
+    transition: 0s;
+    border: 1px solid var(--border-color);
+    border-left: none;
+    box-shadow: var(--shadow-lg);
+}
+
+.sidebar.close .nav-links li:hover .sub-menu {
+    top: 0;
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0.4s ease;
+}
+
+.sidebar .nav-links li .sub-menu .link_name {
+    display: none;
+}
+
+.sidebar.close .nav-links li .sub-menu .link_name {
+    font-size: 15px;
+    opacity: 1;
+    display: block;
+    font-weight: 500;
+    color: var(--text-primary);
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 5px;
+}
+
+.sidebar .nav-links li .sub-menu.blank {
+    padding: 3px 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar.close .nav-links li:hover .sub-menu.blank {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Controls & Configuration Toggle Rows Styling */
+.sidebar .nav-links .control-items,
+.sidebar .nav-links .logout-item {
+    margin-top: 15px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
+}
+
+.sidebar .nav-links .mode-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    padding: 0 10px;
+    border-radius: var(--radius-md);
+    background: var(--glass-bg);
+}
+
+.sidebar.close .nav-links .mode-toggle-wrapper {
+    justify-content: center;
+    padding: 0;
+}
+
+.sidebar .nav-links .mode-text-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.sidebar.close .nav-links .mode-label {
+    display: none;
+}
+
+/* Light Mode/Dark Mode System Slider Track */
+.sidebar .nav-links .toggle-switch-track {
+    position: relative;
+    height: 22px;
+    width: 42px;
+    background: var(--bg-hover);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    border: 1px solid var(--border-color);
+}
+
+.sidebar.close .nav-links .toggle-switch-track {
+    display: none;
+}
+
+.sidebar .nav-links .switch-thumb {
+    position: absolute;
+    height: 14px;
+    width: 14px;
+    left: 4px;
+    top: 3px;
+    background: var(--text-secondary);
+    border-radius: 50%;
+    transition: var(--transition-normal);
+}
+
+html[data-theme="light"] .sidebar .nav-links .switch-thumb {
+    left: 22px;
+    background: var(--primary-color);
+}
+
+
+/* =========================================
+   MOBILE SIDEBAR
+========================================= */
+
+#mobile-hamburger-btn {
+    display: none;
+}
+
+@media (max-width: 768px) {
+
+    #mobile-hamburger-btn {
+        display: block;
+        font-size: 28px;
+        cursor: pointer;
+    }
+
+    .sidebar {
+        left: -260px;
+        width: 260px;
+        transition: left 0.3s ease;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .sidebar.close {
+        width: 260px;
+    }
+
+    .sidebar .logo-details #sidebar-toggle-btn {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+        width: 100%;
+    }
+}
+
+
+/* =========================================
+   MAIN APP CONTENT LAYOUT BASE VIEWPORTS
+========================================= */
+/* ==========================================================================
+   NEXUIST ADMIN REAL ESTATE DASHBOARD - ISOLATED LAYER COMPONENT
+   ========================================================================== */
+
+.nx-admin-dashboard {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    animation: nxFadeUpIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* === HARDWARE ACCELERATED ANIMATION KEYFRAMES === */
+@keyframes nxFadeUpIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes nxModalScale {
+    from { opacity: 0; transform: scale(0.96) translateY(8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* === MODULAR ADMINISTRATIVE INNER SUB-NAVIGATION BAR === */
+.nx-admin-dashboard .nx-admin-subnav {
+    display: flex;
+    align-items: center;
+    background-color: var(--bg-header);
+    border: 1px solid var(--border-color);
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    gap: 8px;
+    position: relative;
+}
+
+.nx-admin-dashboard .nx-subnav-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    padding: 10px 18px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all var(--transition-normal);
+}
+
+.nx-admin-dashboard .nx-subnav-btn:hover,
+.nx-admin-dashboard .nx-subnav-btn.active {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+}
+.nx-admin-dashboard .nx-subnav-btn.active {
+    color: var(--secondary-color);
+    background-color: rgba(0, 212, 255, 0.05);
+}
+
+/* === NOTIFICATION PANEL CONSOLE HUB === */
+.nx-admin-dashboard .nx-notif-center-wrapper {
+    margin-left: auto;
+    position: relative;
+}
+.nx-admin-dashboard .nx-notif-trigger {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15rem;
+    position: relative;
+}
+.nx-admin-dashboard .nx-notif-dot {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 8px;
+    height: 8px;
+    background-color: #ef4444;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #ef4444;
+}
+.nx-admin-dashboard .nx-notif-dropdown {
+    position: absolute;
+    top: 46px;
+    right: 0;
+    width: 320px;
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: var(--glass-shadow);
+    z-index: 100;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+}
+.nx-admin-dashboard .nx-notif-dropdown.show { display: flex; animation: nxFadeUpIn 0.25s ease; }
+.nx-admin-dashboard .nx-dropdown-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.nx-admin-dashboard .nx-dropdown-header h4 { font-size: 0.85rem; font-weight: 600; }
+.nx-admin-dashboard .nx-dropdown-header button { background: none; border: none; color: var(--text-muted); font-size: 0.75rem; cursor: pointer; }
+.nx-admin-dashboard .nx-notif-list { max-height: 260px; overflow-y: auto; }
+.nx-admin-dashboard .nx-notif-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.nx-admin-dashboard .nx-notif-item small { color: var(--text-muted); font-size: 0.7rem; }
+
+/* === PREMIUM FINTECH STATUS DECK VIEWPORTS === */
+.nx-admin-dashboard .nx-view-panel { display: none; }
+.nx-admin-dashboard .nx-view-panel.active { display: block; }
+
+.nx-admin-dashboard .nx-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+}
+
+.nx-admin-dashboard .nx-premium-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--transition-normal), border-color var(--transition-normal);
+}
+.nx-admin-dashboard .nx-premium-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--primary-color);
+}
+.nx-admin-dashboard .nx-card-glow {
+    position: absolute;
+    top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(108, 99, 255, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+}
+.nx-admin-dashboard .nx-card-top {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;
+}
+.nx-admin-dashboard .nx-card-label { font-size: 0.8rem; color: var(--text-secondary); font-weight: 500; }
+.nx-admin-dashboard .nx-card-icon {
+    width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+}
+.nx-admin-dashboard .nx-card-icon.prim { background: rgba(108,99,255,0.1); color: var(--primary-color); }
+.nx-admin-dashboard .nx-card-icon.sec { background: rgba(0,212,255,0.1); color: var(--secondary-color); }
+.nx-admin-dashboard .nx-card-icon.acc { background: rgba(139,92,246,0.1); color: var(--accent-color); }
+.nx-admin-dashboard .nx-card-icon.out { background: rgba(255,255,255,0.05); color: var(--text-primary); }
+
+.nx-admin-dashboard .nx-premium-card h2 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
+.nx-admin-dashboard .nx-card-footer { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; }
+.nx-admin-dashboard .nx-trend { font-weight: 600; display: inline-flex; align-items: center; gap: 2px; }
+.nx-admin-dashboard .nx-trend.up { color: #10b981; }
+.nx-admin-dashboard .nx-trend.safe { color: var(--secondary-color); }
+.nx-admin-dashboard .nx-trend.dynamic { color: var(--text-muted); }
+.nx-admin-dashboard .nx-foot-lbl { color: var(--text-muted); }
+
+/* === PLATFORM GLASSMORPHIC CARDS AND CHART HOOKS === */
+.nx-admin-dashboard .nx-analytics-split { margin-top: 24px; display: grid; grid-template-columns: 1fr; }
+.nx-admin-dashboard .nx-glass-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    position: relative;
+}
+.nx-admin-dashboard .nx-card-title-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.nx-admin-dashboard .nx-card-title-bar h3 { font-size: 1rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+
+.nx-admin-dashboard .nx-charts-layout { width: 100%; display: flex; flex-direction: column; }
+.nx-admin-dashboard .nx-chart-box h5 { font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; margin-bottom: 12px; }
+.nx-admin-dashboard .nx-svg-chart-container { width: 100%; height: 220px; position: relative; }
+.nx-admin-dashboard .nx-svg-graph { width: 100%; height: 100%; }
+
+.nx-admin-dashboard .chart-anim-bar {
+    transform-origin: bottom;
+    animation: barGrow 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes barGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+.nx-admin-dashboard .nx-chart-legends { display: flex; gap: 16px; margin-top: 12px; justify-content: center; font-size: 0.78rem; }
+.nx-admin-dashboard .legend-item { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); }
+.nx-admin-dashboard .legend-item .dot { width: 8px; height: 8px; border-radius: 50%; }
+.nx-admin-dashboard .legend-item .dot.prim { background-color: var(--primary-color); }
+.nx-admin-dashboard .legend-item .dot.sec { background-color: var(--secondary-color); }
+
+/* === SECTION DESIGN CONSTRUCTIVES === */
+.nx-admin-dashboard .nx-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.nx-admin-dashboard .nx-section-header h3 { font-size: 1.15rem; font-weight: 600; }
+.nx-admin-dashboard .nx-subtext-muted { font-size: 0.82rem; color: var(--text-secondary); margin-top: 2px; }
+
+/* === SEARCH & FILTERS BAR === */
+.nx-admin-dashboard .nx-search-filter-bar {
+    display: flex; gap: 16px; background-color: var(--bg-header); padding: 12px; border-radius: var(--radius-md); border: 1px solid var(--border-color); margin-bottom: 16px;
+}
+.nx-admin-dashboard .nx-search-box-input {
+    flex-grow: 1; position: relative; display: flex; align-items: center;
+}
+.nx-admin-dashboard .nx-search-box-input i { position: absolute; left: 14px; color: var(--text-muted); font-size: 1.1rem; }
+.nx-admin-dashboard .nx-search-box-input input {
+    width: 100%; background: var(--bg-main); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 16px 10px 40px; color: var(--text-primary); font-size: 0.88rem; outline: none; transition: border var(--transition-normal);
+}
+.nx-admin-dashboard .nx-search-box-input input:focus { border-color: var(--secondary-color); }
+.nx-admin-dashboard .nx-filter-dropdowns select {
+    background: var(--bg-main); border: 1px solid var(--border-color); color: var(--text-primary); padding: 10px 16px; border-radius: 8px; font-size: 0.88rem; outline: none; cursor: pointer;
+}
+
+/* === MASTER LEDGER DESIGN TABLES === */
+.nx-admin-dashboard .nx-table-responsive { width: 100%; overflow-x: auto; }
+.nx-admin-dashboard .nx-master-table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem; }
+.nx-admin-dashboard .nx-master-table th {
+    padding: 14px 16px; color: var(--text-muted); font-weight: 500; font-size: 0.78rem; border-bottom: 1px solid var(--border-color); text-transform: uppercase; letter-spacing: 0.5px;
+}
+.nx-admin-dashboard .nx-master-table td { padding: 14px 16px; border-bottom: 1px solid var(--border-color); color: var(--text-secondary); vertical-align: middle; }
+.nx-admin-dashboard .nx-master-table tbody tr:hover td { background-color: var(--bg-hover); color: var(--text-primary); }
+
+/* === PROPERTY COMBINED MINI ROW ICON CELL === */
+.nx-admin-dashboard .nx-table-prop-profile { display: flex; align-items: center; gap: 12px; }
+.nx-admin-dashboard .nx-table-prop-avatar { width: 42px; height: 42px; border-radius: 8px; object-fit: cover; background: var(--bg-secondary); border: 1px solid var(--border-color); }
+.nx-admin-dashboard .nx-table-prop-info h5 { font-size: 0.88rem; font-weight: 600; color: var(--text-primary); }
+.nx-admin-dashboard .nx-table-prop-info p { font-size: 0.75rem; color: var(--text-muted); display: flex; align-items: center; gap: 3px; }
+
+/* === BEAUTIFIED COLORED PLATFORM BADGES === */
+.nx-admin-dashboard .nx-status-badge { font-size: 0.72rem; padding: 4px 10px; border-radius: 20px; font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+.nx-admin-dashboard .nx-status-badge.Active { background: rgba(16,185,129,0.1); color: #10b981; }
+.nx-admin-dashboard .nx-status-badge.Upcoming { background: rgba(0,212,255,0.1); color: var(--secondary-color); }
+.nx-admin-dashboard .nx-status-badge.Sold.Out { background: rgba(239,68,68,0.1); color: #ef4444; }
+.nx-admin-dashboard .nx-status-badge.Under.Review { background: rgba(245,158,11,0.1); color: #f59e0b; }
+.nx-admin-dashboard .nx-status-badge.Suspended { background: rgba(100,116,139,0.1); color: var(--text-muted); }
+
+/* === FLEX ROW TRIGGER ACTIONS === */
+.nx-admin-dashboard .nx-table-actions-flex { display: flex; gap: 6px; justify-content: flex-end; }
+.nx-admin-dashboard .nx-row-trigger {
+    background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-secondary); width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all var(--transition-normal);
+}
+.nx-admin-dashboard .nx-row-trigger:hover { color: var(--text-primary); background-color: var(--bg-hover); }
+.nx-admin-dashboard .nx-row-trigger.view-trigger:hover { border-color: var(--secondary-color); color: var(--secondary-color); }
+.nx-admin-dashboard .nx-row-trigger.edit-trigger:hover { border-color: var(--primary-color); color: var(--primary-color); }
+.nx-admin-dashboard .nx-row-trigger.delete-trigger:hover { border-color: #ef4444; color: #ef4444; }
+
+/* === PAGINATION & CONTROLS === */
+.nx-admin-dashboard .nx-table-pagination { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; font-size: 0.78rem; color: var(--text-muted); }
+.nx-admin-dashboard .nx-pag-nav-btn {
+    background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); width: 30px; height: 30px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 1rem;
+}
+.nx-admin-dashboard .nx-pag-nav-btn.active { background: var(--primary-color); border-color: var(--primary-color); }
+.nx-admin-dashboard .nx-pag-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.nx-admin-dashboard .nx-pag-btns { display: flex; gap: 4px; }
+
+/* === COMPONENT BUTTON INTERFACING === */
+.nx-admin-dashboard .nx-action-btn {
+    padding: 10px 18px; font-size: 0.85rem; font-weight: 600; border-radius: 8px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all var(--transition-normal); color: #fff;
+}
+.nx-admin-dashboard .nx-action-btn.primary-action { background-color: var(--primary-color); }
+.nx-admin-dashboard .nx-action-btn.primary-action:hover { background-color: var(--primary-hover); }
+.nx-admin-dashboard .nx-action-btn.secondary-action { background-color: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary); }
+.nx-admin-dashboard .nx-action-btn.neutral-action { background-color: transparent; border: 1px solid var(--border-color); color: var(--text-secondary); }
+
+/* === EMPTY STATE CONSTRUCTIVES === */
+.nx-admin-dashboard .nx-empty-view { padding: 64px 20px !important; text-align: center; display: block; }
+.nx-admin-dashboard .nx-empty-view.hidden { display: none; }
+.nx-admin-dashboard .nx-empty-center { max-width: 360px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.nx-admin-dashboard .nx-empty-icon-box { width: 56px; height: 56px; background: rgba(255,255,255,0.02); border: 1px dashed var(--border-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; color: var(--text-muted); }
+.nx-admin-dashboard .nx-empty-center h4 { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+.nx-admin-dashboard .nx-empty-center p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 8px; }
+
+/* === CORE MODAL OVERLAY SHEET DESIGN === */
+.nx-admin-dashboard .nx-modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(7, 11, 20, 0.7); backdrop-filter: blur(8px); z-index: 1500; display: none; align-items: center; justify-content: center; padding: 20px;
+}
+.nx-admin-dashboard .nx-modal-overlay.open { display: flex; }
+.nx-admin-dashboard .nx-modal-window {
+    background-color: var(--bg-card); border: 1px solid var(--border-color); width: 100%; max-width: 720px; max-height: 85vh; border-radius: var(--radius-md); box-shadow: var(--glass-shadow); display: flex; flex-direction: column; overflow: hidden; animation: nxModalScale 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.nx-admin-dashboard .nx-modal-header { padding: 18px 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+.nx-admin-dashboard .nx-modal-header h3 { font-size: 1.05rem; font-weight: 600; }
+.nx-admin-dashboard .nx-modal-close-trigger { background: none; border: none; color: var(--text-muted); font-size: 1.4rem; cursor: pointer; transition: color var(--transition-normal); }
+.nx-admin-dashboard .nx-modal-close-trigger:hover { color: #ef4444; }
+
+.nx-admin-dashboard .nx-modal-body-scroll { padding: 24px; overflow-y: auto; flex-grow: 1; }
+.nx-admin-dashboard .nx-form-section-title { margin: 20px 0 12px 0; border-bottom: 1px solid var(--border-color); padding-bottom: 6px; }
+.nx-admin-dashboard .nx-form-section-title h5 { font-size: 0.82rem; text-transform: uppercase; color: var(--secondary-color); font-weight: 600; display: flex; align-items: center; gap: 6px; letter-spacing: 0.5px; }
+.nx-admin-dashboard .nx-form-section-title:first-of-type { margin-top: 0; }
+
+/* === FORM CELL ROW DESIGN FLEXIBILITY === */
+.nx-admin-dashboard .nx-control-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; width: 100%; }
+.nx-admin-dashboard .nx-control-group label { font-size: 0.8rem; font-weight: 500; color: var(--text-secondary); }
+.nx-admin-dashboard .nx-control-group input,
+.nx-admin-dashboard .nx-control-group select,
+.nx-admin-dashboard .nx-control-group textarea {
+    background-color: var(--bg-main); border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 14px; color: var(--text-primary); font-size: 0.85rem; outline: none; transition: border-color var(--transition-normal); font-family: inherit;
+}
+.nx-admin-dashboard .nx-control-group input:focus,
+.nx-admin-dashboard .nx-control-group select:focus,
+.nx-admin-dashboard .nx-control-group textarea:focus { border-color: var(--primary-color); }
+
+.nx-admin-dashboard .nx-input-row { display: flex; gap: 16px; }
+.nx-admin-dashboard .nx-input-row.double > * { width: 50%; }
+.nx-admin-dashboard .nx-input-row.triple > * { width: 33.33%; }
+.nx-admin-dashboard .nx-input-row.quad > * { width: 25%; }
+
+.nx-admin-dashboard .nx-amenities-checkbox-flex { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; padding: 6px 0; }
+.nx-admin-dashboard .nx-check-lbl { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--text-secondary); cursor: pointer; }
+.nx-admin-dashboard .nx-check-lbl input { accent-color: var(--primary-color); }
+
+.nx-admin-dashboard .nx-modal-footer-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border-color); }
+
+/* === REAL ESTATE PROPERTY DETAILS PAGE PANELS VIEW === */
+.nx-admin-dashboard .nx-back-link-btn { background: none; border: none; color: var(--secondary-color); font-size: 0.85rem; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; margin-bottom: 12px; }
+.nx-admin-dashboard .nx-details-layout-engine { display: flex; flex-direction: column; gap: 24px; }
+.nx-admin-dashboard .nx-details-banner-frame { width: 100%; height: 260px; border-radius: var(--radius-md); position: relative; overflow: hidden; border: 1px solid var(--border-color); }
+.nx-admin-dashboard .nx-details-img { width: 100%; height: 100%; object-fit: cover; }
+.nx-admin-dashboard .nx-details-overlay-gradient { position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; background: linear-gradient(to top, rgba(7,11,20,0.9) 0%, transparent 100%); padding: 24px; display: flex; align-items: flex-end; justify-content: space-between; }
+.nx-admin-dashboard .nx-banner-meta h2 { font-size: 1.5rem; font-weight: 700; color: #fff; }
+.nx-admin-dashboard .nx-banner-meta p { font-size: 0.85rem; color: var(--text-secondary); display: flex; align-items: center; gap: 4px; margin-top: 4px; }
+
+.nx-admin-dashboard .nx-details-grid-split { display: grid; grid-template-columns: 1.6fr 1fr; gap: 24px; }
+.nx-admin-dashboard .nx-details-main-body { display: flex; flex-direction: column; gap: 24px; }
+.nx-admin-dashboard .nx-features-horizontal-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 12px; background: var(--bg-header); border: 1px solid var(--border-color); padding: 14px; border-radius: 12px; text-align: center; }
+.nx-admin-dashboard .nx-feat-node i { font-size: 1.25rem; color: var(--secondary-color); }
+.nx-admin-dashboard .nx-feat-node div { font-size: 0.78rem; color: var(--text-muted); margin-top: 4px; }
+.nx-admin-dashboard .nx-feat-node h6 { font-size: 0.88rem; font-weight: 600; color: var(--text-primary); }
+
+.nx-admin-dashboard .nx-details-text-block h4 { font-size: 1rem; font-weight: 600; margin-bottom: 8px; border-left: 3px solid var(--primary-color); padding-left: 8px; }
+.nx-admin-dashboard .nx-details-text-block p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+
+.nx-admin-dashboard .nx-amenities-list-flex { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.nx-admin-dashboard .nx-amenity-pill { background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 8px; font-size: 0.78rem; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; }
+.nx-admin-dashboard .nx-amenity-pill i { color: #10b981; }
+
+/* DEFI STATISTICS PROGRESS PROGRESS CARDS */
+.nx-admin-dashboard .nx-details-side-panel { display: flex; flex-direction: column; gap: 20px; }
+.nx-admin-dashboard .nx-progress-container { width: 100%; background: var(--bg-main); height: 8px; border-radius: 10px; overflow: hidden; margin: 8px 0; border: 1px solid var(--border-color); }
+.nx-admin-dashboard .nx-progress-bar-fill { height: 100%; background: linear-gradient(to right, var(--primary-color), var(--secondary-color)); width: 0%; transition: width 0.6s ease; }
+.nx-admin-dashboard .nx-progress-meta-flex { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted); }
+
+.nx-admin-dashboard .nx-side-stats-list { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+.nx-admin-dashboard .nx-side-stat-row { display: flex; justify-content: space-between; font-size: 0.82rem; border-bottom: 1px dashed var(--border-color); padding-bottom: 8px; }
+.nx-admin-dashboard .nx-side-stat-row span:first-child { color: var(--text-secondary); }
+.nx-admin-dashboard .nx-side-stat-row span:last-child { color: var(--text-primary); font-weight: 600; }
+
+/* === ADMINISTRATIVE GLOBAL SYSTEM LIVE TOAST ALERT === */
+.nx-admin-dashboard .nx-toast-alert {
+    position: fixed; bottom: -80px; right: 24px; background-color: var(--bg-card); border-left: 4px solid var(--secondary-color); padding: 14px 20px; border-radius: 8px; box-shadow: var(--glass-shadow); display: flex; align-items: center; gap: 10px; z-index: 3000; transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none;
+}
+.nx-admin-dashboard .nx-toast-alert.show { bottom: 24px; }
+.nx-admin-dashboard .nx-toast-alert-icon { color: var(--secondary-color); font-size: 1.2rem; }
+
+/* ==========================================================================
+   RESPONSIVE LAYOUT CONSTRAINTS MOBILE ADAPTIVITY BREAKPOINTS
+   ========================================================================== */
+@media (max-width: 768px) {
+    .nx-admin-dashboard .nx-admin-subnav { overflow-x: auto; white-space: nowrap; }
+    .nx-admin-dashboard .nx-subnav-btn span { font-size: 0.75rem; }
+    .nx-admin-dashboard .nx-input-row { flex-direction: column; gap: 0; }
+    .nx-admin-dashboard .nx-input-row > * { width: 100% !important; }
+    .nx-admin-dashboard .nx-details-grid-split { grid-template-columns: 1fr; }
+    .nx-admin-dashboard .nx-search-filter-bar { flex-direction: column; }
+    .nx-admin-dashboard .nx-filter-dropdowns select { width: 100%; }
+}
+
+
+/* ==========================================================================
+   NEXUIST MASTER SIDEBAR COLLISION PATCH & MOBILE ACCELERATION 
+   ========================================================================== */
+
+/* --- 1. DESKTOP ISOLATION BOUNDARY --- */
+@media (min-width: 992px) {
+    .nx-admin-dashboard {
+        /* Prevents your fixed master sidebar from overlapping or squeezing content out of view */
+        width: 100% !important;
+        max-width: calc(100vw - 280px) !important; /* Adjust 280px to match your actual sidebar width */
+        margin-left: auto !important;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        box-sizing: border-box;
+    }
+}
+
+/* --- 2. TABLET FLEX CONSTRAINTS --- */
+@media (max-width: 991px) and (min-width: 769px) {
+    .nx-admin-dashboard {
+        max-width: 100% !important;
+        padding: 12px !important;
+    }
+    .nx-admin-dashboard .nx-summary-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+/* --- 3. HARD REBOOT FOR PHONE MOBILE VIEWPORTS --- */
+@media (max-width: 768px) {
+    .nx-admin-dashboard {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 8px !important;
+        margin: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 16px !important;
+        overflow-x: hidden !important; /* Absolute prevention of horizontal screen shaking */
+    }
+
+    /* Force tables to scroll cleanly on small touchscreens instead of breaking cards */
+    .nx-admin-dashboard .nx-glass-card {
+        padding: 14px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+    }
+
+    .nx-admin-dashboard .nx-table-responsive {
+        width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch; /* Butter-smooth swipe navigation on iOS/Android */
+    }
+
+    .nx-admin-dashboard .nx-master-table {
+        min-width: 650px !important; /* Guarantees table data structures look perfect on horizontal scroll */
+    }
+
+    /* Make summary card layout perfectly stack inside 1 column grid rules */
+    .nx-admin-dashboard .nx-summary-grid {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+    }
+
+    /* Stack inner layout structures (e.g. Property Details View) */
+    .nx-admin-dashboard .nx-details-grid-split {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    /* Transform subnav to an elegant horizontally scrollable chip list */
+    .nx-admin-dashboard .nx-admin-subnav {
+        display: flex !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        padding: 6px !important;
+        gap: 6px !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .nx-admin-dashboard .nx-admin-subnav::-webkit-scrollbar {
+        display: none; /* Hides raw utility track lines for native premium app interfaces */
+    }
+
+    .nx-admin-dashboard .nx-subnav-btn {
+        padding: 8px 12px !important;
+        font-size: 0.8rem !important;
+        flex-shrink: 0 !important; /* Prevents text from squishing or multi-lining */
+    }
+
+    /* Move Notification Center cleanly down into view rules formatting */
+    .nx-admin-dashboard .nx-notif-center-wrapper {
+        margin-left: 6px !important;
+    }
+
+    .nx-admin-dashboard .nx-notif-dropdown {
+        position: fixed !important;
+        top: 60px !important;
+        left: 12px !important;
+        right: 12px !important;
+        width: calc(100% - 24px) !important;
+        z-index: 2001 !important;
+    }
+
+    /* Max out fullscreen scaling architectures for administrative modal configurations */
+    .nx-admin-dashboard .nx-modal-window {
+        max-height: 92vh !important;
+        width: 100% !important;
+        margin: 0 !important;
+        border-radius: 12px !important;
+    }
+
+    .nx-admin-dashboard .nx-modal-body-scroll {
+        padding: 16px !important;
+    }
+
+    /* Dynamic inputs force stacking natively on modern responsive forms layout orientation */
+    .nx-admin-dashboard .nx-input-row {
+        flex-direction: column !important;
+        gap: 0 !important;
+    }
+
+    .nx-admin-dashboard .nx-input-row > * {
+        width: 100% !important;
+    }
+}
+
+/* Modal fix */
+/* ==========================================================================
+   NEXUIST MOBILE MODAL OPTIMIZATION ENGINE & HEADER STICKY PATCH
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    /* Force overlay above absolutely everything else on the screen */
+    .nx-admin-dashboard .nx-modal-overlay {
+        padding: 0 !important;
+        align-items: flex-end !important; /* Pulls sheet cleanly from bottom like standard high-end fintech apps */
+        z-index: 999999 !important; /* Dominates master sidebars layout stack layers */
+    }
+
+    /* Transform window into an edge-to-edge mobile sheet */
+    .nx-admin-dashboard .nx-modal-window {
+        max-width: 100vw !important;
+        width: 100% !important;
+        height: 100% !important; /* Converts to clean full screen to handle long real estate form layouts */
+        max-height: 100vh !important;
+        border-radius: 0 !important; /* Sleek presentation */
+        border: none !important;
+    }
+
+    /* LOCK HEADER STICKY AT THE TOP VIEW */
+    .nx-admin-dashboard .nx-modal-header {
+        position: sticky !important;
+        top: 0;
+        z-index: 100;
+        background-color: var(--bg-card) !important;
+        padding: 16px 20px !important;
+        border-bottom: 1px solid var(--border-color) !important;
+        box-shadow: 0 4px 20px var(--glass-shadow);
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+    }
+
+    /* BOOST CLOSE TRIGGER SIZE & HIT-BOX FOR THUMBS */
+    .nx-admin-dashboard .nx-modal-close-trigger {
+        font-size: 1.8rem !important; /* Blows up the X icon so it's instantly visible and tappable */
+        color: var(--text-primary) !important;
+        padding: 8px !important;
+        margin-right: -8px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-width: 44px;
+        min-height: 44px; /* Universal mobile target size baseline standard */
+    }
+
+    /* Adjust scrolling body wrapper to make up for the sticky header offset space */
+    .nx-admin-dashboard .nx-modal-body-scroll {
+        padding: 20px 16px 40px 16px !important; /* Extra bottom breathing space for navigation button zones */
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    /* Make structural subheadings look completely unified across full-width scaling rules */
+    .nx-admin-dashboard .nx-form-section-title {
+        margin: 24px 0 16px 0 !important;
+    }
+}
+
+.nx-admin-dashboard .nx-investor-id-badge {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.nx-admin-dashboard .nx-table-email-text {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+    /* Ensures the extra data columns scroll smoothly together on smaller screens */
+    .nx-admin-dashboard .nx-master-table {
+        min-width: 950px !important; 
+    }
+}

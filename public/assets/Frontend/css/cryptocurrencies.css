@@ -1,0 +1,417 @@
+/* EXTRACTED PRO COLORS FROM YOUR IMAGE */
+:root {
+    --bg-dark: #090e16;
+    /* Deepest Black-Blue from image */
+    --navbar-bg: rgba(9, 14, 22, 0.95);
+    --border-color: #1a232f;
+    /* Subtle borders */
+    --accent-blue: #0070f3;
+    /* Vibe blue for main buttons */
+    --accent-hover: #0056b3;
+    --text-white: #ffffff;
+    --text-gray: #7d8c9f;
+    /* Pro grey for links */
+    --accent-green: #00ff88;
+    /* "Up" color */
+    --accent-red: #ff3355;
+    /* "Down" color */
+
+    /* Transitions for premium feel */
+    --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-mid: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+} */
+
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-white);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+/* --- NAVBAR (Modern Sticky/Glass) --- */
+.navbar {
+    background: var(--navbar-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    height: 64px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+}
+
+.logo a {
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--text-white);
+    letter-spacing: -0.5px;
+}
+
+/* --- DESKTOP NAVIGATION --- */
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 8px;
+}
+
+.nav-link {
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--text-gray);
+    padding: 8px 16px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition-fast);
+}
+
+.nav-link:hover {
+    color: var(--text-white);
+    background: rgba(255, 255, 255, 0.04);
+}
+
+.chevron {
+    opacity: 0.7;
+    transition: transform 0.3s ease;
+}
+
+/* --- THE BEAUTIFUL DROPDOWNS (Desktop Only) --- */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    background: #0d121c;
+    min-width: 200px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 8px 0;
+    box-shadow: 0 12px 32px -4px rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: var(--transition-mid);
+    will-change: transform, opacity;
+}
+
+.dropdown-content li {
+    list-style: none;
+}
+
+.dropdown-content li a {
+    text-decoration: none;
+    font-size: 14px;
+    color: var(--text-gray);
+    padding: 10px 20px;
+    display: block;
+    transition: var(--transition-fast);
+}
+
+.dropdown-content li a:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-white);
+}
+
+/* Desktop Hover States */
+@media (min-width: 1025px) {
+    .dropdown:hover .dropdown-content {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+
+    .dropdown:hover .chevron {
+        transform: rotate(-180deg);
+        opacity: 1;
+    }
+}
+
+/* --- ACTIONS (Right Side) --- */
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.btn-login {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-white);
+}
+
+.btn-signup {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    color: white;
+    background: var(--accent-blue);
+    padding: 10px 20px;
+    border-radius: 6px;
+    transition: var(--transition-fast);
+}
+
+.btn-signup:hover {
+    background: var(--accent-hover);
+    box-shadow: 0 0 15px rgba(0, 112, 243, 0.4);
+}
+
+.mobile-cta-area {
+    display: none;
+}
+
+/* --- TICKER (Trading Marquee) --- */
+.ticker-wrap {
+    background: #000;
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 0;
+    overflow: hidden;
+}
+
+.ticker {
+    display: flex;
+    animation: marquee 30s linear infinite;
+    will-change: transform;
+}
+
+.ticker__item {
+    padding-right: 40px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--text-gray);
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.white {
+    color: var(--text-white);
+    font-weight: 400;
+    padding: 0 4px;
+}
+
+.up {
+    color: var(--accent-green);
+}
+
+.down {
+    color: var(--accent-red);
+}
+
+/* --- MOBILE & RESPONSIVE DESIGN (Rebuilt flow) --- */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px 5px;
+    z-index: 1100;
+}
+
+.menu-toggle .bar {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: white;
+    transition: 0.3s ease;
+}
+
+.menu-toggle .bar-2 {
+    margin-top: 6px;
+}
+
+@media (max-width: 1024px) {
+
+    /* Basic Layout Adjustments */
+    .nav-actions {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .navbar {
+        height: 60px;
+    }
+
+    /* The Beautiful Full-Screen Mobile Menu */
+    .nav-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: #070a10;
+        flex-direction: column;
+        padding: 90px 24px 40px;
+        gap: 0;
+        overflow-y: auto;
+        border-left: 1px solid var(--border-color);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transform: translateX(100%);
+        /* Start Offscreen */
+        z-index: 1050;
+    }
+
+    .nav-menu.is-open {
+        transform: translateX(0);
+    }
+
+    /* Mobile Links (Large & Clean) */
+    .nav-item {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        width: 100%;
+    }
+
+    .nav-link {
+        font-size: 18px;
+        font-weight: 600;
+        padding: 18px 0;
+        width: 100%;
+        justify-content: space-between;
+        color: var(--text-white);
+    }
+
+    .nav-link:hover {
+        background: none;
+    }
+
+    /* Dropdown Reset for Mobile Tapping */
+    .dropdown-content {
+        position: static;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        display: none;
+        /* Crucial: Start Closed */
+        background: rgba(255, 255, 255, 0.02);
+        box-shadow: none;
+        border: none;
+        border-radius: 0;
+        margin-top: 0;
+        padding: 0 10px;
+    }
+
+    .dropdown-content li a {
+        padding: 14px 10px;
+        font-size: 15px;
+        color: var(--text-gray);
+    }
+
+    /* JavaScript triggers this class to open the mobile dropdown */
+    .dropdown.is-expanded .dropdown-content {
+        display: block;
+    }
+
+    .dropdown.is-expanded .chevron {
+        transform: rotate(-180deg);
+    }
+
+    /* Fixed Mobile Action Area */
+    .mobile-cta-area {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 30px;
+        border: none;
+    }
+
+    .mobile-btn-login {
+        text-align: center;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 16px;
+        color: white;
+        padding: 14px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Burger Animation */
+    .navbar.menu-is-active .bar-1 {
+        transform: translateY(3px) rotate(45deg);
+    }
+
+    .navbar.menu-is-active .bar-2 {
+        transform: translateY(-4px) rotate(-45deg);
+    }
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 40px;
+    /* Adjust this height to fit your navbar perfectly */
+    width: auto;
+    /* Keeps the aspect ratio so it doesn't look stretched */
+    display: block;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.05);
+    /* Subtle pop effect when hovering */
+}
+
+/* On smaller mobile screens, you might want it slightly smaller */
+@media (max-width: 480px) {
+    .logo-img {
+        height: 32px;
+    }
+}
+
+.nav-link.active {
+    color: #fff;
+    background: rgba(255,255,255,0.08);
+}
+
+.dropdown-content a.active {
+    color: #fff;
+    background: rgba(255,255,255,0.1);
+}

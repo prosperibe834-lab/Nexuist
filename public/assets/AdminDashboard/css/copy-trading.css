@@ -1,0 +1,1212 @@
+/* =========================================
+   NEXUIST FINTECH ROOT VARIABLES [cite: 1]
+========================================= */
+:root {
+    /* ===== PRIMARY BRAND COLORS ===== */
+    --primary-color: #6c63ff;
+    --primary-hover: #7c73ff;
+    --secondary-color: #00d4ff;
+    --accent-color: #8b5cf6;
+
+    /* ===== BACKGROUND COLORS ===== */
+    --bg-main: #0b101e;
+    --bg-secondary: #111827;
+    --bg-card: #151b2b;
+    --bg-sidebar: #0f1524;
+    --bg-header: #070b14;
+    --bg-hover: #1e293b;
+
+    /* ===== GLASS EFFECTS ===== */
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.06);
+    --glass-shadow: rgba(0, 0, 0, 0.5);
+
+    /* ===== TEXT COLORS ===== */
+    --text-primary: #ffffff;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+
+    /* ===== BORDER COLORS ===== */
+    --border-color: rgba(255, 255, 255, 0.08);
+
+    /* ===== GLOW EFFECTS ===== */
+    --glow-primary: 0 0 15px rgba(108, 99, 255, 0.35);
+
+    /* ===== DESIGN UTILITIES ===== */
+    --radius-md: 14px;
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --font-main: 'Inter', sans-serif;
+    --z-sidebar: 1000;
+}
+
+/* =========================================
+   LIGHT MODE OVERRIDES
+========================================= */
+html[data-theme="light"] {
+    --bg-main: #f8fafc;
+    --bg-secondary: #f1f5f9;
+    --bg-card: #ffffff;
+    --bg-sidebar: #ffffff;
+    --bg-header: #ffffff;
+    --bg-hover: #e2e8f0;
+
+    --glass-bg: rgba(15, 23, 42, 0.03);
+    --glass-border: rgba(15, 23, 42, 0.08);
+    --glass-shadow: rgba(15, 23, 42, 0.05);
+
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --border-color: rgba(15, 23, 42, 0.08);
+    --glow-primary: 0 4px 12px rgba(108, 99, 255, 0.15);
+}
+
+/* =========================================
+   BASE RESET & LAYOUT STRUCTURING
+========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-main);
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    transition: background-color var(--transition-normal);
+}
+
+/* Preloader starts here */
+/* =========================================
+   ADVANCED FINTECH PRELOADER
+========================================= */
+
+#nexuist-preloader {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    background: #05070f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+
+    opacity: 1;
+    visibility: visible;
+
+    transition:
+        opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+        visibility 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+
+    overflow: hidden;
+    padding: 20px;
+}
+
+/* =========================================
+   TERMINAL BOX
+========================================= */
+
+.loader-terminal-box {
+    width: 100%;
+    max-width: 320px;
+
+    padding: 30px 25px;
+
+    border-radius: 24px;
+
+    background: rgba(255, 255, 255, 0.03);
+
+    border: 1px solid rgba(255, 255, 255, 0.06);
+
+    backdrop-filter: blur(14px);
+
+    box-shadow:
+        0 0 40px rgba(0, 212, 255, 0.08),
+        0 0 80px rgba(108, 99, 255, 0.08);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+/* =========================================
+   ICON
+========================================= */
+
+.loader-brand-icon {
+    font-size: clamp(38px, 7vw, 60px);
+
+    color: #00d4ff;
+
+    margin-bottom: 22px;
+
+    filter: drop-shadow(0 0 18px rgba(0, 212, 255, 0.55));
+
+    animation: iconFloat 2s ease-in-out infinite;
+}
+
+/* =========================================
+   LOADING BARS
+========================================= */
+
+.glow-bars-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    height: 30px;
+
+    margin-bottom: 20px;
+}
+
+.glow-bar {
+    width: 5px;
+
+    height: 14px;
+
+    border-radius: 10px;
+
+    background: linear-gradient(to top, #6c63ff, #00d4ff);
+
+    box-shadow:
+        0 0 12px rgba(108, 99, 255, 0.5),
+        0 0 18px rgba(0, 212, 255, 0.25);
+
+    animation: barGrow 1s ease-in-out infinite;
+}
+
+.glow-bar:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.glow-bar:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.glow-bar:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+/* =========================================
+   STATUS TEXT
+========================================= */
+
+.loader-status-text {
+    font-size: clamp(10px, 2vw, 12px);
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    line-height: 1.6;
+
+    color: #94a3b8;
+
+    text-transform: uppercase;
+
+    word-break: break-word;
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes barGrow {
+
+    0%,
+    100% {
+        height: 14px;
+        opacity: 0.4;
+    }
+
+    50% {
+        height: 34px;
+        opacity: 1;
+        filter: brightness(1.2);
+    }
+}
+
+@keyframes iconFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* =========================================
+   HIDE STATE
+========================================= */
+
+#nexuist-preloader.loaded {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS
+========================================= */
+
+@media (max-width: 768px) {
+
+    .loader-terminal-box {
+        max-width: 280px;
+
+        padding: 25px 20px;
+
+        border-radius: 20px;
+    }
+
+    .glow-bars-container {
+        gap: 8px;
+    }
+
+    .glow-bar {
+        width: 4px;
+    }
+
+    .loader-status-text {
+        letter-spacing: 1.5px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .loader-terminal-box {
+        max-width: 240px;
+
+        padding: 22px 18px;
+    }
+
+    .loader-status-text {
+        font-size: 9px;
+
+        letter-spacing: 1px;
+    }
+
+    .glow-bars-container {
+        height: 24px;
+    }
+}
+
+/* Preloader ends here */
+
+/* =========================================
+   SIDEBAR STYLING [cite: 6]
+========================================= */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 260px;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: var(--z-sidebar);
+    transition: width var(--transition-normal), background var(--transition-normal);
+}
+
+/* Collapsed Sidebar State */
+.sidebar.close {
+    width: 78px;
+}
+
+/* Logo Area Layout */
+.sidebar .logo-details {
+    height: 70px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: relative;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar .logo-details i.logo-icon {
+    font-size: 28px;
+    color: var(--secondary-color);
+    min-width: 44px;
+    text-align: center;
+    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
+}
+
+.sidebar .logo-details .logo_name {
+    font-size: 20px;
+    color: var(--text-primary);
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: opacity var(--transition-normal);
+}
+
+.sidebar.close .logo-details .logo_name {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Chevron desktop toggle controller button */
+.sidebar .logo-details #sidebar-toggle-btn {
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 25px;
+    width: 25px;
+    background: var(--primary-color);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    box-shadow: var(--glow-primary);
+}
+
+.sidebar.close .logo-details #sidebar-toggle-btn {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Navigation List Processing */
+.sidebar .nav-links {
+    height: calc(100% - 70px);
+    padding: 15px 0 150px 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Hide side scroll rails neatly */
+.sidebar .nav-links::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar .nav-links::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 10px;
+}
+
+.sidebar .nav-links li {
+    position: relative;
+    list-style: none;
+    transition: var(--transition-normal);
+    padding: 4px 12px;
+}
+
+.sidebar .nav-links li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    height: 48px;
+    transition: var(--transition-normal);
+}
+
+/* Glassmorphic Active and Hover states [cite: 5] */
+.sidebar .nav-links li.active a,
+.sidebar .nav-links li a:hover {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), var(--glass-shadow);
+}
+
+.sidebar .nav-links li.active a i,
+.sidebar .nav-links li a:hover i {
+    color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(108, 99, 255, 0.4);
+}
+
+.sidebar .nav-links li.active a .link_name,
+.sidebar .nav-links li a:hover .link_name {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.sidebar .nav-links li i {
+    min-width: 54px;
+    text-align: center;
+    font-size: 20px;
+    color: var(--text-secondary);
+    transition: var(--transition-normal);
+}
+
+.sidebar .nav-links li .link_name {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    transition: var(--transition-normal);
+    white-space: nowrap;
+}
+
+/* Handles label clamping if desktop side drawer slides compressed */
+.sidebar.close .nav-links li .link_name {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Sub-menus configuration for collapsed system hover popovers */
+.sidebar .nav-links li .sub-menu {
+    padding: 6px 6px 14px 80px;
+    margin-top: -10px;
+    background: var(--bg-sidebar);
+    display: none;
+}
+
+.sidebar .nav-links li.showMenu .sub-menu {
+    display: block;
+}
+
+.sidebar .nav-links li .sub-menu a {
+    color: var(--text-secondary);
+    font-size: 15px;
+    padding: 5px 0;
+    transition: var(--transition-normal);
+}
+
+.sidebar .nav-links li .sub-menu a:hover {
+    color: var(--text-primary);
+}
+
+.sidebar.close .nav-links li .sub-menu {
+    position: absolute;
+    left: 100%;
+    top: -10px;
+    margin-top: 0;
+    padding: 10px 20px;
+    border-radius: 0 6px 6px 0;
+    opacity: 0;
+    display: block;
+    pointer-events: none;
+    transition: 0s;
+    border: 1px solid var(--border-color);
+    border-left: none;
+    box-shadow: var(--shadow-lg);
+}
+
+.sidebar.close .nav-links li:hover .sub-menu {
+    top: 0;
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0.4s ease;
+}
+
+.sidebar .nav-links li .sub-menu .link_name {
+    display: none;
+}
+
+.sidebar.close .nav-links li .sub-menu .link_name {
+    font-size: 15px;
+    opacity: 1;
+    display: block;
+    font-weight: 500;
+    color: var(--text-primary);
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 5px;
+}
+
+.sidebar .nav-links li .sub-menu.blank {
+    padding: 3px 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar.close .nav-links li:hover .sub-menu.blank {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Controls & Configuration Toggle Rows Styling */
+.sidebar .nav-links .control-items,
+.sidebar .nav-links .logout-item {
+    margin-top: 15px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
+}
+
+.sidebar .nav-links .mode-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    padding: 0 10px;
+    border-radius: var(--radius-md);
+    background: var(--glass-bg);
+}
+
+.sidebar.close .nav-links .mode-toggle-wrapper {
+    justify-content: center;
+    padding: 0;
+}
+
+.sidebar .nav-links .mode-text-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.sidebar.close .nav-links .mode-label {
+    display: none;
+}
+
+/* Light Mode/Dark Mode System Slider Track */
+.sidebar .nav-links .toggle-switch-track {
+    position: relative;
+    height: 22px;
+    width: 42px;
+    background: var(--bg-hover);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    border: 1px solid var(--border-color);
+}
+
+.sidebar.close .nav-links .toggle-switch-track {
+    display: none;
+}
+
+.sidebar .nav-links .switch-thumb {
+    position: absolute;
+    height: 14px;
+    width: 14px;
+    left: 4px;
+    top: 3px;
+    background: var(--text-secondary);
+    border-radius: 50%;
+    transition: var(--transition-normal);
+}
+
+html[data-theme="light"] .sidebar .nav-links .switch-thumb {
+    left: 22px;
+    background: var(--primary-color);
+}
+
+/* =========================================
+   MAIN APP CONTENT LAYOUT BASE VIEWPORTS
+========================================= */
+/* ==========================================================================
+   NEXUIST EXPERT TRADING ADMIN DASHBOARD (SANDBOXED PRODUCTION CSS)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. ISOLATED CONTAINER & LAYOUT STRUCTURE
+   -------------------------------------------------------------------------- */
+.nx-trade-dashboard {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    padding: 24px;
+    box-sizing: border-box;
+    transition: background-color var(--transition-normal);
+}
+
+/* Master Grid Framework */
+.nx-trade-dashboard .nxt-layout-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+    margin-top: 24px;
+}
+
+/* --------------------------------------------------------------------------
+   2. INSTITUTIONAL GLASSMORPHIC CARDS & METRICS
+   -------------------------------------------------------------------------- */
+.nx-trade-dashboard .nxt-glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    box-shadow: 0 8px 32px 0 var(--glass-shadow);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.nx-trade-dashboard .nxt-glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--glow-primary);
+    border-color: rgba(108, 99, 255, 0.2);
+}
+
+/* Metrics Performance Track Grid */
+.nx-trade-dashboard .nxt-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    width: 100%;
+}
+
+.nx-trade-dashboard .nxt-stat-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+}
+
+.nx-trade-dashboard .nxt-stat-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, transparent 50%, rgba(0, 212, 255, 0.05) 50%);
+    border-radius: 0 var(--radius-md) 0 100px;
+}
+
+.nx-trade-dashboard .nxt-stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.nx-trade-dashboard .nxt-stat-header i {
+    font-size: 1.3rem;
+    color: var(--secondary-color);
+}
+
+.nx-trade-dashboard .nxt-stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 12px 0 4px 0;
+    letter-spacing: -0.02em;
+    background: linear-gradient(120deg, var(--text-primary), #cbd5e1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nx-trade-dashboard .nxt-stat-footer {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.nx-trade-dashboard .nxt-trend-up {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.nx-trade-dashboard .nxt-trend-down {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   3. SYSTEM FILTERS & SEARCH MODULE
+   -------------------------------------------------------------------------- */
+.nx-trade-dashboard .nxt-control-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.nx-trade-dashboard .nxt-search-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 280px;
+}
+
+.nx-trade-dashboard .nxt-search-wrapper i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.nx-trade-dashboard .nxt-search-input {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    outline: none;
+    transition: var(--transition-normal);
+}
+
+.nx-trade-dashboard .nxt-search-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.15);
+}
+
+.nx-trade-dashboard .nxt-filter-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.nx-trade-dashboard .nxt-select-custom {
+    padding: 11px 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    cursor: pointer;
+    outline: none;
+}
+
+/* --------------------------------------------------------------------------
+   4. INTERACTIVE TRADER GRID & CARDS
+   -------------------------------------------------------------------------- */
+.nx-trade-dashboard .nxt-trader-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.nx-trade-dashboard .nxt-trader-card {
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+}
+
+.nx-trade-dashboard .nxt-trader-banner {
+    width: 100%;
+    height: 90px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.nx-trade-dashboard .nxt-trader-avatar-wrap {
+    position: absolute;
+    bottom: -30px;
+    left: 20px;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    border: 3px solid var(--bg-card);
+    overflow: hidden;
+    background: var(--bg-secondary);
+}
+
+.nx-trade-dashboard .nxt-trader-avatar-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nx-trade-dashboard .nxt-trader-body {
+    padding: 44px 20px 20px 20px;
+}
+
+.nx-trade-dashboard .nxt-trader-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.nx-trade-dashboard .nxt-trader-name {
+    font-size: 1.15rem;
+    font-weight: 600;
+}
+
+.nx-trade-dashboard .nxt-trader-strat {
+    font-size: 0.8rem;
+    color: var(--secondary-color);
+    margin-top: 2px;
+}
+
+/* Institutional Live Status Badges */
+.nx-trade-dashboard .nxt-status-badge {
+    padding: 4px 10px;
+    border-radius: 100px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.nx-trade-dashboard .nxt-status-badge.online {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+}
+
+.nx-trade-dashboard .nxt-status-badge.trading {
+    background: rgba(0, 212, 255, 0.1);
+    color: var(--secondary-color);
+}
+
+.nx-trade-dashboard .nxt-status-badge.busy {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+.nx-trade-dashboard .nxt-status-badge.offline {
+    background: rgba(100, 116, 139, 0.1);
+    color: var(--text-muted);
+}
+
+.nx-trade-dashboard .nxt-metric-matrix {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin: 18px 0;
+    background: rgba(255, 255, 255, 0.01);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.nx-trade-dashboard .nxt-matrix-item {
+    text-align: center;
+}
+
+.nx-trade-dashboard .nxt-matrix-lbl {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.nx-trade-dashboard .nxt-matrix-val {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   5. PREMIUM FINANCIAL TABLES & TIMELINES
+   -------------------------------------------------------------------------- */
+.nx-trade-dashboard .nxt-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.nx-trade-dashboard .nxt-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.88rem;
+}
+
+.nx-trade-dashboard .nxt-table th {
+    background: rgba(255, 255, 255, 0.01);
+    padding: 14px 16px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.nx-trade-dashboard .nxt-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    color: var(--text-primary);
+}
+
+.nx-trade-dashboard .nxt-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.01);
+}
+
+/* --------------------------------------------------------------------------
+   6. DYNAMIC ACTION CONTROLS & BUTTONS
+   -------------------------------------------------------------------------- */
+.nx-trade-dashboard .nxt-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: var(--transition-normal);
+}
+
+.nx-trade-dashboard .nxt-btn-primary {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+.nx-trade-dashboard .nxt-btn-primary:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.nx-trade-dashboard .nxt-btn-secondary {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.nx-trade-dashboard .nxt-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nx-trade-dashboard .nxt-action-dots {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+/* --------------------------------------------------------------------------
+   7. MODAL CONTEXT SYSTEMS (FINTECH OVERLAY)
+   -------------------------------------------------------------------------- */
+.nx-trade-dashboard .nxt-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(7, 11, 20, 0.8);
+    backdrop-filter: blur(12px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nx-trade-dashboard .nxt-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.nx-trade-dashboard .nxt-modal-window {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    width: 100%;
+    max-width: 650px;
+    border-radius: var(--radius-md);
+    box-shadow: 0 24px 64px var(--glass-shadow);
+    transform: scale(0.95) translateY(10px);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.nx-trade-dashboard .nxt-modal-overlay.active .nxt-modal-window {
+    transform: scale(1) translateY(0);
+}
+
+.nx-trade-dashboard .nxt-modal-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nx-trade-dashboard .nxt-modal-body {
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.nx-trade-dashboard .nxt-form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.nx-trade-dashboard .nxt-field-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.nx-trade-dashboard .nxt-field-wrap.full-width {
+    grid-column: span 2;
+}
+
+.nx-trade-dashboard .nxt-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.nx-trade-dashboard .nxt-input {
+    width: 100%;
+    padding: 11px 14px;
+    background: var(--bg-main);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    outline: none;
+}
+
+.nx-trade-dashboard .nxt-input:focus {
+    border-color: var(--primary-color);
+}
+
+/* Tabs Layout Systems */
+.nx-trade-dashboard .nxt-tab-container {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.nx-trade-dashboard .nxt-tab-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    padding: 8px 16px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.9rem;
+    position: relative;
+}
+
+.nx-trade-dashboard .nxt-tab-btn.active {
+    color: var(--primary-color);
+}
+
+.nx-trade-dashboard .nxt-tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -11px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary-color);
+}
+
+/* --------------------------------------------------------------------------
+   8. RESPONSIVE PHONE VIEW CONSTRAINTS
+   -------------------------------------------------------------------------- */
+@media (max-width: 992px) {
+    .nx-trade-dashboard .nxt-layout-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nx-trade-dashboard .nxt-card-span-8,
+    .nx-trade-dashboard .nxt-card-span-4 {
+        grid-column: span 12 !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .nx-trade-dashboard {
+        padding: 16px;
+    }
+
+    .nx-trade-dashboard .nxt-control-bar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nx-trade-dashboard .nxt-search-wrapper,
+    .nx-trade-dashboard .nxt-filter-group {
+        width: 100%;
+    }
+
+    .nx-trade-dashboard .nxt-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .nx-trade-dashboard .nxt-field-wrap.full-width {
+        grid-column: span 1;
+    }
+
+    .nx-trade-dashboard .nxt-modal-window {
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+    }
+}
+
+
+/*  */
+/* ==========================================================================
+   NEXUIST SIDEBAR OVERLAP SURGICAL ALIGNMENT FIX
+   ========================================================================== */
+
+@media (min-width: 992px) {
+    .nx-trade-dashboard {
+        /* Force the inner dashboard to step out from underneath the fixed sidebar */
+        padding-left: 300px !important;
+
+        /* Reset width properties to make sure it doesn't push off the right side of the screen */
+        width: 100% !important;
+        max-width: 100vw !important;
+        margin: 0 !important;
+        box-sizing: border-box !important;
+        display: block !important;
+    }
+}
+
+@media (max-width: 991px) {
+
+    /* If the sidebar collapses or goes into a hamburger menu on tablet/mobile */
+    .nx-trade-dashboard {
+        padding-left: 16px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .sidebar {
+        left: -280px;
+        width: 260px;
+        transition: left var(--transition-normal), transform var(--transition-normal);
+        box-shadow: rgba(0, 0, 0, 0.12) 0px 16px 40px;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .sidebar.close {
+        width: 260px;
+    }
+
+    .sidebar .logo-details #sidebar-toggle-btn {
+        display: none;
+    }
+
+    .sidebar .nav-links {
+        height: calc(100vh - 70px);
+    }
+
+    .main-content,
+    .nx-trade-dashboard {
+        padding-left: 0 !important;
+    }
+
+    .top-header {
+        position: sticky;
+        top: 0;
+        z-index: 1100;
+        background: var(--bg-header);
+    }
+}
+
+/*  */
