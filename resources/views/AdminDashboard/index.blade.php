@@ -71,6 +71,8 @@
                 </ul>
             </li>
 
+           
+
             <li>
                 <a href="{{ url('/investment-plans') }}">
                     <i class='bx bx-layer'></i>
@@ -78,6 +80,26 @@
                 </a>
                 <ul class="sub-menu blank">
                     <li><a class="link_name" href="/investment-plans">Investment Plans</a></li>
+                </ul>
+            </li>
+
+             <li>
+                <a href="{{ url('/StockMarket') }}">
+                    <i class='bx bx-layer'></i>
+                    <span class="link_name">StockMarket</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="/StockMarket">StockMarket</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="{{ url('/Crypto') }}">
+                    <i class='bx bx-layer'></i>
+                    <span class="link_name">Crypto</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="/Crypto">Crypto</a></li>
                 </ul>
             </li>
 

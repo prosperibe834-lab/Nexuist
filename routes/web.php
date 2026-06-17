@@ -9,7 +9,11 @@ use App\Http\Controllers\DepositController;
 use App\Http\Controllers\KycController;
 use App\Http\Controllers\RealEstateInvestmentController;
 use App\Http\Controllers\RealEstatePropertyController;
+use App\Http\Controllers\StockInvestmentController;
+use App\Http\Controllers\CryptoInvestmentController;
+use App\Http\Controllers\StockMarketController;
 use App\Http\Controllers\Admin\RealEstatePropertyController as AdminRealEstatePropertyController;
+use App\Http\Controllers\Admin\StockMarketController as AdminStockMarketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -59,7 +63,8 @@ Route::post('/kyc/{id}/reject',
 Route::view('/explore', 'explore')->name('explore');
 Route::view('/support', 'support');
 Route::view('/livemarkets', 'livemarkets');
-Route::view('/stockMarket', 'stockMarket');
+Route::get('/stockMarket', [StockMarketController::class, 'index'])->name('stockMarket.index');
+Route::get('/stock-market', [StockMarketController::class, 'index']);
 
 // Authentication routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -105,6 +110,8 @@ Route::middleware('auth')->group(function () {
     // Route::view('/botTrading', 'botTrading');
     Route::get('/botTrading', [AiBotController::class, 'botTrading']);
     Route::post('/bot/invest/{id}', [BotInvestmentController::class, 'invest'])->name('bot.invest');
+    Route::post('/stock-market/invest', [StockInvestmentController::class, 'invest'])->name('stockmarket.invest');
+    Route::post('/crypto/invest', [CryptoInvestmentController::class, 'invest'])->name('crypto.invest');
 
     Route::get('/copytrading', [AiBotController::class, 'copyTrading'])->name('copytrading');
     Route::get('/experts', [AiBotController::class, 'experts'])->name('experts');
@@ -168,6 +175,13 @@ Route::middleware('auth')->group(function () {
     Route::view('/AdminSupport', 'AdminDashboard.AdminSupport');
     Route::view('/transactions', 'AdminDashboard.transactions');
     Route::view('/security', 'AdminDashboard.security');
+    Route::get('/StockMarket', [AdminStockMarketController::class, 'index'])->name('admin.stockmarket');
+    Route::post('/admin/stock-market/plans', [AdminStockMarketController::class, 'storePlan'])->name('admin.stockmarket.plan.store');
+    Route::post('/admin/stock-market/plans/{id}/toggle', [AdminStockMarketController::class, 'toggleStatus'])->name('admin.stockmarket.plan.toggle');
+    Route::post('/admin/crypto/plans', [App\Http\Controllers\Admin\CryptoController::class, 'storePlan'])->name('admin.crypto.plan.store');
+    Route::post('/admin/crypto/plans/{id}/toggle', [App\Http\Controllers\Admin\CryptoController::class, 'toggleStatus'])->name('admin.crypto.plan.toggle');
+    Route::delete('/admin/crypto/plans/{id}', [App\Http\Controllers\Admin\CryptoController::class, 'destroy'])->name('admin.crypto.plan.destroy');
+    Route::view('/Crypto', 'AdminDashboard.Crypto');
 });
 
 Route::get('/kyc', [AdminKycController::class, 'index'])->name('kyc.index');
@@ -251,6 +265,16 @@ Route::get(
     '/admin/bots/sort/{type}',
     [AiBotController::class, 'sort']
 );
+
+// Public feed for recent bot deployments (deploy2)
+Route::get('/deploy2', function () {
+    $deploys = \App\Models\BotInvestment::with('bot', 'user')
+        ->latest()
+        ->take(50)
+        ->get();
+
+    return view('deploy2', compact('deploys'));
+});
 
 
 

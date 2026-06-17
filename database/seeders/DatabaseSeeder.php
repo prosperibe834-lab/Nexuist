@@ -54,5 +54,7 @@ class DatabaseSeeder extends Seeder
                 'main_image' => 'https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80',
             ]);
         }
+
+        $this->call(StockMarketSeeder::class);
     }
 }

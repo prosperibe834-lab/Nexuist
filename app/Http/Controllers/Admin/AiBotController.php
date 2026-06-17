@@ -445,7 +445,17 @@ class AiBotController extends Controller
             ];
         });
 
-        return response()->json(compact('traders', 'investments', 'investors', 'portfolios'));
+        $stats = [
+            'totalTraders' => $traders->count(),
+            'activeTraders' => $traders->filter(fn($bot) => strtolower($bot->status) === 'active')->count(),
+            'totalInvestors' => $investors->count(),
+            'totalInvested' => $investments->sum('investment_amount'),
+            'totalProfit' => $investments->sum('current_profit'),
+            'todayPlacements' => BotInvestment::whereDate('created_at', today())->sum('investment_amount'),
+            'pendingCount' => BotInvestment::where('status', 'Running')->count(),
+        ];
+
+        return response()->json(compact('traders', 'investments', 'investors', 'portfolios', 'stats'));
     }
 
     public function storeAdminTrader(Request $request)

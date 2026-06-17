@@ -188,20 +188,20 @@ acmVerifyBtn.addEventListener("click", () => {
 
 // Main section starts here
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Data Schema for the 9 Beautiful Premium Investment Plans
-    const plansData = [
-        { id: 1, name: "Crypto Starter Eco", tier: "Starter", icon: "bx-layer", min: 50, max: 300, dailyRoi: 4.5, duration: 14, bonus: 0, badgeClass: "badge-tier-1" },
-        { id: 2, name: "Crypto Yield Spark", tier: "Starter", icon: "bx-bolt-circle", min: 300, max: 1000, dailyRoi: 5.8, duration: 14, bonus: 5, badgeClass: "badge-tier-1" },
-        { id: 3, name: "Alpha Contract Plus", tier: "Starter", icon: "bx-shuffle", min: 1000, max: 2500, dailyRoi: 7.2, duration: 21, bonus: 15, badgeClass: "badge-tier-1" },
-        
-        { id: 4, name: "Crypto Velocity Loop", tier: "Active Pro", icon: "bx-line-chart", min: 2500, max: 5000, dailyRoi: 10.5, duration: 21, bonus: 40, badgeClass: "badge-tier-2", isHot: true },
-        { id: 5, name: "DeFi Harvest Matrix", tier: "Active Pro", icon: "bx-radar", min: 5000, max: 10000, dailyRoi: 14.0, duration: 30, bonus: 85, badgeClass: "badge-tier-2", isHot: true },
-        { id: 6, name: "Quantum Scalper Edge", tier: "Active Pro", icon: "bx-scatter-chart", min: 10000, max: 25000, dailyRoi: 18.5, duration: 30, bonus: 150, badgeClass: "badge-tier-2", isHot: true },
-        
-        { id: 7, name: "Institutional Prime Vault", tier: "High Net", icon: "bx-crown", min: 25000, max: 50000, dailyRoi: 24.0, duration: 45, bonus: 350, badgeClass: "badge-tier-3" },
-        { id: 8, name: "Vanguard Sovereign Block", tier: "High Net", icon: "bx-diamond", min: 50000, max: 100000, dailyRoi: 32.5, duration: 60, bonus: 800, badgeClass: "badge-tier-3" },
-        { id: 9, name: "Apex Eternity Infinite", tier: "High Net", icon: "bx-infinite", min: 100000, max: 250000, dailyRoi: 40.0, duration: 90, bonus: 2500, badgeClass: "badge-tier-3" }
-    ];
+    // 1. Data Schema for the investment plans — prefer backend-driven data when available
+    const plansData = (window.cryptoPlansData && Array.isArray(window.cryptoPlansData) && window.cryptoPlansData.length)
+        ? window.cryptoPlansData
+        : [
+            { id: 1, name: "Crypto Starter Eco", tier: "Starter", icon: "bx-layer", min: 50, max: 300, dailyRoi: 4.5, duration: 14, bonus: 0, badgeClass: "badge-tier-1" },
+            { id: 2, name: "Crypto Yield Spark", tier: "Starter", icon: "bx-bolt-circle", min: 300, max: 1000, dailyRoi: 5.8, duration: 14, bonus: 5, badgeClass: "badge-tier-1" },
+            { id: 3, name: "Alpha Contract Plus", tier: "Starter", icon: "bx-shuffle", min: 1000, max: 2500, dailyRoi: 7.2, duration: 21, bonus: 15, badgeClass: "badge-tier-1" },
+            { id: 4, name: "Crypto Velocity Loop", tier: "Active Pro", icon: "bx-line-chart", min: 2500, max: 5000, dailyRoi: 10.5, duration: 21, bonus: 40, badgeClass: "badge-tier-2", isHot: true },
+            { id: 5, name: "DeFi Harvest Matrix", tier: "Active Pro", icon: "bx-radar", min: 5000, max: 10000, dailyRoi: 14.0, duration: 30, bonus: 85, badgeClass: "badge-tier-2", isHot: true },
+            { id: 6, name: "Quantum Scalper Edge", tier: "Active Pro", icon: "bx-scatter-chart", min: 10000, max: 25000, dailyRoi: 18.5, duration: 30, bonus: 150, badgeClass: "badge-tier-2", isHot: true },
+            { id: 7, name: "Institutional Prime Vault", tier: "High Net", icon: "bx-crown", min: 25000, max: 50000, dailyRoi: 24.0, duration: 45, bonus: 350, badgeClass: "badge-tier-3" },
+            { id: 8, name: "Vanguard Sovereign Block", tier: "High Net", icon: "bx-diamond", min: 50000, max: 100000, dailyRoi: 32.5, duration: 60, bonus: 800, badgeClass: "badge-tier-3" },
+            { id: 9, name: "Apex Eternity Infinite", tier: "High Net", icon: "bx-infinite", min: 100000, max: 250000, dailyRoi: 40.0, duration: 90, bonus: 2500, badgeClass: "badge-tier-3" }
+        ];
 
     const gridContainer = document.getElementById("investmentPlansGrid");
 
@@ -297,7 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 4. Navigation & Value Redirection Logic Interceptor
-    gridContainer.addEventListener("click", (e) => {
+    gridContainer.addEventListener("click", async (e) => {
         const button = e.target.closest(".invest-btn");
         if (!button) return;
 
@@ -305,12 +305,51 @@ document.addEventListener("DOMContentLoaded", () => {
         const selectedPlan = plansData.find(p => p.id == planId);
         const inputVal = document.getElementById(`input-${planId}`).value;
 
-        // Force minimum/maximum corrections before redirecting variables 
+        // Force minimum/maximum corrections before sending
         let finalAmount = parseFloat(inputVal) || selectedPlan.min;
         if (finalAmount < selectedPlan.min) finalAmount = selectedPlan.min;
         if (finalAmount > selectedPlan.max) finalAmount = selectedPlan.max;
 
-        // Structured URL queries passed systematically to /depositfunds
-        window.location.href = `/depositfunds?amount=${finalAmount}&planId=${planId}&planName=${encodeURIComponent(selectedPlan.name)}`;
+        // If user not authenticated, redirect to login
+        if (!window.cryptoMarketAuth) {
+            return window.location.href = '/login';
+        }
+
+        try {
+            const res = await fetch(`${window.baseUrl}/crypto/invest`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': window.csrfToken || document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ plan_id: planId, amount: finalAmount, term: 'monthly' })
+            });
+
+            const data = await res.json().catch(() => ({}));
+
+            if (res.status === 401) {
+                return window.location.href = '/login';
+            }
+
+            if (!res.ok) {
+                // If backend suggests redirect (insufficient funds), follow it
+                if (data && data.redirect) {
+                    return window.location.href = data.redirect + `?amount=${finalAmount}&planId=${planId}&planName=${encodeURIComponent(selectedPlan.name)}`;
+                }
+                // Fallback to deposit page
+                return window.location.href = `/depositfunds?amount=${finalAmount}&planId=${planId}&planName=${encodeURIComponent(selectedPlan.name)}`;
+            }
+
+            // Success -> follow backend redirect if provided
+            if (data && data.redirect) {
+                return window.location.href = data.redirect;
+            }
+
+            // Default fallback to deploybot
+            window.location.href = '/deploybot';
+        } catch (err) {
+            console.error('Investment request failed', err);
+            window.location.href = `/depositfunds?amount=${finalAmount}&planId=${planId}&planName=${encodeURIComponent(selectedPlan.name)}`;
+        }
     });
 });

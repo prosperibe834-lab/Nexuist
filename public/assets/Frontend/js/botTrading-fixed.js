@@ -190,23 +190,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
             fetch(`/bot/invest/${botId}`, {
                 method: 'POST',
+                credentials: 'same-origin',
                 headers: {
+                    'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
                 },
-                body: JSON.stringify({ amount })
+                body: JSON.stringify({ amount: Number(amount) })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (response.status === 401) {
+                    window.location.href = '/login';
+                    throw new Error('Unauthorized');
+                }
+                if (response.status === 419) {
+                    // CSRF token mismatch / session expired
+                    window.location.href = '/login';
+                    throw new Error('Session expired');
+                }
+                return response.json();
+            })
             .then(data => {
                 if (data.success) {
-                    alert(data.message);
+                    alert(data.message || 'Investment successful');
                     window.location.href = data.redirect || '/deploybot';
-                } else {
-                    alert(data.message);
-                    if (data.redirect) {
-                        window.location.href = data.redirect;
-                    }
+                    return;
                 }
+                // show message and follow redirect if provided
+                if (data.redirect) {
+                    window.location.href = data.redirect;
+                    return;
+                }
+                alert(data.message || 'Investment failed');
             })
             .catch(error => {
                 console.error('Investment error:', error);

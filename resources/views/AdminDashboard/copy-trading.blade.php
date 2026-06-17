@@ -582,7 +582,13 @@
         </div>
     </main>
     <script>
-        window.NEXU_COPY_TRADING = @json(compact('stats', 'traders', 'investments', 'investors', 'portfolios'));
+        window.NEXU_COPY_TRADING = {!! json_encode([
+            'stats' => $stats,
+            'traders' => $traders->toArray(),
+            'investments' => $investments->toArray(),
+            'investors' => $investors->toArray(),
+            'portfolios' => $portfolios->toArray(),
+        ], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!};
     </script>
     <script src="{{ asset('assets/AdminDashboard/js/copy-trading.js') }}"></script>
 </body>

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AiBot;
 use App\Models\BotInvestment;
+use App\Models\StockInvestment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -91,11 +92,22 @@ class BotInvestmentController extends Controller
             ->latest()
             ->get();
 
-        $totalInvested = $activeInvestments->sum('investment_amount');
-        $totalProfit = $activeInvestments->sum('current_profit');
-        $currentBalance = $activeInvestments->sum('current_balance');
+        $cryptoInvestments = \App\Models\CryptoInvestment::with('plan')
+            ->where('user_id', Auth::id())
+            ->latest()
+            ->get();
+
+        $stockInvestments = StockInvestment::with('plan')
+            ->where('user_id', Auth::id())
+            ->latest()
+            ->get();
+
+        // Combine bot, crypto and stock investments for dashboard-wide metrics
+        $totalInvested = $activeInvestments->sum('investment_amount') + $cryptoInvestments->sum('amount') + $stockInvestments->sum('amount');
+        $totalProfit = $activeInvestments->sum('current_profit') + $cryptoInvestments->sum('current_profit') + $stockInvestments->sum('current_profit');
+        $currentBalance = $activeInvestments->sum('current_balance') + $cryptoInvestments->sum('current_balance') + $stockInvestments->sum('current_balance');
         $activeBotsCount = $activeInvestments->count();
-        $primaryInvestment = $activeInvestments->first();
+        $primaryInvestment = $activeInvestments->first() ?? $cryptoInvestments->first() ?? $stockInvestments->first();
 
         return view('deploybot', compact(
             'activeInvestments',
@@ -104,6 +116,6 @@ class BotInvestmentController extends Controller
             'totalProfit',
             'currentBalance',
             'activeBotsCount'
-        ));
+        ))->with([ 'cryptoInvestments' => $cryptoInvestments, 'stockInvestments' => $stockInvestments ]);
     }
 }

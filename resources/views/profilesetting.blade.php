@@ -471,7 +471,13 @@
                                 <option>United Kingdom</option>
                                 <option>Canada</option>
                                 <option>Germany</option>
-                                <option>Australia</option>
+                                <option>Spain</option>
+                                <option>Mexico</option>
+                                <option>Brazil</option>
+                                <option>Japan</option>
+                                <option>Taiwan</option>
+                                <option>Italy</option>
+                                <option>China</option>
                             </select>
                         </div>
                     </div>

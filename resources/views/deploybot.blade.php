@@ -721,6 +721,105 @@
 
     </div>
 
+    <!-- Crypto Investments Section -->
+    <div class="main-layout" style="margin-top:32px;">
+        <main class="dashboard-content">
+            <section class="content-card inventory-card reveal">
+                <div class="card-header">
+                    <h2>My Crypto Investments</h2>
+                </div>
+
+                <div class="inventory-list">
+                    @if(isset($cryptoInvestments) && $cryptoInvestments->isNotEmpty())
+                        @foreach($cryptoInvestments as $inv)
+                            <div class="inventory-item" data-status="{{ $inv->status }}">
+                                <div class="item-info">
+                                    <span class="bot-icon">
+                                        <i class="fas fa-coins"></i>
+                                    </span>
+                                    <div>
+                                        <h4>{{ $inv->plan?->name ?? 'Crypto Plan' }}</h4>
+                                        <p>{{ $inv->plan?->tier ?? '' }} • {{ $inv->plan?->duration_days ?? 0 }} days</p>
+                                        <div style="margin-top:10px;">
+                                            <small>Investment: $<span>{{ number_format($inv->amount ?? 0, 2) }}</span></small>
+                                            <br>
+                                            <small>Status: <span>{{ $inv->status }}</span></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-status">
+                                    <span class="badge {{ $inv->status === 'Running' ? 'success' : ($inv->status === 'Completed' ? 'neutral' : 'warning') }}">{{ $inv->status ?? 'Running' }}</span>
+                                    <p class="profit">+${{ number_format($inv->current_profit ?? 0, 2) }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="inventory-item empty-state">
+                            <div class="item-info">
+                                <span class="bot-icon">
+                                    <i class="fas fa-coins"></i>
+                                </span>
+                                <div>
+                                    <h4>No Crypto Investments</h4>
+                                    <p>Invest in a crypto plan to see it listed here.</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </section>
+
+            <section class="content-card inventory-card reveal" style="margin-top:24px;">
+                <div class="card-header">
+                    <h2>My Stock Investments</h2>
+                </div>
+
+                <div class="inventory-list">
+                    @if(isset($stockInvestments) && $stockInvestments->isNotEmpty())
+                        @foreach($stockInvestments as $stockInv)
+                            <div class="inventory-item" data-status="{{ $stockInv->status }}">
+                                <div class="item-info">
+                                    <span class="bot-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </span>
+                                    <div>
+                                        <h4>{{ $stockInv->plan?->name ?? 'Stock Plan' }}</h4>
+                                        <p>{{ $stockInv->plan?->tier ?? '' }} • {{ $stockInv->term ?? '' }} term</p>
+                                        <div style="margin-top:10px;">
+                                            <small>Investment: $<span>{{ number_format($stockInv->amount ?? 0, 2) }}</span></small>
+                                            <br>
+                                            <small>Status: <span>{{ $stockInv->status }}</span></small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item-status">
+                                    <span class="badge {{ $stockInv->status === 'Running' ? 'success' : ($stockInv->status === 'Completed' ? 'neutral' : 'warning') }}">
+                                        {{ $stockInv->status ?? 'Running' }}
+                                    </span>
+                                    <p class="profit">+${{ number_format($stockInv->current_profit ?? 0, 2) }}</p>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <div class="inventory-item empty-state">
+                            <div class="item-info">
+                                <span class="bot-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </span>
+                                <div>
+                                    <h4>No Stock Investments</h4>
+                                    <p>Invest in a stock plan to see it listed here.</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                </div>
+            </section>
+        </main>
+    </div>
+
+    </div>
+
 
     <script src="{{ asset('assets/Frontend/js/deploybot.js') }}"></script>
     <script>

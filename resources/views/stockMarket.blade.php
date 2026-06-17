@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Nexuist | Professional Trading</title>
     <link rel="stylesheet" href="{{ asset('assets/Frontend/css/stockMarket.css') }}">
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
@@ -64,7 +65,7 @@
         <div class="header-right">
             <div class="top-balance-box desktop-only">
                 <span class="balance-label">ACCOUNT BALANCE</span>
-                <span class="balance-value">$0.00</span>
+                <span class="balance-value">{{ auth()->check() ? '$' . number_format($userBalance, 2) : '$0.00' }}</span>
             </div>
 
             <div class="header-actions">
@@ -118,24 +119,45 @@
 
 
 
+
                 <div class="user-profile">
                     <button class="profile-btn" id="profileBtn">
-                        <div class="avatar">M</div>
-                        <div class="user-info desktop-only">
-                            <span class="name">marine military</span>
-                            <span class="type">Trading Account</span>
-                        </div>
+                        @if(auth()->check())
+                            <div class="avatar">{{ substr(auth()->user()->name, 0, 1) }}</div>
+                            <div class="user-info desktop-only">
+                                <span class="name">{{ auth()->user()->name }}</span>
+                                <span class="type">Trading Account</span>
+                            </div>
+                        @else
+                            <div class="avatar">G</div>
+                            <div class="user-info desktop-only">
+                                <span class="name">Guest</span>
+                                <span class="type">Welcome</span>
+                            </div>
+                        @endif
                         <span class="iconify arrow desktop-only" data-icon="ri:arrow-down-s-line"></span>
                     </button>
+
                     <div class="dropdown-menu profile-menu" id="profileMenu">
-                        <a href="#" class="menu-item"><span class="iconify" data-icon="ri:user-line"></span> My
-                            Profile</a>
-                        <a href="#" class="menu-item"><span class="iconify" data-icon="ri:settings-4-line"></span>
-                            Settings</a>
-                        <a href="#" class="menu-item text-red"><span class="iconify"
-                                data-icon="ri:logout-box-r-line"></span> Logout</a>
+                        @if(auth()->check())
+                            <a href="/profilesetting" class="menu-item"><span class="iconify"
+                                    data-icon="ri:user-line"></span> My
+                                Profile</a>
+                            <a href="#" class="menu-item"><span class="iconify" data-icon="ri:settings-4-line"></span>
+                                Settings</a>
+                            <a href="{{ route('logout') }}" class="menu-item text-red" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><span class="iconify"
+                                    data-icon="ri:logout-box-r-line"></span> Logout</a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+                                @csrf
+                            </form>
+                        @else
+                            <a href="{{ route('login') }}" class="menu-item"><span class="iconify" data-icon="ri:login-box-line"></span> Login</a>
+                            <a href="/signup" class="menu-item"><span class="iconify" data-icon="ri:user-add-line"></span> Sign Up</a>
+                        @endif
                     </div>
                 </div>
+
+
             </div>
         </div>
     </header>
@@ -240,7 +262,7 @@
                     <a href="/deposit" class="nav-item">
                         <span class="iconify" data-icon="ri:add-circle-line"></span> Deposit Funds
                     </a>
-                    <a href="/withdraw" class="nav-item active">
+                    <a href="/withdraw" class="nav-item">
                         <span class="iconify" data-icon="solar:card-send-outline"></span>
                         Withdraw Funds
                     </a>
@@ -364,18 +386,17 @@
                 </a>
 
             </div>
-
             <div class="logout-wrapper">
-
-                <a href="/explore" class="logout-btn">
-
-                    <span class="iconify logout-icon" data-icon="solar:logout-2-outline"></span>
-
-                    <span>Log Out</span>
-
-                </a>
-
+                <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
+                    @csrf
+                    <button type="submit" class="logout-btn"
+                        style="background: none; border: none; cursor: pointer; display: flex; align-items: center; width: 100%;">
+                        <i class='bx bx-log-out'></i>
+                        <span style="margin-left: 8px;">Log Out</span>
+                    </button>
+                </form>
             </div>
+
         </aside>
 
         <!-- Main Content -->
@@ -405,25 +426,25 @@
             </header>
 
             <section class="insights-grid">
-               <div class="insights-card allocation-viewer">
-    <div class="card-title-row">
-        <h3><i class="bx bx-doughnut-chart"></i> Your Allocation Tool</h3>
-        <span class="muted">Live Breakdown</span>
-    </div>
-    <div class="allocation-canvas">
-        <div class="css-doughnut">
-            <div class="doughnut-center">
-                <span>74%</span>
-                <p>Equities</p>
-            </div>
-        </div>
-        <div class="doughnut-legend">
-            <p><span class="dot blue"></span> Tech (35%)</p>
-            <p><span class="dot green"></span> Health (20%)</p>
-            <p><span class="dot yellow"></span> Energy (19%)</p>
-        </div>
-    </div>
-</div>
+                <div class="insights-card allocation-viewer">
+                    <div class="card-title-row">
+                        <h3><i class="bx bx-doughnut-chart"></i> Your Allocation Tool</h3>
+                        <span class="muted">Live Breakdown</span>
+                    </div>
+                    <div class="allocation-canvas">
+                        <div class="css-doughnut">
+                            <div class="doughnut-center">
+                                <span>74%</span>
+                                <p>Equities</p>
+                            </div>
+                        </div>
+                        <div class="doughnut-legend">
+                            <p><span class="dot blue"></span> Tech (35%)</p>
+                            <p><span class="dot green"></span> Health (20%)</p>
+                            <p><span class="dot yellow"></span> Energy (19%)</p>
+                        </div>
+                    </div>
+                </div>
                 <div class="insights-card quick-stats">
                     <div class="insight-item">
                         <i class="bx bx-world icon-dim blue"></i>
@@ -467,6 +488,14 @@
                 </div>
             </section>
 
+            <section class="stock-post-section">
+                <div class="stock-post-header">
+                    <h3><i class="bx bx-news"></i> Latest Stock Market Insights</h3>
+                    <p>Published directly from the Nexuist backend.</p>
+                </div>
+                <div class="stock-post-grid" id="stockPostsContainer"></div>
+            </section>
+
             <footer class="sector-strip">
                 <span class="strip-title">Portfolio Exposure:</span>
                 <div class="sector-icons">
@@ -482,8 +511,17 @@
 
     </div>
 
-    <script src="{{ asset('assets/Frontend/js/stockMarket.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js') }}"></script>
+    <script id="stockPlansData" type="application/json">@json($stockPlans)</script>
+    <script id="stockPostsData" type="application/json">@json($stockPosts)</script>
+    <script id="stockUserBalanceData" type="application/json">{{ $userBalance }}</script>
+    <script>
+        window.stockMarketAuth = @json(auth()->check());
+        window.stockMarketBaseUrl = @json(url(''));
+        window.stockMarketInvestUrl = @json(route('stockmarket.invest'));
+        window.stockMarketDeployUrl = @json(url('/deploybot'));
+    </script>
+    <script src="{{ asset('assets/Frontend/js/stockMarket.js') }}?v=4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 
 </html>

@@ -131,6 +131,29 @@ let expertTraders = [];
 let investments = [];
 let investors = [];
 let portfolios = [];
+const adminCopyTradingDataEndpoint = '/admin/copy-trading/data';
+
+async function fetchAdminCopyTradingData() {
+    try {
+        const response = await fetch(adminCopyTradingDataEndpoint, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Unable to refresh admin copy trading data: ${response.status}`);
+        }
+
+        const data = await response.json();
+        window.NEXU_COPY_TRADING = data;
+        hydrateAdminData();
+        return data;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
 
 function hydrateAdminData() {
     const data = window.NEXU_COPY_TRADING || {};
@@ -384,8 +407,7 @@ function processTraderOnboarding(e) {
             alert(data.message);
             closeTradingModal('modalCreateTrader');
             document.getElementById("formOnboardTrader").reset();
-            hydrateAdminData();
-            executeDataUIRefresh();
+            fetchAdminCopyTradingData().then(() => executeDataUIRefresh());
         } else {
             alert(data.message || 'Unable to onboard expert trader.');
         }
@@ -430,8 +452,7 @@ function processPerformanceCalibration(e) {
         if (data.success) {
             alert(data.message);
             closeTradingModal('modalCalibratePerformance');
-            hydrateAdminData();
-            executeDataUIRefresh();
+            fetchAdminCopyTradingData().then(() => executeDataUIRefresh());
         } else {
             alert(data.message || 'Unable to calibrate trader.');
         }
@@ -469,8 +490,7 @@ function processManualProfitInjection(e) {
             alert(data.message);
             closeTradingModal('modalManualProfitCredit');
             document.getElementById("formManualProfit").reset();
-            hydrateAdminData();
-            executeDataUIRefresh();
+            fetchAdminCopyTradingData().then(() => executeDataUIRefresh());
         } else {
             alert(data.message || 'Unable to adjust profit.');
         }

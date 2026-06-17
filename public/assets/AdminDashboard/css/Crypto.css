@@ -1,0 +1,994 @@
+/* =========================================
+   NEXUIST FINTECH ROOT VARIABLES [cite: 1]
+========================================= */
+:root {
+    /* ===== PRIMARY BRAND COLORS ===== */
+    --primary-color: #6c63ff;
+    --primary-hover: #7c73ff;
+    --secondary-color: #00d4ff;
+    --accent-color: #8b5cf6;
+
+    /* ===== BACKGROUND COLORS ===== */
+    --bg-main: #0b101e;
+    --bg-secondary: #111827;
+    --bg-card: #151b2b;
+    --bg-sidebar: #0f1524;
+    --bg-header: #070b14;
+    --bg-hover: #1e293b;
+
+    /* ===== GLASS EFFECTS ===== */
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.06);
+    --glass-shadow: rgba(0, 0, 0, 0.5);
+
+    /* ===== TEXT COLORS ===== */
+    --text-primary: #ffffff;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+
+    /* ===== BORDER COLORS ===== */
+    --border-color: rgba(255, 255, 255, 0.08);
+
+    /* ===== GLOW EFFECTS ===== */
+    --glow-primary: 0 0 15px rgba(108, 99, 255, 0.35);
+
+    /* ===== DESIGN UTILITIES ===== */
+    --radius-md: 14px;
+    --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --font-main: 'Inter', sans-serif;
+    --z-sidebar: 1000;
+}
+
+/* =========================================
+   LIGHT MODE OVERRIDES
+========================================= */
+html[data-theme="light"] {
+    --bg-main: #f8fafc;
+    --bg-secondary: #f1f5f9;
+    --bg-card: #ffffff;
+    --bg-sidebar: #ffffff;
+    --bg-header: #ffffff;
+    --bg-hover: #e2e8f0;
+
+    --glass-bg: rgba(15, 23, 42, 0.03);
+    --glass-border: rgba(15, 23, 42, 0.08);
+    --glass-shadow: rgba(15, 23, 42, 0.05);
+
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --border-color: rgba(15, 23, 42, 0.08);
+    --glow-primary: 0 4px 12px rgba(108, 99, 255, 0.15);
+}
+
+/* =========================================
+   BASE RESET & LAYOUT STRUCTURING
+========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--font-main);
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    transition: background-color var(--transition-normal);
+}
+
+/* Preloader starts here */
+/* =========================================
+   ADVANCED FINTECH PRELOADER
+========================================= */
+
+#nexuist-preloader {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    background: #05070f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+
+    opacity: 1;
+    visibility: visible;
+
+    transition:
+        opacity 0.4s cubic-bezier(0.25, 1, 0.5, 1),
+        visibility 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+
+    overflow: hidden;
+    padding: 20px;
+}
+
+/* =========================================
+   TERMINAL BOX
+========================================= */
+
+.loader-terminal-box {
+    width: 100%;
+    max-width: 320px;
+
+    padding: 30px 25px;
+
+    border-radius: 24px;
+
+    background: rgba(255, 255, 255, 0.03);
+
+    border: 1px solid rgba(255, 255, 255, 0.06);
+
+    backdrop-filter: blur(14px);
+
+    box-shadow:
+        0 0 40px rgba(0, 212, 255, 0.08),
+        0 0 80px rgba(108, 99, 255, 0.08);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+/* =========================================
+   ICON
+========================================= */
+
+.loader-brand-icon {
+    font-size: clamp(38px, 7vw, 60px);
+
+    color: #00d4ff;
+
+    margin-bottom: 22px;
+
+    filter: drop-shadow(0 0 18px rgba(0, 212, 255, 0.55));
+
+    animation: iconFloat 2s ease-in-out infinite;
+}
+
+/* =========================================
+   LOADING BARS
+========================================= */
+
+.glow-bars-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    height: 30px;
+
+    margin-bottom: 20px;
+}
+
+.glow-bar {
+    width: 5px;
+
+    height: 14px;
+
+    border-radius: 10px;
+
+    background: linear-gradient(to top, #6c63ff, #00d4ff);
+
+    box-shadow:
+        0 0 12px rgba(108, 99, 255, 0.5),
+        0 0 18px rgba(0, 212, 255, 0.25);
+
+    animation: barGrow 1s ease-in-out infinite;
+}
+
+.glow-bar:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.glow-bar:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.glow-bar:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+/* =========================================
+   STATUS TEXT
+========================================= */
+
+.loader-status-text {
+    font-size: clamp(10px, 2vw, 12px);
+
+    font-weight: 700;
+
+    letter-spacing: 2px;
+
+    line-height: 1.6;
+
+    color: #94a3b8;
+
+    text-transform: uppercase;
+
+    word-break: break-word;
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes barGrow {
+
+    0%,
+    100% {
+        height: 14px;
+        opacity: 0.4;
+    }
+
+    50% {
+        height: 34px;
+        opacity: 1;
+        filter: brightness(1.2);
+    }
+}
+
+@keyframes iconFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+/* =========================================
+   HIDE STATE
+========================================= */
+
+#nexuist-preloader.loaded {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS
+========================================= */
+
+@media (max-width: 768px) {
+
+    .loader-terminal-box {
+        max-width: 280px;
+
+        padding: 25px 20px;
+
+        border-radius: 20px;
+    }
+
+    .glow-bars-container {
+        gap: 8px;
+    }
+
+    .glow-bar {
+        width: 4px;
+    }
+
+    .loader-status-text {
+        letter-spacing: 1.5px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .loader-terminal-box {
+        max-width: 240px;
+
+        padding: 22px 18px;
+    }
+
+    .loader-status-text {
+        font-size: 9px;
+
+        letter-spacing: 1px;
+    }
+
+    .glow-bars-container {
+        height: 24px;
+    }
+}
+
+/* Preloader ends here */
+
+/* =========================================
+   SIDEBAR STYLING [cite: 6]
+========================================= */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 260px;
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border-color);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: var(--z-sidebar);
+    transition: width var(--transition-normal), background var(--transition-normal);
+}
+
+/* Collapsed Sidebar State */
+.sidebar.close {
+    width: 78px;
+}
+
+/* Logo Area Layout */
+.sidebar .logo-details {
+    height: 70px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    position: relative;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.sidebar .logo-details i.logo-icon {
+    font-size: 28px;
+    color: var(--secondary-color);
+    min-width: 44px;
+    text-align: center;
+    filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.4));
+}
+
+.sidebar .logo-details .logo_name {
+    font-size: 20px;
+    color: var(--text-primary);
+    font-weight: 700;
+    letter-spacing: 1px;
+    transition: opacity var(--transition-normal);
+}
+
+.sidebar.close .logo-details .logo_name {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Chevron desktop toggle controller button */
+.sidebar .logo-details #sidebar-toggle-btn {
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 25px;
+    width: 25px;
+    background: var(--primary-color);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    box-shadow: var(--glow-primary);
+}
+
+.sidebar.close .logo-details #sidebar-toggle-btn {
+    transform: translateY(-50%) rotate(180deg);
+}
+
+/* Navigation List Processing */
+.sidebar .nav-links {
+    height: calc(100% - 70px);
+    padding: 15px 0 150px 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Hide side scroll rails neatly */
+.sidebar .nav-links::-webkit-scrollbar {
+    width: 4px;
+}
+
+.sidebar .nav-links::-webkit-scrollbar-thumb {
+    background: var(--glass-border);
+    border-radius: 10px;
+}
+
+.sidebar .nav-links li {
+    position: relative;
+    list-style: none;
+    transition: var(--transition-normal);
+    padding: 4px 12px;
+}
+
+.sidebar .nav-links li a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border-radius: var(--radius-md);
+    height: 48px;
+    transition: var(--transition-normal);
+}
+
+/* Glassmorphic Active and Hover states [cite: 5] */
+.sidebar .nav-links li.active a,
+.sidebar .nav-links li a:hover {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), var(--glass-shadow);
+}
+
+.sidebar .nav-links li.active a i,
+.sidebar .nav-links li a:hover i {
+    color: var(--primary-color);
+    text-shadow: 0 0 10px rgba(108, 99, 255, 0.4);
+}
+
+.sidebar .nav-links li.active a .link_name,
+.sidebar .nav-links li a:hover .link_name {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.sidebar .nav-links li i {
+    min-width: 54px;
+    text-align: center;
+    font-size: 20px;
+    color: var(--text-secondary);
+    transition: var(--transition-normal);
+}
+
+.sidebar .nav-links li .link_name {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    transition: var(--transition-normal);
+    white-space: nowrap;
+}
+
+/* Handles label clamping if desktop side drawer slides compressed */
+.sidebar.close .nav-links li .link_name {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Sub-menus configuration for collapsed system hover popovers */
+.sidebar .nav-links li .sub-menu {
+    padding: 6px 6px 14px 80px;
+    margin-top: -10px;
+    background: var(--bg-sidebar);
+    display: none;
+}
+
+.sidebar .nav-links li.showMenu .sub-menu {
+    display: block;
+}
+
+.sidebar .nav-links li .sub-menu a {
+    color: var(--text-secondary);
+    font-size: 15px;
+    padding: 5px 0;
+    transition: var(--transition-normal);
+}
+
+.sidebar .nav-links li .sub-menu a:hover {
+    color: var(--text-primary);
+}
+
+.sidebar.close .nav-links li .sub-menu {
+    position: absolute;
+    left: 100%;
+    top: -10px;
+    margin-top: 0;
+    padding: 10px 20px;
+    border-radius: 0 6px 6px 0;
+    opacity: 0;
+    display: block;
+    pointer-events: none;
+    transition: 0s;
+    border: 1px solid var(--border-color);
+    border-left: none;
+    box-shadow: var(--shadow-lg);
+}
+
+.sidebar.close .nav-links li:hover .sub-menu {
+    top: 0;
+    opacity: 1;
+    pointer-events: auto;
+    transition: all 0.4s ease;
+}
+
+.sidebar .nav-links li .sub-menu .link_name {
+    display: none;
+}
+
+.sidebar.close .nav-links li .sub-menu .link_name {
+    font-size: 15px;
+    opacity: 1;
+    display: block;
+    font-weight: 500;
+    color: var(--text-primary);
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 5px;
+}
+
+.sidebar .nav-links li .sub-menu.blank {
+    padding: 3px 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar.close .nav-links li:hover .sub-menu.blank {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Controls & Configuration Toggle Rows Styling */
+.sidebar .nav-links .control-items,
+.sidebar .nav-links .logout-item {
+    margin-top: 15px;
+    border-top: 1px solid var(--border-color);
+    padding-top: 15px;
+}
+
+.sidebar .nav-links .mode-toggle-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 48px;
+    padding: 0 10px;
+    border-radius: var(--radius-md);
+    background: var(--glass-bg);
+}
+
+.sidebar.close .nav-links .mode-toggle-wrapper {
+    justify-content: center;
+    padding: 0;
+}
+
+.sidebar .nav-links .mode-text-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.sidebar.close .nav-links .mode-label {
+    display: none;
+}
+
+/* Light Mode/Dark Mode System Slider Track */
+.sidebar .nav-links .toggle-switch-track {
+    position: relative;
+    height: 22px;
+    width: 42px;
+    background: var(--bg-hover);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    border: 1px solid var(--border-color);
+}
+
+.sidebar.close .nav-links .toggle-switch-track {
+    display: none;
+}
+
+.sidebar .nav-links .switch-thumb {
+    position: absolute;
+    height: 14px;
+    width: 14px;
+    left: 4px;
+    top: 3px;
+    background: var(--text-secondary);
+    border-radius: 50%;
+    transition: var(--transition-normal);
+}
+
+html[data-theme="light"] .sidebar .nav-links .switch-thumb {
+    left: 22px;
+    background: var(--primary-color);
+}
+
+/* =========================================
+   MAIN APP CONTENT LAYOUT BASE VIEWPORTS
+========================================= */
+.main-content {
+    position: relative;
+    min-height: 100vh;
+    left: 260px;
+    width: calc(100% - 260px);
+    transition: var(--transition-normal);
+}
+
+.sidebar.close~.main-content {
+    left: 78px;
+    width: calc(100% - 78px);
+}
+
+/* Top App Bar Headers */
+.main-content .top-header {
+    height: 70px;
+    background: var(--bg-header);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 900;
+    transition: background var(--transition-normal);
+}
+
+.main-content .top-header .header-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.main-content .top-header #mobile-hamburger-btn {
+    font-size: 26px;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: none;
+    /* Only reveals down scales rules mapping mobiles */
+}
+
+.main-content .top-header h1 {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Empty Viewport Window Container */
+.main-content .content-body {
+    padding: 30px;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN RULES MEDIA QUERIES [cite: 6]
+========================================= */
+@media (max-width: 992px) {
+    .sidebar {
+        width: 78px;
+    }
+
+    .sidebar .logo-details .logo_name,
+    .sidebar .nav-links li .link_name,
+    .sidebar .nav-links .toggle-switch-track {
+        display: none !important;
+    }
+
+    .sidebar .logo-details #sidebar-toggle-btn {
+        display: none;
+        /* Disable standard switch mechanisms over mobile dimensions */
+    }
+
+    .main-content {
+        left: 78px;
+        width: calc(100% - 78px);
+    }
+}
+
+@media (max-width: 576px) {
+    .sidebar {
+        left: -80px;
+    }
+
+    .sidebar.open {
+        left: 0;
+        width: 260px;
+    }
+
+    .sidebar.open .logo-details .logo_name,
+    .sidebar.open .nav-links li .link_name,
+    .sidebar.open .toggle-switch-track {
+        display: block !important;
+    }
+
+    .sidebar.open~.main-content {
+        left: 0;
+        width: 100%;
+    }
+
+    .main-content {
+        left: 0;
+        width: 100%;
+    }
+
+    .main-content .top-header #mobile-hamburger-btn {
+        display: block;
+    }
+}
+
+/* Main Styling starts here */
+/* =========================================================================
+   NEXUIST FINTECH - TRANSACTION LOGS COMPLETELY STYLED CORE UI
+========================================================================= */
+/* ==========================================================================
+   NEXUIST STOCK MARKET ENGINE - COMPACT FINTECH OVERLAY
+   ========================================================================== */
+
+.nx-stock-market-engine {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 24px !important;
+    box-sizing: border-box !important;
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+}
+
+/* --- GRID ARCHITECTURES --- */
+.nx-stock-market-engine .nx-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.nx-stock-market-engine .nx-content-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.nx-stock-market-engine .nx-col-4 { grid-column: span 4; }
+.nx-stock-market-engine .nx-col-6 { grid-column: span 6; }
+.nx-stock-market-engine .nx-col-8 { grid-column: span 8; }
+.nx-stock-market-engine .nx-col-12 { grid-column: span 12; }
+
+@media (max-width: 1200px) {
+    .nx-stock-market-engine .nx-col-4,
+    .nx-stock-market-engine .nx-col-6,
+    .nx-stock-market-engine .nx-col-8 { grid-column: span 12 !important; }
+}
+
+/* --- GLASSMOPHIC FINTECH CONTAINER SYSTEM --- */
+.nx-stock-market-engine .nx-glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 20px;
+    box-shadow: 0 8px 32px 0 var(--glass-shadow);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.nx-stock-market-engine .nx-glass-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(108, 99, 255, 0.2);
+    box-shadow: var(--glow-primary);
+}
+
+/* --- COUNTER & STAT COMPONENT INTERFACES --- */
+.nx-stock-market-engine .nx-stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.nx-stock-market-engine .nx-stat-header i {
+    font-size: 1.25rem;
+    color: var(--secondary-color);
+}
+
+.nx-stock-market-engine .nx-stat-counter {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin: 12px 0 6px 0;
+    letter-spacing: -0.02em;
+    background: linear-gradient(145deg, #ffffff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.nx-stock-market-engine .nx-stat-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    border-top: 1px solid var(--border-color);
+    padding-top: 8px;
+    margin-top: 8px;
+}
+
+/* --- FINANCIAL NAVIGATION TRACK MODULES --- */
+.nx-stock-market-engine .nx-workspace-nav {
+    display: flex;
+    gap: 6px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+.nx-stock-market-engine .nx-workspace-nav::-webkit-scrollbar { display: none; }
+
+.nx-stock-market-engine .nx-nav-tab {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    padding: 12px 18px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    position: relative;
+    transition: color var(--transition-normal);
+}
+
+.nx-stock-market-engine .nx-nav-tab.active {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.nx-stock-market-engine .nx-nav-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary-color);
+    box-shadow: var(--glow-primary);
+}
+
+/* --- UTILITIES, FORMS, & CONTROL ELEMENTS --- */
+.nx-stock-market-engine .nx-search-frame {
+    position: relative;
+    margin-bottom: 20px;
+    max-width: 360px;
+}
+
+.nx-stock-market-engine .nx-search-frame i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.nx-stock-market-engine .nx-input {
+    width: 100%;
+    padding: 10px 14px 10px 38px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.88rem;
+    outline: none;
+    transition: var(--transition-normal);
+}
+
+.nx-stock-market-engine .nx-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.15);
+}
+
+.nx-stock-market-engine .nx-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    transition: var(--transition-normal);
+}
+.nx-stock-market-engine .nx-btn-p { background: var(--primary-color); color: #fff; }
+.nx-stock-market-engine .nx-btn-p:hover { background: var(--primary-hover); }
+.nx-stock-market-engine .nx-btn-s { background: rgba(255, 255, 255, 0.05); color: var(--text-primary); border: 1px solid var(--border-color); }
+.nx-stock-market-engine .nx-btn-s:hover { background: rgba(255, 255, 255, 0.1); }
+
+/* --- TRADING AND AUDIT TABLES --- */
+.nx-stock-market-engine .nx-table-container {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 10px;
+}
+
+.nx-stock-market-engine .nx-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.85rem;
+}
+
+.nx-stock-market-engine .nx-table th {
+    background: rgba(255, 255, 255, 0.01);
+    padding: 14px 16px;
+    color: var(--text-secondary);
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-color);
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+}
+
+.nx-stock-market-engine .nx-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.nx-stock-market-engine .nx-table tr:hover {
+    background: rgba(255, 255, 255, 0.015);
+}
+
+/* Status Badges */
+.nx-stock-market-engine .nx-badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.nx-stock-market-engine .nx-badge.up { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+.nx-stock-market-engine .nx-badge.idle { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+.nx-stock-market-engine .nx-badge.down { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+
+/* --- FINTECH PROFILE TERMINAL OVERLAY --- */
+.nx-stock-market-engine .nx-investor-card {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.nx-stock-market-engine .nx-pfp-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: white;
+}
+
+/* --- OVERLAY INTERFACE SYSTEM MODALS --- */
+.nx-stock-market-engine .nx-overlay-block {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(7, 11, 20, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.nx-stock-market-engine .nx-overlay-block.active { opacity: 1; pointer-events: auto; }
+
+.nx-stock-market-engine .nx-modal-shell {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    width: 100%; max-width: 550px;
+    max-height: 85vh; display: flex; flex-direction: column;
+    transform: scale(0.97); transition: transform 0.25s ease;
+}
+
+.nx-stock-market-engine .nx-overlay-block.active .nx-modal-shell { transform: scale(1); }

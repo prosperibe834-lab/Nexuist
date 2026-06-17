@@ -4,6 +4,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\KycVerification;
 use App\Models\RealEstateInvestment;
+use App\Models\StockInvestment;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -62,6 +63,11 @@ class User extends Authenticatable
     public function botInvestments()
     {
         return $this->hasMany(BotInvestment::class);
+    }
+
+    public function stockInvestments()
+    {
+        return $this->hasMany(StockInvestment::class);
     }
 
     public function realEstateInvestments()
