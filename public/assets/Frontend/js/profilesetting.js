@@ -155,57 +155,40 @@ document.addEventListener('DOMContentLoaded', () => {
 const qtDropdownBtn = document.getElementById("qtDropdownBtn");
 const qtDropdownMenu = document.getElementById("qtDropdownMenu");
 
-qtDropdownBtn.addEventListener("click", () => {
+if (qtDropdownBtn && qtDropdownMenu) {
+    qtDropdownBtn.addEventListener("click", () => {
+        qtDropdownMenu.classList.toggle("active");
+        qtDropdownBtn.classList.toggle("active");
+    });
 
-    qtDropdownMenu.classList.toggle("active");
-    qtDropdownBtn.classList.toggle("active");
-
-});
-
-window.addEventListener("click", (e) => {
-
-    if(
-        !qtDropdownBtn.contains(e.target) &&
-        !qtDropdownMenu.contains(e.target)
-    ){
-        qtDropdownMenu.classList.remove("active");
-        qtDropdownBtn.classList.remove("active");
-    }
-
-});
+    window.addEventListener("click", (e) => {
+        if (
+            !qtDropdownBtn.contains(e.target) &&
+            !qtDropdownMenu.contains(e.target)
+        ) {
+            qtDropdownMenu.classList.remove("active");
+            qtDropdownBtn.classList.remove("active");
+        }
+    });
+}
 
 const acmVerifyBtn = document.getElementById("acmVerifyBtn");
 const acmVerifyMenu = document.getElementById("acmVerifyMenu");
 
-acmVerifyBtn.addEventListener("click", () => {
-
-    acmVerifyBtn.classList.toggle("active");
-
-    acmVerifyMenu.classList.toggle("active");
-
-});
+if (acmVerifyBtn && acmVerifyMenu) {
+    acmVerifyBtn.addEventListener("click", () => {
+        acmVerifyBtn.classList.toggle("active");
+        acmVerifyMenu.classList.toggle("active");
+    });
+}
 
 
 // Main section starts here
 // Tab Switching logic
 document.querySelectorAll('.nav-item').forEach(button => {
     button.addEventListener('click', () => {
-        document.querySelector('.nav-item.active').classList.remove('active');
+        const active = document.querySelector('.nav-item.active');
+        if (active) active.classList.remove('active');
         button.classList.add('active');
     });
-});
-
-// Form Submission Feedback
-document.getElementById('profileForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const btn = this.querySelector('.btn-save');
-    const originalContent = btn.innerHTML;
-    
-    btn.style.background = '#10b981';
-    btn.innerHTML = '<span>Profile Updated!</span> <i class="bx bx-check-circle"></i>';
-    
-    setTimeout(() => {
-        btn.style.background = '#3b82f6';
-        btn.innerHTML = originalContent;
-    }, 3000);
 });

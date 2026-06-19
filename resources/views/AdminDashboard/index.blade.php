@@ -83,6 +83,16 @@
                 </ul>
             </li>
 
+            <li>
+                <a href="{{ url('/PremiumInvestment') }}">
+                    <i class='bx bx-layer'></i>
+                    <span class="link_name">Premium Investment</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="/PremiumInvestment">Premium Investment</a></li>
+                </ul>
+            </li>
+
              <li>
                 <a href="{{ url('/StockMarket') }}">
                     <i class='bx bx-layer'></i>

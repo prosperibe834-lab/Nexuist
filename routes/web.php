@@ -127,7 +127,8 @@ Route::middleware('auth')->group(function () {
     Route::view('/premiumSignals', 'premiumSignals');
     Route::view('/loan', 'loan');
     Route::view('/loanHistory', 'loanHistory');
-    Route::view('/profilesetting', 'profilesetting');
+    Route::get('/profilesetting', [UserController::class, 'profileSetting']);
+    Route::post('/profilesetting', [UserController::class, 'updateProfile'])->name('user.profile.update');
     Route::view('/security', 'security');
     Route::view('/verify-account', 'verify-account');
     Route::view('/referUser', 'referUser');
@@ -175,6 +176,7 @@ Route::middleware('auth')->group(function () {
     Route::view('/AdminSupport', 'AdminDashboard.AdminSupport');
     Route::view('/transactions', 'AdminDashboard.transactions');
     Route::view('/security', 'AdminDashboard.security');
+    Route::view('/PremiumInvestment', 'AdminDashboard.PremiumInvestment');
     Route::get('/StockMarket', [AdminStockMarketController::class, 'index'])->name('admin.stockmarket');
     Route::post('/admin/stock-market/plans', [AdminStockMarketController::class, 'storePlan'])->name('admin.stockmarket.plan.store');
     Route::post('/admin/stock-market/plans/{id}/toggle', [AdminStockMarketController::class, 'toggleStatus'])->name('admin.stockmarket.plan.toggle');

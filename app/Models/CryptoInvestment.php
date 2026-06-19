@@ -40,4 +40,32 @@ class CryptoInvestment extends Model
     {
         return $this->belongsTo(CryptoPlan::class, 'crypto_plan_id');
     }
+
+    public function getTermDaysAttribute()
+    {
+        return match ($this->term) {
+            'daily' => 1,
+            'monthly' => 30,
+            'yearly' => 365,
+            default => 30,
+        };
+    }
+
+    public function getAccruedProfitAttribute()
+    {
+        $elapsedDays = now()->diffInDays($this->start_date);
+        if ($elapsedDays <= 0) {
+            return 0.00;
+        }
+
+        $days = min($elapsedDays, $this->term_days);
+        $dailyRate = match ($this->term) {
+            'daily' => $this->profit_rate / 100,
+            'monthly' => ($this->profit_rate / 100) / 30,
+            'yearly' => ($this->profit_rate / 100) / 365,
+            default => $this->profit_rate / 100,
+        };
+
+        return round($this->amount * $dailyRate * $days, 2);
+    }
 }

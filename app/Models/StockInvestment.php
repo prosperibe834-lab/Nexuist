@@ -59,6 +59,13 @@ class StockInvestment extends Model
         }
 
         $days = min($elapsedDays, $this->term_days);
-        return round($this->amount * ($this->profit_rate / 100) * $days, 2);
+        $dailyRate = match ($this->term) {
+            'daily' => $this->profit_rate / 100,
+            'monthly' => ($this->profit_rate / 100) / 30,
+            'yearly' => ($this->profit_rate / 100) / 365,
+            default => $this->profit_rate / 100,
+        };
+
+        return round($this->amount * $dailyRate * $days, 2);
     }
 }
