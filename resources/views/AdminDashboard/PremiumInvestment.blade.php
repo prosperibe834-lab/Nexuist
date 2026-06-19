@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/AdminDashboard/css/PremiumInvestment.css') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
@@ -308,32 +309,32 @@
                 <div class="stat-icon p-blue"><i class="bx bx-signal-5 animate-pulse"></i></div>
                 <div class="stat-details">
                     <span class="stat-lbl">Total Active Signals</span>
-                    <h3>142</h3>
-                    <span class="stat-trend up"><i class="bx bx-trending-up"></i> +12.5% This Week</span>
+                    <h3>{{ $stats['activePackages'] ?? 0 }}</h3>
+                    <span class="stat-trend up"><i class="bx bx-trending-up"></i> Premium catalog</span>
                 </div>
             </div>
             <div class="glass-card stat-card glow-on-hover">
                 <div class="stat-icon p-purple"><i class="bx bx-user-check"></i></div>
                 <div class="stat-details">
                     <span class="stat-lbl">Active Premium Members</span>
-                    <h3>2,841</h3>
-                    <span class="stat-trend up"><i class="bx bx-trending-up"></i> +8.2% Growth</span>
+                    <h3>{{ $stats['totalSubscribers'] ?? 0 }}</h3>
+                    <span class="stat-trend up"><i class="bx bx-trending-up"></i> Active subscriber base</span>
                 </div>
             </div>
             <div class="glass-card stat-card glow-on-hover">
                 <div class="stat-icon p-gold"><i class="bx bx-wallet"></i></div>
                 <div class="stat-details">
                     <span class="stat-lbl">Monthly Revenue (MRR)</span>
-                    <h3>$42,890</h3>
-                    <span class="stat-trend up"><i class="bx bx-trending-up"></i> +18.4% MRR</span>
+                    <h3>${{ number_format($stats['totalInvestment'] ?? 0, 2) }}</h3>
+                    <span class="stat-trend up"><i class="bx bx-trending-up"></i> Total investment volume</span>
                 </div>
             </div>
             <div class="glass-card stat-card glow-on-hover">
                 <div class="stat-icon p-green"><i class="bx bx-pie-chart-alt-2"></i></div>
                 <div class="stat-details">
                     <span class="stat-lbl">Signal Success Rate</span>
-                    <h3>87.4%</h3>
-                    <span class="stat-trend stable"><i class="bx bx-check-shield"></i> Institutional Target</span>
+                    <h3>{{ $stats['averageAccuracy'] ?? 0 }}%</h3>
+                    <span class="stat-trend stable"><i class="bx bx-check-shield"></i> Average bot accuracy</span>
                 </div>
             </div>
         </div>
@@ -341,10 +342,10 @@
         <div class="fintech-grid-3 mt-4">
             <div class="glass-card perf-card">
                 <h4><i class="bx bx-analyse text-blue"></i> Signal Performance Tracking</h4>
-                <div class="perf-metric-row"><span>Total Signals Sent</span><strong>3,401</strong></div>
-                <div class="perf-metric-row"><span>Total Winning Signals</span><strong class="text-green">2,972</strong></div>
-                <div class="perf-metric-row"><span>Total Losing Signals</span><strong class="text-red">429</strong></div>
-                <div class="perf-metric-row"><span>Average Profit Target</span><strong class="text-gold">+24.6%</strong></div>
+                <div class="perf-metric-row"><span>Total Signals Sent</span><strong>{{ $stats['totalSignalsSent'] ?? 0 }}</strong></div>
+                <div class="perf-metric-row"><span>Total Winning Signals</span><strong class="text-green">{{ $stats['winningSignals'] ?? 0 }}</strong></div>
+                <div class="perf-metric-row"><span>Total Losing Signals</span><strong class="text-red">{{ $stats['losingSignals'] ?? 0 }}</strong></div>
+                <div class="perf-metric-row"><span>Average Profit Target</span><strong class="text-gold">+{{ $stats['averageProfitTarget'] ?? 0 }}%</strong></div>
             </div>
             <div class="glass-card perf-card">
                 <h4><i class="bx bx-medal text-gold"></i> Alpha Asset Metrics</h4>
@@ -370,79 +371,90 @@
         <div class="fintech-split-layout">
             <div class="glass-card form-wrapper">
                 <h3><i class="bx bx-plus-circle text-primary"></i> Create New Signal Package</h3>
-                <form id="create-package-form" class="fintech-form">
-                    <div class="form-row-2">
+                <form id="create-package-form" class="fintech-form" action="{{ route('admin.premium.package.store') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-row-3">
                         <div class="form-group">
                             <label>Signal Name</label>
-                            <input type="text" placeholder="e.g. Alpha Crypto VIP" required />
+                            <input type="text" name="bot_name" placeholder="e.g. Alpha Crypto VIP" required />
                         </div>
                         <div class="form-group">
                             <label>Signal Category</label>
-                            <select required>
-                                <option>Crypto</option>
-                                <option>Forex</option>
-                                <option>Stocks</option>
-                                <option>Commodities</option>
-                                <option>Indices</option>
-                                <option>Mining</option>
+                            <select name="strategy_type" required>
+                                <option value="Crypto">Crypto</option>
+                                <option value="Forex">Forex</option>
+                                <option value="Stocks">Stocks</option>
+                                <option value="Commodities">Commodities</option>
+                                <option value="Indices">Indices</option>
+                                <option value="Mining">Mining</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Trading Style</label>
+                            <select name="trading_style" required>
+                                <option value="">Select style</option>
+                                <option value="Scalping">Scalping</option>
+                                <option value="Swing">Swing</option>
+                                <option value="Day Trading">Day Trading</option>
+                                <option value="Position">Position</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-row-3">
                         <div class="form-group">
                             <label>Monthly Price ($)</label>
-                            <input type="number" placeholder="49" required />
+                            <input type="number" name="monthly_return" placeholder="49" required />
                         </div>
                         <div class="form-group">
                             <label>Quarterly Price ($)</label>
-                            <input type="number" placeholder="129" required />
+                            <input type="number" name="quarterly_price" placeholder="129" required />
                         </div>
                         <div class="form-group">
                             <label>Yearly Price ($)</label>
-                            <input type="number" placeholder="399" required />
+                            <input type="number" name="annual_return" placeholder="399" required />
                         </div>
                     </div>
                     <div class="form-row-2">
                         <div class="form-group">
                             <label>Target Success Rate (%)</label>
-                            <input type="number" placeholder="85" max="100" />
+                            <input type="number" name="accuracy_rate" placeholder="85" max="100" />
                         </div>
                         <div class="form-group">
                             <label>Risk Level Level</label>
-                            <select>
-                                <option>Low</option>
-                                <option>Medium</option>
-                                <option>High</option>
+                            <select name="risk_level">
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-row-2">
                         <div class="form-group">
                             <label>Signal Icon Upload</label>
-                            <input type="file" class="file-input-custom" />
+                            <input type="file" name="bot_image" class="file-input-custom" />
                         </div>
                         <div class="form-group">
                             <label>Signal Banner Image</label>
-                            <input type="file" class="file-input-custom" />
+                            <input type="file" name="bot_logo" class="file-input-custom" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Signal Description</label>
-                        <textarea rows="3" placeholder="Describe the structural trading strategy..."></textarea>
+                        <textarea name="description" rows="3" placeholder="Describe the structural trading strategy..."></textarea>
                     </div>
                     <div class="form-group">
                         <label class="mb-2 block">Package Badges & Features Matrix</label>
                         <div class="checkbox-grid">
-                            <label class="check-container"><input type="checkbox" checked /> Real Time Notifications</label>
-                            <label class="check-container"><input type="checkbox" checked /> Expert Analysis</label>
-                            <label class="check-container"><input type="checkbox" checked /> Entry Price Alerts</label>
-                            <label class="check-container"><input type="checkbox" checked /> Exit Price Alerts</label>
-                            <label class="check-container"><input type="checkbox" /> Stop Loss Alerts</label>
-                            <label class="check-container"><input type="checkbox" /> Take Profit Alerts</label>
-                            <label class="check-container"><input type="checkbox" /> VIP Support</label>
-                            <label class="check-container"><input type="checkbox" /> Featured Badge</label>
-                            <label class="check-container"><input type="checkbox" /> Premium Badge</label>
-                            <label class="check-container"><input type="checkbox" /> Hot Badge</label>
+                            <label class="check-container"><input type="checkbox" checked name="real_time_notifications" /> Real Time Notifications</label>
+                            <label class="check-container"><input type="checkbox" checked name="expert_analysis" /> Expert Analysis</label>
+                            <label class="check-container"><input type="checkbox" checked name="entry_price_alerts" /> Entry Price Alerts</label>
+                            <label class="check-container"><input type="checkbox" checked name="exit_price_alerts" /> Exit Price Alerts</label>
+                            <label class="check-container"><input type="checkbox" name="stop_loss_alerts" /> Stop Loss Alerts</label>
+                            <label class="check-container"><input type="checkbox" name="take_profit_alerts" /> Take Profit Alerts</label>
+                            <label class="check-container"><input type="checkbox" name="vip_support" /> VIP Support</label>
+                            <label class="check-container"><input type="checkbox" name="featured" /> Featured Badge</label>
+                            <label class="check-container"><input type="checkbox" name="premium" /> Premium Badge</label>
+                            <label class="check-container"><input type="checkbox" name="popular" /> Hot Badge</label>
                         </div>
                     </div>
                     <button type="submit" class="btn-submit ripple"><i class="bx bx-check"></i> Generate Signal Package</button>
@@ -471,8 +483,8 @@
                         <div><i class="bx bx-check-circle text-green"></i> Entry/Exit Target Alerts</div>
                     </div>
                     <div class="card-actions-mock">
-                        <button class="mock-action-btn edit-m"><i class="bx bx-edit"></i> Edit</button>
-                        <button class="mock-action-btn delete-m"><i class="bx bx-trash"></i> Drop</button>
+                        <button type="button" class="mock-action-btn edit-m"><i class="bx bx-edit"></i> Edit</button>
+                        <button type="button" class="mock-action-btn delete-m"><i class="bx bx-trash"></i> Drop</button>
                     </div>
                 </div>
             </div>
@@ -483,35 +495,36 @@
         <div class="fintech-split-layout">
             <div class="glass-card form-wrapper">
                 <h3><i class="bx bx-broadcast text-secondary"></i> Send Live Order Execution Signal</h3>
-                <form id="live-signal-form" class="fintech-form">
+                <form id="live-signal-form" class="fintech-form" action="{{ route('admin.premium.live-signal') }}" method="POST">
+                    @csrf
                     <div class="form-row-3">
                         <div class="form-group">
                             <label>Asset Name</label>
-                            <input type="text" placeholder="e.g. BTC/USDT or EUR/USD" required />
+                            <input type="text" name="asset_name" placeholder="e.g. BTC/USDT or EUR/USD" required />
                         </div>
                         <div class="form-group">
                             <label>Signal Type</label>
-                            <select class="select-signal-type">
-                                <option class="opt-buy">BUY / LONG</option>
-                                <option class="opt-sell">SELL / SHORT</option>
+                            <select class="select-signal-type" name="signal_type">
+                                <option value="BUY">BUY / LONG</option>
+                                <option value="SELL">SELL / SHORT</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Time Frame</label>
-                            <input type="text" placeholder="e.g. 15M, 1H, 4H" />
+                            <input type="text" name="time_frame" placeholder="e.g. 15M, 1H, 4H" />
                         </div>
                     </div>
                     <div class="form-row-4">
-                        <div class="form-group"><label>Entry Price</label><input type="text" placeholder="67400.00" required /></div>
-                        <div class="form-group"><label>Take Profit 1</label><input type="text" placeholder="68500.00" required /></div>
-                        <div class="form-group"><label>Take Profit 2</label><input type="text" placeholder="69200.00" /></div>
-                        <div class="form-group"><label>Take Profit 3</label><input type="text" placeholder="71000.00" /></div>
+                        <div class="form-group"><label>Entry Price</label><input type="text" name="entry_price" placeholder="67400.00" required /></div>
+                        <div class="form-group"><label>Take Profit 1</label><input type="text" name="take_profit_1" placeholder="68500.00" required /></div>
+                        <div class="form-group"><label>Take Profit 2</label><input type="text" name="take_profit_2" placeholder="69200.00" /></div>
+                        <div class="form-group"><label>Take Profit 3</label><input type="text" name="take_profit_3" placeholder="71000.00" /></div>
                     </div>
                     <div class="form-row-2">
-                        <div class="form-group"><label>Stop Loss Target</label><input type="text" placeholder="66100.00" required /></div>
-                        <div class="form-group"><label>Risk Portfolio Allocation (%)</label><input type="text" placeholder="2.5%" /></div>
+                        <div class="form-group"><label>Stop Loss Target</label><input type="text" name="stop_loss" placeholder="66100.00" required /></div>
+                        <div class="form-group"><label>Risk Portfolio Allocation (%)</label><input type="text" name="allocation" placeholder="2.5%" /></div>
                     </div>
-                    <div class="form-group"><label>Signal Notes / Directives</label><textarea placeholder="Add entry context or chart pattern analysis notes..."></textarea></div>
+                    <div class="form-group"><label>Signal Notes / Directives</label><textarea name="notes" placeholder="Add entry context or chart pattern analysis notes..."></textarea></div>
                     <button type="submit" class="btn-submit btn-secondary-color ripple"><i class="bx bx-paper-plane"></i> Broadcast Live Order Execution</button>
                 </form>
             </div>
@@ -560,44 +573,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <div class="table-user-cell">
-                                <div class="avatar-mock p-purple">M</div>
-                                <div><strong>Monica Vance</strong><span>monica@nexuist.io</span></div>
-                            </div>
-                        </td>
-                        <td><code class="node-code">NEX-9082</code></td>
-                        <td>Nigeria</td>
-                        <td>Alpha Crypto VIP</td>
-                        <td>Yearly Plan</td>
-                        <td class="text-gold">$399.00</td>
-                        <td><span class="badge-status active-st">Active</span></td>
-                        <td class="text-right">
-                            <button class="action-icon-btn text-blue" title="View Details"><i class="bx bx-show"></i></button>
-                            <button class="action-icon-btn text-purple" title="Edit Properties"><i class="bx bx-edit"></i></button>
-                            <button class="action-icon-btn text-red" title="Suspend Access"><i class="bx bx-block"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="table-user-cell">
-                                <div class="avatar-mock p-blue">J</div>
-                                <div><strong>Jonathan Blake</strong><span>j.blake@tradingview.com</span></div>
-                            </div>
-                        </td>
-                        <td><code class="node-code">NEX-1044</code></td>
-                        <td>United States</td>
-                        <td>Forex Pro Scalper</td>
-                        <td>Monthly Plan</td>
-                        <td class="text-gold">$49.00</td>
-                        <td><span class="badge-status pending-st">Suspended</span></td>
-                        <td class="text-right">
-                            <button class="action-icon-btn text-blue"><i class="bx bx-show"></i></button>
-                            <button class="action-icon-btn text-purple"><i class="bx bx-edit"></i></button>
-                            <button class="action-icon-btn text-green" title="Reactivate"><i class="bx bx-refresh"></i></button>
-                        </td>
-                    </tr>
+                    @forelse($subscribers ?? collect() as $subscriber)
+                        <tr>
+                            <td>
+                                <div class="table-user-cell">
+                                    <div class="avatar-mock p-purple">{{ strtoupper(substr($subscriber['name'], 0, 1)) }}</div>
+                                    <div><strong>{{ $subscriber['name'] }}</strong><span>{{ $subscriber['email'] }}</span></div>
+                                </div>
+                            </td>
+                            <td><code class="node-code">NEX-{{ str_pad($subscriber['id'] ?? 0, 4, '0', STR_PAD_LEFT) }}</code></td>
+                            <td>{{ $subscriber['country'] }}</td>
+                            <td>{{ $subscriber['activePackage'] }}</td>
+                            <td>{{ $subscriber['planTier'] }}</td>
+                            <td class="text-gold">${{ number_format($subscriber['amountPaid'] ?? 0, 2) }}</td>
+                            <td>
+                                <span class="badge-status {{ $subscriber['status'] === 'Active' ? 'active-st' : 'pending-st' }}">{{ $subscriber['status'] }}</span>
+                            </td>
+                            <td class="text-right">
+                                <button type="button" class="action-icon-btn text-blue view-subscriber-btn" data-investment-id="{{ $subscriber['investment_id'] }}" data-user-id="{{ $subscriber['id'] }}" title="View Details"><i class="bx bx-show"></i></button>
+                                <button type="button" class="action-icon-btn text-purple edit-subscriber-btn" data-investment-id="{{ $subscriber['investment_id'] }}" data-user-id="{{ $subscriber['id'] }}" data-current-status="{{ $subscriber['status'] }}" data-toggle-url="{{ route('admin.premium.subscriber.toggle', $subscriber['investment_id']) }}" title="Edit Properties"><i class="bx bx-edit"></i></button>
+                                <button type="button" class="action-icon-btn text-red delete-subscriber-btn" data-investment-id="{{ $subscriber['investment_id'] }}" data-user-id="{{ $subscriber['id'] }}" data-delete-url="{{ route('admin.premium.subscriber.delete', $subscriber['investment_id']) }}" title="Suspend Access"><i class="bx bx-block"></i></button>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="8" class="text-center">No premium subscribers found.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -623,29 +625,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><code class="node-code">TXN-009823184</code></td>
-                        <td>Monica Vance</td>
-                        <td>Alpha Crypto VIP</td>
-                        <td class="text-green">$399.00</td>
-                        <td><i class="bx bxl-paypal"></i> PayPal</td>
-                        <td>2026-06-15</td>
-                        <td><span class="badge-status active-st">Settled</span></td>
-                        <td class="text-right"><button class="btn-action-small refund-btn">Refund</button></td>
-                    </tr>
-                    <tr>
-                        <td><code class="node-code">TXN-009871142</code></td>
-                        <td>Marcus Vance</td>
-                        <td>Forex Institutional</td>
-                        <td class="text-green">$129.00</td>
-                        <td><i class="bx bx-credit-card"></i> Visa Card</td>
-                        <td>2026-06-16</td>
-                        <td><span class="badge-status warning-st">Review Pending</span></td>
-                        <td class="text-right">
-                            <button class="btn-action-small approve-btn mr-1">Approve</button>
-                            <button class="btn-action-small reject-btn">Reject</button>
-                        </td>
-                    </tr>
+                    @forelse($payments ?? collect() as $payment)
+                        <tr>
+                            <td><code class="node-code">{{ $payment['transactionId'] }}</code></td>
+                            <td>{{ $payment['userName'] }}</td>
+                            <td>{{ $payment['packageOption'] }}</td>
+                            <td class="text-green">${{ number_format($payment['grossValue'] ?? 0, 2) }}</td>
+                            <td><i class="bx bx-wallet"></i> {{ $payment['paymentGateway'] }}</td>
+                            <td>{{ $payment['settlementDate'] }}</td>
+                            <td><span class="badge-status {{ $payment['status'] === 'Settled' ? 'active-st' : 'warning-st' }}">{{ $payment['status'] }}</span></td>
+                            <td class="text-right">
+                                <button class="btn-action-small approve-btn mr-1">Approve</button>
+                                <button class="btn-action-small reject-btn">Reject</button>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="8" class="text-center">No payment records available.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

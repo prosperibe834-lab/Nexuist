@@ -6,6 +6,7 @@ use App\Models\BotInvestment;
 use App\Models\StockInvestment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BotInvestmentController extends Controller
 {
@@ -40,28 +41,25 @@ class BotInvestmentController extends Controller
                 return $this->jsonResponse(false, 'Insufficient balance. Please deposit funds.', ['redirect' => '/deposit']);
             }
 
-            // DEDUCT WALLET
-            $userModel = \App\Models\User::findOrFail(Auth::id());
-            $userModel->balance -= $amount;
-            $userModel->save();
+            DB::transaction(function () use ($user, $bot, $amount) {
+                $user->decrement('balance', $amount);
 
-            // CREATE INVESTMENT
-            BotInvestment::create([
-                'user_id'           => $user->id,
-                'bot_id'            => $bot->id,
-                'investment_amount' => $amount,
-                'current_profit'    => 0,
-                'current_balance'   => $amount,
-                'start_date'        => now(),
-                'end_date'          => now()->addDays(30),
-                'status'            => 'Running',
-            ]);
+                BotInvestment::create([
+                    'user_id'           => $user->id,
+                    'bot_id'            => $bot->id,
+                    'investment_amount' => $amount,
+                    'current_profit'    => 0,
+                    'current_balance'   => $amount,
+                    'start_date'        => now(),
+                    'end_date'          => now()->addDays(30),
+                    'status'            => 'Running',
+                ]);
 
-            // UPDATE BOT STATS
-            $bot->increment('total_subscribers');
-            $bot->increment('total_investment', $amount);
+                $bot->increment('total_subscribers');
+                $bot->increment('total_investment', $amount);
+            });
 
-            return $this->jsonResponse(true, 'AI Bot Investment Activated Successfully', ['redirect' => '/deploybot']);
+            return $this->jsonResponse(true, 'AI Bot Investment Activated Successfully', ['redirect' => route('deploybot')]);
 
         } catch (\Exception $e) {
             return $this->jsonResponse(false, 'Error: ' . $e->getMessage());
@@ -83,6 +81,51 @@ class BotInvestmentController extends Controller
         }
 
         return response()->json($response, $status);
+    }
+
+    public static function accruePendingProfitsForUser($user)
+    {
+        $investments = BotInvestment::with('bot')
+            ->where('user_id', $user->id)
+            ->where('status', 'Running')
+            ->get();
+
+        $userNeedsSave = false;
+        foreach ($investments as $investment) {
+            if (!$investment->bot || !$investment->bot->monthly_return) {
+                continue;
+            }
+
+            $startDate = \Illuminate\Support\Carbon::parse($investment->start_date);
+            $endDate = \Illuminate\Support\Carbon::parse($investment->end_date);
+            $today = now();
+
+            $totalDays = max(1, $startDate->diffInDays($endDate));
+            $elapsedDays = min($startDate->diffInDays($today), $totalDays);
+            $elapsedDays = max(0, $elapsedDays);
+
+            $dailyRate = ($investment->bot->monthly_return / 100) / 30;
+            $targetProfit = round($investment->investment_amount * $dailyRate * $elapsedDays, 2);
+
+            if ($targetProfit > $investment->current_profit) {
+                $profitDifference = $targetProfit - $investment->current_profit;
+                $investment->current_profit = $targetProfit;
+                $investment->current_balance = round($investment->investment_amount + $targetProfit, 2);
+
+                if ($today->greaterThanOrEqualTo($endDate)) {
+                    $investment->status = 'Completed';
+                }
+
+                $investment->save();
+
+                $user->balance = round(($user->balance ?? 0) + $profitDifference, 2);
+                $userNeedsSave = true;
+            }
+        }
+
+        if ($userNeedsSave) {
+            $user->save();
+        }
     }
 
     public function dashboard()

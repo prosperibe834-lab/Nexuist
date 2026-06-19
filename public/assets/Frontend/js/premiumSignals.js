@@ -201,6 +201,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const name = card.getAttribute('data-name');
             const price = card.getAttribute('data-price');
 
+            // If user doesn't have enough balance, redirect to deposit page
+            const userBal = window.__USER_BALANCE || 0;
+            const required = parseFloat(price) || 0;
+            if (parseFloat(userBal) < required) {
+                window.location.href = '/depositfunds';
+                return;
+            }
+
             displayName.innerText = name;
             displayPrice.value = price;
 
@@ -232,6 +240,14 @@ document.querySelectorAll('.btn-subscribe').forEach(button => {
         selectedName = card.getAttribute('data-name');
         selectedPrice = card.getAttribute('data-price');
 
+        // If user doesn't have enough balance, redirect to deposit page
+        const userBal = window.__USER_BALANCE || 0;
+        const required = parseFloat(selectedPrice) || 0;
+        if (parseFloat(userBal) < required) {
+            window.location.href = '/depositfunds';
+            return;
+        }
+
         displayName.innerText = selectedName;
         displayPrice.value = selectedPrice;
 
@@ -239,14 +255,56 @@ document.querySelectorAll('.btn-subscribe').forEach(button => {
     });
 });
 
-// Redirect to payment page
-completeBtn.addEventListener('click', () => {
-
+// Complete subscription: POST to server invest endpoint
+completeBtn.addEventListener('click', async () => {
     const paymentMethod = document.querySelector('.modal-select').value;
 
-    window.location.href =
-        `/premiumPayment?name=${encodeURIComponent(selectedName)}&price=${encodeURIComponent(selectedPrice)}&method=${encodeURIComponent(paymentMethod)}`;
+    const modal = document.getElementById('subModal');
+    const selectedCard = document.querySelector(`.sig-card[data-name="${selectedName}"]`);
+    const botId = selectedCard ? selectedCard.getAttribute('data-id') : null;
+    const amount = selectedPrice;
 
+    if (!botId) {
+        alert('Invalid selection');
+        return;
+    }
+
+    try {
+        const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+        const res = await fetch(`/bot/invest/${botId}`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ amount: amount })
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+            // Redirect if backend provided a redirect route
+            if (data.redirect) {
+                window.location.href = data.redirect;
+                return;
+            }
+            alert(data.message || 'Subscription successful');
+            modal.style.display = 'none';
+            // Optionally reload to show updated balances
+            setTimeout(() => location.reload(), 800);
+        } else {
+            if (data.redirect) {
+                window.location.href = data.redirect;
+                return;
+            }
+            alert(data.message || 'Subscription failed');
+        }
+    } catch (e) {
+        console.error(e);
+        alert('Network error while placing investment');
+    }
 });
 
 });

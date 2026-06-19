@@ -127,6 +127,9 @@ document.addEventListener("DOMContentLoaded", () => {
     initTabModuleNavigation();
     initNotificationFormListeners();
     initLiveOrderTransmissions();
+    initPackageFormSubmission();
+    initPreviewCardActions();
+    initSubscriberActionButtons();
 });
 
 /**
@@ -189,18 +192,170 @@ function initLiveOrderTransmissions() {
     const liveSignalForm = document.getElementById("live-signal-form");
     if (!liveSignalForm) return;
 
-    liveSignalForm.addEventListener("submit", (e) => {
+    liveSignalForm.addEventListener("submit", async (e) => {
         e.preventDefault();
-        
-        // Harvest form metadata inputs
-        const assetName = liveSignalForm.querySelector("input[placeholder*='BTC/USDT']").value;
-        const signalType = liveSignalForm.querySelector(".select-signal-type").value;
-        
-        showFintechToast(
-            "Signal Dispatched Successfully", 
-            `Live institutional sequence for ${assetName} (${signalType}) synced to frontend matrix pipelines.`
-        );
-        liveSignalForm.reset();
+
+        const action = liveSignalForm.action;
+        const token = document.querySelector('meta[name="csrf-token"]').content;
+
+        const formData = new FormData(liveSignalForm);
+
+        try {
+            const response = await fetch(action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': token,
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                showFintechToast('Live Signal Created', 'Live signal has been submitted successfully.');
+                liveSignalForm.reset();
+                return;
+            }
+
+            showFintechToast('Error Sending Signal', data.message || 'Unable to create live signal.', true);
+        } catch (error) {
+            showFintechToast('Network Error', error.message || 'Please try again.', true);
+        }
+    });
+}
+
+function initPackageFormSubmission() {
+    const packageForm = document.getElementById("create-package-form");
+    if (!packageForm) return;
+
+    packageForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const action = packageForm.action;
+        const token = document.querySelector('meta[name="csrf-token"]').content;
+        const formData = new FormData(packageForm);
+
+        try {
+            const response = await fetch(action, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': token,
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+            if (response.ok && data.success) {
+                showFintechToast('Package Created', 'Your new signal package is saved and live.');
+                packageForm.reset();
+                return;
+            }
+
+            showFintechToast('Error Saving Package', data.message || 'Unable to save the package.', true);
+        } catch (error) {
+            showFintechToast('Network Error', error.message || 'Please try again.', true);
+        }
+    });
+}
+
+function initPreviewCardActions() {
+    const previewCard = document.getElementById('live-package-preview-card');
+    if (!previewCard) return;
+
+    const editButton = previewCard.querySelector('.edit-m');
+    const deleteButton = previewCard.querySelector('.delete-m');
+    const title = previewCard.querySelector('h5');
+    const subtitle = previewCard.querySelector('span');
+
+    if (editButton) {
+        editButton.addEventListener('click', () => {
+            const newName = prompt('Enter a new package name:', title.textContent.trim());
+            if (newName) {
+                title.textContent = newName;
+                showFintechToast('Preview Updated', 'Package preview has been updated locally.');
+            }
+        });
+    }
+
+    if (deleteButton) {
+        deleteButton.addEventListener('click', () => {
+            previewCard.remove();
+            showFintechToast('Package Removed', 'Preview card has been removed.');
+        });
+    }
+}
+
+function initSubscriberActionButtons() {
+    const subscriberRows = document.querySelectorAll('.view-subscriber-btn, .edit-subscriber-btn, .delete-subscriber-btn');
+    if (!subscriberRows.length) return;
+    const token = document.querySelector('meta[name="csrf-token"]').content;
+
+    subscriberRows.forEach((button) => {
+        button.addEventListener('click', async () => {
+            const investmentId = button.getAttribute('data-investment-id');
+            const row = button.closest('tr');
+
+            if (button.classList.contains('view-subscriber-btn')) {
+                const userName = row.querySelector('td strong')?.textContent || 'Subscriber';
+                const userEmail = row.querySelector('td span')?.textContent || '';
+                showFintechToast('Subscriber Info', `${userName} ${userEmail}`);
+                return;
+            }
+
+            if (button.classList.contains('edit-subscriber-btn')) {
+                const url = button.dataset.toggleUrl || `/admin/premium/subscriber/${investmentId}/toggle-status`;
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token,
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify({})
+                    });
+                    const data = await response.json();
+                    if (response.ok && data.success) {
+                        const statusCell = row.querySelector('td span.badge-status');
+                        if (statusCell) {
+                            statusCell.textContent = data.status;
+                            statusCell.classList.toggle('active-st', data.status === 'Active');
+                            statusCell.classList.toggle('pending-st', data.status !== 'Active');
+                        }
+                        showFintechToast('Status Updated', data.message);
+                        return;
+                    }
+                    showFintechToast('Error Updating Status', data.message || 'Unable to update subscriber status.', true);
+                } catch (error) {
+                    showFintechToast('Network Error', error.message || 'Please try again.', true);
+                }
+                return;
+            }
+
+            if (button.classList.contains('delete-subscriber-btn')) {
+                if (!confirm('Remove this subscriber record?')) return;
+                const url = button.dataset.deleteUrl || `/admin/premium/subscriber/${investmentId}`;
+                try {
+                    const response = await fetch(url, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': token,
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+                    const data = await response.json();
+                    if (response.ok && data.success) {
+                        row.remove();
+                        showFintechToast('Subscriber Removed', data.message);
+                        return;
+                    }
+                    showFintechToast('Error Removing Subscriber', data.message || 'Unable to delete subscriber.', true);
+                } catch (error) {
+                    showFintechToast('Network Error', error.message || 'Please try again.', true);
+                }
+            }
+        });
     });
 }
 

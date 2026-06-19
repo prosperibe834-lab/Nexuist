@@ -9,6 +9,8 @@
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script>window.__USER_BALANCE = {{ $balance ?? 0 }};</script>
 
 </head>
 
@@ -64,7 +66,8 @@
         <div class="header-right">
             <div class="top-balance-box desktop-only">
                 <span class="balance-label">ACCOUNT BALANCE</span>
-                <span class="balance-value">$0.00</span>
+
+                <span class="balance-value"> ${{ number_format(Auth::user()->balance, 2) }}
             </div>
 
             <div class="header-actions">
@@ -118,26 +121,37 @@
 
 
 
+
                 <div class="user-profile">
                     <button class="profile-btn" id="profileBtn">
-                        <div class="avatar">M</div>
+                        {{-- Avatar shows first letter of name --}}
+                        <div class="avatar">{{ substr(Auth::user()->name, 0, 1) }}</div>
                         <div class="user-info desktop-only">
-                            <span class="name">marine military</span>
+                            <span class="name">{{ Auth::user()->name }}</span>
                             <span class="type">Trading Account</span>
                         </div>
                         <span class="iconify arrow desktop-only" data-icon="ri:arrow-down-s-line"></span>
                     </button>
+
                     <div class="dropdown-menu profile-menu" id="profileMenu">
-                        <a href="#" class="menu-item"><span class="iconify" data-icon="ri:user-line"></span> My
+                        <a href="/profilesetting" class="menu-item"><span class="iconify"
+                                data-icon="ri:user-line"></span> My
                             Profile</a>
                         <a href="#" class="menu-item"><span class="iconify" data-icon="ri:settings-4-line"></span>
                             Settings</a>
-                        <a href="#" class="menu-item text-red"><span class="iconify"
-                                data-icon="ri:logout-box-r-line"></span> Logout</a>
+                        <a href="#" class="menu-item text-red"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <span class="iconify" data-icon="ri:logout-box-r-line"></span>
+                            Logout
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
+
                 </div>
             </div>
-        </div>
     </header>
 
     <div class="main-layout">
@@ -366,16 +380,17 @@
             </div>
 
             <div class="logout-wrapper">
-
-                <a href="/explore" class="logout-btn">
-
-                    <span class="iconify logout-icon" data-icon="solar:logout-2-outline"></span>
-
-                    <span>Log Out</span>
-
-                </a>
-
+                <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
+                    @csrf
+                    <button type="submit" class="logout-btn"
+                        style="background: none; border: none; cursor: pointer; display: flex; align-items: center; width: 100%;">
+                        <i class='bx bx-log-out'></i>
+                        <span style="margin-left: 8px;">Log Out</span>
+                    </button>
+                </form>
             </div>
+
+
         </aside>
 
         <!-- Main Content -->
@@ -392,201 +407,94 @@
 
         <!-- MAIN CONTENT -->
         <div class="nexuist-main-content">
-    <!-- Header Section -->
-    <div class="signals-header">
-        <div class="header-left">
-            <div class="title-with-icon">
-                <i class='bx bx-bar-chart-alt-2 main-icon'></i>
-                <h1>Premium Trading Signals</h1>
-            </div>
-            <p>Subscribe to professional trading signals and enhance your trading success</p>
-        </div>
-        <div class="available-badge">
-            <i class='bx bx-trending-up'></i>
-            <div class="badge-text">
-                <span class="count">6</span>
-                <span class="label">Available Signals</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Grid Section -->
-    <div class="signals-grid">
-        <!-- Card 1 -->
-        <div class="sig-card" data-name="Breakout Signals" data-price="3000.00">
-            <div class="card-header">
-                <i class='bx bx-broadcast'></i>
-                <h3>Breakout Signals</h3>
-                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
-            </div>
-            <div class="card-price">
-                <span class="currency">$</span>
-                <span class="amount">3,000.00</span>
-                <span class="period">/month</span>
-            </div>
-            <p class="sub-text">Professional trading signals subscription</p>
-            <ul class="feat-list">
-                <li><i class='bx bx-check'></i> Success Rate: 68.7%</li>
-                <li><i class='bx bx-check'></i> Real-time notifications</li>
-                <li><i class='bx bx-check'></i> Expert analysis</li>
-                <li><i class='bx bx-check'></i> 24/7 support</li>
-            </ul>
-            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="sig-card" data-name="Buying Oversold" data-price="3800.00">
-            <div class="card-header">
-                <i class='bx bx-bullseye'></i>
-                <h3>Buying Oversold</h3>
-                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
-            </div>
-            <div class="card-price">
-                <span class="currency">$</span>
-                <span class="amount">3,800.00</span>
-                <span class="period">/month</span>
-            </div>
-            <p class="sub-text">Professional trading signals subscription</p>
-            <ul class="feat-list">
-                <li><i class='bx bx-check'></i> Success Rate: 75%</li>
-                <li><i class='bx bx-check'></i> Real-time notifications</li>
-                <li><i class='bx bx-check'></i> Expert analysis</li>
-                <li><i class='bx bx-check'></i> 24/7 support</li>
-            </ul>
-            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="sig-card" data-name="Trend Signal" data-price="4000.00">
-            <div class="card-header">
-                <i class='bx bx-line-chart'></i>
-                <h3>Trend Signal</h3>
-                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
-            </div>
-            <div class="card-price">
-                <span class="currency">$</span>
-                <span class="amount">4,000.00</span>
-                <span class="period">/month</span>
-            </div>
-            <p class="sub-text">Professional trading signals subscription</p>
-            <ul class="feat-list">
-                <li><i class='bx bx-check'></i> Success Rate: 78.4%</li>
-                <li><i class='bx bx-check'></i> Real-time notifications</li>
-                <li><i class='bx bx-check'></i> Expert analysis</li>
-                <li><i class='bx bx-check'></i> 24/7 support</li>
-            </ul>
-            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="sig-card active-border" data-name="AntMiner-S7" data-price="5300.00">
-            <div class="card-header">
-                <i class='bx bx-chip'></i>
-                <h3>AntMiner-S7</h3>
-                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
-            </div>
-            <div class="card-price">
-                <span class="currency">$</span>
-                <span class="amount">5,300.00</span>
-                <span class="period">/month</span>
-            </div>
-            <p class="sub-text">Professional trading signals subscription</p>
-            <ul class="feat-list">
-                <li><i class='bx bx-check'></i> Success Rate: 85.4%</li>
-                <li><i class='bx bx-check'></i> Real-time notifications</li>
-                <li><i class='bx bx-check'></i> Expert analysis</li>
-                <li><i class='bx bx-check'></i> 24/7 support</li>
-            </ul>
-            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="sig-card" data-name="S9 Mining" data-price="6000.00">
-            <div class="card-header">
-                <i class='bx bx-server'></i>
-                <h3>S9 Mining</h3>
-                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
-            </div>
-            <div class="card-price">
-                <span class="currency">$</span>
-                <span class="amount">6,000.00</span>
-                <span class="period">/month</span>
-            </div>
-            <p class="sub-text">Professional trading signals subscription</p>
-            <ul class="feat-list">
-                <li><i class='bx bx-check'></i> Success Rate: 87.5%</li>
-                <li><i class='bx bx-check'></i> Real-time notifications</li>
-                <li><i class='bx bx-check'></i> Expert analysis</li>
-                <li><i class='bx bx-check'></i> 24/7 support</li>
-            </ul>
-            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
-        </div>
-
-        <!-- Card 6 -->
-        <div class="sig-card" data-name="Bitfury-B8" data-price="7000.00">
-            <div class="card-header">
-                <i class='bx bx-shield-quarter'></i>
-                <h3>Bitfury-B8</h3>
-                <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
-            </div>
-            <div class="card-price">
-                <span class="currency">$</span>
-                <span class="amount">7,000.00</span>
-                <span class="period">/month</span>
-            </div>
-            <p class="sub-text">Professional trading signals subscription</p>
-            <ul class="feat-list">
-                <li><i class='bx bx-check'></i> Success Rate: 93.4%</li>
-                <li><i class='bx bx-check'></i> Real-time notifications</li>
-                <li><i class='bx bx-check'></i> Expert analysis</li>
-                <li><i class='bx bx-check'></i> 24/7 support</li>
-            </ul>
-            <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
-        </div>
-    </div>
-</div>
-
-<!-- Modal Section (Outside main flow to avoid sidebar interference) -->
-<div class="modal-overlay" id="subModal">
-    <div class="modal-container">
-        <div class="modal-header">
-            <div class="modal-title-group">
-                <div class="modal-icon"><i class='bx bx-pulse'></i></div>
-                <div>
-                    <h2>Subscribe to Signal</h2>
-                    <span id="display-name" class="modal-subtitle">Trend Signal</span>
+            <!-- Header Section -->
+            <div class="signals-header">
+                <div class="header-left">
+                    <div class="title-with-icon">
+                        <i class='bx bx-bar-chart-alt-2 main-icon'></i>
+                        <h1>Premium Trading Signals</h1>
+                    </div>
+                    <p>Subscribe to professional trading signals and enhance your trading success</p>
+                </div>
+                <div class="available-badge">
+                    <i class='bx bx-trending-up'></i>
+                    <div class="badge-text">
+                        <span class="count">{{ $signalCount ?? ($signals->count() ?? 0) }}</span>
+                        <span class="label">Available Signals</span>
+                    </div>
                 </div>
             </div>
-            <button class="close-modal" id="closeBtn"><i class='bx bx-x'></i></button>
-        </div>
-        <div class="modal-body">
-            <div class="input-group">
-                <label><i class='bx bx-credit-card'></i> Payment Method</label>
-                <select class="modal-select">
-                    <option>Bank Transfer</option>
-                    <option>USDT (Tether)</option>
-                    <option>Bitcoin</option>
-                </select>
+
+            <!-- Grid Section -->
+            <div class="signals-grid">
+                @foreach($signals ?? collect() as $signal)
+                    <div class="sig-card" data-id="{{ $signal->id }}" data-name="{{ $signal->bot_name }}"
+                        data-price="{{ number_format($signal->minimum_investment, 2, '.', '') }}">
+                        <div class="card-header">
+                            <i class='bx bx-broadcast'></i>
+                            <h3>{{ $signal->bot_name }}</h3>
+                            <span class="premium-tag"><i class='bx bxs-star'></i> Premium</span>
+                        </div>
+                        <div class="card-price">
+                            <span class="currency">$</span>
+                            <span class="amount">{{ number_format($signal->minimum_investment, 2) }}</span>
+                            <span class="period">/month</span>
+                        </div>
+                        <p class="sub-text">
+                            {{ Str::limit($signal->description ?? 'Premium trading signal subscription', 80) }}</p>
+                        <ul class="feat-list">
+                            <li><i class='bx bx-check'></i> Success Rate: {{ $signal->accuracy_rate ?? 0 }}%</li>
+                            <li><i class='bx bx-check'></i> Real-time notifications</li>
+                            <li><i class='bx bx-check'></i> Expert analysis</li>
+                            <li><i class='bx bx-check'></i> 24/7 support</li>
+                        </ul>
+                        <button class="btn-subscribe"><i class='bx bx-plus-circle'></i> Subscribe Now</button>
+                    </div>
+                @endforeach
             </div>
-            <div class="input-group">
-                <label><i class='bx bx-dollar'></i> Subscription Amount ($)</label>
-                <div class="price-input-box">
-                    <input type="text" id="display-price" readonly>
-                    <span class="freq">/month</span>
-                </div>
-            </div>
-            <div class="modal-notice">
-                <i class='bx bx-info-circle'></i> Recurring monthly subscription. Cancel anytime.
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn-cancel" id="cancelBtn">Cancel</button>
-            <button class="btn-complete"><i class='bx bx-check-circle'></i> Complete Subscription</button>
         </div>
 
-        
-    </div>
-</div>
+        <!-- Modal Section (Outside main flow to avoid sidebar interference) -->
+        <div class="modal-overlay" id="subModal">
+            <div class="modal-container">
+                <div class="modal-header">
+                    <div class="modal-title-group">
+                        <div class="modal-icon"><i class='bx bx-pulse'></i></div>
+                        <div>
+                            <h2>Subscribe to Signal</h2>
+                            <span id="display-name" class="modal-subtitle">Trend Signal</span>
+                        </div>
+                    </div>
+                    <button class="close-modal" id="closeBtn"><i class='bx bx-x'></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <label><i class='bx bx-credit-card'></i> Payment Method</label>
+                        <select class="modal-select">
+                            <option>Bank Transfer</option>
+                            <option>USDT (Tether)</option>
+                            <option>Bitcoin</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label><i class='bx bx-dollar'></i> Subscription Amount ($)</label>
+                        <div class="price-input-box">
+                            <input type="text" id="display-price" readonly>
+                            <span class="freq">/month</span>
+                        </div>
+                    </div>
+                    <div class="modal-notice">
+                        <i class='bx bx-info-circle'></i> Recurring monthly subscription. Cancel anytime.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-cancel" id="cancelBtn">Cancel</button>
+                    <button class="btn-complete"><i class='bx bx-check-circle'></i> Complete Subscription</button>
+                </div>
+
+
+            </div>
+        </div>
 
     </div>
 

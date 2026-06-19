@@ -911,3 +911,8 @@ body {
 
 
                 <span class="balance-value"> ${{ number_format(Auth::user()->balance, 2) }}
+
+
+git add .
+git commit -m "Describe what you changed"
+git push origin main

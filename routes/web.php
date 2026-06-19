@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\BotInvestmentController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\KycController;
+use App\Http\Controllers\PremiumSignalsController;
 use App\Http\Controllers\RealEstateInvestmentController;
 use App\Http\Controllers\RealEstatePropertyController;
 use App\Http\Controllers\StockInvestmentController;
@@ -124,7 +125,7 @@ Route::middleware('auth')->group(function () {
     Route::view('/accountstatement', 'accountstatement');
     Route::view('/signals', 'signals');
     Route::view('/premiumPayment', 'premiumPayment');
-    Route::view('/premiumSignals', 'premiumSignals');
+    Route::get('/premiumSignals', [PremiumSignalsController::class, 'index'])->name('premium.signals');
     Route::view('/loan', 'loan');
     Route::view('/loanHistory', 'loanHistory');
     Route::get('/profilesetting', [UserController::class, 'profileSetting']);
@@ -176,7 +177,7 @@ Route::middleware('auth')->group(function () {
     Route::view('/AdminSupport', 'AdminDashboard.AdminSupport');
     Route::view('/transactions', 'AdminDashboard.transactions');
     Route::view('/security', 'AdminDashboard.security');
-    Route::view('/PremiumInvestment', 'AdminDashboard.PremiumInvestment');
+    Route::get('/PremiumInvestment', [AiBotController::class, 'premiumInvestmentDashboard'])->name('admin.premiuminvestment');
     Route::get('/StockMarket', [AdminStockMarketController::class, 'index'])->name('admin.stockmarket');
     Route::post('/admin/stock-market/plans', [AdminStockMarketController::class, 'storePlan'])->name('admin.stockmarket.plan.store');
     Route::post('/admin/stock-market/plans/{id}/toggle', [AdminStockMarketController::class, 'toggleStatus'])->name('admin.stockmarket.plan.toggle');
@@ -248,6 +249,21 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/copy-trading/data', [AiBotController::class, 'copyTradingAdminData'])
         ->name('admin.copy-trading.data');
+
+    Route::post('/premium/packages', [AiBotController::class, 'store'])
+        ->name('admin.premium.package.store');
+
+    Route::post('/premium/live-signal', [AiBotController::class, 'broadcastLiveSignal'])
+        ->name('admin.premium.live-signal');
+
+    Route::post('/premium/subscriber/{investment}/toggle-status', [AiBotController::class, 'togglePremiumSubscriberStatus'])
+        ->name('admin.premium.subscriber.toggle');
+
+    Route::delete('/premium/subscriber/{investment}', [AiBotController::class, 'deletePremiumSubscriber'])
+        ->name('admin.premium.subscriber.delete');
+
+    // Admin create premium investment (create investment on behalf of a user)
+    Route::post('/premium/invest', [AiBotController::class, 'adminCreateInvestment'])->name('admin.premium.invest');
 });
 
 // Investment Search and Filter Routes
@@ -279,4 +295,19 @@ Route::get('/deploy2', function () {
 });
 
 
+// Support endpoints (user)
+Route::post('/support/tickets', [App\Http\Controllers\SupportController::class, 'store'])->name('support.store');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/support/tickets', [App\Http\Controllers\SupportController::class, 'userTickets'])->name('support.user.tickets');
+    Route::get('/support/tickets/{id}', [App\Http\Controllers\SupportController::class, 'show'])->name('support.show');
+});
+
+// Support endpoints (admin)
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('/support/tickets', [App\Http\Controllers\SupportController::class, 'adminIndex'])->name('admin.support.tickets');
+    Route::get('/support/tickets/{id}', [App\Http\Controllers\SupportController::class, 'show'])->name('admin.support.tickets.show');
+    Route::post('/support/tickets/{id}/reply', [App\Http\Controllers\SupportController::class, 'adminReply'])->name('admin.support.reply');
+    Route::post('/support/tickets/{id}/status', [App\Http\Controllers\SupportController::class, 'adminUpdateStatus'])->name('admin.support.status');
+});
 

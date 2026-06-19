@@ -93,11 +93,15 @@ class AiBotController extends Controller
     {
         try {
             $request->validate([
-                'bot_name'       => 'required',
-                'strategy_type'  => 'required',
-                'trading_style'  => 'required',
-                'monthly_return' => 'required',
-                'accuracy_rate'  => 'required',
+                'bot_name'           => 'required|string',
+                'strategy_type'      => 'required|string',
+                'trading_style'      => 'required|string',
+                'monthly_return'     => 'required|numeric',
+                'accuracy_rate'      => 'required|numeric',
+                'drawdown'           => 'nullable|numeric',
+                'minimum_investment' => 'nullable|numeric',
+                'maximum_investment' => 'nullable|numeric',
+                'annual_return'      => 'nullable|numeric',
             ]);
 
             $bot = new AiBot();
@@ -106,13 +110,14 @@ class AiBotController extends Controller
             $bot->strategy_type      = $request->strategy_type;
             $bot->description        = $request->description;
             $bot->monthly_return     = $request->monthly_return;
-            $bot->annual_return      = $request->annual_return;
+            $bot->annual_return      = $request->annual_return ?? 0;
             $bot->accuracy_rate      = $request->accuracy_rate;
-            $bot->drawdown           = $request->drawdown;
+            // Ensure numeric defaults to prevent DB NOT NULL constraint failures
+            $bot->drawdown           = $request->filled('drawdown') ? $request->drawdown : 0;
             $bot->risk_level         = $request->risk_level;
             $bot->trading_style      = $request->trading_style;
-            $bot->minimum_investment = $request->minimum_investment;
-            $bot->maximum_investment = $request->maximum_investment;
+            $bot->minimum_investment = $request->filled('minimum_investment') ? $request->minimum_investment : 0;
+            $bot->maximum_investment = $request->filled('maximum_investment') ? $request->maximum_investment : ($bot->minimum_investment * 10 ?: 0);
             $bot->featured           = $request->featured ? 1 : 0;
             $bot->premium            = $request->premium ? 1 : 0;
             $bot->popular            = $request->popular ? 1 : 0;
@@ -124,6 +129,18 @@ class AiBotController extends Controller
                 $file->move(public_path('uploads/bots'), $name);
                 $bot->bot_image = $name;
             }
+
+            if ($request->hasFile('bot_logo')) {
+                $file = $request->file('bot_logo');
+                $name = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('uploads/bots'), $name);
+                $bot->bot_logo = $name;
+            }
+
+            $bot->status = $request->status ?? 'Active';
+            $bot->premium = $request->filled('premium') ? 1 : 0;
+            $bot->featured = $request->filled('featured') ? 1 : 0;
+            $bot->popular = $request->filled('popular') ? 1 : 0;
 
             $bot->save();
 
@@ -357,6 +374,63 @@ class AiBotController extends Controller
         return view('experts', compact('bots', 'expertsData'));
     }
 
+    public function premiumInvestmentDashboard()
+    {
+        $bots = AiBot::where('premium', 1)
+            ->where('status', 'Active')
+            ->latest()
+            ->get();
+
+        $botIds = $bots->pluck('id');
+
+        $investments = BotInvestment::with(['user', 'bot'])
+            ->whereIn('bot_id', $botIds)
+            ->latest()
+            ->get();
+
+        $stats = [
+            'activePackages' => $bots->count(),
+            'totalSubscribers' => $investments->unique('user_id')->count(),
+            'totalInvestment' => $investments->sum('investment_amount'),
+            'totalProfit' => $investments->sum('current_profit'),
+            'averageAccuracy' => round($bots->avg('accuracy_rate') ?? 0, 2),
+            'totalSignalsSent' => $investments->count(),
+            'winningSignals' => $investments->where('current_profit', '>', 0)->count(),
+            'losingSignals' => $investments->where('current_profit', '<', 0)->count(),
+            'averageProfitTarget' => round($bots->avg('monthly_return') ?? 0, 2),
+        ];
+
+        $subscribers = $investments->groupBy('user_id')->map(function ($items) {
+            $first = $items->first();
+
+            return [
+                'id' => optional($first->user)->id,
+                'investment_id' => $first->id,
+                'name' => optional($first->user)->name ?? 'Unknown User',
+                'email' => optional($first->user)->email ?? '',
+                'country' => optional($first->user)->country ?? 'Unknown',
+                'activePackage' => optional($first->bot)->bot_name ?? 'Premium Signals',
+                'planTier' => $items->count() > 1 ? 'Multi Plan' : 'Monthly Plan',
+                'amountPaid' => $items->sum('investment_amount'),
+                'status' => $items->contains(fn ($investment) => $investment->status === 'Running') ? 'Active' : 'Completed',
+            ];
+        })->values();
+
+        $payments = $investments->map(function ($investment) {
+            return [
+                'transactionId' => 'TXN-' . str_pad($investment->id, 7, '0', STR_PAD_LEFT),
+                'userName' => optional($investment->user)->name ?? 'Unknown User',
+                'packageOption' => optional($investment->bot)->bot_name ?? 'Premium Signals',
+                'grossValue' => $investment->investment_amount,
+                'paymentGateway' => 'Wallet',
+                'settlementDate' => $investment->created_at ? $investment->created_at->format('Y-m-d') : now()->toDateString(),
+                'status' => $investment->status === 'Running' ? 'Settled' : ucfirst($investment->status),
+            ];
+        });
+
+        return view('AdminDashboard.PremiumInvestment', compact('bots', 'stats', 'investments', 'subscribers', 'payments'));
+    }
+
     public function copyTradingAdmin()
     {
         $traders = AiBot::withCount('investments')
@@ -551,6 +625,102 @@ class AiBotController extends Controller
             'success' => true,
             'message' => 'Investment profit adjusted successfully.',
             'investment' => $investment,
+        ]);
+    }
+
+    public function adminCreateInvestment(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'bot_id' => 'required|exists:ai_bots,id',
+            'amount' => 'required|numeric|min:1',
+        ]);
+
+        $user = User::findOrFail($request->user_id);
+        $bot = AiBot::findOrFail($request->bot_id);
+
+        if ($user->balance < $request->amount) {
+            return response()->json(['success' => false, 'message' => 'User has insufficient balance'], 400);
+        }
+
+        $user->balance -= $request->amount;
+        $user->save();
+
+        $investment = BotInvestment::create([
+            'user_id' => $user->id,
+            'bot_id' => $bot->id,
+            'investment_amount' => $request->amount,
+            'current_profit' => 0,
+            'current_balance' => $request->amount,
+            'start_date' => now(),
+            'end_date' => now()->addDays(30),
+            'status' => 'Running',
+        ]);
+
+        $bot->increment('total_subscribers');
+        $bot->increment('total_investment', $request->amount);
+
+        return response()->json(['success' => true, 'investment' => $investment]);
+    }
+
+    public function broadcastLiveSignal(Request $request)
+    {
+        $request->validate([
+            'asset_name' => 'required|string|max:255',
+            'signal_type' => 'required|string|max:50',
+            'time_frame' => 'nullable|string|max:50',
+            'entry_price' => 'required|string|max:50',
+            'take_profit_1' => 'required|string|max:50',
+            'take_profit_2' => 'nullable|string|max:50',
+            'take_profit_3' => 'nullable|string|max:50',
+            'stop_loss' => 'required|string|max:50',
+            'allocation' => 'nullable|string|max:50',
+            'notes' => 'nullable|string',
+        ]);
+
+        $signal = $request->only([
+            'asset_name',
+            'signal_type',
+            'time_frame',
+            'entry_price',
+            'take_profit_1',
+            'take_profit_2',
+            'take_profit_3',
+            'stop_loss',
+            'allocation',
+            'notes',
+        ]);
+
+        session()->push('premium_live_signals', $signal);
+
+        if ($request->expectsJson()) {
+            return response()->json([ 'success' => true, 'message' => 'Live signal created successfully.', 'signal' => $signal ]);
+        }
+
+        return back()->with('success', 'Live signal executed successfully.');
+    }
+
+    public function togglePremiumSubscriberStatus(Request $request, BotInvestment $investment)
+    {
+        $investment->status = $investment->status === 'Running' ? 'Completed' : 'Running';
+        $investment->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Subscriber status updated successfully.',
+            'status' => $investment->status,
+            'investment_id' => $investment->id,
+        ]);
+    }
+
+    public function deletePremiumSubscriber(BotInvestment $investment)
+    {
+        $investment->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Subscriber record deleted successfully.',
+            'investment_id' => $investment->id,
         ]);
     }
 

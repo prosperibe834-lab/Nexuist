@@ -166,35 +166,29 @@ document.addEventListener('click', (e) => {
 const qtDropdownBtn = document.getElementById("qtDropdownBtn");
 const qtDropdownMenu = document.getElementById("qtDropdownMenu");
 
-qtDropdownBtn.addEventListener("click", () => {
+if (qtDropdownBtn && qtDropdownMenu) {
+    qtDropdownBtn.addEventListener("click", () => {
+        qtDropdownMenu.classList.toggle("active");
+        qtDropdownBtn.classList.toggle("active");
+    });
 
-    qtDropdownMenu.classList.toggle("active");
-    qtDropdownBtn.classList.toggle("active");
-
-});
-
-window.addEventListener("click", (e) => {
-
-    if (
-        !qtDropdownBtn.contains(e.target) &&
-        !qtDropdownMenu.contains(e.target)
-    ) {
-        qtDropdownMenu.classList.remove("active");
-        qtDropdownBtn.classList.remove("active");
-    }
-
-});
+    window.addEventListener("click", (e) => {
+        if (!qtDropdownBtn.contains(e.target) && !qtDropdownMenu.contains(e.target)) {
+            qtDropdownMenu.classList.remove("active");
+            qtDropdownBtn.classList.remove("active");
+        }
+    });
+}
 
 const acmVerifyBtn = document.getElementById("acmVerifyBtn");
 const acmVerifyMenu = document.getElementById("acmVerifyMenu");
 
-acmVerifyBtn.addEventListener("click", () => {
-
-    acmVerifyBtn.classList.toggle("active");
-
-    acmVerifyMenu.classList.toggle("active");
-
-});
+if (acmVerifyBtn && acmVerifyMenu) {
+    acmVerifyBtn.addEventListener("click", () => {
+        acmVerifyBtn.classList.toggle("active");
+        acmVerifyMenu.classList.toggle("active");
+    });
+}
 
 
 // Main section starts here
@@ -203,43 +197,79 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendBtn = document.getElementById('sendBtn');
     const messageBox = document.getElementById('userMessage');
     const charCount = document.getElementById('currentChars');
-    const inputs = form.querySelectorAll('input, textarea');
+    const inputs = form ? form.querySelectorAll('input, textarea') : [];
+
+    if (!form || !sendBtn || !charCount) {
+        return;
+    }
+
+    function updateFormState() {
+        const allFilled = Array.from(inputs).every(i => i.value.trim() !== "");
+        sendBtn.disabled = !allFilled;
+        sendBtn.classList.toggle('disabled', !allFilled);
+    }
 
     // 1. Character Counter & Button Validation
     inputs.forEach(input => {
         input.addEventListener('input', () => {
-            // Update character count
             if (input.id === 'userMessage') {
                 charCount.innerText = input.value.length;
             }
 
-            // Check if all fields are filled
-            const allFilled = Array.from(inputs).every(i => i.value.trim() !== "");
-            if (allFilled) {
-                sendBtn.classList.remove('disabled');
-                sendBtn.disabled = false;
-            } else {
-                sendBtn.classList.add('disabled');
-                sendBtn.disabled = true;
-            }
+            updateFormState();
         });
     });
 
+    updateFormState();
+
     // 2. Form Submission & Modal
-    form.onsubmit = (e) => {
+    form.onsubmit = async (e) => {
         e.preventDefault();
 
-        // Simulate sending
-        sendBtn.innerHTML = "<i class='bx bx-loader-alt bx-spin'></i> Sending...";
+        const payload = {
+            name: document.getElementById('userName')?.value.trim() || '',
+            email: document.getElementById('userEmail')?.value.trim() || '',
+            message: document.getElementById('userMessage')?.value.trim() || '',
+            subject: 'Support Request',
+            category: 'General',
+        };
 
-        setTimeout(() => {
+        sendBtn.innerHTML = "<i class='bx bx-loader-alt bx-spin'></i> Sending...";
+        sendBtn.disabled = true;
+
+        try {
+            const baseUrl = window.NEXUIST_BASE_URL || '';
+            const response = await fetch(`${baseUrl}/support/tickets`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const text = await response.text();
+            let data = {};
+            try {
+                data = JSON.parse(text);
+            } catch (parseError) {
+                throw new Error('Invalid server response: ' + text);
+            }
+
+            if (!response.ok || !data.success) {
+                throw new Error(data.message || 'Failed to send support ticket.');
+            }
+
             document.getElementById('successModal').style.display = 'flex';
             form.reset();
+            charCount.innerText = '0';
+            updateFormState();
+        } catch (error) {
+            alert(error.message || 'An error occurred while sending your request.');
+            updateFormState();
+        } finally {
             sendBtn.innerHTML = "<span>Send Message</span><i class='bx bx-paper-plane'></i>";
-            sendBtn.classList.add('disabled');
-            sendBtn.disabled = true;
-            charCount.innerText = "0";
-        }, 1500);
+        }
     };
 });
 
