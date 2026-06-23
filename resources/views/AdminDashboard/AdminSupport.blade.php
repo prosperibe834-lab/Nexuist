@@ -269,8 +269,8 @@
             <div class="support-stat-card border-primary">
                 <div class="card-metric-info">
                     <span class="metric-label">Total Support Tickets</span>
-                    <span class="metric-value">1,482</span>
-                    <span class="metric-trend"><i class="bx bx-trending-up"></i> +12% this week</span>
+                    <span class="metric-value">{{ $stats['totalTickets'] ?? 0 }}</span>
+                    <span class="metric-trend"><i class="bx bx-trending-up"></i> +{{ $stats['weeklyTrend'] ?? 0 }}% this week</span>
                 </div>
                 <div class="card-icon-box bg-primary-glow"><i class="bx bx-cabinet"></i></div>
             </div>
@@ -278,7 +278,7 @@
             <div class="support-stat-card border-warning">
                 <div class="card-metric-info">
                     <span class="metric-label">Open Tickets</span>
-                    <span class="metric-value" id="stat-open-count">24</span>
+                    <span class="metric-value" id="stat-open-count">{{ $stats['openTickets'] ?? 0 }}</span>
                     <span class="metric-trend color-warning">Requires response</span>
                 </div>
                 <div class="card-icon-box bg-warning-glow"><i class="bx bx-folder-open"></i></div>
@@ -287,8 +287,8 @@
             <div class="support-stat-card border-success">
                 <div class="card-metric-info">
                     <span class="metric-label">Resolved Tickets</span>
-                    <span class="metric-value">1,412</span>
-                    <span class="metric-trend color-success"><i class="bx bx-check-double"></i> 95.2% rate</span>
+                    <span class="metric-value">{{ $stats['resolvedTickets'] ?? 0 }}</span>
+                    <span class="metric-trend color-success"><i class="bx bx-check-double"></i> {{ $stats['resolutionRate'] ?? 0 }}% rate</span>
                 </div>
                 <div class="card-icon-box bg-success-glow"><i class="bx bx-badge-check"></i></div>
             </div>
@@ -296,7 +296,7 @@
             <div class="support-stat-card border-danger">
                 <div class="card-metric-info">
                     <span class="metric-label">High Priority Tiers</span>
-                    <span class="metric-value">4</span>
+                    <span class="metric-value">{{ $stats['highPriorityTickets'] ?? 0 }}</span>
                     <span class="metric-trend color-danger">VIP & Risk Escalations</span>
                 </div>
                 <div class="card-icon-box bg-danger-glow"><i class="bx bx-shield-quarter"></i></div>
@@ -351,53 +351,41 @@
                         </tr>
                     </thead>
                     <tbody id="ticketTableBody">
-                        <tr data-user="Marcus Vance" data-uid="#NEX-88219" onclick="selectTicket('TCK-9902')">
-                            <td><span class="ticket-id-tag">TCK-9902</span></td>
-                            <td>
-                                <div class="user-profile-cell">
-                                    <div class="avatar-circle-placeholder profile-mv">MV</div>
-                                    <div>
-                                        <div class="profile-fullname">Marcus Vance</div>
-                                        <div class="profile-uid">#NEX-88219</div>
+                        @forelse ($tickets as $ticket)
+                            @php
+                                $user = $ticket->user ?? null;
+                                $initials = strtoupper(substr($ticket->name, 0, 1) . (strpos($ticket->name, ' ') !== false ? substr(strrchr($ticket->name, ' '), 1, 1) : ''));
+                                $statusClass = 'status-badge s-' . strtolower(str_replace(' ', '-', $ticket->status));
+                                $priorityClass = 'priority-badge p-' . strtolower($ticket->priority ?? 'medium');
+                            @endphp
+                            <tr data-user="{{ $ticket->name }}" data-uid="#NEX-{{ $ticket->id }}" onclick="selectTicket('TCK-{{ $ticket->id }}')">
+                                <td><span class="ticket-id-tag">TCK-{{ $ticket->id }}</span></td>
+                                <td>
+                                    <div class="user-profile-cell">
+                                        <div class="avatar-circle-placeholder">{{ $initials }}</div>
+                                        <div>
+                                            <div class="profile-fullname">{{ $ticket->name }}</div>
+                                            <div class="profile-uid">#NEX-{{ $ticket->user_id ?? 'N/A' }}</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="ticket-subject-text">Crypto Deposit Not Credited to Wallet</div>
-                                <div class="ticket-cat-sub">Deposit Issues</div>
-                            </td>
-                            <td><span class="priority-badge p-high">High</span></td>
-                            <td><span class="status-badge s-open">Open</span></td>
-                            <td class="date-cell-text">2026-05-26</td>
-                            <td>
-                                <button class="table-control-btn" title="Interact with Case"><i
-                                        class="bx bx-message-square-detail"></i></button>
-                            </td>
-                        </tr>
-
-                        <tr data-user="Elena Rostova" data-uid="#NEX-41029" onclick="selectTicket('TCK-9841')">
-                            <td><span class="ticket-id-tag">TCK-9841</span></td>
-                            <td>
-                                <div class="user-profile-cell">
-                                    <div class="avatar-circle-placeholder profile-er">ER</div>
-                                    <div>
-                                        <div class="profile-fullname">Elena Rostova</div>
-                                        <div class="profile-uid">#NEX-41029</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="ticket-subject-text">Loan Term Extension Request Denied</div>
-                                <div class="ticket-cat-sub">Loan Complaints</div>
-                            </td>
-                            <td><span class="priority-badge p-medium">Medium</span></td>
-                            <td><span class="status-badge s-escalated">Escalated</span></td>
-                            <td class="date-cell-text">2026-05-25</td>
-                            <td>
-                                <button class="table-control-btn" title="Interact with Case"><i
-                                        class="bx bx-message-square-detail"></i></button>
-                            </td>
-                        </tr>
+                                </td>
+                                <td>
+                                    <div class="ticket-subject-text">{{ $ticket->subject }}</div>
+                                    <div class="ticket-cat-sub">{{ $ticket->category ?? 'General' }}</div>
+                                </td>
+                                <td><span class="{{ $priorityClass }}">{{ $ticket->priority ?? 'Medium' }}</span></td>
+                                <td><span class="{{ $statusClass }}">{{ $ticket->status }}</span></td>
+                                <td class="date-cell-text">{{ $ticket->created_at->format('Y-m-d') }}</td>
+                                <td>
+                                    <button class="table-control-btn" title="Interact with Case"><i
+                                            class="bx bx-message-square-detail"></i></button>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="7" style="text-align: center; padding: 20px;">No support tickets found.</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

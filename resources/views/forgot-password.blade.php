@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Reset Your Nexuist Security Key</title>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./{{ asset('assets/Frontend/css/forgot-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/Frontend/css/forgot-style.css') }}">
+
+
 </head>
 
 <body>
@@ -50,21 +52,22 @@
                 <p class="brand-tagline">Account Recovery System Node</p>
             </div>
 
-            <div class="recovery-panel active-panel" id="panel-request-form">
+            <div class="recovery-panel {{ session('status') ? '' : 'active-panel' }}" id="panel-request-form">
                 <div class="system-notice-card">
                     <i class='bx bx-shield-quarter system-icon-glow'></i>
                     <p>Enter your verified credentials below. If matching parameters are discovered, an encrypted
                         recovery vector mapping sequence will be dispatched instantly.</p>
                 </div>
 
-                <form id="nexuist-forgot-form" novalidate>
+                <form id="nexuist-forgot-form" novalidate method="POST" action="{{ route('password.email') }}">
+                    @csrf
                     <div class="form-grid-layout">
                         <div class="input-field-group">
                             <label for="recovery-email">Registered Email Address <span class="req">*</span></label>
                             <div class="interactive-input-container">
                                 <i class='bx bx-envelope field-icon'></i>
-                                <input type="email" id="recovery-email" placeholder="Enter your registered email"
-                                    required>
+                                <input type="email" id="recovery-email" name="email" placeholder="Enter your registered email"
+                                    value="{{ old('email') }}" required>
                             </div>
                         </div>
                     </div>
@@ -78,7 +81,7 @@
                 </form>
             </div>
 
-            <div class="recovery-panel" id="panel-success-msg">
+            <div class="recovery-panel {{ session('status') ? 'active-panel' : '' }}" id="panel-success-msg">
                 <div class="success-vector-animation-wrapper">
                     <div class="success-ring-pulsate">
                         <i class='bx bx-mail-send success-icon-spin'></i>
@@ -89,6 +92,14 @@
                             id="target-dispatch-mirror">your email</strong>. Please inspect your inbox and spam filters
                         to authorize security settings.
                     </p>
+
+                    @if (session('status'))
+                        <div class="notice success">{{ session('status') }}</div>
+                    @endif
+
+                    @if ($errors->has('email'))
+                        <div class="notice error">{{ $errors->first('email') }}</div>
+                    @endif
 
                     <div class="timer-countdown-block">
                         <p>Didn't receive the secure signal? Resend available in: <span
@@ -119,7 +130,7 @@
         </div>
     </div>
 
-    <script src="./{{ asset('assets/Frontend/js/forgot-password.js') }}"></script>
+    <script src="{{ asset('assets/Frontend/js/forgot-password.js') }}"></script>
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
 
 </body>

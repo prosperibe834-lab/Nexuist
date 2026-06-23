@@ -10,7 +10,7 @@ class SupportTicket extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id', 'name', 'email', 'subject', 'category', 'status', 'last_message_at'
+        'user_id', 'name', 'email', 'subject', 'category', 'status', 'priority', 'last_message_at'
     ];
 
     public function messages()

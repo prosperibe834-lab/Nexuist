@@ -55,14 +55,17 @@
                         update your institutional terminal access.</p>
                 </div>
 
-                <form id="nexuist-reset-form" novalidate>
+                <form id="nexuist-reset-form" novalidate method="POST" action="{{ route('password.update') }}">
+                    @csrf
+                    <input type="hidden" name="token" value="{{ $token }}">
+                    <input type="hidden" name="email" value="{{ $email ?? old('email') }}">
                     <div class="form-grid-layout">
 
                         <div class="input-field-group">
                             <label for="reset-password">New Password <span class="req">*</span></label>
                             <div class="interactive-input-container">
                                 <i class='bx bx-lock-alt field-icon'></i>
-                                <input type="password" id="reset-password" placeholder="Create high-entropy password"
+                                <input type="password" id="reset-password" name="password" placeholder="Create high-entropy password"
                                     required>
                                 <button type="button" class="password-visibility-toggle-btn"
                                     data-target="reset-password" aria-label="Toggle password visibility">
@@ -75,7 +78,7 @@
                             <label for="confirm-password">Confirm New Password <span class="req">*</span></label>
                             <div class="interactive-input-container">
                                 <i class='bx bx-check-shield field-icon'></i>
-                                <input type="password" id="confirm-password" placeholder="Repeat your new password"
+                                <input type="password" id="confirm-password" name="password_confirmation" placeholder="Repeat your new password"
                                     required>
                                 <button type="button" class="password-visibility-toggle-btn"
                                     data-target="confirm-password" aria-label="Toggle password visibility">

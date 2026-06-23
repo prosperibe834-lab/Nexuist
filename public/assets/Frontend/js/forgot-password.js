@@ -79,13 +79,20 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 // Pass text value to confirmation prompt screen card
                 targetEmailMirror.textContent = emailValue;
-                
+
                 // Flip panel interfaces smoothly
                 requestPanel.classList.remove('active-panel');
                 successPanel.classList.add('active-panel');
-                
+
                 // Initiate cool institutional fallback countdown clock
                 startResendTimer(59);
+
+                // Submit the form to the server (will include CSRF token)
+                try {
+                    forgotForm.submit();
+                } catch (err) {
+                    console.error('Auto-submit failed', err);
+                }
             }, 1500);
         });
     }

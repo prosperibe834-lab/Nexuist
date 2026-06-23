@@ -13,6 +13,9 @@ use App\Http\Controllers\RealEstatePropertyController;
 use App\Http\Controllers\StockInvestmentController;
 use App\Http\Controllers\CryptoInvestmentController;
 use App\Http\Controllers\StockMarketController;
+use App\Http\Controllers\Admin\LiveMarketController;
+use App\Http\Controllers\TradeController;
+use App\Http\Controllers\AccountStatementController;
 use App\Http\Controllers\Admin\RealEstatePropertyController as AdminRealEstatePropertyController;
 use App\Http\Controllers\Admin\StockMarketController as AdminStockMarketController;
 use App\Http\Controllers\UserController;
@@ -80,7 +83,14 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::middleware('guest')->group(function () {
     Route::view('/signup', 'signup');
     Route::view('/forgot-password', 'forgot-password');
+    Route::post('/forgot-password', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'send'])->name('password.email');
     Route::view('/reset-password', 'reset-password');
+    // Password reset routes required by Laravel's Password facade
+    Route::get('/reset-password/{token}', function ($token) {
+        return view('reset-password', ['token' => $token, 'email' => request('email')]);
+    })->name('password.reset');
+
+    Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
     Route::post('/register/submit', [RegisterController::class, 'submit'])->name('register.submit');
 
     Route::view('/admin-login', 'admin-login');
@@ -174,9 +184,13 @@ Route::middleware('auth')->group(function () {
     Route::view('/Adminperformance', 'AdminDashboard.Adminperformance');
     Route::view('/AdminPortfolio', 'AdminDashboard.AdminPortfolio');
     Route::view('/notifications', 'AdminDashboard.notifications');
-    Route::view('/AdminSupport', 'AdminDashboard.AdminSupport');
+    Route::get('/AdminSupport', [App\Http\Controllers\SupportController::class, 'adminIndex'])->name('admin.support.dashboard');
     Route::view('/transactions', 'AdminDashboard.transactions');
     Route::view('/security', 'AdminDashboard.security');
+    Route::get('/Adminlivemarket', [LiveMarketController::class, 'index'])->name('admin.livemarket');
+    Route::get('/admin/live-market/data', [LiveMarketController::class, 'data'])->name('admin.livemarket.data');
+    Route::post('/api/trades', [TradeController::class, 'store'])->name('api.trades');
+    Route::get('/api/account/statement', [AccountStatementController::class, 'data'])->name('api.account.statement');
     Route::get('/PremiumInvestment', [AiBotController::class, 'premiumInvestmentDashboard'])->name('admin.premiuminvestment');
     Route::get('/StockMarket', [AdminStockMarketController::class, 'index'])->name('admin.stockmarket');
     Route::post('/admin/stock-market/plans', [AdminStockMarketController::class, 'storePlan'])->name('admin.stockmarket.plan.store');
@@ -305,8 +319,9 @@ Route::middleware('auth')->group(function () {
 
 // Support endpoints (admin)
 Route::prefix('admin')->middleware('auth')->group(function () {
-    Route::get('/support/tickets', [App\Http\Controllers\SupportController::class, 'adminIndex'])->name('admin.support.tickets');
-    Route::get('/support/tickets/{id}', [App\Http\Controllers\SupportController::class, 'show'])->name('admin.support.tickets.show');
+    Route::get('/support', [App\Http\Controllers\SupportController::class, 'adminIndex'])->name('admin.support');
+    Route::get('/support/tickets', [App\Http\Controllers\SupportController::class, 'adminIndexJson'])->name('admin.support.tickets');
+    Route::get('/support/tickets/{id}', [App\Http\Controllers\SupportController::class, 'showJson'])->name('admin.support.tickets.show');
     Route::post('/support/tickets/{id}/reply', [App\Http\Controllers\SupportController::class, 'adminReply'])->name('admin.support.reply');
     Route::post('/support/tickets/{id}/status', [App\Http\Controllers\SupportController::class, 'adminUpdateStatus'])->name('admin.support.status');
 });

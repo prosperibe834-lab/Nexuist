@@ -187,15 +187,46 @@ acmVerifyBtn.addEventListener("click", () => {
 
 
 // Main Section starts here
-const transactionData = [
-    { icon: 'ri:bank-line', date: '12/15/2024', type: 'deposit', category: 'Wire Transfer', amount: '$1,000.00', currency: 'USD', destination: 'Bank transfer, Bank', ref: '030070037504', status: 'Completed' },
-    { icon: 'ri:coin-line', date: '11/10/2024', type: 'deposit', category: 'Crypto Deposit', amount: '$500.00', currency: 'USDC', destination: 'TestDenic', ref: '020009072289', status: 'Pending' },
-    { icon: 'ri:bank-line', date: '12/09/2024', type: 'withdrawal', category: 'Wire Bank Transfer', amount: '$3,500.00', currency: 'USD', destination: 'Bank transfer, Bank', ref: '012908054864', status: 'Pending' },
-    { icon: 'ri:copper-coin-line', date: '12/13/2024', type: 'deposit', category: 'Crypto Deposit', amount: '$1,000.00', currency: 'USDC', destination: 'TestDenic', ref: '010039096301', status: 'Completed' },
-    { icon: 'ri:coin-line', date: '12/18/2024', type: 'deposit', category: 'Crypto Deposit', amount: '$1,000.00', currency: 'EUR', destination: 'Bank Transfer Bank', ref: 'JS87001', status: 'Completed' }
-];
+let transactionData = [];
 
-function initTable() {
+async function fetchStatementData() {
+    try {
+        const res = await fetch('/api/account/statement', { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+        if (!res.ok) throw new Error('Failed to fetch');
+        const payload = await res.json();
+        if (!payload.success) throw new Error(payload.message || 'Error');
+        transactionData = payload.records || [];
+
+        // populate currency filter options dynamically
+        const currencySelect = document.getElementById('currencyFilter');
+        if (currencySelect && payload.currencies) {
+            // clear existing (keep 'all')
+            const base = currencySelect.querySelector('option[value="all"]');
+            currencySelect.innerHTML = '';
+            currencySelect.appendChild(base);
+            payload.currencies.forEach(c => {
+                const opt = document.createElement('option');
+                opt.value = c; opt.text = c; currencySelect.appendChild(opt);
+            });
+        }
+    } catch (err) {
+        console.error('Statement fetch failed', err);
+        // fallback to empty dataset and surface an inline error later
+        transactionData = [];
+        // remove preloader if present so user can see the page
+        try {
+            const pre = document.getElementById('fintech-preloader');
+            if (pre) {
+                pre.classList.add('preloader-hidden');
+                setTimeout(() => pre.remove(), 600);
+            }
+        } catch (e) {
+            console.error('Failed to remove preloader', e);
+        }
+    }
+}
+
+async function initTable() {
     const tableBody = document.getElementById('statementTableBody');
     const searchInput = document.getElementById('tableSearch');
     
@@ -341,7 +372,20 @@ function initTable() {
         });
     }
 
-    renderTable(); // First Load
+    // First load data from backend then render (defensive)
+    try {
+        await fetchStatementData();
+        renderTable();
+    } catch (err) {
+        console.error('Error initializing statement table', err);
+        const container = document.querySelector('.statement-container');
+        if (container) {
+            container.insertAdjacentHTML('afterbegin', `<div class="js-error" style="padding:16px; background:#2b2730; color:#fff; border-radius:8px; margin-bottom:12px;">An error occurred while loading your statement. Check console for details.</div>`);
+        }
+        // ensure preloader hidden
+        const pre = document.getElementById('fintech-preloader');
+        if (pre) { pre.classList.add('preloader-hidden'); setTimeout(() => pre.remove(), 600); }
+    }
 }
 
 // Initialize on Load

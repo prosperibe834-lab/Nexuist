@@ -19,6 +19,7 @@ class SupportController extends Controller
             'message' => 'required|string',
             'subject' => 'nullable|string|max:255',
             'category' => 'nullable|string|max:255',
+            'priority' => 'nullable|in:Low,Medium,High',
         ]);
 
         $user = Auth::user();
@@ -29,6 +30,7 @@ class SupportController extends Controller
             'email' => $request->email,
             'subject' => $request->subject ?? 'Support Request',
             'category' => $request->category ?? 'General',
+            'priority' => $request->priority ?? 'Medium',
             'status' => 'Open',
             'last_message_at' => now(),
         ]);
@@ -51,6 +53,14 @@ class SupportController extends Controller
         return response()->json(['tickets' => $tickets]);
     }
 
+    // Show single ticket with messages - JSON API for admin
+    public function showJson($id)
+    {
+        $this->authorizeAdmin();
+        $ticket = SupportTicket::with('messages')->findOrFail($id);
+        return response()->json(['ticket' => $ticket]);
+    }
+
     // Show single ticket with messages (for both user and admin)
     public function show($id)
     {
@@ -68,12 +78,56 @@ class SupportController extends Controller
         return response()->json(['ticket' => $ticket]);
     }
 
-    // Admin: list all tickets
+    // Admin: dashboard stats
+    public function stats()
+    {
+        $this->authorizeAdmin();
+
+        $totalTickets = SupportTicket::count();
+        $openTickets = SupportTicket::where('status', 'Open')->count();
+        $resolvedTickets = SupportTicket::where('status', 'Resolved')->count();
+        $highPriorityTickets = SupportTicket::where('priority', 'High')->count();
+        $weeklyTrend = (SupportTicket::where('created_at', '>=', now()->subDays(7))->count() / max($totalTickets, 1) * 100);
+        $resolutionRate = ($totalTickets > 0) ? round(($resolvedTickets / $totalTickets) * 100, 1) : 0;
+
+        return response()->json([
+            'totalTickets' => $totalTickets,
+            'openTickets' => $openTickets,
+            'resolvedTickets' => $resolvedTickets,
+            'highPriorityTickets' => $highPriorityTickets,
+            'weeklyTrend' => round($weeklyTrend, 1),
+            'resolutionRate' => $resolutionRate,
+        ]);
+    }
+
+    // Admin: get all tickets as JSON API
+    public function adminIndexJson()
+    {
+        $this->authorizeAdmin();
+        $tickets = SupportTicket::with('messages')->withCount('messages')->orderByDesc('last_message_at')->get();
+        return response()->json(['tickets' => $tickets]);
+    }
+
+    // Admin: list all tickets (HTML view)
     public function adminIndex()
     {
         $this->authorizeAdmin();
         $tickets = SupportTicket::withCount('messages')->orderByDesc('last_message_at')->get();
-        return response()->json(['tickets' => $tickets]);
+
+        // Fetch stats for display
+        $stats = [
+            'totalTickets' => SupportTicket::count(),
+            'openTickets' => SupportTicket::where('status', 'Open')->count(),
+            'resolvedTickets' => SupportTicket::where('status', 'Resolved')->count(),
+            'highPriorityTickets' => SupportTicket::where('priority', 'High')->count(),
+            'weeklyTrend' => round((SupportTicket::where('created_at', '>=', now()->subDays(7))->count() / max(SupportTicket::count(), 1) * 100), 1),
+            'resolutionRate' => SupportTicket::count() > 0 ? round((SupportTicket::where('status', 'Resolved')->count() / SupportTicket::count()) * 100, 1) : 0,
+        ];
+
+        return view('AdminDashboard.AdminSupport', [
+            'tickets' => $tickets,
+            'stats' => $stats,
+        ]);
     }
 
     // Admin: reply to ticket

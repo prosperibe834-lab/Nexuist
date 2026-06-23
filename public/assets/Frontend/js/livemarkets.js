@@ -374,22 +374,45 @@ document.querySelector('.tab-sell').addEventListener('click', function () {
     document.querySelector('.tab-buy-final').style.background = '#f6465d';
 });
 
-// 2. Handle the "Place Order" button click
-function handlePlaceOrder() {
+// 2. Handle the "Place Order" button click - submit to backend
+async function handlePlaceOrder() {
     const symbol = document.getElementById('orderTitle').innerText;
-    const amount = document.querySelector('.form-field input[type="number"]').value;
-    const type = document.querySelector('.tab-buy-final').innerText; // Checks if Buy or Sell
+    const amount = Number(document.querySelector('.form-field input[type="number"]').value);
+    const btnText = document.querySelector('.tab-buy-final').innerText || '';
+    const type = btnText.includes('SELL') ? 'SELL' : 'BUY';
 
     if (!amount || amount <= 0) {
-        alert("Please enter a valid amount to trade.");
+        alert('Please enter a valid amount.');
         return;
     }
 
-    // This is where you would normally send data to your backend
-    alert(`Order Submitted Successfully!\nType: ${type}\nAsset: ${symbol}\nAmount: $${amount}`);
+    const csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
-    // Close terminal after "successful" trade
-    closeTerminal();
+    try {
+        const res = await fetch('/api/trades', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrf || ''
+            },
+            body: JSON.stringify({ symbol, amount, type })
+        });
+
+        const json = await res.json();
+        if (!res.ok || !json.success) {
+            alert(json.message || 'Trade failed.');
+            return;
+        }
+
+        // Show Success Modal (leave terminal open until user closes)
+        document.getElementById('successMessage').innerText = `Your order for ${symbol} has been executed.`;
+        document.getElementById('orderSuccessModal').style.display = 'flex';
+
+    } catch (err) {
+        console.error('Trade submission error', err);
+        alert('Unable to submit trade. Try again.');
+    }
 }
 
 function setVal(percent) {
@@ -401,19 +424,7 @@ function setVal(percent) {
 }
 
 // --- 1. SUCCESS MODAL LOGIC ---
-function handlePlaceOrder() {
-    const symbol = document.getElementById('orderTitle').innerText;
-    const amount = document.querySelector('.form-field input[type="number"]').value;
-
-    if (!amount || amount <= 0) {
-        alert("Please enter a valid amount.");
-        return;
-    }
-
-    // Show Success Modal
-    document.getElementById('successMessage').innerText = `Your order for ${symbol} has been executed.`;
-    document.getElementById('orderSuccessModal').style.display = 'flex';
-}
+// (handled above) show success modal after backend confirmation
 
 function closeSuccessModal() {
     document.getElementById('orderSuccessModal').style.display = 'none';

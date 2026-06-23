@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('assets/AdminDashboard/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/AdminDashboard/css/Adminlivemarket.css') }}">
 </head>
 
 <body>
@@ -34,7 +34,7 @@
         </div>
 
         <ul class="nav-links">
-            <li class="active">
+            <li>
                 <a href="{{ route('admin.dashboard') }}">
                     <i class='bx bx-grid-alt'></i>
                     <span class="link_name">Das             hboard</span>
@@ -83,7 +83,7 @@
                 </ul>
             </li>
 
-            <li>
+            <li class="active">
                 <a href="{{ url('/Adminlivemarket') }}">
                     <i class='bx bx-layer'></i>
                     <span class="link_name">Adminlivemarket</span>
@@ -288,148 +288,174 @@
         <header class="top-header">
             <div class="header-left">
                 <i class='bx bx-menu' id="mobile-hamburger-btn"></i>
-                <h1 id="page-title-display">Dashboard</h1>
+                <h1 id="page-title-display">Adminlivemarket</h1>
             </div>
             <div class="header-right">
             </div>
         </header>
 
         <!-- Main starts here -->
-        <div class="dashboard-grid">
+        <div class="market-monitor-viewport">
 
-            <div class="metric-card glass-panel text-glow-purple">
-                <div class="card-header">
-                    <span>TOTAL PORTFOLIO VALUE</span>
-                    <i class='bx bx-wallet token-icon-purple'></i>
-                </div>
-                <h2>$124,580.32 <span class="trend-up"><i class='bx bx-trending-up'></i> +12.5%</span></h2>
-                <p class="text-muted">Combined wallet & active plans</p>
+    <section class="overview-metrics-grid">
+        <div class="metric-glass-card">
+            <div class="card-meta">
+                <span class="label">Total Trades Today</span>
+                <h2 class="counter-val" id="stat-total">148</h2>
             </div>
-
-            <div class="metric-card glass-panel text-glow-green">
-                <div class="card-header">
-                    <span>TOTAL ROI GENERATED</span>
-                    <i class='bx bx-bar-chart-alt-2 token-icon-green'></i>
-                </div>
-                <h2>$14,210.85 <span class="trend-up"><i class='bx bx-bolt'></i> Live</span></h2>
-                <p class="text-muted">Automated fixed returns payouts</p>
-            </div>
-
-            <div class="metric-card glass-panel text-glow-cyan">
-                <div class="card-header">
-                    <span>ACTIVE TRADING BOTS</span>
-                    <i class='bx bx-bot token-icon-cyan'></i>
-                </div>
-                <h2>3 <span class="status-badge-active">Running</span></h2>
-                <p class="text-muted">AI engines executing market trades</p>
-            </div>
-
-            <div class="grid-col-span-2 glass-panel chart-panel">
-
-                <div class="grid-col-span-2 glass-panel chart-panel">
-                    <div class="panel-header">
-                        <h3><i class='bx bx-line-chart'></i> Portfolio Growth & Market Overview</h3>
-                        <div class="timeframe-selectors">
-                            <span class="active" data-timeframe="1D">1D</span>
-                            <span data-timeframe="1W">1W</span>
-                            <span data-timeframe="1M">1M</span>
-                            <span data-timeframe="1Y">1Y</span>
-                        </div>
-                    </div>
-                    <div class="chart-viewport-real">
-                        <div id="nexuist-live-chart"></div>
-                    </div>
-                    <p class="text-muted" id="chart-status"
-                        style="margin-top: 10px; font-size: 12px; text-align: center;">
-                        <i class='bx bx-pulse bx-spin-custom' style="color: var(--secondary-color);"></i> Stream via
-                        AJAX Connection Active...
-                    </p>
-                </div>
-            </div>
-
-            <div class="glass-panel actions-panel">
-                <div class="panel-header">
-                    <h3><i class='bx bx-rocket'></i> Quick Actions</h3>
-                </div>
-                <div class="action-buttons-vertical">
-                    <button class="btn btn-primary-glow" id="action-deposit"><i class='bx bx-plus-circle'></i> New
-                        Deposit</button>
-                    <button class="btn btn-secondary-glass" id="action-withdraw"><i
-                            class='bx bx-right-top-arrow-circle'></i> Request Withdrawal</button>
-                    <button class="btn btn-secondary-glass" id="action-bot"><i class='bx bx-chip'></i> Launch AI
-                        Bot</button>
-                </div>
-            </div>
-
-            <div class="grid-col-span-2 glass-panel table-panel">
-                <div class="panel-header">
-                    <h3><i class='bx bx-history'></i> Recent Financial Operations</h3>
-                    <a href="transactions" class="view-all-link">View Logs <i class='bx bx-right-arrow-alt'></i></a>
-                </div>
-                <div class="table-responsive">
-                    <table class="dashboard-table">
-                        <thead>
-                            <tr>
-                                <th>Transaction ID</th>
-                                <th>Type</th>
-                                <th>Amount</th>
-                                <th>Asset</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>#NEX-98210</td>
-                                <td><span class="type-deposit">Deposit</span></td>
-                                <td>+$5,000.00</td>
-                                <td><i class='bx bxl-bitcoin crypto-btc'></i> BTC</td>
-                                <td><span class="badge badge-success">Approved</span></td>
-                            </tr>
-                            <tr>
-                                <td>#NEX-98194</td>
-                                <td><span class="type-roi">ROI Payout</span></td>
-                                <td>+$145.20</td>
-                                <td><i class='bx bxl-tailwind-css crypto-usdt'></i> USDT</td>
-                                <td><span class="badge badge-success">Automated</span></td>
-                            </tr>
-                            <tr>
-                                <td>#NEX-98112</td>
-                                <td><span class="type-withdrawal">Withdrawal</span></td>
-                                <td>-$1,200.00</td>
-                                <td><i class='bx bxl-ethereum crypto-eth'></i> ETH</td>
-                                <td><span class="badge badge-warning">Pending</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="glass-panel metrics-breakdown">
-                <div class="panel-header">
-                    <h3><i class='bx bx-pie-chart-alt'></i> Asset Allocations</h3>
-                </div>
-                <div class="allocation-list">
-                    <div class="allocation-item">
-                        <div class="asset-info"><i class='bx bxl-bitcoin crypto-btc'></i> <span>Bitcoin</span></div>
-                        <span class="allocation-pct">45%</span>
-                    </div>
-                    <div class="allocation-item">
-                        <div class="asset-info"><i class='bx bxl-ethereum crypto-eth'></i> <span>Ethereum</span></div>
-                        <span class="allocation-pct">30%</span>
-                    </div>
-                    <div class="allocation-item">
-                        <div class="asset-info"><i class='bx bxl-tailwind-css crypto-usdt'></i> <span>USDT Tether</span>
-                        </div>
-                        <span class="allocation-pct">25%</span>
-                    </div>
-                </div>
-            </div>
-
+            <div class="card-icon-frame color-primary"><i class="bx bx-transfer-alt"></i></div>
         </div>
+        <div class="metric-glass-card">
+            <div class="card-meta">
+                <span class="label">Active Trades</span>
+                <h2 class="counter-val txt-cyan" id="stat-active">42</h2>
+            </div>
+            <div class="card-icon-frame color-cyan"><i class="bx bx-radio-circle-marked animate-pulse"></i></div>
+        </div>
+        <div class="metric-glass-card">
+            <div class="card-meta">
+                <span class="label">Closed Trades</span>
+                <h2 class="counter-val" id="stat-closed">106</h2>
+            </div>
+            <div class="card-icon-frame color-muted"><i class="bx bx-package"></i></div>
+        </div>
+        <div class="metric-glass-card">
+            <div class="card-meta">
+                <span class="label">Buy / Sell Split</span>
+                <h2><span id="stat-buys" class="txt-up">89</span><span class="split-slash">/</span><span id="stat-sells" class="txt-down">59</span></h2>
+            </div>
+            <div class="card-icon-frame color-purple"><i class="bx bx-unite"></i></div>
+        </div>
+        <div class="metric-glass-card">
+            <div class="card-meta">
+                <span class="label">Total Trading Volume</span>
+                <h2 class="counter-val" id="stat-volume">$1,482,900</h2>
+            </div>
+            <div class="card-icon-frame color-gold"><i class="bx bx-coin-stack"></i></div>
+        </div>
+        <div class="metric-glass-card">
+            <div class="card-meta">
+                <span class="label">Total User Profit</span>
+                <h2 class="counter-val txt-up" id="stat-profit">+$64,250</h2>
+            </div>
+            <div class="card-icon-frame color-up"><i class="bx bx-trending-up"></i></div>
+        </div>
+        <div class="metric-glass-card">
+            <div class="card-meta">
+                <span class="label">Total User Loss</span>
+                <h2 class="counter-val txt-down" id="stat-loss">-$22,140</h2>
+            </div>
+            <div class="card-icon-frame color-down"><i class="bx bx-trending-down"></i></div>
+        </div>
+    </section>
+
+    <section class="charts-row-layout">
+        <div class="chart-glass-box">
+            <div class="box-heading">
+                <h3><i class="bx bx-chart icon-brand"></i> Profit & Loss Distribution Ledger</h3>
+            </div>
+            <div class="chart-canvas-wrapper">
+                <canvas id="profitLossChart"></canvas>
+            </div>
+        </div>
+        <div class="chart-glass-box">
+            <div class="box-heading">
+                <h3><i class="bx bx-pie-chart-alt-2 icon-secondary"></i> Volumetric Trading Pairs Share</h3>
+            </div>
+            <div class="chart-canvas-wrapper">
+                <canvas id="pairsVolumeChart"></canvas>
+            </div>
+        </div>
+    </section>
+
+    <section class="rankings-and-feed-row">
+        <div class="rankings-panel glass-panel">
+            <div class="panel-heading"><h3><i class="bx bx-award icon-gold"></i> Top Volume Traders</h3></div>
+            <div class="ranking-list" id="topTradersLeaderboard">
+                </div>
+        </div>
+
+        <div class="rankings-panel glass-panel">
+            <div class="panel-heading"><h3><i class="bx bx-bolt icon-cyan"></i> Most Active Asset Pairs</h3></div>
+            <div class="ranking-list" id="mostTradedPairsList">
+                </div>
+        </div>
+
+        <div class="feed-panel glass-panel">
+            <div class="panel-heading">
+                <h3><i class="bx bx-pulse icon-purple animate-pulse"></i> Live Execution Terminal Stream</h3>
+            </div>
+            <div class="scrolling-activity-stream" id="activityStreamFeed">
+                </div>
+        </div>
+    </section>
+
+    <section class="main-table-glass-card glass-panel">
+        <div class="table-action-header">
+            <div class="title-block">
+                <h3>Centralized Order Pipeline Log</h3>
+                <p>Real-time audit control layer of active and closed transactions across matching systems.</p>
+            </div>
+            <div class="filter-controls-group">
+                <div class="search-input-shell">
+                    <i class="bx bx-search"></i>
+                    <input type="text" id="ledgerSearchInput" placeholder="Filter by User, Email, or Pair...">
+                </div>
+                <select id="statusFilterSelect" class="table-custom-select">
+                    <option value="ALL">All States</option>
+                    <option value="ACTIVE">ACTIVE</option>
+                    <option value="CLOSED">CLOSED</option>
+                </select>
+                <select id="typeFilterSelect" class="table-custom-select">
+                    <option value="ALL">All Directions</option>
+                    <option value="BUY">BUY</option>
+                    <option value="SELL">SELL</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="table-scroller">
+            <table class="nexuist-monitor-table">
+                <thead>
+                    <tr>
+                        <th>Trade ID</th>
+                        <th>Trader Identity</th>
+                        <th>Asset Pair</th>
+                        <th>Type</th>
+                        <th>Invested Capital</th>
+                        <th>Leverage</th>
+                        <th>Execution Strike</th>
+                        <th>Spot Value</th>
+                        <th>P&L Spread</th>
+                        <th>State</th>
+                        <th>Timestamp</th>
+                        <th class="txt-right">Operational Logs</th>
+                    </tr>
+                </thead>
+                <tbody id="masterTradeLedgerBody">
+                    </tbody>
+            </table>
+        </div>
+    </section>
+
+</div>
+
+<div class="modal-dim-shroud" id="tradeDetailModal">
+    <div class="modal-window-viewport glass-panel">
+        <div class="modal-view-header">
+            <h3><i class="bx bx-terminal txt-brand"></i> Detailed Trade Diagnostic Framework</h3>
+            <button class="modal-close-trigger" onclick="closeTradeDiagnosticModal()"><i class="bx bx-x"></i></button>
+        </div>
+        <div class="modal-grid-content" id="modalDynamicOutput">
+            </div>
+    </div>
+</div>
+
     </main>
 
-    <script src="{{ asset('assets/AdminDashboard/js/script.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ asset('assets/AdminDashboard/js/Adminlivemarket.js') }}"></script>
+
 </body>
 
 </html>

@@ -31,6 +31,7 @@ class User extends Authenticatable
         'crypto_balance',
         'is_bot_active',
         'kyc_status',
+        'is_admin',
     ];
 
     /**
