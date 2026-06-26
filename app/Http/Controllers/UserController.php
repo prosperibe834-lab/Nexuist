@@ -72,7 +72,11 @@ class UserController extends Controller
 
         $totalProfit = $realEstateProfit + $botProfit + $cryptoProfit + $stockProfit;
 
-        return view('index', compact('totalDeposit', 'bonus', 'totalProfit'));
+        $unreadCount = UserNotification::where('user_id', $user->id)
+            ->where('status', 'unread')
+            ->count();
+
+        return view('index', compact('totalDeposit', 'bonus', 'totalProfit', 'unreadCount'));
     }
 
     public function profileSetting()

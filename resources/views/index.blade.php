@@ -55,8 +55,8 @@
 
             <div class="crypto-ticker desktop-only">
                 <span class="live-indicator"><span class="dot"></span> LIVE</span>
-                <span class="ticker-item">BTC: <strong class="red">$80,898</strong></span>
-                <span class="ticker-item">ETH: <strong class="red">$2,329</strong></span>
+                <span class="ticker-item">BTC: <strong class="red" id="btc-price">$80,898</strong></span>
+                <span class="ticker-item">ETH: <strong class="red" id="eth-price">$2,329</strong></span>
             </div>
         </div>
 
@@ -109,12 +109,11 @@
                 <div class="notification-wrapper">
                     <button class="icon-btn" id="notifBtn">
                         <span class="iconify" data-icon="ri:notification-3-line"></span>
-                        <span class="badge red-badge">4</span>
+                        <span class="badge red-badge" id="notification-count">{{ $unreadCount ?? 0 }}</span>
                     </button>
                     <div class="dropdown-menu notif-menu" id="notifMenu">
                         <div class="menu-header">Notifications</div>
-                        <a href="/notifications" class="menu-item">System update complete</a>
-                        <a href="/livemarkets" class="menu-item">Check new live markets</a>
+                        <a href="/notifications" class="menu-item">View all notifications</a>
                     </div>
                 </div>
 
@@ -135,7 +134,7 @@
                         <a href="/profilesetting" class="menu-item"><span class="iconify"
                                 data-icon="ri:user-line"></span> My
                             Profile</a>
-                        <a href="#" class="menu-item"><span class="iconify" data-icon="ri:settings-4-line"></span>
+                        <a href="/profilesetting" class="menu-item"><span class="iconify" data-icon="ri:settings-4-line"></span>
                             Settings</a>
                         <a href="#" class="menu-item text-red"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

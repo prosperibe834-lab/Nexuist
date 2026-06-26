@@ -155,65 +155,69 @@ document.addEventListener('DOMContentLoaded', () => {
 const qtDropdownBtn = document.getElementById("qtDropdownBtn");
 const qtDropdownMenu = document.getElementById("qtDropdownMenu");
 
-qtDropdownBtn.addEventListener("click", () => {
+if (qtDropdownBtn && qtDropdownMenu) {
+    qtDropdownBtn.addEventListener("click", () => {
+        qtDropdownMenu.classList.toggle("active");
+        qtDropdownBtn.classList.toggle("active");
+    });
 
-    qtDropdownMenu.classList.toggle("active");
-    qtDropdownBtn.classList.toggle("active");
-
-});
-
-window.addEventListener("click", (e) => {
-
-    if(
-        !qtDropdownBtn.contains(e.target) &&
-        !qtDropdownMenu.contains(e.target)
-    ){
-        qtDropdownMenu.classList.remove("active");
-        qtDropdownBtn.classList.remove("active");
-    }
-
-});
+    window.addEventListener("click", (e) => {
+        if (
+            !qtDropdownBtn.contains(e.target) &&
+            !qtDropdownMenu.contains(e.target)
+        ) {
+            qtDropdownMenu.classList.remove("active");
+            qtDropdownBtn.classList.remove("active");
+        }
+    });
+}
 
 const acmVerifyBtn = document.getElementById("acmVerifyBtn");
 const acmVerifyMenu = document.getElementById("acmVerifyMenu");
 
-acmVerifyBtn.addEventListener("click", () => {
-
-    acmVerifyBtn.classList.toggle("active");
-
-    acmVerifyMenu.classList.toggle("active");
-
-});
+if (acmVerifyBtn && acmVerifyMenu) {
+    acmVerifyBtn.addEventListener("click", () => {
+        acmVerifyBtn.classList.toggle("active");
+        acmVerifyMenu.classList.toggle("active");
+    });
+}
 
 
 // Main Section starts here
 let transactionData = [];
 
-async function fetchStatementData() {
+async function fetchStatementData(filters = {}) {
     try {
-        const res = await fetch('/api/account/statement', { credentials: 'same-origin', headers: { Accept: 'application/json' } });
-        if (!res.ok) throw new Error('Failed to fetch');
+        const query = new URLSearchParams();
+
+        if (filters.search) query.set('search', filters.search);
+        if (filters.currency && filters.currency !== 'all') query.set('currency', filters.currency);
+        if (filters.status && filters.status !== 'all') query.set('status', filters.status);
+        if (filters.type && filters.type !== 'all') query.set('type', filters.type);
+        if (filters.dateRange && filters.dateRange !== 'all') query.set('date_range', filters.dateRange);
+
+        const url = '/api/account/statement' + (query.toString() ? `?${query.toString()}` : '');
+        const res = await fetch(url, { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+        if (!res.ok) {
+            const errorText = await res.text();
+            throw new Error(errorText || 'Failed to fetch statement data');
+        }
+
         const payload = await res.json();
         if (!payload.success) throw new Error(payload.message || 'Error');
-        transactionData = payload.records || [];
 
-        // populate currency filter options dynamically
-        const currencySelect = document.getElementById('currencyFilter');
-        if (currencySelect && payload.currencies) {
-            // clear existing (keep 'all')
-            const base = currencySelect.querySelector('option[value="all"]');
-            currencySelect.innerHTML = '';
-            currencySelect.appendChild(base);
-            payload.currencies.forEach(c => {
-                const opt = document.createElement('option');
-                opt.value = c; opt.text = c; currencySelect.appendChild(opt);
-            });
-        }
+        transactionData = payload.records || [];
+        populateStatementFilters(payload);
+
+        return payload;
     } catch (err) {
         console.error('Statement fetch failed', err);
-        // fallback to empty dataset and surface an inline error later
         transactionData = [];
-        // remove preloader if present so user can see the page
+        const container = document.querySelector('.statement-container');
+        if (container && !document.querySelector('.statement-error')) {
+            container.insertAdjacentHTML('afterbegin', `<div class="statement-error" style="padding:16px; background:#2b2730; color:#fff; border-radius:8px; margin-bottom:12px;">Unable to load statement data. ${err.message}</div>`);
+        }
+
         try {
             const pre = document.getElementById('fintech-preloader');
             if (pre) {
@@ -223,6 +227,41 @@ async function fetchStatementData() {
         } catch (e) {
             console.error('Failed to remove preloader', e);
         }
+
+        return { records: [] };
+    }
+}
+
+function populateStatementFilters(payload) {
+    const currencySelect = document.getElementById('currencyFilter');
+    const statusSelect = document.getElementById('statusFilter');
+
+    if (currencySelect && Array.isArray(payload.currencies)) {
+        const defaultOption = document.createElement('option');
+        defaultOption.value = 'all';
+        defaultOption.text = 'All Currencies';
+        currencySelect.innerHTML = '';
+        currencySelect.appendChild(defaultOption);
+        payload.currencies.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c;
+            opt.text = c;
+            currencySelect.appendChild(opt);
+        });
+    }
+
+    if (statusSelect && Array.isArray(payload.statuses)) {
+        const defaultOption = document.createElement('option');
+        defaultOption.value = 'all';
+        defaultOption.text = 'All Status';
+        statusSelect.innerHTML = '';
+        statusSelect.appendChild(defaultOption);
+        payload.statuses.forEach(s => {
+            const opt = document.createElement('option');
+            opt.value = s;
+            opt.text = s;
+            statusSelect.appendChild(opt);
+        });
     }
 }
 
@@ -363,48 +402,52 @@ async function initTable() {
         if (nextBtn) nextBtn.onclick = () => { if (currentPage < totalPages) { currentPage += 1; renderTable(); } };
     }
 
-    searchInput.addEventListener('input', (e) => {
-        currentFilters.search = e.target.value.toLowerCase();
+    const searchDebounce = debounce(async (value) => {
+        currentFilters.search = value.toLowerCase();
         currentPage = 1;
-        renderTable();
+        await refreshTable();
+    }, 300);
+
+    searchInput.addEventListener('input', (e) => {
+        searchDebounce(e.target.value);
     });
 
     typeTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
+        tab.addEventListener('click', async () => {
             typeTabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
             currentFilters.type = tab.dataset.type || 'all';
             currentPage = 1;
-            renderTable();
+            await refreshTable();
         });
     });
 
     if (dateFilter) {
-        dateFilter.addEventListener('change', (e) => {
+        dateFilter.addEventListener('change', async (e) => {
             currentFilters.dateRange = e.target.value;
             currentPage = 1;
-            renderTable();
+            await refreshTable();
         });
     }
 
     if (currencyFilter) {
-        currencyFilter.addEventListener('change', (e) => {
+        currencyFilter.addEventListener('change', async (e) => {
             currentFilters.currency = e.target.value;
             currentPage = 1;
-            renderTable();
+            await refreshTable();
         });
     }
 
     if (statusFilter) {
-        statusFilter.addEventListener('change', (e) => {
+        statusFilter.addEventListener('change', async (e) => {
             currentFilters.status = e.target.value;
             currentPage = 1;
-            renderTable();
+            await refreshTable();
         });
     }
 
     if (resetBtn) {
-        resetBtn.addEventListener('click', () => {
+        resetBtn.addEventListener('click', async () => {
             searchInput.value = '';
             currentFilters = { type: 'all', currency: 'all', status: 'all', search: '', dateRange: 'all' };
             if (dateFilter) dateFilter.value = 'all';
@@ -414,8 +457,21 @@ async function initTable() {
             const defaultTab = typeTabs.find(t => t.dataset.type === 'all');
             if (defaultTab) defaultTab.classList.add('active');
             currentPage = 1;
-            renderTable();
+            await refreshTable();
         });
+    }
+
+    async function refreshTable() {
+        await fetchStatementData(currentFilters);
+        renderTable();
+    }
+
+    function debounce(fn, delay) {
+        let timer;
+        return (...args) => {
+            clearTimeout(timer);
+            timer = setTimeout(() => fn.apply(this, args), delay);
+        };
     }
 
     try {

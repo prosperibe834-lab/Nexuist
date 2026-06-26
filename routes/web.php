@@ -9,6 +9,7 @@ use App\Http\Controllers\DemoTradeController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\KycController;
 use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\TradeController;
 use App\Http\Controllers\RealEstateInvestmentController;
 use App\Http\Controllers\RealEstatePropertyController;
 use App\Http\Controllers\StockInvestmentController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\CryptoInvestmentController;
 use App\Http\Controllers\StockMarketController;
 use App\Http\Controllers\Admin\RealEstatePropertyController as AdminRealEstatePropertyController;
 use App\Http\Controllers\Admin\StockMarketController as AdminStockMarketController;
+use App\Http\Controllers\AccountStatementController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\UserController;
@@ -119,8 +121,10 @@ Route::middleware('auth')->group(function () {
     Route::post('/api/demo/trade/{id}/close', [DemoTradeController::class, 'close'])->name('demo.trade.close');
     Route::get('/api/demo/dashboard', [DemoTradeController::class, 'dashboard'])->name('demo.dashboard');
     Route::post('/api/demo/reset', [DemoTradeController::class, 'reset'])->name('demo.reset');
+    Route::post('/api/trades', [TradeController::class, 'store'])->name('trades.store');
     Route::get('/api/portfolio', [PortfolioController::class, 'index'])->name('portfolio.data');
     Route::get('/api/admin/portfolio', [PortfolioController::class, 'adminIndex'])->name('admin.portfolio.data');
+    Route::get('/api/account/statement', [AccountStatementController::class, 'data'])->name('account.statement.data');
     
     // AdminDemo Route
     Route::get('/AdminDemo', [AdminDemoController::class, 'index'])->name('admin.demo');
@@ -147,7 +151,7 @@ Route::middleware('auth')->group(function () {
     Route::view('/depositfunds', 'depositfunds');
     Route::view('/withdraw', 'withdraw');
     Route::view('/transactions', 'transactions');
-    Route::view('/accountstatement', 'accountstatement');
+    Route::get('/accountstatement', [AccountStatementController::class, 'index'])->name('account.statement');
     Route::view('/signals', 'signals');
     Route::view('/premiumPayment', 'premiumPayment');
     Route::view('/premiumSignals', 'premiumSignals');
@@ -163,6 +167,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/notifications/{id}/toggle-read', [NotificationController::class, 'toggleRead'])->name('notifications.toggleRead');
     Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
     Route::view('/kyc-form', 'kyc-form');
+    Route::view('/settlement', 'settlement');
 
     // Route::view('/deploybot', 'deploybot');
     Route::get('/deploybot', [BotInvestmentController::class, 'dashboard'])

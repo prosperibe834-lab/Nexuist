@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Schema;
 
 class AccountStatementController extends Controller
 {
+    public function index()
+    {
+        return view('accountstatement');
+    }
+
     public function data(Request $request)
     {
         if (! Auth::check()) {
@@ -56,6 +61,9 @@ class AccountStatementController extends Controller
         $records = $deposits->concat($withdrawals)->sortByDesc('date')->values();
 
         $currencies = $records->pluck('currency')->unique()->values();
+        $statuses = $records->pluck('status')->unique()->values();
+        $types = $records->pluck('type')->unique()->values();
+        $categories = $records->pluck('category')->unique()->values();
 
         $summary = [
             'total' => $records->count(),
@@ -67,6 +75,9 @@ class AccountStatementController extends Controller
             'success' => true,
             'records' => $records,
             'currencies' => $currencies,
+            'statuses' => $statuses,
+            'types' => $types,
+            'categories' => $categories,
             'summary' => $summary,
         ]);
     }

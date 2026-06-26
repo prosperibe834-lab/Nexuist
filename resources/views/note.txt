@@ -914,13 +914,8 @@ body {
 
 
 git add .
-git commit -m "i did notification page"
+git commit -m "i did notification page the backend"
 git push origin main 
 
 
 
-in my index.blade.php like my frontend / i want this <div class="notification-wrapper"> this <span class="badge red-badge">4</span> i wnt this span count to be couting base on and also this <div class="crypto-ticker desktop-only">
-<span class="live-indicator"><span class="dot"></span> LIVE</span>
-<span class="ticker-item">BTC: <strong class="red">$80,898</strong></span>
-<span class="ticker-item">ETH: <strong class="red">$2,329</strong></span>
-</div> let the bitcoin and ethuruim price be coming from live like rel world price

@@ -375,18 +375,31 @@ document.querySelector('.tab-sell').addEventListener('click', function () {
 });
 
 // 2. Handle the "Place Order" button click - submit to backend
+function getCsrfToken() {
+    const meta = document.querySelector('meta[name="csrf-token"]');
+    if (meta) return meta.getAttribute('content');
+
+    const match = document.cookie.match(new RegExp('(^| )XSRF-TOKEN=([^;]+)'));
+    return match ? decodeURIComponent(match[2]) : '';
+}
+
 async function handlePlaceOrder() {
-    const symbol = document.getElementById('orderTitle').innerText;
-    const amount = Number(document.querySelector('.form-field input[type="number"]').value);
-    const btnText = document.querySelector('.tab-buy-final').innerText || '';
+    const symbol = (document.getElementById('orderTitle')?.innerText || '').trim();
+    const amount = Number(document.querySelector('.form-field input[type="number"]')?.value || 0);
+    const btnText = document.querySelector('.tab-buy-final')?.innerText || '';
     const type = btnText.includes('SELL') ? 'SELL' : 'BUY';
+
+    if (!symbol) {
+        alert('No trade symbol selected.');
+        return;
+    }
 
     if (!amount || amount <= 0) {
         alert('Please enter a valid amount.');
         return;
     }
 
-    const csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    const csrf = getCsrfToken();
 
     try {
         const res = await fetch('/api/trades', {
@@ -394,24 +407,29 @@ async function handlePlaceOrder() {
             credentials: 'same-origin',
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrf || ''
+                'Accept': 'application/json',
+                'X-CSRF-TOKEN': csrf
             },
             body: JSON.stringify({ symbol, amount, type })
         });
 
-        const json = await res.json();
-        if (!res.ok || !json.success) {
-            alert(json.message || 'Trade failed.');
-            return;
+        const text = await res.text();
+        let json;
+        try {
+            json = text ? JSON.parse(text) : {};
+        } catch (_) {
+            throw new Error(text || 'Unexpected server response.');
         }
 
-        // Show Success Modal (leave terminal open until user closes)
+        if (!res.ok || !json.success) {
+            throw new Error(json?.message || `Trade failed with status ${res.status}`);
+        }
+
         document.getElementById('successMessage').innerText = `Your order for ${symbol} has been executed.`;
         document.getElementById('orderSuccessModal').style.display = 'flex';
-
     } catch (err) {
         console.error('Trade submission error', err);
-        alert('Unable to submit trade. Try again.');
+        alert(err.message || 'Unable to submit trade. Try again.');
     }
 }
 

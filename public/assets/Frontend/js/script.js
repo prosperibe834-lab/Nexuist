@@ -150,7 +150,51 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    loadLiveCryptoPrices();
 });
+
+async function loadLiveCryptoPrices() {
+    const btcPriceElement = document.getElementById('btc-price');
+    const ethPriceElement = document.getElementById('eth-price');
+    if (!btcPriceElement || !ethPriceElement) {
+        return;
+    }
+
+    const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd&include_24hr_change=true';
+
+    try {
+        const response = await fetch(apiUrl, {
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error('Crypto price API error');
+        }
+
+        const data = await response.json();
+
+        if (data.bitcoin && data.ethereum) {
+            const btcUsd = Number(data.bitcoin.usd || 0);
+            const ethUsd = Number(data.ethereum.usd || 0);
+            const btcChange = Number(data.bitcoin.usd_24h_change || 0);
+            const ethChange = Number(data.ethereum.usd_24h_change || 0);
+
+            btcPriceElement.textContent = `$${btcUsd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            ethPriceElement.textContent = `$${ethUsd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+            btcPriceElement.classList.toggle('text-green', btcChange >= 0);
+            btcPriceElement.classList.toggle('text-red', btcChange < 0);
+            ethPriceElement.classList.toggle('text-green', ethChange >= 0);
+            ethPriceElement.classList.toggle('text-red', ethChange < 0);
+        }
+    } catch (error) {
+        console.error('Failed to load live crypto prices', error);
+    }
+
+    setTimeout(loadLiveCryptoPrices, 60000);
+}
 
 
 const qtDropdownBtn = document.getElementById("qtDropdownBtn");
