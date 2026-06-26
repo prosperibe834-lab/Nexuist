@@ -229,11 +229,20 @@ async function fetchStatementData() {
 async function initTable() {
     const tableBody = document.getElementById('statementTableBody');
     const searchInput = document.getElementById('tableSearch');
-    
-    // --- STATE MANAGEMENT ---
+    const dateFilter = document.getElementById('dateFilter');
+    const currencyFilter = document.getElementById('currencyFilter');
+    const statusFilter = document.getElementById('statusFilter');
+    const typeTabs = Array.from(document.querySelectorAll('.type-tab'));
+    const resetBtn = document.getElementById('resetFilters');
+
+    if (!tableBody || !searchInput) {
+        console.error('Account statement table or search input is missing.');
+        return;
+    }
+
     let currentPage = 1;
-    const rowsPerPage = 5; 
-    
+    const rowsPerPage = 5;
+
     let currentFilters = {
         type: 'all',
         currency: 'all',
@@ -242,42 +251,60 @@ async function initTable() {
         dateRange: 'all'
     };
 
-    // --- CORE RENDERING ENGINE ---
+    function normalize(value) {
+        return String(value || '').trim().toLowerCase();
+    }
+
     function renderTable() {
         const now = new Date();
+        const searchTerm = normalize(currentFilters.search);
 
-        // 1. Filter Logic
         const filteredData = transactionData.filter(item => {
-            // Date Filter
+            const itemDate = new Date(item.date);
             let matchesDate = true;
-            if (currentFilters.dateRange !== 'all') {
-                const itemDate = new Date(item.date);
-                const diffTime = Math.abs(now - itemDate);
-                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                matchesDate = diffDays <= parseInt(currentFilters.dateRange);
+
+            if (currentFilters.dateRange !== 'all' && !isNaN(itemDate.getTime())) {
+                const diffTime = now - itemDate;
+                const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                matchesDate = diffDays >= 0 && diffDays <= parseInt(currentFilters.dateRange, 10);
             }
-            
-            // Search, Type, Currency, Status Filters
-            const matchesSearch = item.category.toLowerCase().includes(currentFilters.search) || 
-                                 item.ref.toLowerCase().includes(currentFilters.search) ||
-                                 item.destination.toLowerCase().includes(currentFilters.search);
-            
-            const matchesType = currentFilters.type === 'all' || item.type === currentFilters.type;
-            const matchesCurrency = currentFilters.currency === 'all' || item.currency === currentFilters.currency;
-            const matchesStatus = currentFilters.status === 'all' || item.status === currentFilters.status;
+
+            const itemType = normalize(item.type);
+            const itemCurrency = normalize(item.currency);
+            const itemStatus = normalize(item.status);
+            const itemCategory = normalize(item.category);
+            const itemDestination = normalize(item.destination);
+            const itemRef = normalize(item.ref);
+            const itemAmount = normalize(item.amount);
+            const itemDateLabel = normalize(item.date);
+
+            const matchesSearch = searchTerm === '' || [
+                itemCategory,
+                itemDestination,
+                itemRef,
+                itemCurrency,
+                itemType,
+                itemStatus,
+                itemAmount,
+                itemDateLabel
+            ].some(value => value.includes(searchTerm));
+
+            const matchesType = currentFilters.type === 'all'
+                || (currentFilters.type === 'others' && itemType !== 'deposit' && itemType !== 'withdrawal')
+                || itemType === currentFilters.type;
+
+            const matchesCurrency = currentFilters.currency === 'all' || itemCurrency === normalize(currentFilters.currency);
+            const matchesStatus = currentFilters.status === 'all' || itemStatus === normalize(currentFilters.status);
 
             return matchesDate && matchesSearch && matchesType && matchesCurrency && matchesStatus;
         });
 
-        // 2. Pagination Math
-        const totalPages = Math.ceil(filteredData.length / rowsPerPage) || 1;
+        const totalPages = Math.max(1, Math.ceil(filteredData.length / rowsPerPage));
         if (currentPage > totalPages) currentPage = totalPages;
 
         const start = (currentPage - 1) * rowsPerPage;
-        const end = start + rowsPerPage;
-        const paginatedData = filteredData.slice(start, end);
+        const paginatedData = filteredData.slice(start, start + rowsPerPage);
 
-        // 3. Build Table HTML
         tableBody.innerHTML = paginatedData.length > 0 ? paginatedData.map(item => `
             <tr class="fade-in">
                 <td class="icon-cell"><span class="iconify" data-icon="${item.icon}"></span></td>
@@ -289,16 +316,18 @@ async function initTable() {
                 <td>${item.currency}</td>
                 <td class="text-secondary">${item.destination}</td>
                 <td style="font-family: monospace; font-size: 12px;">${item.ref}</td>
-                <td><span class="status-pill status-${item.status}">${item.status}</span></td>
+                <td><span class="status-pill status-${item.status.toLowerCase()}">${item.status}</span></td>
             </tr>
         `).join('') : `<tr><td colspan="8" style="text-align:center; padding: 50px; color: var(--text-secondary);">No records found.</td></tr>`;
 
-        // 4. Update UI Elements
-        document.getElementById('showing-count').innerText = `Showing ${paginatedData.length} of ${filteredData.length} transactions`;
+        const countLabel = document.getElementById('showing-count');
+        if (countLabel) {
+            countLabel.innerText = `Showing ${paginatedData.length} of ${filteredData.length} transactions`;
+        }
+
         updatePaginationUI(totalPages);
     }
 
-    // --- PAGINATION UI GENERATOR ---
     function updatePaginationUI(totalPages) {
         const paginationContainer = document.querySelector('.pagination');
         if (!paginationContainer) return;
@@ -309,7 +338,7 @@ async function initTable() {
             </button>
         `;
 
-        for (let i = 1; i <= totalPages; i++) {
+        for (let i = 1; i <= totalPages; i += 1) {
             html += `<button class="page-link ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
         }
 
@@ -321,58 +350,74 @@ async function initTable() {
 
         paginationContainer.innerHTML = html;
 
-        // Re-attach Events
         paginationContainer.querySelectorAll('.page-link[data-page]').forEach(btn => {
             btn.addEventListener('click', () => {
-                currentPage = parseInt(btn.dataset.page);
+                currentPage = parseInt(btn.dataset.page, 10);
                 renderTable();
             });
         });
 
-        document.getElementById('prevPage').onclick = () => { if(currentPage > 1) { currentPage--; renderTable(); } };
-        document.getElementById('nextPage').onclick = () => { if(currentPage < totalPages) { currentPage++; renderTable(); } };
+        const prevBtn = document.getElementById('prevPage');
+        const nextBtn = document.getElementById('nextPage');
+        if (prevBtn) prevBtn.onclick = () => { if (currentPage > 1) { currentPage -= 1; renderTable(); } };
+        if (nextBtn) nextBtn.onclick = () => { if (currentPage < totalPages) { currentPage += 1; renderTable(); } };
     }
 
-    // --- GLOBAL EVENT LISTENERS ---
-    
-    // Search
     searchInput.addEventListener('input', (e) => {
         currentFilters.search = e.target.value.toLowerCase();
         currentPage = 1;
         renderTable();
     });
 
-    // Category Tabs
-    document.querySelectorAll('.type-tab').forEach(tab => {
+    typeTabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            document.querySelector('.type-tab.active').classList.remove('active');
+            typeTabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
-            currentFilters.type = tab.dataset.type;
+            currentFilters.type = tab.dataset.type || 'all';
             currentPage = 1;
             renderTable();
         });
     });
 
-    // Dropdown Selects
-    document.getElementById('dateFilter').addEventListener('change', (e) => { currentFilters.dateRange = e.target.value; currentPage = 1; renderTable(); });
-    document.getElementById('currencyFilter').addEventListener('change', (e) => { currentFilters.currency = e.target.value; currentPage = 1; renderTable(); });
-    document.getElementById('statusFilter').addEventListener('change', (e) => { currentFilters.status = e.target.value; currentPage = 1; renderTable(); });
-
-    // Reset Button
-    const resetBtn = document.getElementById('resetFilters');
-    if(resetBtn) {
-        resetBtn.addEventListener('click', () => {
-            searchInput.value = '';
-            currentFilters = { type: 'all', currency: 'all', status: 'all', search: '', dateRange: 'all' };
-            document.querySelectorAll('select').forEach(s => s.value = 'all');
-            document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
-            document.querySelector('.type-tab[data-type="all"]').classList.add('active');
+    if (dateFilter) {
+        dateFilter.addEventListener('change', (e) => {
+            currentFilters.dateRange = e.target.value;
             currentPage = 1;
             renderTable();
         });
     }
 
-    // First load data from backend then render (defensive)
+    if (currencyFilter) {
+        currencyFilter.addEventListener('change', (e) => {
+            currentFilters.currency = e.target.value;
+            currentPage = 1;
+            renderTable();
+        });
+    }
+
+    if (statusFilter) {
+        statusFilter.addEventListener('change', (e) => {
+            currentFilters.status = e.target.value;
+            currentPage = 1;
+            renderTable();
+        });
+    }
+
+    if (resetBtn) {
+        resetBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            currentFilters = { type: 'all', currency: 'all', status: 'all', search: '', dateRange: 'all' };
+            if (dateFilter) dateFilter.value = 'all';
+            if (currencyFilter) currencyFilter.value = 'all';
+            if (statusFilter) statusFilter.value = 'all';
+            typeTabs.forEach(t => t.classList.remove('active'));
+            const defaultTab = typeTabs.find(t => t.dataset.type === 'all');
+            if (defaultTab) defaultTab.classList.add('active');
+            currentPage = 1;
+            renderTable();
+        });
+    }
+
     try {
         await fetchStatementData();
         renderTable();
@@ -382,11 +427,9 @@ async function initTable() {
         if (container) {
             container.insertAdjacentHTML('afterbegin', `<div class="js-error" style="padding:16px; background:#2b2730; color:#fff; border-radius:8px; margin-bottom:12px;">An error occurred while loading your statement. Check console for details.</div>`);
         }
-        // ensure preloader hidden
         const pre = document.getElementById('fintech-preloader');
         if (pre) { pre.classList.add('preloader-hidden'); setTimeout(() => pre.remove(), 600); }
     }
 }
 
-// Initialize on Load
 document.addEventListener('DOMContentLoaded', initTable);

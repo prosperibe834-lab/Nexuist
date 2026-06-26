@@ -153,12 +153,12 @@
                 </ul>
             </li>
             <li>
-                <a href="{{ url('/notifications') }}">
+                <a href="{{ url('/admin-notifications') }}">
                     <i class='bx bx-bell'></i>
                     <span class="link_name">Notifications</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="{{ url('/notifications') }}">Notifications</a></li>
+                    <li><a class="link_name" href="{{ url('/admin-notifications') }}">Notifications</a></li>
                 </ul>
             </li>
             <li>

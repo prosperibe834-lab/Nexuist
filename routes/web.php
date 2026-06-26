@@ -1,23 +1,24 @@
 <?php
 
 use App\Http\Controllers\AdminKycController;
+use App\Http\Controllers\Admin\AdminDemoController;
 use App\Http\Controllers\Admin\AiBotController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\BotInvestmentController;
+use App\Http\Controllers\DemoTradeController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\KycController;
-use App\Http\Controllers\PremiumSignalsController;
+use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\RealEstateInvestmentController;
 use App\Http\Controllers\RealEstatePropertyController;
 use App\Http\Controllers\StockInvestmentController;
+use App\Http\Controllers\BotInvestmentController;
 use App\Http\Controllers\CryptoInvestmentController;
 use App\Http\Controllers\StockMarketController;
-use App\Http\Controllers\Admin\LiveMarketController;
-use App\Http\Controllers\TradeController;
-use App\Http\Controllers\AccountStatementController;
 use App\Http\Controllers\Admin\RealEstatePropertyController as AdminRealEstatePropertyController;
 use App\Http\Controllers\Admin\StockMarketController as AdminStockMarketController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -80,17 +81,15 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 | 2. Guest Pages
 |--------------------------------------------------------------------------
 */
+Route::get('/ref/{code}', function ($code) {
+    session(['referral_code' => $code]);
+    return redirect('/signup?ref=' . urlencode($code));
+});
+
 Route::middleware('guest')->group(function () {
     Route::view('/signup', 'signup');
     Route::view('/forgot-password', 'forgot-password');
-    Route::post('/forgot-password', [\App\Http\Controllers\Auth\ForgotPasswordController::class, 'send'])->name('password.email');
     Route::view('/reset-password', 'reset-password');
-    // Password reset routes required by Laravel's Password facade
-    Route::get('/reset-password/{token}', function ($token) {
-        return view('reset-password', ['token' => $token, 'email' => request('email')]);
-    })->name('password.reset');
-
-    Route::post('/reset-password', [\App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
     Route::post('/register/submit', [RegisterController::class, 'submit'])->name('register.submit');
 
     Route::view('/admin-login', 'admin-login');
@@ -110,6 +109,22 @@ Route::middleware('auth')->group(function () {
     Route::view('/portfolio', 'portfolio')->name('portfolio');
     Route::view('/performance', 'performance');
     Route::view('/demo', 'demo');
+    
+    // Demo Trading Routes
+    Route::view('/demoTrade', 'demoTrade')->name('demo.trade');
+    Route::view('/demoLive', 'demoLive')->name('demo.live');
+    Route::view('/demoHistory', 'demoHistory')->name('demo.history');
+    Route::post('/api/demo/trade', [DemoTradeController::class, 'store'])->name('demo.trade.store');
+    Route::get('/api/demo/history', [DemoTradeController::class, 'history'])->name('demo.trade.history');
+    Route::post('/api/demo/trade/{id}/close', [DemoTradeController::class, 'close'])->name('demo.trade.close');
+    Route::get('/api/demo/dashboard', [DemoTradeController::class, 'dashboard'])->name('demo.dashboard');
+    Route::post('/api/demo/reset', [DemoTradeController::class, 'reset'])->name('demo.reset');
+    Route::get('/api/portfolio', [PortfolioController::class, 'index'])->name('portfolio.data');
+    Route::get('/api/admin/portfolio', [PortfolioController::class, 'adminIndex'])->name('admin.portfolio.data');
+    
+    // AdminDemo Route
+    Route::get('/AdminDemo', [AdminDemoController::class, 'index'])->name('admin.demo');
+    
     Route::view('/invest', 'invest');
     Route::view('/plans', 'plans');
     Route::view('/investment-plans', 'investment-plans');
@@ -135,15 +150,18 @@ Route::middleware('auth')->group(function () {
     Route::view('/accountstatement', 'accountstatement');
     Route::view('/signals', 'signals');
     Route::view('/premiumPayment', 'premiumPayment');
-    Route::get('/premiumSignals', [PremiumSignalsController::class, 'index'])->name('premium.signals');
+    Route::view('/premiumSignals', 'premiumSignals');
     Route::view('/loan', 'loan');
     Route::view('/loanHistory', 'loanHistory');
     Route::get('/profilesetting', [UserController::class, 'profileSetting']);
     Route::post('/profilesetting', [UserController::class, 'updateProfile'])->name('user.profile.update');
     Route::view('/security', 'security');
     Route::view('/verify-account', 'verify-account');
-    Route::view('/referUser', 'referUser');
-    Route::view('/notifications', 'notifications');
+    Route::get('/referUser', [ReferralController::class, 'userDashboard']);
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllRead'])->name('notifications.markAllRead');
+    Route::post('/notifications/{id}/toggle-read', [NotificationController::class, 'toggleRead'])->name('notifications.toggleRead');
+    Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
     Route::view('/kyc-form', 'kyc-form');
 
     // Route::view('/deploybot', 'deploybot');
@@ -151,7 +169,7 @@ Route::middleware('auth')->group(function () {
     ->middleware('auth')
     ->name('deploybot');
 
-    Route::view('/notification', 'notification');
+    Route::get('/notification', [NotificationController::class, 'index'])->name('notification.index');
 
     // Admin
     Route::view('/admin-dashboard', 'AdminDashboard.index')->name('admin.dashboard');
@@ -183,15 +201,12 @@ Route::middleware('auth')->group(function () {
     Route::view('/investment-plans', 'AdminDashboard.investment-plans');
     Route::view('/Adminperformance', 'AdminDashboard.Adminperformance');
     Route::view('/AdminPortfolio', 'AdminDashboard.AdminPortfolio');
-    Route::view('/notifications', 'AdminDashboard.notifications');
-    Route::get('/AdminSupport', [App\Http\Controllers\SupportController::class, 'adminIndex'])->name('admin.support.dashboard');
+    Route::view('/admin-notifications', 'AdminDashboard.notifications')->name('admin.notifications');
+    Route::view('/AdminSupport', 'AdminDashboard.AdminSupport');
     Route::view('/transactions', 'AdminDashboard.transactions');
     Route::view('/security', 'AdminDashboard.security');
-    Route::get('/Adminlivemarket', [LiveMarketController::class, 'index'])->name('admin.livemarket');
-    Route::get('/admin/live-market/data', [LiveMarketController::class, 'data'])->name('admin.livemarket.data');
-    Route::post('/api/trades', [TradeController::class, 'store'])->name('api.trades');
-    Route::get('/api/account/statement', [AccountStatementController::class, 'data'])->name('api.account.statement');
-    Route::get('/PremiumInvestment', [AiBotController::class, 'premiumInvestmentDashboard'])->name('admin.premiuminvestment');
+    Route::get('/AdminReferUSer', [ReferralController::class, 'adminDashboard']);
+    Route::view('/PremiumInvestment', 'AdminDashboard.PremiumInvestment');
     Route::get('/StockMarket', [AdminStockMarketController::class, 'index'])->name('admin.stockmarket');
     Route::post('/admin/stock-market/plans', [AdminStockMarketController::class, 'storePlan'])->name('admin.stockmarket.plan.store');
     Route::post('/admin/stock-market/plans/{id}/toggle', [AdminStockMarketController::class, 'toggleStatus'])->name('admin.stockmarket.plan.toggle');
@@ -263,21 +278,6 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/copy-trading/data', [AiBotController::class, 'copyTradingAdminData'])
         ->name('admin.copy-trading.data');
-
-    Route::post('/premium/packages', [AiBotController::class, 'store'])
-        ->name('admin.premium.package.store');
-
-    Route::post('/premium/live-signal', [AiBotController::class, 'broadcastLiveSignal'])
-        ->name('admin.premium.live-signal');
-
-    Route::post('/premium/subscriber/{investment}/toggle-status', [AiBotController::class, 'togglePremiumSubscriberStatus'])
-        ->name('admin.premium.subscriber.toggle');
-
-    Route::delete('/premium/subscriber/{investment}', [AiBotController::class, 'deletePremiumSubscriber'])
-        ->name('admin.premium.subscriber.delete');
-
-    // Admin create premium investment (create investment on behalf of a user)
-    Route::post('/premium/invest', [AiBotController::class, 'adminCreateInvestment'])->name('admin.premium.invest');
 });
 
 // Investment Search and Filter Routes
@@ -309,20 +309,4 @@ Route::get('/deploy2', function () {
 });
 
 
-// Support endpoints (user)
-Route::post('/support/tickets', [App\Http\Controllers\SupportController::class, 'store'])->name('support.store');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/support/tickets', [App\Http\Controllers\SupportController::class, 'userTickets'])->name('support.user.tickets');
-    Route::get('/support/tickets/{id}', [App\Http\Controllers\SupportController::class, 'show'])->name('support.show');
-});
-
-// Support endpoints (admin)
-Route::prefix('admin')->middleware('auth')->group(function () {
-    Route::get('/support', [App\Http\Controllers\SupportController::class, 'adminIndex'])->name('admin.support');
-    Route::get('/support/tickets', [App\Http\Controllers\SupportController::class, 'adminIndexJson'])->name('admin.support.tickets');
-    Route::get('/support/tickets/{id}', [App\Http\Controllers\SupportController::class, 'showJson'])->name('admin.support.tickets.show');
-    Route::post('/support/tickets/{id}/reply', [App\Http\Controllers\SupportController::class, 'adminReply'])->name('admin.support.reply');
-    Route::post('/support/tickets/{id}/status', [App\Http\Controllers\SupportController::class, 'adminUpdateStatus'])->name('admin.support.status');
-});
 

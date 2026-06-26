@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Nexuist | Professional Trading</title>
     <link rel="stylesheet" href="{{ asset('assets/Frontend/css/demoTrade.css') }}">
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
@@ -63,10 +64,9 @@
 
         <div class="header-right">
             <div class="top-balance-box desktop-only">
-                <span class="balance-label">ACCOUNT BALANCE</span>
-                <span class="balance-value">$0.00</span>
-            </div>
-
+                    <span class="balance-label">DEMO BALANCE</span>
+                    <span class="balance-value" id="demoBalanceDisplay">${{ number_format(Auth::user()->demo_balance ?? 0, 2) }}</span>
+                </div>
             <div class="header-actions">
 
                 <div class="qt-dropdown-wrapper">
@@ -118,24 +118,36 @@
 
 
 
-                <div class="user-profile">
+               <div class="user-profile">
                     <button class="profile-btn" id="profileBtn">
-                        <div class="avatar">M</div>
+                        {{-- Avatar shows first letter of name --}}
+                        <div class="avatar">{{ substr(Auth::user()->name, 0, 1) }}</div>
                         <div class="user-info desktop-only">
-                            <span class="name">marine military</span>
+                            <span class="name">{{ Auth::user()->name }}</span>
                             <span class="type">Trading Account</span>
                         </div>
                         <span class="iconify arrow desktop-only" data-icon="ri:arrow-down-s-line"></span>
                     </button>
+
                     <div class="dropdown-menu profile-menu" id="profileMenu">
-                        <a href="#" class="menu-item"><span class="iconify" data-icon="ri:user-line"></span> My
+                        <a href="/profilesetting" class="menu-item"><span class="iconify"
+                                data-icon="ri:user-line"></span> My
                             Profile</a>
                         <a href="#" class="menu-item"><span class="iconify" data-icon="ri:settings-4-line"></span>
                             Settings</a>
-                        <a href="#" class="menu-item text-red"><span class="iconify"
-                                data-icon="ri:logout-box-r-line"></span> Logout</a>
+                        <a href="#" class="menu-item text-red"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <span class="iconify" data-icon="ri:logout-box-r-line"></span>
+                            Logout
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
-                </div>
+</div>
+
+
             </div>
         </div>
     </header>
@@ -365,17 +377,16 @@
 
             </div>
 
-            <div class="logout-wrapper">
-
-                <a href="/explore" class="logout-btn">
-
-                    <span class="iconify logout-icon" data-icon="solar:logout-2-outline"></span>
-
-                    <span>Log Out</span>
-
-                </a>
-
-            </div>
+           <div class="logout-wrapper">
+                <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
+                    @csrf
+                    <button type="submit" class="logout-btn"
+                        style="background: none; border: none; cursor: pointer; display: flex; align-items: center; width: 100%;">
+                        <i class='bx bx-log-out'></i>
+                        <span style="margin-left: 8px;">Log Out</span>
+                    </button>
+                </form>
+</div>
         </aside>
 
         <!-- Main Content -->
@@ -388,7 +399,7 @@
                 </div>
                 <div class="terminal-balance-capsule">
                     <div class="capsule-label">Available Balance</div>
-                    <div class="capsule-value" id="terminalAvailableBalance">$100,000.00</div>
+                    <div class="capsule-value" id="terminalAvailableBalance">${{ number_format(Auth::user()->demo_balance ?? 0, 2) }}</div>
                 </div>
             </header>
 

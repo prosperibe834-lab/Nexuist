@@ -84,12 +84,32 @@
             </li>
 
             <li>
+                <a href="{{ url('/AdminDemo') }}">
+                    <i class='bx bx-layer'></i>
+                    <span class="link_name">AdminDemo</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="/AdminDemo">AdminDemo</a></li>
+                </ul>
+            </li>
+            
+            <li>
+                <a href="{{ url('/AdminReferUSer') }}">
+                    <i class='bx bx-layer'></i>
+                    <span class="link_name">AdminReferUSer</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="/AdminReferUSer">AdminReferUSer</a></li>
+                </ul>
+            </li>
+
+            <li>
                 <a href="{{ url('/Adminlivemarket') }}">
                     <i class='bx bx-layer'></i>
                     <span class="link_name">Adminlivemarket</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="/investment-plans">Adminlivemarket</a></li>
+                    <li><a class="link_name" href="/Adminlivemarket">Adminlivemarket</a></li>
                 </ul>
             </li>
 
@@ -206,12 +226,12 @@
                 </ul>
             </li>
             <li>
-                <a href="{{ url('/notifications') }}">
+                <a href="{{ url('/admin-notifications') }}">
                     <i class='bx bx-bell'></i>
                     <span class="link_name">Notifications</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="/notifications">Notifications</a></li>
+                    <li><a class="link_name" href="/admin-notifications">Notifications</a></li>
                 </ul>
             </li>
             <li>

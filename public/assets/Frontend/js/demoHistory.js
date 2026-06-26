@@ -216,79 +216,153 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Client Side Dynamic Filter Processor Engine
     if (filterForm) {
-        filterForm.addEventListener('submit', (e) => {
+        filterForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            
-            // Collect Current Value Snapshots
-            const statusCriteria = document.getElementById('filter-status').value.toLowerCase();
-            const typeCriteria = document.getElementById('filter-type').value.toLowerCase();
-            const assetCriteria = document.getElementById('filter-asset').value.toLowerCase().trim();
-            const resultCriteria = document.getElementById('filter-result').value;
-
-            const tableRows = tableBody.querySelectorAll('tr:not(.no-records-row)');
-            let visibleCount = 0;
-
-            tableRows.forEach(row => {
-                const rowAsset = row.getAttribute('data-asset').toLowerCase();
-                const rowType = row.getAttribute('data-type').toLowerCase();
-                const rowStatus = row.getAttribute('data-status').toLowerCase();
-                const rowPnl = parseFloat(row.getAttribute('data-pnl') || '0');
-
-                let matchesAsset = !assetCriteria || rowAsset.includes(assetCriteria);
-                let matchesType = statusCriteria === 'all' || rowStatus === statusCriteria;
-                let matchesTradeType = typeCriteria === 'all' || rowType === typeCriteria;
-                
-                let matchesResult = true;
-                if (resultCriteria === 'profit') matchesResult = rowPnl > 0;
-                else if (resultCriteria === 'loss') matchesResult = rowPnl < 0;
-                else if (resultCriteria === 'break-even') matchesResult = rowPnl === 0;
-
-                if (matchesAsset && matchesType && matchesTradeType && matchesResult) {
-                    row.style.display = '';
-                    visibleCount++;
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-
-            updateTableMeta(visibleCount);
+            await fetchDemoHistory();
         });
     }
 
     // 3. Clear Controls Functional Operation
     if (resetFiltersBtn) {
-        resetFiltersBtn.addEventListener('click', () => {
+        resetFiltersBtn.addEventListener('click', async () => {
             filterForm.reset();
-            const tableRows = tableBody.querySelectorAll('tr:not(.no-records-row)');
-            tableRows.forEach(row => row.style.display = '');
-            updateTableMeta(tableRows.length);
+            await fetchDemoHistory();
+        });
+    }
+
+    fetchDemoHistory();
+
+    async function getCsrfToken() {
+        const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+        return tokenMeta ? tokenMeta.content : '';
+    }
+
+    async function fetchDemoHistory() {
+        try {
+            const filterStatus = document.getElementById('filter-status').value;
+            const filterType = document.getElementById('filter-type').value;
+            const filterAsset = document.getElementById('filter-asset').value;
+            const filterResult = document.getElementById('filter-result').value;
+            const perPage = document.getElementById('filter-per-page').value;
+
+            const params = new URLSearchParams();
+            if(filterStatus && filterStatus !== 'all') params.append('status', filterStatus);
+            if(filterType && filterType !== 'all') params.append('direction', filterType.toUpperCase());
+            if(filterAsset) params.append('asset', filterAsset);
+            if(filterResult && filterResult !== 'all') params.append('result', filterResult);
+            params.append('per_page', perPage);
+
+            const response = await fetch('/api/demo/history?' + params.toString(), { headers: { 'Accept': 'application/json' } });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || 'Unable to load demo history.');
+            }
+
+            if (data.trades && Array.isArray(data.trades)) {
+                renderHistoryRows(data.trades);
+                updateTableMeta(data.trades.length);
+            }
+
+            const statsActive = document.getElementById('stat-active-trades');
+            const statWin = document.getElementById('stat-win-rate');
+            const statPnl = document.getElementById('stat-total-pnl');
+            if (statsActive) statsActive.textContent = data.statistics?.active_trades ?? '0';
+            if (statWin) statWin.textContent = data.statistics?.win_rate ?? '0%';
+            if (statPnl) statPnl.textContent = data.statistics?.total_pnl ?? '$0.00';
+
+            const demoBalanceDisplay = document.getElementById('demoBalanceDisplay');
+            if (demoBalanceDisplay) {
+                demoBalanceDisplay.textContent = `$${Number(data.demo_balance).toFixed(2)}`;
+            }
+        } catch (error) {
+            console.warn('Demo history load failed:', error.message);
+        }
+    }
+
+    function renderHistoryRows(trades) {
+        tableBody.innerHTML = '';
+
+        if (!trades.length) {
+            const noRecordRow = document.createElement('tr');
+            noRecordRow.className = 'no-records-row';
+            noRecordRow.innerHTML = `<td colspan="10" class="no-records-row">No demo trades found.</td>`;
+            tableBody.appendChild(noRecordRow);
+            return;
+        }
+
+        trades.forEach(trade => {
+            const row = document.createElement('tr');
+            const statusLabel = trade.status === 'OPEN' ? 'Active' : 'Closed';
+            const statusClass = trade.status === 'OPEN' ? 'status-active' : 'status-closed';
+            const resultLabel = trade.result ? trade.result.replace('_', ' ') : 'Pending';
+            const pnlValue = trade.pnl !== null ? Number(trade.pnl).toFixed(2) : '0.00';
+            const pnlClass = trade.pnl > 0 ? 'success-text' : trade.pnl < 0 ? 'error-text' : 'neutral';
+            const entryPrice = trade.entry_price ?? trade.notional_value ? `$${Number(trade.notional_value).toFixed(2)}` : '$0.00';
+
+            row.setAttribute('data-asset', trade.asset || '');
+            row.setAttribute('data-type', trade.direction ? trade.direction.toLowerCase() : '');
+            row.setAttribute('data-status', trade.status ? trade.status.toLowerCase() : '');
+            row.setAttribute('data-pnl', pnlValue);
+
+            row.innerHTML = `
+                <td>
+                    <div class="asset-cell">
+                        <i class='bx bx-coin-stack'></i>
+                        <span>${trade.asset || 'N/A'}</span>
+                    </div>
+                </td>
+                <td><span class="badge ${trade.direction === 'BUY' ? 'badge-success' : 'badge-danger'}">${trade.direction || 'N/A'}</span></td>
+                <td><strong>$${Number(trade.amount).toFixed(2)}</strong></td>
+                <td class="text-secondary">${trade.leverage}x</td>
+                <td>${entryPrice}</td>
+                <td>${entryPrice}</td>
+                <td>
+                    <div class="pnl-cell ${pnlClass}">
+                        <span class="pnl-amount">${trade.pnl !== null ? (trade.pnl >= 0 ? '+' : '') + '$' + pnlValue : '$0.00'}</span>
+                        <span class="pnl-percent">(${trade.result ?? 'PENDING'})</span>
+                    </div>
+                </td>
+                <td><span class="status-indicator ${statusClass}">${statusLabel}</span></td>
+                <td class="date-cell">
+                    <span>${trade.opened_at ? new Date(trade.opened_at).toLocaleDateString() : 'N/A'}</span>
+                    <small>${trade.opened_at ? new Date(trade.opened_at).toLocaleTimeString() : ''}</small>
+                </td>
+                <td class="text-right">
+                    <button class="btn-table-action btn-close-trade" data-id="${trade.id}" ${trade.status === 'CLOSED' ? 'disabled' : ''} title="Close Position">
+                        <i class='bx bx-x-circle'></i> Close
+                    </button>
+                </td>
+            `;
+            tableBody.appendChild(row);
         });
     }
 
     // 4. Live Actions: Closing Out Position Entries
     if (tableBody) {
-        tableBody.addEventListener('click', (e) => {
+        tableBody.addEventListener('click', async (e) => {
             const closeBtn = e.target.closest('.btn-close-trade');
             if (closeBtn) {
-                const targetRow = closeBtn.closest('tr');
-                
-                // Luxury dynamic drop transition prior to extraction
-                targetRow.style.transition = 'all 0.3s ease';
-                targetRow.style.opacity = '0';
-                targetRow.style.transform = 'translateX(30px)';
-                
-                setTimeout(() => {
-                    targetRow.remove();
-                    const activeRows = tableBody.querySelectorAll('tr:not(.no-records-row)');
-                    updateTableMeta(activeRows.length);
-                    
-                    // Adjust metrics layout dynamic update tracking sample
-                    const activeStat = document.getElementById('stat-active-trades');
-                    if(activeStat) {
-                        let count = parseInt(activeStat.textContent) || 0;
-                        if(count > 0) activeStat.textContent = count - 1;
+                const tradeId = closeBtn.getAttribute('data-id');
+                const token = await getCsrfToken();
+                try {
+                    const response = await fetch(`/api/demo/trade/${tradeId}/close`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token,
+                            'Accept': 'application/json',
+                        },
+                    });
+                    const data = await response.json();
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Unable to close trade.');
                     }
-                }, 300);
+
+                    alert('Trade closed successfully. Demo balance updated.');
+                    fetchDemoHistory();
+                } catch (error) {
+                    alert(error.message || 'Unable to close trade.');
+                }
             }
         });
     }

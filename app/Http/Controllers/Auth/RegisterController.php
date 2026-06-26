@@ -22,15 +22,29 @@ class RegisterController extends Controller
             'password'           => 'required|string|min:8|confirmed', 
         ]);
 
+        $referralCode = $request->input('referral_code') ?? session('referral_code');
+        $referredById = null;
+
+        if ($referralCode) {
+            $referrer = User::where('referral_code', $referralCode)->first();
+            $referredById = $referrer?->id;
+        }
+
         // 2. Create and save the new trader profile
         $user = User::create([
-            'username' => $request->username,
-            'name'     => $request->fullname,
-            'email'    => $request->email,
-            'phone'    => $request->phone_country_code . ' ' . trim($request->phone),
-            'country'  => $request->country,
-            'password' => Hash::make($request->password),
+            'username'      => $request->username,
+            'name'          => $request->fullname,
+            'email'         => $request->email,
+            'phone'         => $request->phone_country_code . ' ' . trim($request->phone),
+            'country'       => $request->country,
+            'password'      => Hash::make($request->password),
+            'referred_by'   => $referredById,
+            'referral_earnings' => 0.00,
         ]);
+
+        if (session()->has('referral_code')) {
+            session()->forget('referral_code');
+        }
 
         // Log the user into their new session instantly
         Auth::login($user);

@@ -56,7 +56,7 @@
                         Statements</span></a></li>
             <li><a href="kyc"><i class='bx bx-id-card'></i><span class="link_name">KYC Verification</span></a></li>
             <li><a href="loans"><i class='bx bx-money'></i><span class="link_name">Loan Requests</span></a></li>
-            <li><a href="notifications"><i class='bx bx-bell'></i><span class="link_name">Notifications</span></a></li>
+            <li><a href="admin-notifications"><i class='bx bx-bell'></i><span class="link_name">Notifications</span></a></li>
             <li><a href="support"><i class='bx bx-support'></i><span class="link_name">Messages & Support</span></a>
             </li>
             <li><a href="transactions"><i class='bx bx-receipt'></i><span class="link_name">Transaction Logs</span></a>

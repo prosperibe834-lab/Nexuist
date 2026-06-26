@@ -2,6 +2,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\BotInvestment;
+use App\Models\CryptoInvestment;
+use App\Models\DemoTrade;
 use App\Models\KycVerification;
 use App\Models\RealEstateInvestment;
 use App\Models\StockInvestment;
@@ -29,9 +32,12 @@ class User extends Authenticatable
         'password',
         'balance',
         'crypto_balance',
+        'demo_balance',
         'is_bot_active',
         'kyc_status',
-        'is_admin',
+        'referral_code',
+        'referred_by',
+        'referral_earnings',
     ];
 
     /**
@@ -71,9 +77,29 @@ class User extends Authenticatable
         return $this->hasMany(StockInvestment::class);
     }
 
+    public function cryptoInvestments()
+    {
+        return $this->hasMany(CryptoInvestment::class);
+    }
+
     public function realEstateInvestments()
     {
         return $this->hasMany(RealEstateInvestment::class);
+    }
+
+    public function demoTrades()
+    {
+        return $this->hasMany(DemoTrade::class);
+    }
+
+    public function referrals()
+    {
+        return $this->hasMany(User::class, 'referred_by');
+    }
+
+    public function referrer()
+    {
+        return $this->belongsTo(User::class, 'referred_by');
     }
 }
 

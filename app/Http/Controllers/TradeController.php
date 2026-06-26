@@ -6,6 +6,7 @@ use App\Models\CryptoInvestment;
 use App\Models\CryptoPlan;
 use App\Models\StockInvestment;
 use App\Models\StockPlan;
+use App\Models\UserNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -20,6 +21,7 @@ class TradeController extends Controller
             'type' => 'required|in:BUY,SELL',
         ]);
 
+        /** @var \App\Models\User|null $user */
         $user = Auth::user();
         if (! $user) {
             return response()->json(['success' => false, 'message' => 'Authentication required.'], 401);
@@ -88,6 +90,12 @@ class TradeController extends Controller
                     ]);
                 }
             });
+
+            UserNotification::createForUser(
+                $user,
+                $isCrypto ? 'Crypto Trade' : 'Stock Trade',
+                strtoupper($type) . ' trade executed for ' . $symbol . ' with amount $' . number_format($amount, 2) . '.'
+            );
 
             return response()->json(['success' => true, 'message' => 'Trade executed successfully.']);
         } catch (\Exception $e) {

@@ -120,73 +120,71 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Main Section starts here
 document.addEventListener("DOMContentLoaded", () => {
-    const userCards = document.querySelectorAll('.nx-hub-user-card');
     const searchInput = document.getElementById('user-hub-search');
 
-    // Filter User Cards through Sidebar Search Field input
+    function applyUserSearchFilter() {
+        const query = searchInput?.value.toLowerCase() || '';
+        document.querySelectorAll('.nx-hub-user-card').forEach(card => {
+            const name = card.getAttribute('data-name')?.toLowerCase() || '';
+            const uid = card.getAttribute('data-uid')?.toLowerCase() || '';
+            if (name.includes(query) || uid.includes(query)) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
     if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
-            userCards.forEach(card => {
-                const name = card.getAttribute('data-name').toLowerCase();
-                const uid = card.getAttribute('data-uid').toLowerCase();
-                if (name.includes(query) || uid.includes(query)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
+        searchInput.addEventListener('input', applyUserSearchFilter);
+    }
+
+    function bindUserCardEvents() {
+        const userCards = document.querySelectorAll('.nx-hub-user-card');
+        userCards.forEach(card => {
+            card.addEventListener('click', () => {
+                userCards.forEach(c => c.classList.remove('active-hub-node'));
+                card.classList.add('active-hub-node');
+
+                const name = card.getAttribute('data-name');
+                const uid = card.getAttribute('data-uid');
+                const email = card.getAttribute('data-email');
+                const netWorth = card.getAttribute('data-net-worth');
+                const pendingDep = card.getAttribute('data-pending-deposit');
+                const totalInv = card.getAttribute('data-total-invested');
+                const roi = card.getAttribute('data-roi');
+                const winRate = card.getAttribute('data-win-rate');
+                const profitFactor = card.getAttribute('data-profit-factor');
+                const pool = card.getAttribute('data-investment-pool');
+                const txid = card.getAttribute('data-txid');
+                const txGateway = card.getAttribute('data-tx-gateway');
+                const txAmt = card.getAttribute('data-tx-amount');
+                const txDate = card.getAttribute('data-tx-date');
+                const txStatus = card.getAttribute('data-tx-status');
+
+                document.getElementById('dyn-user-name').textContent = name;
+                document.getElementById('dyn-user-uid').textContent = `UID: ${uid}`;
+                document.getElementById('dyn-user-email').textContent = email;
+                document.getElementById('dyn-net-worth').textContent = netWorth;
+                document.getElementById('dyn-pending-deposit').textContent = pendingDep;
+                document.getElementById('dyn-total-invested').textContent = totalInv;
+                document.getElementById('dyn-investment-pool').textContent = pool;
+                document.getElementById('dyn-roi').textContent = roi;
+                document.getElementById('dyn-win-rate').textContent = winRate;
+                document.getElementById('dyn-profit-factor').textContent = profitFactor;
+                document.getElementById('dyn-txid').textContent = txid;
+                document.getElementById('dyn-tx-gateway').innerHTML = `<i class='bx bxl-bitcoin'></i> ${txGateway}`;
+                document.getElementById('dyn-tx-amount').textContent = txAmt;
+                document.getElementById('dyn-tx-date').textContent = txDate;
+                const statusBadge = document.getElementById('dyn-tx-status');
+                statusBadge.textContent = txStatus;
+                statusBadge.className = `status-pill state-${txStatus.toLowerCase()}`;
             });
         });
     }
 
-    // Interactive Core Dynamic Swapping Logic
-    userCards.forEach(card => {
-        card.addEventListener('click', () => {
-            // Swap out CSS active class indicators
-            userCards.forEach(c => c.classList.remove('active-hub-node'));
-            card.classList.add('active-hub-node');
-
-            // Pull complete context datasets attributes
-            const name = card.getAttribute('data-name');
-            const uid = card.getAttribute('data-uid');
-            const email = card.getAttribute('data-email');
-            const netWorth = card.getAttribute('data-net-worth');
-            const pendingDep = card.getAttribute('data-pending-deposit');
-            const totalInv = card.getAttribute('data-total-invested');
-            const roi = card.getAttribute('data-roi');
-            const winRate = card.getAttribute('data-win-rate');
-            const profitFactor = card.getAttribute('data-profit-factor');
-            const pool = card.getAttribute('data-investment-pool');
-            
-            const txid = card.getAttribute('data-txid');
-            const txGateway = card.getAttribute('data-tx-gateway');
-            const txAmt = card.getAttribute('data-tx-amount');
-            const txDate = card.getAttribute('data-tx-date');
-            const txStatus = card.getAttribute('data-tx-status');
-
-            // Mutate Central Workspace Text Values 
-            document.getElementById('dyn-user-name').textContent = name;
-            document.getElementById('dyn-user-uid').textContent = `UID: ${uid}`;
-            document.getElementById('dyn-user-email').textContent = email;
-            document.getElementById('dyn-net-worth').textContent = netWorth;
-            document.getElementById('dyn-pending-deposit').textContent = pendingDep;
-            document.getElementById('dyn-total-invested').textContent = totalInv;
-            document.getElementById('dyn-investment-pool').textContent = pool;
-            document.getElementById('dyn-roi').textContent = roi;
-            document.getElementById('dyn-win-rate').textContent = winRate;
-            document.getElementById('dyn-profit-factor').textContent = profitFactor;
-            
-            // Mutate Transaction Row Elements Data Mapping
-            document.getElementById('dyn-txid').textContent = txid;
-            document.getElementById('dyn-tx-gateway').innerHTML = `<i class='bx bxl-bitcoin'></i> ${txGateway}`;
-            document.getElementById('dyn-tx-amount').textContent = txAmt;
-            document.getElementById('dyn-tx-date').textContent = txDate;
-            
-            const statusBadge = document.getElementById('dyn-tx-status');
-            statusBadge.textContent = txStatus;
-            statusBadge.className = `status-pill state-${txStatus.toLowerCase()}`;
-        });
-    });
+    window.bindUserCardEvents = bindUserCardEvents;
+    window.applyUserSearchFilter = applyUserSearchFilter;
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -257,4 +255,93 @@ document.addEventListener("DOMContentLoaded", () => {
         alert(`Administrative Notice: ${currentUserName}'s credentials have been blacklisted.`);
         suspModal.style.display = 'none';
     });
+});
+
+function initializeUserCards() {
+    const userCards = document.querySelectorAll('.nx-hub-user-card');
+    userCards.forEach(card => {
+        card.addEventListener('click', () => {
+            userCards.forEach(c => c.classList.remove('active-hub-node'));
+            card.classList.add('active-hub-node');
+
+            const name = card.getAttribute('data-name');
+            const uid = card.getAttribute('data-uid');
+            const email = card.getAttribute('data-email');
+            const netWorth = card.getAttribute('data-net-worth');
+            const pendingDep = card.getAttribute('data-pending-deposit');
+            const totalInv = card.getAttribute('data-total-invested');
+            const roi = card.getAttribute('data-roi');
+            const winRate = card.getAttribute('data-win-rate');
+            const profitFactor = card.getAttribute('data-profit-factor');
+            const pool = card.getAttribute('data-investment-pool');
+            const txid = card.getAttribute('data-txid');
+            const txGateway = card.getAttribute('data-tx-gateway');
+            const txAmt = card.getAttribute('data-tx-amount');
+            const txDate = card.getAttribute('data-tx-date');
+            const txStatus = card.getAttribute('data-tx-status');
+
+            document.getElementById('dyn-user-name').textContent = name;
+            document.getElementById('dyn-user-uid').textContent = `UID: ${uid}`;
+            document.getElementById('dyn-user-email').textContent = email;
+            document.getElementById('dyn-net-worth').textContent = netWorth;
+            document.getElementById('dyn-pending-deposit').textContent = pendingDep;
+            document.getElementById('dyn-total-invested').textContent = totalInv;
+            document.getElementById('dyn-investment-pool').textContent = pool;
+            document.getElementById('dyn-roi').textContent = roi;
+            document.getElementById('dyn-win-rate').textContent = winRate;
+            document.getElementById('dyn-profit-factor').textContent = profitFactor;
+            document.getElementById('dyn-txid').textContent = txid;
+            document.getElementById('dyn-tx-gateway').innerHTML = `<i class='bx bxl-bitcoin'></i> ${txGateway}`;
+            document.getElementById('dyn-tx-amount').textContent = txAmt;
+            document.getElementById('dyn-tx-date').textContent = txDate;
+            const statusBadge = document.getElementById('dyn-tx-status');
+            statusBadge.textContent = txStatus;
+            statusBadge.className = `status-pill state-${txStatus.toLowerCase()}`;
+        });
+    });
+}
+
+async function fetchAdminPortfolioData() {
+    try {
+        const response = await fetch('/api/admin/portfolio', {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        });
+        const data = await response.json();
+
+        if (!data.success) {
+            console.error('Failed loading admin portfolio', data.message || data);
+            return;
+        }
+
+        const container = document.getElementById('hub-user-nodes-container');
+        if (!container) return;
+
+        container.innerHTML = data.users.map(user => `
+            <div class="nx-hub-user-card" data-uid="${user.uid}" data-name="${user.name}" data-email="${user.email}"
+                data-net-worth="${user.net_worth}" data-pending-deposit="${user.pending_deposit}"
+                data-total-invested="${user.total_invested}" data-roi="${user.roi}" data-win-rate="${user.win_rate}"
+                data-profit-factor="${user.profit_factor}" data-investment-pool="${user.investment_pool}"
+                data-txid="${user.pending_transaction.txid}" data-tx-gateway="${user.pending_transaction.gateway}"
+                data-tx-amount="${user.pending_transaction.amount}" data-tx-date="${user.pending_transaction.date}"
+                data-tx-status="${user.pending_transaction.status}">
+                <div class="hub-avatar bg-gradient-blue">${user.name.split(' ').map(n => n[0]).join('').slice(0,2).toUpperCase()}</div>
+                <div class="hub-user-meta">
+                    <strong class="hub-user-name">${user.name}</strong>
+                    <span class="hub-user-uid">UID: ${user.uid}</span>
+                    <span class="hub-user-balance">Net Capital: ${user.net_worth}</span>
+                </div>
+            </div>
+        `).join('');
+
+        initializeUserCards();
+        document.querySelector('.nx-hub-user-card')?.click();
+    } catch (error) {
+        console.error('Admin portfolio load failed', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchAdminPortfolioData();
 });

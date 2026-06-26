@@ -113,8 +113,8 @@
                     </button>
                     <div class="dropdown-menu notif-menu" id="notifMenu">
                         <div class="menu-header">Notifications</div>
-                        <a href="#" class="menu-item">System update complete</a>
-                        <a href="#" class="menu-item">Check new live markets</a>
+                        <a href="/notifications" class="menu-item">System update complete</a>
+                        <a href="/livemarkets" class="menu-item">Check new live markets</a>
                     </div>
                 </div>
 

@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Nexuist | Professional Trading</title>
     <link rel="stylesheet" href="{{ asset('assets/Frontend/css/demoLive.css') }}">
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
@@ -63,8 +64,8 @@
 
         <div class="header-right">
             <div class="top-balance-box desktop-only">
-                <span class="balance-label">ACCOUNT BALANCE</span>
-                <span class="balance-value">$0.00</span>
+                <span class="balance-label">DEMO BALANCE</span>
+                <span class="balance-value" id="demoBalanceDisplay">$0.00</span>
             </div>
 
             <div class="header-actions">
@@ -538,7 +539,7 @@
     </div>
 
     <script src="{{ asset('assets/Frontend/js/demoLive.js') }}"></script>
-    <script type="text/javascript" src="https://s3.tradingview.com/tv.js') }}"></script>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js" ></script>
 </body>
 
 </html>

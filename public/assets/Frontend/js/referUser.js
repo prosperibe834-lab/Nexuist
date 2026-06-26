@@ -222,7 +222,11 @@ let qrContainer = null;
 function openQRModal() {
     const modal = document.getElementById('referralQRModal');
     const canvas = document.getElementById('qrcode-canvas');
-    const referralLink = "https://nexuist.app/ref/Tokyo";
+    const referralLink = document.getElementById('refLink')?.value || window.location.href;
+
+    if (!modal || !canvas) {
+        return;
+    }
 
     modal.style.display = 'flex';
     
@@ -244,9 +248,11 @@ function closeQRModal() {
 
 function downloadReferralQR() {
     const canvasEl = document.querySelector('#qrcode-canvas canvas');
+    const referralId = document.getElementById('refID')?.value || 'referral';
+
     if (canvasEl) {
         const link = document.createElement('a');
-        link.download = 'Nexuist-Referral-Tokyo.png';
+        link.download = `Nexuist-Referral-${referralId}.png`;
         link.href = canvasEl.toDataURL("image/png");
         link.click();
     }

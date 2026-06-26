@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Deposit;
 use App\Models\User;
+use App\Models\UserNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -92,6 +93,12 @@ public function index()
             if ($user) {
                 $user->balance += $deposit->amount;
                 $user->save();
+
+                UserNotification::createForUser(
+                    $user,
+                    'Deposit Approved',
+                    'Your deposit of $' . number_format($deposit->amount, 2) . ' has been approved and added to your account.'
+                );
             }
 
             $deposit->status = 'Approved';
@@ -105,6 +112,7 @@ public function index()
 
         // REJECT DEPOSIT
         if ($request->status === 'Rejected') {
+            $user = $deposit->user;
 
             // delete uploaded proof image
             if ($deposit->proof_image) {
@@ -113,6 +121,14 @@ public function index()
                 if (file_exists($filePath)) {
                     unlink($filePath);
                 }
+            }
+
+            if ($user) {
+                UserNotification::createForUser(
+                    $user,
+                    'Deposit Rejected',
+                    'Your deposit request for $' . number_format($deposit->amount, 2) . ' has been rejected and removed.'
+                );
             }
 
             $deposit->delete();
@@ -146,7 +162,7 @@ public function index()
 
         // 3. Create Record
         try {
-            Deposit::create([
+            $deposit = Deposit::create([
                 'user_id'     => Auth::id(),
                 'txid'        => 'TXN-' . strtoupper(uniqid()),
                 'amount'      => $request->amount,
@@ -154,6 +170,12 @@ public function index()
                 'proof_image' => $path,
                 'status'      => 'Pending',
             ]);
+
+            UserNotification::createForUser(
+                Auth::user(),
+                'Deposit',
+                'Your deposit request of $' . number_format($deposit->amount, 2) . ' has been received and is pending approval.'
+            );
 
             return response()->json(['success' => true, 'message' => 'Deposit recorded!']);
         } catch (\Exception $e) {

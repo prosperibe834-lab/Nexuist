@@ -1657,3 +1657,92 @@ ul {
     opacity: 0;
     transition: all 0.4s ease;
 }
+
+/* --- PORTFOLIO SUMMARY GRID ENGINE --- */
+.portfolio-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 24px;
+}
+
+/* --- INDIVIDUAL SUMMARY METRIC CARDS --- */
+.summary-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+/* Premium subtle top-border lighting effect */
+.summary-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: transparent;
+    transition: var(--transition);
+}
+
+/* Hover Dynamic Lift & Glow State */
+.summary-card:hover {
+    background: var(--bg-card-hover);
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* --- TYPOGRAPHY STRUCTURING --- */
+.summary-card small {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.summary-card strong {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+    transition: var(--transition);
+}
+
+/* --- FINTECH ACCENT COLOR HIGHLIGHTS --- */
+
+/* 1. Total Invested Card Accent (Blue Theme) */
+.summary-card:has(#total-invested)::before {
+    background: linear-gradient(90deg, var(--color-blue), transparent);
+}
+.summary-card:hover:has(#total-invested) strong {
+    color: #60a5fa; /* Soft light blue glow */
+}
+
+/* 2. Open Positions Card Accent (Purple Theme) */
+.summary-card:has(#open-positions)::before {
+    background: linear-gradient(90deg, var(--color-purple), transparent);
+}
+
+/* 3. Closed Positions Card Accent (Orange Theme) */
+.summary-card:has(#closed-positions)::before {
+    background: linear-gradient(90deg, var(--color-orange), transparent);
+}
+
+/* 4. Total Profit Card Accent (Emerald Green Theme) */
+.summary-card:has(#total-profit)::before {
+    background: linear-gradient(90deg, var(--color-green), transparent);
+}
+/* Force profit text to stay consistently green for positive feedback loop */
+.summary-card strong#total-profit {
+    color: var(--color-green);
+}

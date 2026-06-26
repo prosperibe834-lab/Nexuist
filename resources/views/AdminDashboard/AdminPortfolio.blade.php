@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Nexuist Admin Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -156,12 +157,12 @@
                 </ul>
             </li>
             <li>
-                <a href="{{ url('/notifications') }}">
+                <a href="{{ url('/admin-notifications') }}">
                     <i class='bx bx-bell'></i>
                     <span class="link_name">Notifications</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="/notifications">Notifications</a></li>
+                    <li><a class="link_name" href="/admin-notifications">Notifications</a></li>
                 </ul>
             </li>
             <li>
@@ -264,33 +265,7 @@
                     </div>
 
                     <div class="nx-hub-user-list" id="hub-user-nodes-container">
-                        <div class="nx-hub-user-card active-hub-node" data-uid="#NEX-10942" data-name="Alexander Mercer"
-                            data-email="a.mercer@nexus.io" data-net-worth="$15,420.50" data-pending-deposit="$5,000.00"
-                            data-total-invested="$10,420.50" data-roi="+34.82%" data-win-rate="78.4%"
-                            data-profit-factor="2.41" data-investment-pool="BTC Core Mirror & ETH Scalper"
-                            data-txid="TXN-90812401" data-tx-gateway="Crypto (BTC)" data-tx-amount="$5,000.00"
-                            data-tx-date="2026-05-24 14:32" data-tx-status="Pending">
-                            <div class="hub-avatar bg-gradient-blue">AM</div>
-                            <div class="hub-user-meta">
-                                <strong class="hub-user-name">Alexander Mercer</strong>
-                                <span class="hub-user-uid">UID: #NEX-10942</span>
-                                <span class="hub-user-balance">Net Capital: $15,420.50</span>
-                            </div>
-                        </div>
-
-                        <div class="nx-hub-user-card" data-uid="#NEX-20481" data-name="Amara Kalu"
-                            data-email="amara.k@domain.com" data-net-worth="$48,920.00" data-pending-deposit="$0.00"
-                            data-total-invested="$48,920.00" data-roi="+42.10%" data-win-rate="81.2%"
-                            data-profit-factor="3.05" data-investment-pool="Solana Delta Volatility Pool"
-                            data-txid="TXN-90761102" data-tx-gateway="Crypto (USDT)" data-tx-amount="$12,000.00"
-                            data-tx-date="2026-05-20 09:15" data-tx-status="Successful">
-                            <div class="hub-avatar bg-gradient-purple">AK</div>
-                            <div class="hub-user-meta">
-                                <strong class="hub-user-name">Amara Kalu</strong>
-                                <span class="hub-user-uid">UID: #NEX-20481</span>
-                                <span class="hub-user-balance">Net Capital: $48,920.00</span>
-                            </div>
-                        </div>
+                        <!-- User list will be loaded from backend -->
                     </div>
                 </div>
 

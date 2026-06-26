@@ -219,50 +219,28 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // 3. Row Action Controllers (Mark Read/Delete Toggle)
-    document.getElementById("notifications-wrapper").addEventListener("click", function (e) {
+    document.getElementById("notifications-wrapper").addEventListener("click", async function (e) {
         const item = e.target.closest(".noti-item");
         if (!item) return;
 
-        // Toggle Single Item Read/Unread State logic
+        const notificationId = item.dataset.id;
+        if (!notificationId) return;
+
         if (e.target.closest(".read-toggle-btn")) {
-            const btn = item.querySelector(".read-toggle-btn i");
-            if (item.classList.contains("unread")) {
-                item.classList.remove("unread");
-                item.setAttribute("data-status", "read");
-                if(btn) { btn.className = "bx bx-undo"; }
-                item.querySelector(".read-toggle-btn").setAttribute("title", "Mark as unread");
-            } else {
-                item.classList.add("unread");
-                item.setAttribute("data-status", "unread");
-                if(btn) { btn.className = "bx bx-check"; }
-                item.querySelector(".read-toggle-btn").setAttribute("title", "Mark as read");
-            }
-            updateStatusMetrics();
-            evaluateVisibilityFilterEngine();
+            const currentStatus = item.dataset.status === "unread" ? "read" : "unread";
+            await toggleNotificationRead(notificationId, currentStatus, item);
+            return;
         }
 
-        // Delete Row Action logic
         if (e.target.closest(".delete-btn")) {
-            item.style.transform = "scale(0.95)";
-            item.style.opacity = "0";
-            setTimeout(() => {
-                item.remove();
-                updateStatusMetrics();
-            }, 200);
+            await deleteNotification(notificationId, item);
+            return;
         }
     });
 
     // 4. Global Bulk State Action Configuration
-    markAllBtn.addEventListener("click", function () {
-        const structuralItems = document.querySelectorAll(".noti-list .noti-item");
-        structuralItems.forEach(item => {
-            item.classList.remove("unread");
-            item.setAttribute("data-status", "read");
-            const btn = item.querySelector(".read-toggle-btn i");
-            if(btn) { btn.className = "bx bx-undo"; }
-        });
-        updateStatusMetrics();
-        evaluateVisibilityFilterEngine();
+    markAllBtn.addEventListener("click", async function () {
+        await markAllNotificationsRead();
     });
 
     // Core Filtering Engine Rule Calculator Matrix
@@ -294,5 +272,112 @@ document.addEventListener("DOMContentLoaded", function () {
         
         unreadCountBadge.textContent = activeUnreadCount;
         showingCountText.textContent = `Showing ${currentTotalItems} of ${currentTotalItems} notifications`;
+    }
+
+    function getCsrfToken() {
+        return document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
+    }
+
+    async function toggleNotificationRead(notificationId, status, item) {
+        try {
+            const response = await fetch(`/notifications/${notificationId}/toggle-read`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': getCsrfToken(),
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: JSON.stringify({ status }),
+            });
+
+            const data = await response.json();
+            if (!data.success) {
+                throw new Error(data.message || 'Unable to update notification status');
+            }
+
+            const btnIcon = item.querySelector('.read-toggle-btn i');
+            const actionButton = item.querySelector('.read-toggle-btn');
+
+            if (status === 'read') {
+                item.classList.remove('unread');
+                item.setAttribute('data-status', 'read');
+                if (btnIcon) { btnIcon.className = 'bx bx-undo'; }
+                if (actionButton) { actionButton.setAttribute('title', 'Mark as unread'); }
+            } else {
+                item.classList.add('unread');
+                item.setAttribute('data-status', 'unread');
+                if (btnIcon) { btnIcon.className = 'bx bx-check'; }
+                if (actionButton) { actionButton.setAttribute('title', 'Mark as read'); }
+            }
+
+            unreadCountBadge.textContent = data.unreadCount;
+            updateStatusMetrics();
+            evaluateVisibilityFilterEngine();
+        } catch (error) {
+            console.error(error);
+            alert('Unable to update notification status. Please try again.');
+        }
+    }
+
+    async function deleteNotification(notificationId, item) {
+        if (!confirm('Delete this notification? This cannot be undone.')) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`/notifications/${notificationId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': getCsrfToken(),
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            });
+
+            const data = await response.json();
+            if (!data.success) {
+                throw new Error(data.message || 'Unable to delete notification');
+            }
+
+            item.remove();
+            unreadCountBadge.textContent = data.unreadCount;
+            updateStatusMetrics();
+            evaluateVisibilityFilterEngine();
+        } catch (error) {
+            console.error(error);
+            alert('Unable to delete notification. Please try again.');
+        }
+    }
+
+    async function markAllNotificationsRead() {
+        try {
+            const response = await fetch('/notifications/mark-all-read', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': getCsrfToken(),
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+            });
+
+            const data = await response.json();
+            if (!data.success) {
+                throw new Error(data.message || 'Unable to mark all notifications as read');
+            }
+
+            document.querySelectorAll('.noti-list .noti-item').forEach(item => {
+                item.classList.remove('unread');
+                item.setAttribute('data-status', 'read');
+                const btnIcon = item.querySelector('.read-toggle-btn i');
+                const actionButton = item.querySelector('.read-toggle-btn');
+                if (btnIcon) { btnIcon.className = 'bx bx-undo'; }
+                if (actionButton) { actionButton.setAttribute('title', 'Mark as unread'); }
+            });
+
+            unreadCountBadge.textContent = data.unreadCount;
+            updateStatusMetrics();
+            evaluateVisibilityFilterEngine();
+        } catch (error) {
+            console.error(error);
+            alert('Unable to mark all notifications as read. Please try again.');
+        }
     }
 });

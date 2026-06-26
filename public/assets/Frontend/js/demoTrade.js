@@ -251,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 5. Submit Order Interceptor
     if(demoTradeForm) {
-        demoTradeForm.addEventListener("submit", (e) => {
+        demoTradeForm.addEventListener("submit", async (e) => {
             e.preventDefault();
             
             if(!tradeDirectionInput.value) {
@@ -259,32 +259,112 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // High Fidelity Success Notification Stream
-            alert(`Order Dispatched Successfully!\nInstrument: ${assetSelector.value}\nDirection: ${tradeDirectionInput.value}\nMargin Allocation: $${tradeAmountInput.value}\nLeverage: ${leverageSelector.value}x`);
-            
-            // Reset fields
-            demoTradeForm.reset();
-            directionNodes.forEach(n => n.classList.remove("is-selected"));
-            tradeDirectionInput.value = "";
-            triggerReceiptCalculations();
+            const asset = assetSelector.value;
+            const amount = parseFloat(tradeAmountInput.value) || 0;
+            const leverage = parseFloat(leverageSelector.value) || 1;
+            const durationValue = document.getElementById('durationSelector').value;
+
+            if (!asset) {
+                alert("Execution Refused: Please select an asset instrument.");
+                return;
+            }
+
+            if (amount < 10) {
+                alert("Execution Refused: Minimum demo allocation is $10.");
+                return;
+            }
+
+            if (amount > 100000) {
+                alert("Execution Refused: Maximum demo allocation is $100,000.");
+                return;
+            }
+
+            const payload = {
+                asset,
+                direction: tradeDirectionInput.value,
+                amount,
+                leverage,
+                duration_minutes: parseInt(durationValue, 10) || 15,
+            };
+
+            const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+            const token = tokenMeta ? tokenMeta.content : '';
+
+            try {
+                const response = await fetch('/api/demo/trade', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': token,
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.message || 'Trade request failed.');
+                }
+
+                alert(`Order Dispatched Successfully!\nInstrument: ${asset}\nDirection: ${tradeDirectionInput.value}\nMargin Allocation: $${amount.toFixed(2)}\nLeverage: ${leverage.toFixed(0)}x`);
+
+                if (terminalAvailableBalance) {
+                    terminalAvailableBalance.textContent = `$${Number(data.demo_balance).toFixed(2)}`;
+                }
+                const demoBalanceDisplay = document.getElementById('demoBalanceDisplay');
+                if (demoBalanceDisplay) {
+                    demoBalanceDisplay.textContent = `$${Number(data.demo_balance).toFixed(2)}`;
+                }
+
+                demoTradeForm.reset();
+                directionNodes.forEach(n => n.classList.remove("is-selected"));
+                tradeDirectionInput.value = "";
+                triggerReceiptCalculations();
+            } catch (error) {
+                alert(error.message || 'Unable to place demo trade at this time.');
+            }
         });
     }
 
     // 6. Interactive Simulator Reset Engine 
     if(terminalResetBtn) {
-        terminalResetBtn.addEventListener("click", () => {
+        terminalResetBtn.addEventListener("click", async () => {
             if(confirm("Are you sure you want to completely restore the virtual execution simulation matrix?")) {
-                if(terminalAvailableBalance) {
-                    terminalAvailableBalance.textContent = "$100,000.00";
-                    
-                    // Flash notification effect
-                    terminalAvailableBalance.style.color = "#10b981";
-                    setTimeout(() => { terminalAvailableBalance.style.color = ""; }, 500);
+                const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+                const token = tokenMeta ? tokenMeta.content : '';
+
+                try {
+                    const response = await fetch('/api/demo/reset', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token,
+                            'Accept': 'application/json',
+                        },
+                    });
+
+                    const data = await response.json();
+                    if (!response.ok) {
+                        throw new Error(data.message || 'Reset failed.');
+                    }
+
+                    if(terminalAvailableBalance) {
+                        terminalAvailableBalance.textContent = `$${Number(data.demo_balance).toFixed(2)}`;
+                        terminalAvailableBalance.style.color = "#10b981";
+                        setTimeout(() => { terminalAvailableBalance.style.color = ""; }, 500);
+                    }
+                    const demoBalanceDisplay = document.getElementById('demoBalanceDisplay');
+                    if (demoBalanceDisplay) {
+                        demoBalanceDisplay.textContent = `$${Number(data.demo_balance).toFixed(2)}`;
+                    }
+
+                    if(demoTradeForm) demoTradeForm.reset();
+                    directionNodes.forEach(n => n.classList.remove("is-selected"));
+                    if(tradeDirectionInput) tradeDirectionInput.value = "";
+                    triggerReceiptCalculations();
+                } catch (error) {
+                    alert(error.message || 'Unable to reset demo account at this time.');
                 }
-                if(demoTradeForm) demoTradeForm.reset();
-                directionNodes.forEach(n => n.classList.remove("is-selected"));
-                if(tradeDirectionInput) tradeDirectionInput.value = "";
-                triggerReceiptCalculations();
             }
         });
     }

@@ -186,116 +186,156 @@ acmVerifyBtn.addEventListener("click", () => {
 });
 
 
-// Main section starts here
-// Sample Portfolio Data
-const myPortfolio = [
-    { name: "Aleksei Volkov", gain: "+$1,240.50", roi: "18.4%", img: "https://i.pravatar.cc/150?u=a" },
-    { name: "Maria Rodriguez", gain: "+$840.20", roi: "12.1%", img: "https://i.pravatar.cc/150?u=m" },
-    { name: "David Chen", gain: "-$120.00", roi: "-2.4%", img: "https://i.pravatar.cc/150?u=d" }
-];
+const portfolioState = {
+    summary: {
+        current_portfolio_value: 0,
+        total_invested: 0,
+        open_positions: 0,
+        closed_positions: 0,
+        total_profit: 0,
+    },
+    positions: [],
+};
+
+function formatCurrency(value) {
+    return '$' + Number(value || 0).toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
+}
 
 function renderPortfolioView() {
     const list = document.getElementById('activeTradersList');
-    list.innerHTML = myPortfolio.map(t => `
-        <div class="active-trader-card">
-            <div class="trader-info-mini">
-                <img src="${t.img}">
-                <div><strong>${t.name}</strong><br><small>Copying</small></div>
-            </div>
-            <div class="sparkline-container">
+    if (!list) return;
+
+    if (portfolioState.positions.length === 0) {
+        list.innerHTML = `<div class="empty-state">No active positions found. Open a trade to populate your portfolio.</div>`;
+        return;
+    }
+
+    list.innerHTML = portfolioState.positions.map((position) => {
+        const closeButton = position.closeable
+            ? `<button class="btn-close-trade" onclick="closePortfolioTrade(${position.id})">Close Position</button>`
+            : '';
+
+        return `
+            <div class="active-trader-card">
+                <div class="trader-info-mini">
+                    <div>
+                        <strong>${position.title}</strong>
+                        <small>${position.type.replace('_', ' ').toUpperCase()}</small>
+                    </div>
                 </div>
-            <div class="gain-indicator">
-                <h4>${t.gain}</h4>
-                <small>${t.roi} Total Return</small>
+                <div class="sparkline-container"></div>
+                <div class="gain-indicator">
+                    <h4>${formatCurrency(position.current_value)}</h4>
+                    <small>${position.status === 'OPEN' ? 'Open' : 'Closed'} • Profit ${formatCurrency(position.profit)}</small>
+                </div>
+                ${closeButton}
             </div>
-            <button class="btn-outline-danger" style="font-size: 10px; padding: 5px;">Close Trade</button>
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
-// Live Feed Simulator
+function renderPortfolioSummary() {
+    const summary = portfolioState.summary;
+    const totalEquity = document.getElementById('total-equity');
+    const totalInvested = document.getElementById('total-invested');
+    const openPositions = document.getElementById('open-positions');
+    const closedPositions = document.getElementById('closed-positions');
+    const totalProfit = document.getElementById('total-profit');
+    const portfolioChange = document.getElementById('portfolio-change');
+
+    if (totalEquity) totalEquity.innerText = formatCurrency(summary.current_portfolio_value);
+    if (totalInvested) totalInvested.innerText = formatCurrency(summary.total_invested);
+    if (openPositions) openPositions.innerText = summary.open_positions;
+    if (closedPositions) closedPositions.innerText = summary.closed_positions;
+    if (totalProfit) totalProfit.innerText = formatCurrency(summary.total_profit);
+
+    if (portfolioChange) {
+        const percent = summary.total_invested > 0 ? (summary.total_profit / Math.max(summary.total_invested, 1)) * 100 : 0;
+        portfolioChange.innerHTML = `<i class="fas fa-caret-${percent >= 0 ? 'up' : 'down'}"></i> ${percent.toFixed(1)}% Today`;
+        portfolioChange.classList.toggle('txt-green', percent >= 0);
+        portfolioChange.classList.toggle('txt-red', percent < 0);
+    }
+}
+
+function getCsrfToken() {
+    return document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+}
+
+async function fetchPortfolioData() {
+    try {
+        const response = await fetch('/api/portfolio', {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        });
+        const data = await response.json();
+
+        if (!data.success) {
+            console.error('Portfolio fetch failed', data.message || data);
+            return;
+        }
+
+        portfolioState.summary = data.summary || portfolioState.summary;
+        portfolioState.positions = data.positions || [];
+
+        renderPortfolioSummary();
+        renderPortfolioView();
+    } catch (error) {
+        console.error('Unable to load portfolio data', error);
+    }
+}
+
+async function closePortfolioTrade(tradeId) {
+    if (!confirm('Close this trade position? This action is irreversible.')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/demo/trade/${tradeId}/close`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': getCsrfToken(),
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+        });
+
+        const data = await response.json();
+        if (!data.success) {
+            alert(data.message || 'Could not close the trade.');
+            return;
+        }
+
+        await fetchPortfolioData();
+    } catch (error) {
+        console.error('Close trade failed', error);
+        alert('Failed to close trade. Try again later.');
+    }
+}
+
 function startLiveFeed() {
     const feed = document.getElementById('liveFeed');
-    const names = ["Sarah J.", "Mike T.", "Elena R.", "Liam H."];
-    
+    const names = ['Sarah J.', 'Mike T.', 'Elena R.', 'Liam H.'];
+
     setInterval(() => {
+        if (!feed) return;
         const name = names[Math.floor(Math.random() * names.length)];
         const profit = (Math.random() * 50).toFixed(2);
-        
         const div = document.createElement('div');
         div.className = 'feed-item fade-in';
         div.innerHTML = `
             <span>${name} just closed a trade</span>
             <span class="profit">+$${profit}</span>
         `;
-        
         feed.prepend(div);
-        if(feed.children.length > 15) feed.lastChild.remove();
+        if (feed.children.length > 15) {
+            feed.lastChild.remove();
+        }
     }, 3000);
 }
 
-// 1. Updated Render Function
-function renderPortfolioView() {
-    const list = document.getElementById('activeTradersList');
-    
-    // Check if portfolio is empty
-    if (myPortfolio.length === 0) {
-        list.innerHTML = `<div class="empty-state">No active trades. Go to Marketplace to start.</div>`;
-        return;
-    }
-
-    list.innerHTML = myPortfolio.map((t, index) => `
-        <div class="active-trader-card" id="trader-card-${index}">
-            <div class="trader-info-mini">
-                <img src="${t.img}">
-                <div><strong>${t.name}</strong><br><small>Copying</small></div>
-            </div>
-            <div class="sparkline-container"></div>
-            <div class="gain-indicator">
-                <h4>${t.gain}</h4>
-                <small>${t.roi} Total Return</small>
-            </div>
-            <button class="btn-close-trade" onclick="closeTrade(${index})">
-                <i class="fas fa-times"></i> Close Trade
-            </button>
-        </div>
-    `).join('');
-}
-
-// 2. The Logic to Remove the Trade
-function closeTrade(index) {
-    const card = document.getElementById(`trader-card-${index}`);
-    
-    // Add a confirmation to prevent accidental clicks
-    if (confirm("Are you sure you want to stop copying this trader and liquidate your position?")) {
-        
-        // Add the animation class
-        card.classList.add('removing');
-
-        // Wait for animation to finish, then remove data and re-render
-        setTimeout(() => {
-            myPortfolio.splice(index, 1); // Remove the item from the data array
-            renderPortfolioView(); // Refresh the list
-            updateTotalBalance(); // Update the big numbers at the top
-        }, 400);
-    }
-}
-
-// 3. Update the Top Summary Balance
-function updateTotalBalance() {
-    let total = 0;
-    myPortfolio.forEach(item => {
-        // Simple logic to strip the '$' and ',' to calculate
-        let val = parseFloat(item.gain.replace('$', '').replace('+', '').replace(',', ''));
-        total += val;
-    });
-    
-    const equityEl = document.getElementById('total-equity');
-    if(equityEl) {
-        equityEl.innerText = `$${(12450 + total).toLocaleString()}`; // Base balance + gains
-    }
-}
-
-// Initialize
-renderPortfolioView();
+fetchPortfolioData();
 startLiveFeed();

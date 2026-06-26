@@ -233,4 +233,92 @@ document.addEventListener("DOMContentLoaded", () => {
             console.log("Demo trading profile database metrics successfully purged and re-allocated.");
         }
     }
+
+    // --- 4. Load demo dashboard data from backend and render UI ---
+    async function loadDemoDashboard() {
+        try {
+            const res = await fetch('/api/demo/dashboard', { method: 'GET', credentials: 'same-origin' });
+            if (!res.ok) throw new Error('Failed to fetch demo dashboard');
+            const data = await res.json();
+
+            // balance
+            if (virtualBalanceDisplay && data.stats && typeof data.stats.totalBalance !== 'undefined') {
+                virtualBalanceDisplay.textContent = `$${Number(data.stats.totalBalance).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+            }
+
+            // stats
+            if (statTotalTrades) statTotalTrades.textContent = data.stats?.totalTrades ?? '0';
+            if (statWinRate) statWinRate.textContent = (data.stats?.winRate ? `${data.stats.winRate}%` : '0%');
+            if (statTotalPnL) {
+                statTotalPnL.textContent = `$${Number(data.stats?.totalPnl ?? 0).toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+                statTotalPnL.className = data.stats?.totalPnl > 0 ? 'positive-pnl' : (data.stats?.totalPnl < 0 ? 'negative-pnl' : 'neutral-pnl');
+            }
+            if (statActiveTrades) statActiveTrades.textContent = data.stats?.activePositions ?? '0';
+            if (positionBadgeCount) positionBadgeCount.textContent = `${data.stats?.activePositions ?? 0} Active`;
+
+            // render live positions into panel
+            const livePanel = document.querySelector('.live-positions-panel');
+            const emptyWrapper = document.getElementById('emptyPositionsWrapper');
+            if (Array.isArray(data.openPositions) && data.openPositions.length) {
+                // remove empty state
+                if (emptyWrapper) emptyWrapper.style.display = 'none';
+
+                // create list container if not exists
+                let list = document.getElementById('positionsList');
+                if (!list) {
+                    list = document.createElement('div');
+                    list.id = 'positionsList';
+                    list.className = 'positions-list';
+                    list.style.padding = '12px';
+                    livePanel.appendChild(list);
+                }
+
+                list.innerHTML = data.openPositions.map(pos => `
+                    <div class="position-row">
+                        <div class="pos-left"><strong>${pos.user}</strong> • ${pos.asset}</div>
+                        <div class="pos-right">
+                            <span class="dir">${pos.direction}</span>
+                            <span class="amt">$${Number(pos.amount).toLocaleString(undefined, {minimumFractionDigits:2})}</span>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                if (emptyWrapper) emptyWrapper.style.display = 'block';
+                const list = document.getElementById('positionsList');
+                if (list) list.remove();
+            }
+
+        } catch (err) {
+            console.error('Error loading demo dashboard:', err);
+        }
+    }
+
+    // Call initial load
+    loadDemoDashboard();
+
+    // Replace local reset to call backend reset as well
+    async function executeVirtualBalanceResetRemote() {
+        try {
+            const res = await fetch('/api/demo/reset', { method: 'POST', headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '' }, credentials: 'same-origin' });
+            if (!res.ok) throw new Error('Reset failed');
+            // refresh UI
+            await loadDemoDashboard();
+            // small flash
+            if (virtualBalanceDisplay) {
+                virtualBalanceDisplay.classList.remove('balance-flash');
+                void virtualBalanceDisplay.offsetWidth;
+                virtualBalanceDisplay.classList.add('balance-flash');
+            }
+        } catch (err) {
+            console.error('Remote reset failed:', err);
+        }
+    }
+
+    // Override reset triggers to use remote reset when available
+    resetTriggers.forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            executeVirtualBalanceResetRemote();
+        });
+    });
 });

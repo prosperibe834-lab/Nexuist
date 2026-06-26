@@ -417,23 +417,84 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    function getCsrfToken() {
+        const tokenMeta = document.querySelector('meta[name="csrf-token"]');
+        return tokenMeta ? tokenMeta.content : '';
+    }
+
+    async function refreshDemoDashboard() {
+        try {
+            const response = await fetch('/api/demo/dashboard', { headers: { 'Accept': 'application/json' } });
+            const data = await response.json();
+            if (!response.ok) {
+                throw new Error(data.message || 'Unable to load demo dashboard.');
+            }
+
+            const demoBalanceDisplay = document.getElementById('demoBalanceDisplay');
+            if (demoBalanceDisplay) {
+                demoBalanceDisplay.textContent = `$${Number(data.demo_balance).toFixed(2)}`;
+            }
+        } catch (error) {
+            console.warn('Demo dashboard fetch failed:', error.message);
+        }
+    }
+
     // Final Order Submit Interceptor Dispatch Trigger
     if (terminalFinalSubmitBtn) {
-        terminalFinalSubmitBtn.addEventListener("click", () => {
+        terminalFinalSubmitBtn.addEventListener("click", async () => {
             const requestedPrincipal = parseFloat(termAmountInput.value) || 0;
             if (requestedPrincipal <= 0) {
                 alert("Execution Refused: Investment Principal must be greater than zero.");
                 return;
             }
 
-            alert(`Order Dispatched to Simulation Clearing House Core!\nAsset: ${systemSelectedAssetObj.symbol}\nDirection Vector: ${positionDirectionVector}\nPrincipal Invested: $${requestedPrincipal}\nMultiplier Factor: ${termLeverageSelector.value}x`);
-            
-            // Return seamlessly to dashboard view
-            closeTerminalBtn.click();
+            if (!systemSelectedAssetObj) {
+                alert("Execution Refused: Please select an asset from the market list before placing a trade.");
+                return;
+            }
+
+            const payload = {
+                asset: systemSelectedAssetObj.symbol.split('/')[0] || systemSelectedAssetObj.id,
+                direction: positionDirectionVector,
+                amount: requestedPrincipal,
+                leverage: parseFloat(termLeverageSelector.value) || 1,
+                duration_minutes: 15,
+            };
+
+            try {
+                const response = await fetch('/api/demo/trade', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': getCsrfToken(),
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.message || 'Demo trade request failed.');
+                }
+
+                alert(`Order Dispatched to Simulation Clearing House Core!\nAsset: ${payload.asset}\nDirection Vector: ${payload.direction}\nPrincipal Invested: $${requestedPrincipal.toFixed(2)}\nMultiplier Factor: ${payload.leverage}x`);
+
+                if (document.getElementById('demoBalanceDisplay')) {
+                    document.getElementById('demoBalanceDisplay').textContent = `$${Number(data.demo_balance).toFixed(2)}`;
+                }
+
+                refreshDemoDashboard();
+                closeTerminalBtn.click();
+            } catch (error) {
+                alert(error.message || 'Unable to submit demo trade.');
+            }
         });
     }
-// Interactive Core Sub-view Transition Routing Toggles
-function launchTerminalConsoleView(assetObject) {
+
+    refreshDemoDashboard();
+
+    // --- Interactive Core Sub-view Transition Routing Toggles ---
+    function launchTerminalConsoleView(assetObject) {
     systemSelectedAssetObj = assetObject;
     
     // Populate static metrics text views inside structural panel containers

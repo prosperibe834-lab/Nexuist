@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexuist | Professional Trading</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="{{ asset('assets/Frontend/css/notification.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-        <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
 </head>
 
@@ -15,30 +16,30 @@
 
 
     <div id="fintech-preloader">
-    <div class="loader-container">
-        <div class="loader-logo">
-            <div class="logo-hexagon">
-                <span class="iconify" data-icon="ri:shield-flash-line"></span>
+        <div class="loader-container">
+            <div class="loader-logo">
+                <div class="logo-hexagon">
+                    <span class="iconify" data-icon="ri:shield-flash-line"></span>
+                </div>
+                <h2 class="loader-brand-name">Nexuist</h2>
             </div>
-            <h2 class="loader-brand-name">Nexuist</h2>
+
+            <div class="loader-progress-wrapper">
+                <div class="loader-progress-bar" id="load-bar">
+                    <div class="shimmer-effect"></div>
+                </div>
+            </div>
+
+            <div class="loader-status">
+                <span class="status-dot"></span>
+                <p id="status-text">Initializing encrypted connection...</p>
+            </div>
         </div>
 
-        <div class="loader-progress-wrapper">
-            <div class="loader-progress-bar" id="load-bar">
-                <div class="shimmer-effect"></div>
-            </div>
-        </div>
-
-        <div class="loader-status">
-            <span class="status-dot"></span>
-            <p id="status-text">Initializing encrypted connection...</p>
-        </div>
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
     </div>
-    
-    <div class="glow glow-1"></div>
-    <div class="glow glow-2"></div>
-</div>
-<!-- Preloader ends here -->
+    <!-- Preloader ends here -->
 
     <header class="top-header">
         <div class="header-left">
@@ -63,7 +64,7 @@
         <div class="header-right">
             <div class="top-balance-box desktop-only">
                 <span class="balance-label">ACCOUNT BALANCE</span>
-                <span class="balance-value">$0.00</span>
+                <span class="balance-value"> ${{ number_format(Auth::user()->balance, 2) }}
             </div>
 
             <div class="header-actions">
@@ -119,22 +120,34 @@
 
                 <div class="user-profile">
                     <button class="profile-btn" id="profileBtn">
-                        <div class="avatar">M</div>
+                        {{-- Avatar shows first letter of name --}}
+                        <div class="avatar">{{ substr(Auth::user()->name, 0, 1) }}</div>
                         <div class="user-info desktop-only">
-                            <span class="name">marine military</span>
+                            <span class="name">{{ Auth::user()->name }}</span>
                             <span class="type">Trading Account</span>
                         </div>
                         <span class="iconify arrow desktop-only" data-icon="ri:arrow-down-s-line"></span>
                     </button>
+
                     <div class="dropdown-menu profile-menu" id="profileMenu">
-                        <a href="#" class="menu-item"><span class="iconify" data-icon="ri:user-line"></span> My
+                        <a href="/profilesetting" class="menu-item"><span class="iconify"
+                                data-icon="ri:user-line"></span> My
                             Profile</a>
                         <a href="#" class="menu-item"><span class="iconify" data-icon="ri:settings-4-line"></span>
                             Settings</a>
-                        <a href="#" class="menu-item text-red"><span class="iconify"
-                                data-icon="ri:logout-box-r-line"></span> Logout</a>
+                        <a href="#" class="menu-item text-red"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <span class="iconify" data-icon="ri:logout-box-r-line"></span>
+                            Logout
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </header>
@@ -364,127 +377,107 @@
 
             </div>
 
+
             <div class="logout-wrapper">
-
-                <a href="/explore" class="logout-btn">
-
-                    <span class="iconify logout-icon" data-icon="solar:logout-2-outline"></span>
-
-                    <span>Log Out</span>
-
-                </a>
-
+                <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
+                    @csrf
+                    <button type="submit" class="logout-btn"
+                        style="background: none; border: none; cursor: pointer; display: flex; align-items: center; width: 100%;">
+                        <i class='bx bx-log-out'></i>
+                        <span style="margin-left: 8px;">Log Out</span>
+                    </button>
+                </form>
             </div>
-        </aside> 
+
+        </aside>
 
         <!-- Main Content -->
-         <div class="notifications-container">
-    <div class="noti-header">
-        <div class="noti-title-area">
-            <h2>Notifications <span class="noti-badge" id="unread-count">13</span></h2>
-            <p>Your personal notification center for staying updated with important system alerts and messages.</p>
-        </div>
-        <div class="noti-header-actions">
-            <button class="action-btn secondary-btn" id="mark-all-read-btn">
-                <i class="bx bx-check-double"></i> Mark all as read
-            </button>
-        </div>
-    </div>
+        <div class="notifications-container">
+            <div class="noti-header">
+                <div class="noti-title-area">
+                    <h2>Notifications <span class="noti-badge" id="unread-count">{{ $unreadCount }}</span></h2>
+                    <p>Your personal notification center for staying updated with important system alerts and messages.
+                    </p>
+                </div>
+                <div class="noti-header-actions">
+                    <button class="action-btn secondary-btn" id="mark-all-read-btn">
+                        <i class="bx bx-check-double"></i> Mark all as read
+                    </button>
+                </div>
+            </div>
 
-    <div class="noti-controls">
-        <div class="filter-tabs">
-            <button class="tab-btn active" data-filter="all">All</button>
-            <button class="tab-btn" data-filter="unread">Unread</button>
-            <button class="tab-btn" data-filter="read">Read</button>
-        </div>
-        <div class="search-wrapper">
-            <i class="bx bx-search search-icon"></i>
-            <input type="text" id="noti-search" placeholder="Search notifications, IPs, or assets...">
-        </div>
-    </div>
+            <div class="noti-controls">
+                <div class="filter-tabs">
+                    <button class="tab-btn active" data-filter="all">All</button>
+                    <button class="tab-btn" data-filter="unread">Unread</button>
+                    <button class="tab-btn" data-filter="read">Read</button>
+                </div>
 
-    <div class="noti-list" id="notifications-wrapper">
-        
-        <div class="noti-item unread" data-status="unread">
-            <div class="noti-item-left">
-                <div class="icon-avatar login-status">
-                    <i class="bx bx-info-circle"></i>
+                <div class="search-wrapper">
+                    <i class="bx bx-search search-icon"></i>
+                    <input type="text" id="noti-search" placeholder="Search notifications, IPs, or assets...">
                 </div>
-                <div class="noti-details">
-                    <div class="noti-main-text">
-                        <span class="noti-type-tag tag-login">New Login</span>
-                        <p class="noti-message">New login detected from IP: <span class="highlight">102.90.82.69</span> on Android Phone - Chrome.</p>
-                    </div>
-                    <div class="noti-meta">
-                        <span class="meta-time"><i class="bx bx-time-five"></i> 2026-05-20 20:44:27</span>
-                        <span class="meta-relative">1 day ago</span>
-                    </div>
-                </div>
+                
             </div>
-            <div class="noti-item-actions">
-                <button class="icon-action-btn view-btn" title="View details"><i class="bx bx-show"></i></button>
-                <button class="icon-action-btn read-toggle-btn" title="Mark as read"><i class="bx bx-check"></i></button>
-                <button class="icon-action-btn delete-btn" title="Delete"><i class="bx bx-trash"></i></button>
-            </div>
-        </div>
 
-        <div class="noti-item unread" data-status="unread">
-            <div class="noti-item-left">
-                <div class="icon-avatar success-status">
-                    <i class="bx bx-check-circle"></i>
-                </div>
-                <div class="noti-details">
-                    <div class="noti-main-text">
-                        <span class="noti-type-tag tag-success">Demo Trade Opened</span>
-                        <p class="noti-message">Demo trade opened for <span class="highlight">BSC-USD/USD</span> with 1x leverage. Amount: <span class="highlight-money">$1.03</span></p>
+            <div class="noti-list" id="notifications-wrapper">
+                @if($notifications->isEmpty())
+                    <div class="noti-empty">
+                        <p>No notifications found. Any activity like login, deposit, trade, or profile updates will appear here.</p>
                     </div>
-                    <div class="noti-meta">
-                        <span class="meta-time"><i class="bx bx-time-five"></i> 2026-05-19 15:28:00</span>
-                        <span class="meta-relative">2 days ago</span>
-                    </div>
-                </div>
+                @else
+                    @foreach($notifications as $notification)
+                        @php
+                            $tagClasses = [
+                                'Login' => 'tag-login',
+                                'Deposit' => 'tag-success',
+                                'Deposit Approved' => 'tag-success',
+                                'Deposit Rejected' => 'tag-error',
+                                'Crypto Trade' => 'tag-success',
+                                'Stock Trade' => 'tag-success',
+                                'Profile Update' => 'tag-registration',
+                            ];
+                            $tagClass = $tagClasses[$notification->type] ?? 'tag-default';
+                        @endphp
+                        <div class="noti-item {{ $notification->status === 'unread' ? 'unread' : '' }}"
+                             data-id="{{ $notification->id }}"
+                             data-status="{{ $notification->status }}">
+                            <div class="noti-item-left">
+                                <div class="icon-avatar {{ $notification->status === 'unread' ? 'login-status' : 'registration-status' }}">
+                                    <i class="bx bx-bell"></i>
+                                </div>
+                                <div class="noti-details">
+                                    <div class="noti-main-text">
+                                        <span class="noti-type-tag {{ $tagClass }}">{{ $notification->type }}</span>
+                                        <p class="noti-message">{{ $notification->message }}</p>
+                                    </div>
+                                    <div class="noti-meta">
+                                        <span class="meta-time"><i class="bx bx-time-five"></i> {{ $notification->created_at->format('Y-m-d H:i:s') }}</span>
+                                        <span class="meta-relative">{{ $notification->created_at->diffForHumans() }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="noti-item-actions">
+                                <button class="icon-action-btn view-btn" title="View details"><i class="bx bx-show"></i></button>
+                                <button class="icon-action-btn read-toggle-btn" title="{{ $notification->status === 'unread' ? 'Mark as read' : 'Mark as unread' }}">
+                                    <i class="bx {{ $notification->status === 'unread' ? 'bx-check' : 'bx-undo' }}"></i>
+                                </button>
+                                <button class="icon-action-btn delete-btn" title="Delete"><i class="bx bx-trash"></i></button>
+                            </div>
+                        </div>
+                    @endforeach
+                @endif
             </div>
-            <div class="noti-item-actions">
-                <button class="icon-action-btn view-btn" title="View details"><i class="bx bx-show"></i></button>
-                <button class="icon-action-btn read-toggle-btn" title="Mark as read"><i class="bx bx-check"></i></button>
-                <button class="icon-action-btn delete-btn" title="Delete"><i class="bx bx-trash"></i></button>
-            </div>
-        </div>
 
-        <div class="noti-item" data-status="read">
-            <div class="noti-item-left">
-                <div class="icon-avatar registration-status">
-                    <i class="bx bx-user-plus"></i>
-                </div>
-                <div class="noti-details">
-                    <div class="noti-main-text">
-                        <span class="noti-type-tag tag-registration">Welcome to Nexuist</span>
-                        <p class="noti-message">Thank you for registering. Your account has been successfully created.</p>
-                    </div>
-                    <div class="noti-meta">
-                        <span class="meta-time"><i class="bx bx-time-five"></i> 2026-05-17 11:18:55</span>
-                        <span class="meta-relative">3 days ago</span>
-                    </div>
-                </div>
-            </div>
-            <div class="noti-item-actions">
-                <button class="icon-action-btn view-btn" title="View details"><i class="bx bx-show"></i></button>
-                <button class="icon-action-btn read-toggle-btn" title="Mark as unread"><i class="bx bx-undo"></i></button>
-                <button class="icon-action-btn delete-btn" title="Delete"><i class="bx bx-trash"></i></button>
+            <div class="noti-footer">
+                <p id="showing-count-text">Showing 3 of 3 notifications</p>
             </div>
         </div>
 
-    </div>
-
-    <div class="noti-footer">
-        <p id="showing-count-text">Showing 3 of 3 notifications</p>
-    </div>
-</div>
-        
     </div>
 
     <script src="{{ asset('assets/Frontend/js/notification.js') }}"></script>
-        <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
 
 </body>
 

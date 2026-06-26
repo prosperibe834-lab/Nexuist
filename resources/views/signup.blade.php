@@ -89,6 +89,7 @@
 
             <input type="hidden" id="hidden-country-field" name="country">
             <input type="hidden" id="hidden-phone-code-field" name="phone_country_code">
+            <input type="hidden" name="referral_code" value="{{ old('referral_code', session('referral_code') ?? request('ref')) }}">
 
             <fieldset class="form-step-panel active" id="form-panel-1">
                 <div class="panel-meta-title group-personal">

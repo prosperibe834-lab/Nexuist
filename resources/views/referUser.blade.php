@@ -63,7 +63,9 @@
         <div class="header-right">
             <div class="top-balance-box desktop-only">
                 <span class="balance-label">ACCOUNT BALANCE</span>
-                <span class="balance-value">$0.00</span>
+                 <span class="balance-value"> ${{ number_format(Auth::user()->balance, 2) }}
+
+
             </div>
 
             <div class="header-actions">
@@ -117,24 +119,37 @@
 
 
 
-                <div class="user-profile">
+                
+ <div class="user-profile">
                     <button class="profile-btn" id="profileBtn">
-                        <div class="avatar">M</div>
+                        {{-- Avatar shows first letter of name --}}
+                        <div class="avatar">{{ substr(Auth::user()->name, 0, 1) }}</div>
                         <div class="user-info desktop-only">
-                            <span class="name">marine military</span>
+                            <span class="name">{{ Auth::user()->name }}</span>
                             <span class="type">Trading Account</span>
                         </div>
                         <span class="iconify arrow desktop-only" data-icon="ri:arrow-down-s-line"></span>
                     </button>
+
                     <div class="dropdown-menu profile-menu" id="profileMenu">
-                        <a href="#" class="menu-item"><span class="iconify" data-icon="ri:user-line"></span> My
+                        <a href="/profilesetting" class="menu-item"><span class="iconify"
+                                data-icon="ri:user-line"></span> My
                             Profile</a>
                         <a href="#" class="menu-item"><span class="iconify" data-icon="ri:settings-4-line"></span>
                             Settings</a>
-                        <a href="#" class="menu-item text-red"><span class="iconify"
-                                data-icon="ri:logout-box-r-line"></span> Logout</a>
+                        <a href="#" class="menu-item text-red"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <span class="iconify" data-icon="ri:logout-box-r-line"></span>
+                            Logout
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </div>
-                </div>
+</div>
+
+
             </div>
         </div>
     </header>
@@ -365,16 +380,16 @@
             </div>
 
             <div class="logout-wrapper">
+                <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
+                    @csrf
+                    <button type="submit" class="logout-btn"
+                        style="background: none; border: none; cursor: pointer; display: flex; align-items: center; width: 100%;">
+                        <i class='bx bx-log-out'></i>
+                        <span style="margin-left: 8px;">Log Out</span>
+                    </button>
+                </form>
+</div>
 
-                <a href="/explore" class="logout-btn">
-
-                    <span class="iconify logout-icon" data-icon="solar:logout-2-outline"></span>
-
-                    <span>Log Out</span>
-
-                </a>
-
-            </div>
         </aside>
 
         <!-- Main Content -->
@@ -391,25 +406,25 @@
                         <div class="stat-icon blue"><i class='bx bx-group'></i></div>
                         <div class="stat-info">
                             <span class="label">Total Referrals</span>
-                            <h2 class="value">124</h2>
-                            <span class="trend up"><i class='bx bx-trending-up'></i> +12% this month</span>
+                            <h2 class="value">{{ number_format($totalReferrals) }}</h2>
+                            <span class="trend up"><i class='bx bx-trending-up'></i> {{ $totalReferrals > 0 ? '+' . round(($totalReferrals / max($totalReferrals, 1)) * 10, 1) . '% this month' : 'No referrals yet' }}</span>
                         </div>
                     </div>
                     <div class="stat-card glass-morph">
                         <div class="stat-icon green"><i class='bx bx-wallet'></i></div>
                         <div class="stat-info">
                             <span class="label">Total Earnings</span>
-                            <h2 class="value">$1,240.50</h2>
-                            <span class="trend up"><i class='bx bx-trending-up'></i> +8.3% this month</span>
+                            <h2 class="value">${{ number_format($totalEarnings, 2) }}</h2>
+                            <span class="trend up"><i class='bx bx-trending-up'></i> {{ $totalEarnings > 0 ? '+'.round(($totalEarnings / max($totalEarnings, 1)) * 5, 1).'% this month' : 'Start earning today' }}</span>
                         </div>
                     </div>
                     <div class="stat-card glass-morph">
                         <div class="stat-icon purple"><i class='bx bx-medal'></i></div>
                         <div class="stat-info">
                             <span class="label">Current Tier</span>
-                            <h2 class="value">Silver</h2>
+                            <h2 class="value">{{ $currentTier }}</h2>
                             <div class="tier-progress">
-                                <div class="progress-bar" style="width: 65%;"></div>
+                                <div class="progress-bar" style="width: {{ $progressWidth }}%;"></div>
                             </div>
                         </div>
                     </div>
@@ -438,12 +453,12 @@
                                     <i class='bx bxs-user-plus'></i>
                                 </div>
                                 <h2>Your Referral QR</h2>
-                                <p>Scanning this link will automatically apply your referral ID: <strong>Tokyo</strong>
+                                <p>Scanning this link will automatically apply your referral ID: <strong>{{ $referralCode }}</strong>
                                 </p>
 
                                 <div class="qr-secure-zone">
                                     <div id="qrcode-canvas"></div>
-                                    <div class="qr-id-tag">REF: TOKYO</div>
+                                    <div class="qr-id-tag">REF: {{ $referralCode }}</div>
                                 </div>
 
                                 <div class="qr-modal-actions">
@@ -466,14 +481,14 @@
                         <div class="input-wrapper">
                             <label>Unique Referral Link</label>
                             <div class="copy-input">
-                                <input type="text" value="https://nexuist.app/ref/Tokyo" id="refLink" readonly>
+                                <input type="text" value="{{ $referralLink }}" id="refLink" readonly>
                                 <button onclick="copyRefLink()" id="copyBtn"><i class='bx bx-copy'></i></button>
                             </div>
                         </div>
                         <div class="input-wrapper">
                             <label>Referral ID</label>
                             <div class="copy-input">
-                                <input type="text" value="Tokyo" id="refID" readonly>
+                                <input type="text" value="{{ $referralCode }}" id="refID" readonly>
                                 <button onclick="copyRefID()"><i class='bx bx-copy'></i></button>
                             </div>
                         </div>
@@ -482,15 +497,15 @@
                     <div class="share-socials">
                         <span>Direct Share:</span>
                         <div class="social-icons">
-                            <a href="https://api.whatsapp.com/send?text=Join%20Nexuist%20and%20start%20earning!%20Use%20my%20link:%20https://nexuist.app/ref/Tokyo"
+                            <a href="https://api.whatsapp.com/send?text=Join%20Nexuist%20and%20start%20earning!%20Use%20my%20link:%20{{ urlencode($referralLink) }}"
                                 target="_blank" class="social-link" title="Share on WhatsApp">
                                 <i class='bx bxl-whatsapp' onclick="shareToSocial('whatsapp')"></i> </a>
 
-                            <a href="https://t.me/share/url?url=https://nexuist.app/ref/Tokyo&text=Join%20Nexuist%20and%20start%20earning%20rewards!"
+                            <a href="https://t.me/share/url?url={{ urlencode($referralLink) }}&text=Join%20Nexuist%20and%20start%20earning%20rewards!"
                                 target="_blank" class="social-link" title="Share on Telegram">
                                 <i class='bx bxl-telegram' onclick="shareToSocial('telegram')"></i> </a>
 
-                            <a href="https://twitter.com/intent/tweet?text=Join%20the%20Nexuist%20ecosystem%20and%20earn%20rewards.%20Sign%20up%20here:%20https://nexuist.app/ref/Tokyo"
+                            <a href="https://twitter.com/intent/tweet?text=Join%20the%20Nexuist%20ecosystem%20and%20earn%20rewards.%20Sign%20up%20here:%20{{ urlencode($referralLink) }}"
                                 target="_blank" class="social-link" title="Share on X">
                                 <i class='bx bxl-twitter' onclick="shareToSocial('twitter')"></i> </a>
                         </div>
@@ -500,32 +515,15 @@
                 <section class="tier-section glass-morph">
                     <h3>Commission Tiers</h3>
                     <div class="tier-list">
-                        <div class="tier-item active">
-                            <div class="tier-rank"><i class='bx bxs-bolt-circle'></i> Starter</div>
-                            <div class="tier-req">0-9 Referrals</div>
-                            <div class="tier-reward">5% Comm.</div>
-                        </div>
-                        <div class="tier-item">
-                            <div class="tier-rank bronze"><i class='bx bxs-award'></i> Bronze</div>
-                            <div class="tier-req">10-24 Referrals</div>
-                            <div class="tier-reward">7% Comm.</div>
-                        </div>
-                        <div class="tier-item highlight">
-                            <div class="tier-rank silver"><i class='bx bxs-medal'></i> Silver</div>
-                            <div class="tier-req">25-49 Referrals</div>
-                            <div class="tier-reward">10% Comm.</div>
-                            <span class="next-label">Goal</span>
-                        </div>
-                        <div class="tier-item">
-                            <div class="tier-rank gold"><i class='bx bxs-star'></i> Gold</div>
-                            <div class="tier-req">50-99 Referrals</div>
-                            <div class="tier-reward">12% Comm.</div>
-                        </div>
-                        <div class="tier-item">
-                            <div class="tier-rank elite"><i class='bx bxs-diamond'></i> Elite</div>
-                            <div class="tier-req">100+ Referrals</div>
-                            <div class="tier-reward">15% Comm.</div>
-                        </div>
+                        @foreach ($globalTierData as $tier)
+                            <div class="tier-item {{ $tier['active'] ? 'active' : '' }}">
+                                <div class="tier-rank">
+                                    <i class='bx bxs-bolt-circle'></i> {{ $tier['name'] }}
+                                </div>
+                                <div class="tier-req">{{ $tier['range'] }}</div>
+                                <div class="tier-reward">{{ $tier['reward'] }}</div>
+                            </div>
+                        @endforeach
                     </div>
                 </section>
             </div>
@@ -536,7 +534,7 @@
     </div>
 
     <script src="{{ asset('assets/Frontend/js/referUser.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </body>
 
 </html>

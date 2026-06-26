@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\UserNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,6 +32,13 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
             $request->session()->regenerate();
+
+            UserNotification::createForUser(
+                Auth::user(),
+                'Login',
+                'New login detected from IP: ' . $request->ip() . '. User agent: ' . $request->userAgent()
+            );
+
             return redirect('/')->with('success', 'Terminal authentication verified. Welcome back.');
         }
 

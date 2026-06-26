@@ -157,12 +157,12 @@
                 </ul>
             </li>
             <li>
-                <a href="notifications">
+                <a href="admin-notifications">
                     <i class='bx bx-bell'></i>
                     <span class="link_name">Notifications</span>
                 </a>
                 <ul class="sub-menu blank">
-                    <li><a class="link_name" href="notifications">Notifications</a></li>
+                    <li><a class="link_name" href="admin-notifications">Notifications</a></li>
                 </ul>
             </li>
             <li>

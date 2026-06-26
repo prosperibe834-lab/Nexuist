@@ -8,6 +8,7 @@ use App\Models\Deposit;
 use App\Models\RealEstateInvestment;
 use App\Models\StockInvestment;
 use App\Models\User;
+use App\Models\UserNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -130,7 +131,15 @@ class UserController extends Controller
             'country' => 'nullable|string|max:100',
         ]);
 
+        /** @var \App\Models\User $user */
         $user->update($validated);
+
+        UserNotification::createForUser(
+            $user,
+            'Profile Update',
+            'Your profile was successfully updated. Changes are now active.'
+        );
+
         session()->flash('success', 'Profile updated successfully');
 
         if ($request->wantsJson()) {
