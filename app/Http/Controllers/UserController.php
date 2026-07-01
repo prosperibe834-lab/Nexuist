@@ -9,6 +9,7 @@ use App\Models\RealEstateInvestment;
 use App\Models\StockInvestment;
 use App\Models\User;
 use App\Models\UserNotification;
+use App\Models\Withdrawal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -76,7 +77,11 @@ class UserController extends Controller
             ->where('status', 'unread')
             ->count();
 
-        return view('index', compact('totalDeposit', 'bonus', 'totalProfit', 'unreadCount'));
+        $totalWithdrawal = Withdrawal::where('user_id', $user->id)
+            ->whereIn('status', ['approved', 'completed'])
+            ->sum('amount');
+
+        return view('index', compact('totalDeposit', 'bonus', 'totalProfit', 'unreadCount', 'totalWithdrawal'));
     }
 
     public function profileSetting()
@@ -135,15 +140,7 @@ class UserController extends Controller
             'country' => 'nullable|string|max:100',
         ]);
 
-        /** @var \App\Models\User $user */
         $user->update($validated);
-
-        UserNotification::createForUser(
-            $user,
-            'Profile Update',
-            'Your profile was successfully updated. Changes are now active.'
-        );
-
         session()->flash('success', 'Profile updated successfully');
 
         if ($request->wantsJson()) {

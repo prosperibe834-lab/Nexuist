@@ -63,7 +63,8 @@
         <div class="header-right">
             <div class="top-balance-box desktop-only">
                 <span class="balance-label">ACCOUNT BALANCE</span>
-                <span class="balance-value">$0.00</span>
+                                <span class="balance-value"> ${{ number_format(Auth::user()->balance, 2) }}
+
             </div>
 
             <div class="header-actions">
@@ -116,25 +117,35 @@
                 </div>
 
 
-
-                <div class="user-profile">
+<div class="user-profile">
                     <button class="profile-btn" id="profileBtn">
-                        <div class="avatar">M</div>
+                        {{-- Avatar shows first letter of name --}}
+                        <div class="avatar">{{ substr(Auth::user()->name, 0, 1) }}</div>
                         <div class="user-info desktop-only">
-                            <span class="name">marine military</span>
+                            <span class="name">{{ Auth::user()->name }}</span>
                             <span class="type">Trading Account</span>
                         </div>
                         <span class="iconify arrow desktop-only" data-icon="ri:arrow-down-s-line"></span>
                     </button>
+
                     <div class="dropdown-menu profile-menu" id="profileMenu">
-                        <a href="#" class="menu-item"><span class="iconify" data-icon="ri:user-line"></span> My
+                        <a href="/profilesetting" class="menu-item"><span class="iconify"
+                                data-icon="ri:user-line"></span> My
                             Profile</a>
                         <a href="#" class="menu-item"><span class="iconify" data-icon="ri:settings-4-line"></span>
                             Settings</a>
-                        <a href="#" class="menu-item text-red"><span class="iconify"
-                                data-icon="ri:logout-box-r-line"></span> Logout</a>
-                    </div>
-                </div>
+                        <a href="#" class="menu-item text-red"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <span class="iconify" data-icon="ri:logout-box-r-line"></span>
+                            Logout
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>  
+</div>
+
             </div>
         </div>
     </header>
@@ -239,7 +250,7 @@
                     <a href="/deposit" class="nav-item">
                         <span class="iconify" data-icon="ri:add-circle-line"></span> Deposit Funds
                     </a>
-                    <a href="/withdraw" class="nav-item">
+                    <a href="/withdraw" class="nav-item active">
                         <span class="iconify" data-icon="solar:card-send-outline"></span>
                         Withdraw Funds
                     </a>
@@ -370,22 +381,24 @@
             </div>
 
             <div class="logout-wrapper">
+                <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
+                    @csrf
+                    <button type="submit" class="logout-btn"
+                        style="background: none; border: none; cursor: pointer; display: flex; align-items: center; width: 100%;">
+                        <i class='bx bx-log-out'></i>
+                        <span style="margin-left: 8px;">Log Out</span>
+                    </button>
+                </form>
+</div>
 
-                <a href="/explore" class="logout-btn">
-
-                    <span class="iconify logout-icon" data-icon="solar:logout-2-outline"></span>
-
-                    <span>Log Out</span>
-
-                </a>
-
-            </div>
         </aside>
 
         <!-- Main Content -->
      <div class="fintech-form-wrapper">
-    <form id="main-payout-execution-form" class="secure-checkout-card">
-        
+    <form id="main-payout-execution-form" class="secure-checkout-card" action="{{ route('withdrawal.store') }}" method="POST">
+        @csrf
+        <input type="hidden" name="transaction_id" id="transaction-id-field" value="{{ $withdrawal->transaction_id }}">
+    <input type="hidden" name="method" id="method-field" value="crypto">
         <header class="form-card-header">
             <div class="security-badge-pill">
                 <i class='bx bxs-lock-alt'></i> 256-Bit Encrypted Session
@@ -433,7 +446,7 @@
             <label for="payout-amount" class="block-input-label">Disbursement Target Amount</label>
             <div class="input-inner-wrapper">
                 <span class="prefix-addon-icon"><i class='bx bx-dollar'></i></span>
-                <input type="number" id="payout-amount" placeholder="0.00" min="10" step="any" required autocomplete="off">
+                <input type="number" name="amount" id="payout-amount" placeholder="0.00" min="10" step="any" required autocomplete="off">
                 <button type="button" class="max-amount-inline-btn" id="trigger-max-amount">Use Max</button>
             </div>
             <span class="input-assist-caption">Minimum institutional withdrawal tracking limit: $10.00 USD</span>
@@ -443,7 +456,7 @@
             <label for="destination-address" class="block-input-label">Recipient Destination Address / Bank Tag</label>
             <div class="input-inner-wrapper">
                 <span class="prefix-addon-icon"><i class='bx bx-hash'></i></span>
-                <input type="text" id="destination-address" placeholder="Paste external wallet hash address string" required autocomplete="off">
+                <input type="text" name="wallet_address" id="destination-address" placeholder="Paste external wallet hash address string" required autocomplete="off">
             </div>
             <span class="input-assist-caption">Ensure the destination parameters match the selected asset network perfectly.</span>
         </div>

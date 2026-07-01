@@ -63,7 +63,8 @@
         <div class="header-right">
             <div class="top-balance-box desktop-only">
                 <span class="balance-label">ACCOUNT BALANCE</span>
-                <span class="balance-value">$0.00</span>
+                
+                <span class="balance-value"> ${{ number_format(Auth::user()->balance, 2) }}
             </div>
 
             <div class="header-actions">
@@ -117,24 +118,38 @@
 
 
 
-                <div class="user-profile">
+               
+ <div class="user-profile">
                     <button class="profile-btn" id="profileBtn">
-                        <div class="avatar">M</div>
+                        {{-- Avatar shows first letter of name --}}
+                        <div class="avatar">{{ substr(Auth::user()->name, 0, 1) }}</div>
                         <div class="user-info desktop-only">
-                            <span class="name">marine military</span>
+                            <span class="name">{{ Auth::user()->name }}</span>
                             <span class="type">Trading Account</span>
                         </div>
                         <span class="iconify arrow desktop-only" data-icon="ri:arrow-down-s-line"></span>
                     </button>
+
                     <div class="dropdown-menu profile-menu" id="profileMenu">
-                        <a href="#" class="menu-item"><span class="iconify" data-icon="ri:user-line"></span> My
+                        <a href="/profilesetting" class="menu-item"><span class="iconify"
+                                data-icon="ri:user-line"></span> My
                             Profile</a>
                         <a href="#" class="menu-item"><span class="iconify" data-icon="ri:settings-4-line"></span>
                             Settings</a>
-                        <a href="#" class="menu-item text-red"><span class="iconify"
-                                data-icon="ri:logout-box-r-line"></span> Logout</a>
-                    </div>
-                </div>
+                        <a href="#" class="menu-item text-red"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <span class="iconify" data-icon="ri:logout-box-r-line"></span>
+                            Logout
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </div>  
+</div>
+
+
+
             </div>
         </div>
     </header>
@@ -364,17 +379,18 @@
 
             </div>
 
-            <div class="logout-wrapper">
+             <div class="logout-wrapper">
+                <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
+                    @csrf
+                    <button type="submit" class="logout-btn"
+                        style="background: none; border: none; cursor: pointer; display: flex; align-items: center; width: 100%;">
+                        <i class='bx bx-log-out'></i>
+                        <span style="margin-left: 8px;">Log Out</span>
+                    </button>
+                </form>
+</div>
 
-                <a href="/explore" class="logout-btn">
 
-                    <span class="iconify logout-icon" data-icon="solar:logout-2-outline"></span>
-
-                    <span>Log Out</span>
-
-                </a>
-
-            </div>
         </aside>
 
         <!-- Main Content -->
@@ -439,21 +455,22 @@
                     </div>
                 </article>
 
-                <form id="withdrawal-verification-form" class="withdrawal-input-panel">
+                <form id="withdrawal-verification-form" class="withdrawal-input-panel" action="{{ route('withdrawal.initiate') }}" method="POST">
+                    @csrf
                     <div class="input-panel-header">
                         <i class='bx bx-lock-open-alt security-icon'></i>
-                        <h2>Enter Verification Code</h2>
-                        <p>Paste the precise numerical sequence provided by your dedicated account officer.</p>
+                        <h2>Enter Withdrawal Transaction ID</h2>
+                        <p>Enter the transaction ID shown below to continue to settlement.</p>
                     </div>
 
                     <div class="input-field-group">
                         <div class="interactive-input-container">
                             <i class='bx bx-dialpad field-icon'></i>
-                            <input type="text" id="verification-code" placeholder="Enter your verification code here"
-                                required autocomplete="off">
+                            <input type="text" name="transaction_id" id="verification-code" placeholder="Enter your transaction ID"
+                                value="{{ old('transaction_id', $currentTransactionId ?? '') }}" required autocomplete="off">
                         </div>
                         <span class="field-info">
-                            <i class='bx bx-check-circle'></i> This code was provided by our customer support team
+                            <i class='bx bx-check-circle'></i> This ID is generated for your withdrawal request
                         </span>
                     </div>
 
@@ -466,7 +483,7 @@
 
                 <footer class="transaction-summary-tooltip">
                     <i class='bx bxs-coin-stack'></i>
-                    <p>Current Pending Transaction ID: <strong id="current-tid">NEXU-WIT-8472</strong></p>
+                    <p>Current Pending Transaction ID: <strong id="current-tid">{{ $currentTransactionId ?? $withdrawal->transaction_id }}</strong></p>
                 </footer>
             </div>
 

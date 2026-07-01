@@ -193,34 +193,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const submitBtn = document.getElementById("verify-submit-btn");
 
     if (verificationForm) {
-        verificationForm.addEventListener("submit", function (e) {
-            e.preventDefault();
+        verificationForm.addEventListener("submit", function () {
+            if (!codeInput || !codeInput.value.trim()) {
+                return;
+            }
 
-            const rawValue = codeInput.value.trim();
-            if (!rawValue) return;
-
-            // Update UI State to reflect a secure processing pipeline execution
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = "<i class='bx bx-loader-alt animate-spin'></i> Authorization Processing...";
-            submitBtn.style.opacity = "0.7";
-
-            // Simulate server authentication delay round-trip tracking network latency
-            setTimeout(() => {
-                alert(`Security Pipeline Input Accepted! Validating internal transaction context node reference token: ${rawValue}`);
-                
-                // Return button status to baseline configuration after completion processing sequence
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = "<i class='bx bx-check-shield'></i> Verify & Continue";
-                submitBtn.style.opacity = "1";
-            }, 2500);
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = "<i class='bx bx-loader-alt animate-spin'></i> Checking transaction...";
+                submitBtn.style.opacity = "0.7";
+            }
         });
     }
-
-    const verifyBtn = document.getElementById("verify-submit-btn");
-
-verifyBtn.addEventListener("click", function(e){
-    e.preventDefault();
-
-    window.location.href = "/settlement";
-});
 });

@@ -262,31 +262,68 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnWthConfirmApprove = document.getElementById("btn-withdraw-approve");
     const btnWthConfirmReject = document.getElementById("btn-withdraw-reject");
 
-    if (btnWthConfirmApprove) {
-        btnWthConfirmApprove.addEventListener("click", () => {
-            if (wthTargetRowScope) {
-                wthTargetRowScope.setAttribute("data-status", "Approved");
-                const visualBadge = wthTargetRowScope.querySelector(".nx-w-status");
-                if (visualBadge) {
-                    visualBadge.className = "nx-w-status status-w-approved";
-                    visualBadge.innerHTML = "<i class='bx bx-check-circle'></i> Approved";
-                }
-                wthModalAuditWindow.classList.remove("modal-active");
+    async function submitWithdrawalAction(action) {
+        if (!wthTargetRowScope) return;
+
+        const withdrawalId = wthTargetRowScope.getAttribute('data-id');
+        if (!withdrawalId) return;
+
+        const url = `/api/withdrawals/${withdrawalId}/${action}`;
+        const payload = {};
+
+        if (action === 'reject') {
+            const reason = prompt('Enter reason for rejection:');
+            if (!reason) {
+                return;
             }
+            payload.reason = reason;
+        }
+
+        const token = document.querySelector('meta[name="csrf-token"]')?.content;
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': token,
+                },
+                body: JSON.stringify(payload),
+            });
+
+            const data = await response.json();
+            if (!data.success) {
+                alert(data.message || 'Unable to process withdrawal.');
+                return;
+            }
+
+            const status = action === 'approve' ? 'Approved' : 'Rejected';
+            const badge = wthTargetRowScope.querySelector('.nx-w-status');
+            if (badge) {
+                badge.className = `nx-w-status status-w-${status.toLowerCase()}`;
+                badge.innerHTML = action === 'approve'
+                    ? "<i class='bx bx-check-circle'></i> Approved"
+                    : "<i class='bx bx-x-circle'></i> Rejected";
+            }
+
+            wthTargetRowScope.setAttribute('data-status', status);
+            if (wthModalAuditWindow) wthModalAuditWindow.classList.remove('modal-active');
+            alert(data.message || `Withdrawal ${status.toLowerCase()} successfully.`);
+        } catch (error) {
+            console.error(error);
+            alert('Network error while processing withdrawal.');
+        }
+    }
+
+    if (btnWthConfirmApprove) {
+        btnWthConfirmApprove.addEventListener('click', () => {
+            submitWithdrawalAction('approve');
         });
     }
 
     if (btnWthConfirmReject) {
-        btnWthConfirmReject.addEventListener("click", () => {
-            if (wthTargetRowScope) {
-                wthTargetRowScope.setAttribute("data-status", "Rejected");
-                const visualBadge = wthTargetRowScope.querySelector(".nx-w-status");
-                if (visualBadge) {
-                    visualBadge.className = "nx-w-status status-w-rejected";
-                    visualBadge.innerHTML = "<i class='bx bx-x-circle'></i> Rejected";
-                }
-                wthModalAuditWindow.classList.remove("modal-active");
-            }
+        btnWthConfirmReject.addEventListener('click', () => {
+            submitWithdrawalAction('reject');
         });
     }
 

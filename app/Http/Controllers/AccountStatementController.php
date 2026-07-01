@@ -47,12 +47,12 @@ class AccountStatementController extends Controller
                     'id' => $w->id,
                     'date' => isset($w->created_at) ? date('Y-m-d', strtotime($w->created_at)) : '',
                     'type' => 'withdrawal',
-                    'category' => $w->method ?? 'Withdrawal',
-                    'amount' => number_format($w->amount, 2),
+                    'category' => $w->method === 'crypto' ? 'Crypto Withdrawal' : ($w->method === 'bank_transfer' ? 'Bank Withdrawal' : 'Withdrawal'),
+                    'amount' => number_format((float) $w->amount, 2),
                     'currency' => $w->currency ?? 'USD',
-                    'destination' => $w->destination ?? '',
-                    'ref' => $w->reference ?? ($w->txid ?? ''),
-                    'status' => $w->status ?? 'Pending',
+                    'destination' => $w->wallet_address ?? '',
+                    'ref' => $w->transaction_id ?? '',
+                    'status' => ucfirst((string) ($w->status ?? 'Pending')),
                     'icon' => 'ri:arrow-right-up-line',
                 ];
             })->values();

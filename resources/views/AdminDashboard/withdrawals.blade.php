@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexuist Admin Dashboard</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -254,9 +255,9 @@
                 <i class='bx bx-time-five icon-w-warn'></i>
             </div>
             <div class="nx-w-card-body">
-                <h2>$28,450.00</h2>
+                <h2>${{ number_format($stats['total_pending_amount'] ?? 0, 2) }}</h2>
                 <div class="nx-w-pill pill-warn">
-                    <i class='bx bx-git-pull-request'></i> 5 Pending Sign-offs
+                    <i class='bx bx-git-pull-request'></i> {{ $stats['pending'] ?? 0 }} Pending Sign-offs
                 </div>
             </div>
             <p class="nx-w-meta">Awaiting administrative clearance authorization</p>
@@ -268,7 +269,7 @@
                 <i class='bx bx-check-shield icon-w-success'></i>
             </div>
             <div class="nx-w-card-body">
-                <h2>$412,050.00</h2>
+                <h2>${{ number_format($stats['total_approved_amount'] ?? 0, 2) }}</h2>
                 <div class="nx-w-pill pill-success">
                     <i class='bx bx-trending-down'></i> -8.2% Outflow Rate
                 </div>
@@ -282,7 +283,7 @@
                 <i class='bx bx-bank icon-w-accent'></i>
             </div>
             <div class="nx-w-card-body">
-                <h2>Bank Wire</h2>
+                <h2>{{ !empty($stats['dominant_routing_endpoint']) ? ucfirst(str_replace('_', ' ', $stats['dominant_routing_endpoint'])) : 'No Data' }}</h2>
                 <div class="nx-w-pill pill-accent">
                     <i class='bx bx-shuffle'></i> 52% Selection
                 </div>
@@ -349,56 +350,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="nx-w-data-row" data-txid="WTH-77402911" data-uid="#NEX-20349" data-name="Marcus Vance" data-method="Bank Transfer" data-amount="12500.00" data-destination="Chase Bank •••• 8841" data-status="Pending">
-                        <td><span class="nx-w-hash-tag">WTH-77402911</span></td>
+                    @forelse ($withdrawals as $withdrawal)
+                    <tr class="nx-w-data-row" data-id="{{ $withdrawal->id }}" data-txid="{{ $withdrawal->transaction_id }}" data-uid="#NEX-{{ $withdrawal->user->id }}" data-name="{{ $withdrawal->user->name }}" data-method="{{ ucfirst(str_replace('_', ' ', $withdrawal->method)) }}" data-amount="{{ number_format($withdrawal->amount, 2, '.', '') }}" data-destination="{{ $withdrawal->wallet_address }}" data-status="{{ ucfirst($withdrawal->status) }}">
+                        <td><span class="nx-w-hash-tag">{{ $withdrawal->transaction_id }}</span></td>
                         <td>
                             <div class="nx-w-profile-cell">
-                                <div class="nx-w-avatar avatar-purple">MV</div>
+                                <div class="nx-w-avatar avatar-purple">{{ strtoupper(substr($withdrawal->user->name, 0, 2)) }}</div>
                                 <div class="nx-w-profile-info">
-                                    <span class="nx-w-username">Marcus Vance</span>
-                                    <span class="nx-w-uid">#NEX-20349</span>
+                                    <span class="nx-w-username">{{ $withdrawal->user->name }}</span>
+                                    <span class="nx-w-uid">#NEX-{{ $withdrawal->user->id }}</span>
                                 </div>
                             </div>
                         </td>
-                        <td><span class="nx-w-method-text"><i class='bx bx-bank text-muted'></i> Bank Transfer</span></td>
-                        <td><span class="nx-w-value-negative">$12,500.00</span></td>
-                        <td><span class="nx-w-dest-text">Chase Bank •••• 8841</span></td>
-                        <td><span class="nx-w-status status-w-pending"><i class='bx bx-time-five'></i> Pending</span></td>
+                        <td><span class="nx-w-method-text"><i class='bx {{ $withdrawal->source_wallet === 'btc_yield' ? 'bxl-bitcoin' : ($withdrawal->source_wallet === 'usdt_main' ? 'bx-wallet' : 'bx-bank') }} text-muted'></i> {{ $withdrawal->source_wallet === 'btc_yield' ? 'Bitcoin Vault' : ($withdrawal->source_wallet === 'usdt_main' ? 'USDT Balance' : ucfirst(str_replace('_', ' ', $withdrawal->method))) }}</span></td>
+                        <td><span class="nx-w-value-negative">${{ number_format($withdrawal->amount, 2) }}</span></td>
+                        <td><span class="nx-w-dest-text">{{ $withdrawal->wallet_address }}</span></td>
+                        <td><span class="nx-w-status status-w-{{ strtolower($withdrawal->status) }}"><i class='bx bx-time-five'></i> {{ ucfirst($withdrawal->status) }}</span></td>
                         <td>
                             <div class="nx-w-actions-group">
                                 <button class="nx-w-action-btn withdraw-action-review" title="Process Outflow Instruction"><i class='bx bx-slider-alt'></i></button>
                             </div>
                         </td>
                     </tr>
-
-                    <tr class="nx-w-data-row" data-txid="WTH-11940293" data-uid="#NEX-39401" data-name="Elena Rostova" data-method="Crypto" data-amount="4310.00" data-destination="0x71C...49Ba (USDT)" data-status="Approved">
-                        <td><span class="nx-w-hash-tag">WTH-11940293</span></td>
-                        <td>
-                            <div class="nx-w-profile-cell">
-                                <div class="nx-w-avatar avatar-cyan">ER</div>
-                                <div class="nx-w-profile-info">
-                                    <span class="nx-w-username">Elena Rostova</span>
-                                    <span class="nx-w-uid">#NEX-39401</span>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="nx-w-method-text"><i class='bx bxl-bitcoin crypto-usdt'></i> Crypto (USDT)</span></td>
-                        <td><span class="nx-w-value-negative">$4,310.00</span></td>
-                        <td><span class="nx-w-dest-text monospace-font">0x71C...49Ba</span></td>
-                        <td><span class="nx-w-status status-w-approved"><i class='bx bx-check-circle'></i> Approved</span></td>
-                        <td>
-                            <div class="nx-w-actions-group">
-                                <button class="nx-w-action-btn withdraw-action-review" title="Process Outflow Instruction"><i class='bx bx-slider-alt'></i></button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr id="withdraw-empty-row" style="display: none;">
+                    @empty
+                    <tr id="withdraw-empty-row">
                         <td colspan="7" class="nx-w-empty-fallback">
                             <i class='bx bx-transfer-alt empty-w-icon'></i>
                             <p>No withdrawal logs cross-intersect your active parameter configuration.</p>
                         </td>
                     </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

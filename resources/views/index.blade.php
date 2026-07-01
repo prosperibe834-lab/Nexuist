@@ -96,7 +96,7 @@
                             <span>Withdraw Funds</span>
                         </a>
 
-                        <a href="#" class="qt-dropdown-item">
+                        <a href="/livemarkets" class="qt-dropdown-item">
                             <span class="iconify qt-menu-icon" data-icon="solar:chart-square-outline"></span>
                             <span>Trade Markets</span>
                         </a>
@@ -113,7 +113,7 @@
                     </button>
                     <div class="dropdown-menu notif-menu" id="notifMenu">
                         <div class="menu-header">Notifications</div>
-                        <a href="/notifications" class="menu-item">View all notifications</a>
+                        <a href="/notification" class="menu-item">View all notifications</a>
                     </div>
                 </div>
 
@@ -134,7 +134,8 @@
                         <a href="/profilesetting" class="menu-item"><span class="iconify"
                                 data-icon="ri:user-line"></span> My
                             Profile</a>
-                        <a href="/profilesetting" class="menu-item"><span class="iconify" data-icon="ri:settings-4-line"></span>
+                        <a href="/verify-account" class="menu-item"><span class="iconify"
+                                data-icon="ri:settings-4-line"></span>
                             Settings</a>
                         <a href="#" class="menu-item text-red"
                             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -148,7 +149,7 @@
                     </div>
                 </div>
 
-                
+
             </div>
         </div>
     </header>
@@ -184,10 +185,10 @@
                         </a>
                         <div class="sidebar-submenu" id="investPlansMenu">
 
-                            <a href="plans.html" class="nav-item sub-item">
+                            <!-- <a href="plans.html" class="nav-item sub-item">
                                 <span class="iconify submenu-icon" data-icon="solar:layers-outline"></span>
                                 All Plans
-                            </a>
+                            </a> -->
 
                             <a href="/stockMarket" class="nav-item sub-item">
                                 <span class="iconify submenu-icon" data-icon="solar:chart-square-outline"></span>
@@ -209,9 +210,9 @@
                     <a href="/portfolio" class="nav-item">
                         <span class="iconify" data-icon="ri:pie-chart-line"></span> My Portfolio
                     </a>
-                    <a href="/performance" class="nav-item">
+                    <!-- <a href="/performance" class="nav-item">
                         <span class="iconify" data-icon="ri:line-chart-line"></span> Performance History
-                    </a>
+                    </a> -->
                 </div>
 
                 <div class="nav-section">
@@ -257,9 +258,9 @@
                         <span class="iconify" data-icon="solar:card-send-outline"></span>
                         Withdraw Funds
                     </a>
-                    <a href="internal-/transfer" class="nav-item">
+                    <!-- <a href="internal-/transfer" class="nav-item">
                         <span class="iconify" data-icon="ri:arrow-left-right-line"></span> Internal Transfer
-                    </a>
+                    </a> -->
                 </div>
 
                 <div class="acm-section">
@@ -358,7 +359,7 @@
 
             </nav>
 
-            <div class="sidebar-footer">
+            <!-- <div class="sidebar-footer">
 
                 <a href="/loan" class="apply-credit">
                     <span class="iconify" data-icon="ri:add-box-line"></span> Apply for Credit
@@ -368,7 +369,7 @@
                 <a href="/loanHistory" class="apply-credit">
                     <span class="iconify" data-icon="ri:file-list-3-line"></span> Credit History
                 </a>
-            </div>
+            </div> -->
 
             <div class="contact-wrapper">
 
@@ -447,12 +448,12 @@
                         <span class="tag tag-success"><span class="iconify" data-icon="ri:checkbox-circle-line"></span>
                             Available for Withdrawal</span>
                         @if(strtolower(Auth::user()->kyc_status) === 'approved')
-                        <span class="tag tag-success"><span class="iconify" data-icon="ri:checkbox-circle-line"></span>
-                            Verified</span>
-                    @else
-                        <span class="tag tag-danger"><span class="iconify" data-icon="ri:error-warning-line"></span>
-                            Unverified</span>
-                    @endif
+                            <span class="tag tag-success"><span class="iconify" data-icon="ri:checkbox-circle-line"></span>
+                                Verified</span>
+                        @else
+                            <span class="tag tag-danger"><span class="iconify" data-icon="ri:error-warning-line"></span>
+                                Unverified</span>
+                        @endif
                     </div>
 
 
@@ -503,11 +504,11 @@
                         <p>Total Withdrawal</p>
                         <div class="icon-circle"><span class="iconify" data-icon="ri:arrow-up-line"></span></div>
                     </div>
-                    <h2>$0.00</h2>
+                    <h2>${{ number_format($totalWithdrawal ?? 0, 2) }}</h2>
                     <p class="bottom-text"><span class="iconify" data-icon="ri:calendar-line"></span> All time</p>
                 </div>
 
-               
+
             </div>
 
             <div class="card flex-card">

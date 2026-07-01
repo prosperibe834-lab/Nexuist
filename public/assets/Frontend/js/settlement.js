@@ -193,6 +193,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const useMaxBtn = document.getElementById("trigger-max-amount");
     const amountInput = document.getElementById("payout-amount");
     const submitBtn = document.getElementById("submit-payout-btn");
+    const methodField = document.getElementById("method-field");
     
     // Modal Selectors
     const successModal = document.getElementById("success-state-modal");
@@ -200,21 +201,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const modalRefHash = document.getElementById("mdl-ref-hash");
     const modalPoolType = document.getElementById("mdl-pool-type");
 
-    // 1. Dynamic Toggle States styling tracking for custom select tiles
     tileRadioGroup.forEach(radio => {
         radio.addEventListener("change", function () {
-            // Drop current active structural layouts tags on alternate selections
             document.querySelectorAll(".wallet-select-tile").forEach(tile => {
                 tile.classList.remove("active-tile");
             });
-            // Assign active layout identifier back onto target visual node
             if (this.checked) {
                 this.closest(".wallet-select-tile").classList.add("active-tile");
+                if (methodField) {
+                    methodField.value = 'crypto';
+                }
             }
         });
     });
 
-    // 2. Inline Utility Button Max Value Assignment Handler Logic
     if (useMaxBtn && amountInput) {
         useMaxBtn.addEventListener("click", function () {
             const activeWallet = document.querySelector("input[name='source_wallet']:checked").value;
@@ -226,74 +226,88 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // 3. Form Dispatch Interception Sequence Implementation
     if (payoutForm) {
-        payoutForm.addEventListener("submit", function (e) {
+        payoutForm.addEventListener("submit", async function (e) {
             e.preventDefault();
 
-            // Read operational parameters states 
-            const selectedWalletInput = document.querySelector("input[name='source_wallet']:checked");
-            const walletLabel = selectedWalletInput.closest(".wallet-select-tile").querySelector(".tile-title").textContent;
-            const targetAddressValue = document.getElementById("destination-address").value.trim();
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = "<i class='bx bx-loader-alt bx-spin'></i> Sending request...";
+            }
 
-            // Set UI processing load state markers 
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = "<i class='bx bx-loader-alt bx-spin'></i> Routing to Clearing Network...";
+            const form = e.currentTarget;
+            const formData = new FormData(form);
+            const transactionId = formData.get('transaction_id') || '';
+            const amount = formData.get('amount') || '';
+            const address = formData.get('wallet_address') || '';
+            const requestMethod = (form.getAttribute('method') || 'POST').toUpperCase();
 
-            // Simulate financial data round-trip communication payload matrix latency
-            setTimeout(() => {
-                // Populate custom modal payload elements dynamically before execution opening array
-                if (modalRefHash) modalRefHash.textContent = targetAddressValue || "N/A";
-                if (modalPoolType) modalPoolType.textContent = walletLabel || "USDT Balance";
+            try {
+                const response = await fetch(form.action, {
+                    method: requestMethod,
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },
+                    credentials: 'same-origin'
+                });
 
-                // Open overlay window cleanly
-                if (successModal) {
-                    successModal.classList.add("modal-open");
+                const payload = await response.json().catch(() => ({}));
+
+                if (!response.ok || !payload.success) {
+                    throw new Error(payload.message || 'Unable to submit withdrawal request.');
                 }
 
-                // Reset processing button state variables configuration
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = "<i class='bx bx-send'></i> Review & Execute Release";
-                payoutForm.reset();
-                
-                // Keep structural layout classes active normalized matching fallback defaults
-                document.querySelectorAll(".wallet-select-tile").forEach((tile, index) => {
-                    if (index === 0) tile.classList.add("active-tile");
-                });
-            }, 2000);
+                if (modalRefHash) modalRefHash.textContent = transactionId || 'N/A';
+                if (modalPoolType) modalPoolType.textContent = document.querySelector("input[name='source_wallet']:checked")?.closest('.wallet-select-tile')?.querySelector('.tile-title')?.textContent || 'USDT Balance';
+
+                if (successModal) {
+                    successModal.classList.add('modal-open');
+                }
+
+                if (amount) {
+                    form.reset();
+                    document.querySelectorAll('.wallet-select-tile').forEach((tile, index) => {
+                        tile.classList.toggle('active-tile', index === 0);
+                    });
+                }
+            } catch (error) {
+                console.error(error);
+                alert(error.message || 'Unable to submit your withdrawal request.');
+            } finally {
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = "<i class='bx bx-send'></i> Review & Execute Release";
+                }
+            }
         });
     }
 
-    document.addEventListener("DOMContentLoaded", function () {
-    const walletTiles = document.querySelectorAll(".wallet-select-tile");
-
-    walletTiles.forEach(tile => {
-        tile.addEventListener("click", function (e) {
-            // Find the embedded radio button within this specific card frame
+    document.querySelectorAll(".wallet-select-tile").forEach(tile => {
+        tile.addEventListener("click", function () {
             const targetRadio = this.querySelector("input[type='radio']");
-            
             if (targetRadio) {
-                // Check the radio input track programmatically
                 targetRadio.checked = true;
-
-                // Scrub the active styling layer off all options in the module container
-                walletTiles.forEach(item => item.classList.remove("active-tile"));
-
-                // Affix the active dashboard visual properties onto the chosen option card
+                document.querySelectorAll(".wallet-select-tile").forEach(item => item.classList.remove("active-tile"));
                 this.classList.add("active-tile");
-                
-                // Fire an optional tracking event to sync up max balance utility calculations
                 targetRadio.dispatchEvent(new Event('change', { bubbles: true }));
             }
         });
     });
-});
 
-    // 4. Modal Window Termination Mechanics
     if (closeModalBtn && successModal) {
         closeModalBtn.addEventListener("click", function () {
             successModal.classList.remove("modal-open");
         });
+    }
+
+    const transactionInput = document.getElementById('transaction-id-field');
+    if (transactionInput && !transactionInput.value) {
+        const match = window.location.pathname.match(/\/withdraw\/settlement\/([^/]+)/);
+        if (match) {
+            transactionInput.value = match[1];
+        }
     }
 
 });

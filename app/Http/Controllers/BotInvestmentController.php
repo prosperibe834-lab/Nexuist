@@ -85,6 +85,34 @@ class BotInvestmentController extends Controller
         return response()->json($response, $status);
     }
 
+    /**
+     * Accrue pending profits for a user's bot investments.
+     *
+     * This is used by PremiumSignalsController to ensure a user's active
+     * bot investment state is refreshed before rendering premium signal data.
+     */
+    public static function accruePendingProfitsForUser($user)
+    {
+        try {
+            $investments = BotInvestment::where('user_id', $user->id)
+                ->where('status', 'Running')
+                ->get();
+
+            foreach ($investments as $investment) {
+                // Placeholder logic: refresh current_balance if needed.
+                // Real accrual rules may be added later.
+                if ($investment->current_balance === null) {
+                    $investment->current_balance = $investment->investment_amount;
+                    $investment->save();
+                }
+            }
+        } catch (\Exception $e) {
+            // Prevent failure during signal page render.
+        }
+
+        return true;
+    }
+
     public function dashboard()
     {
         $activeInvestments = BotInvestment::with('bot')
