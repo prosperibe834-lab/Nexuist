@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use App\Models\UserNotification;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -26,5 +29,17 @@ class AppServiceProvider extends ServiceProvider
         } catch (\Throwable $e) {
             // if mailer not available during certain artisan commands, silently ignore
         }
+
+        View::composer('layouts.frontend-header-sidebar', function ($view) {
+            $unreadCount = 0;
+
+            if (Auth::check()) {
+                $unreadCount = UserNotification::where('user_id', Auth::id())
+                    ->where('status', 'unread')
+                    ->count();
+            }
+
+            $view->with('unreadCount', $unreadCount);
+        });
     }
 }

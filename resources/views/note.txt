@@ -914,10 +914,15 @@ body {
 
 
 git add .
-git commit -m "i added backend to withrawal"
+git commit -m "i linked all the nav well"
 git push origin main 
 
 
 
-
+i want you to link my frontend blades for me the <header class="top-header"> the  <div class="header-right"> the  <div class="user-profile"> the <div class="main-layout">
+        <aside class="sidebar" id="sidebar"> some of them in that frontend are not linked well i want you to from the index.blade the / the main one and see how it is and link others well and also dont touch AdminDashboard folder that one is different is not part of it i want you to do it to those fronend files those files at views outside dont touch AdminDashboard folder. those files that has this div i sent you do them link them well from the index and know what to do and in that and there are some stuffs i commented out also comment it out in others and these one on this index make it other to be like it  <div class="crypto-ticker desktop-only">
+                        <span class="live-indicator"><span class="dot"></span> LIVE</span>
+                        <span class="ticker-item">BTC: <strong class="red" id="btc-price">$80,898</strong></span>
+                        <span class="ticker-item">ETH: <strong class="red" id="eth-price">$2,329</strong></span>
+                    </div>, although i have already linked some but i did not link all just from this index and know what to do. dont remove the active link for each page ohh just that linking it well. Can you do it without doing mistake or having error that will affect my site?
 
