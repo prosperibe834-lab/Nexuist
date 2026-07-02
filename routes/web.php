@@ -4,8 +4,10 @@ use App\Http\Controllers\AccountStatementController;
 use App\Http\Controllers\AdminKycController;
 use App\Http\Controllers\Admin\AdminDemoController;
 use App\Http\Controllers\Admin\AiBotController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\DemoTradeController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\KycController;
@@ -91,8 +93,12 @@ Route::get('/ref/{code}', function ($code) {
 
 Route::middleware('guest')->group(function () {
     Route::view('/signup', 'signup');
-    Route::view('/forgot-password', 'forgot-password');
-    Route::view('/reset-password', 'reset-password');
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotForm'])->name('password.request');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'send'])->name('password.email');
+    Route::get('/forgot-password/otp', [ForgotPasswordController::class, 'showOtpForm'])->name('password.otp');
+    Route::post('/forgot-password/otp/verify', [ForgotPasswordController::class, 'verifyOtp'])->name('password.otp.verify');
+    Route::get('/forgot-password/reset', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset.form');
+    Route::post('/forgot-password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
     Route::post('/register/submit', [RegisterController::class, 'submit'])->name('register.submit');
 
     Route::view('/admin-login', 'admin-login');

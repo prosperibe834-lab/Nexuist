@@ -122,20 +122,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Form final execution update action handler
     if (resetForm) {
         resetForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+            if (!passwordInput.value || !confirmInput.value) {
+                e.preventDefault();
+                return;
+            }
 
-            // Lock submission changes visually
             submitBtn.disabled = true;
             submitBtn.innerHTML = `<span>Updating Protocol...</span> <i class='bx bx-loader-alt bx-spin'></i>`;
-
-            // Process secure database save handshakes
-            setTimeout(() => {
-                resetPanel.classList.remove('active-panel');
-                successPanel.classList.add('active-panel');
-                
-                // Fire automatic auto-routing security redirect timer
-                startRedirectCountdown(5);
-            }, 1800);
         });
     }
 

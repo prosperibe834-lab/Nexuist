@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Illuminate\Auth\Events\PasswordReset;
 
 class ResetPasswordController extends Controller
 {
@@ -15,25 +15,27 @@ class ResetPasswordController extends Controller
     public function reset(Request $request)
     {
         $request->validate([
-            'token' => 'required',
             'email' => 'required|email',
             'password' => 'required|confirmed|min:8',
         ]);
 
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) {
-                $user->password = Hash::make($password);
-                $user->setRememberToken(Str::random(60));
-                $user->save();
-                event(new PasswordReset($user));
-            }
-        );
-
-        if ($status == Password::PASSWORD_RESET) {
-            return redirect('/login')->with('status', __($status));
+        if (! session('password_reset_verified') || strtolower(trim($request->email)) !== session('password_reset_email')) {
+            return back()->withErrors(['email' => 'Your recovery session has expired. Please start again.']);
         }
 
-        return back()->withErrors(['email' => [__($status)]]);
+        $user = User::where('email', strtolower(trim($request->email)))->first();
+
+        if (! $user) {
+            return back()->withErrors(['email' => 'We could not find an account with that email address.']);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->setRememberToken(Str::random(60));
+        $user->save();
+        event(new PasswordReset($user));
+
+        session()->forget(['password_reset_email', 'password_reset_otp', 'password_reset_verified']);
+
+        return redirect('/login')->with('status', 'Your password has been updated successfully. Please sign in.');
     }
 }

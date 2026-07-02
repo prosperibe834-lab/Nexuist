@@ -59,6 +59,14 @@
                         recovery vector mapping sequence will be dispatched instantly.</p>
                 </div>
 
+                @if (session('status'))
+                    <div class="notice success">{{ session('status') }}</div>
+                @endif
+
+                @if ($errors->has('email'))
+                    <div class="notice error">{{ $errors->first('email') }}</div>
+                @endif
+
                 <form id="nexuist-forgot-form" novalidate method="POST" action="{{ route('password.email') }}">
                     @csrf
                     <div class="form-grid-layout">

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Establish New Nexuist Security Credentials</title>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./{{ asset('assets/Frontend/css/reset-password.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/Frontend/css/reset-password.css') }}">
 </head>
 
 <body>
@@ -55,9 +55,16 @@
                         update your institutional terminal access.</p>
                 </div>
 
+                @if (session('status'))
+                    <div class="notice success">{{ session('status') }}</div>
+                @endif
+
+                @if ($errors->has('email'))
+                    <div class="notice error">{{ $errors->first('email') }}</div>
+                @endif
+
                 <form id="nexuist-reset-form" novalidate method="POST" action="{{ route('password.update') }}">
                     @csrf
-                    <input type="hidden" name="token" value="{{ $token }}">
                     <input type="hidden" name="email" value="{{ $email ?? old('email') }}">
                     <div class="form-grid-layout">
 
@@ -147,7 +154,7 @@
         </div>
     </div>
 
-    <script src="./{{ asset('assets/Frontend/js/reset-password.js') }}"></script>
+    <script src="{{ asset('assets/Frontend/js/reset-password.js') }}"></script>
     <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
 
 </body>
