@@ -94,7 +94,6 @@
     </div>
 </header>
 
-<div class="main-layout">
     <aside class="sidebar" id="sidebar">
         <div class="sidebar-header">
             <span>LIVE MARKET</span>
@@ -312,4 +311,3 @@
                 });
         });
     </script>
-</div>

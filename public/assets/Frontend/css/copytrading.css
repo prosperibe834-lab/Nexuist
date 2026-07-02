@@ -1593,7 +1593,8 @@ body{
 .dashboard-container{
     margin-left: var(--sidebar-width);
     width: calc(100% - var(--sidebar-width));
-    padding: 30px;
+    max-width: none;
+    padding: calc(var(--header-height) + 30px) 30px 30px;
     overflow-x: hidden;
 }
 

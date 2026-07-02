@@ -220,8 +220,6 @@
             </div>
         </section>
 
-    </div>
-
     <script src="{{ asset('assets/Frontend/js/copytrading.js') }}"></script>
 </body>
 
