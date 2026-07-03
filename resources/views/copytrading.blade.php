@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <link rel="icon" type="image/png" href="{{ asset('assets/Frontend/image/NexuistLogo.png.png') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexuist | Professional Trading</title>
@@ -99,15 +100,38 @@
                 </div>
             </div>
 
-            <div class="empty-state-card scale-up">
-                <div class="empty-icon">
-                    <i class="fas fa-copy"></i>
-                </div>
-                <h2>Start Copy Trading</h2>
-                <p>You haven't started copying any traders yet. Browse our expert traders and start copying their
-                    winning strategies to earn profits automatically.</p>
+            @if(!empty($activeCopies) && $activeCopies > 0)
+                <section class="active-copies-section">
+                    <div class="section-header">
+                        <h2>Your Active Copying Positions</h2>
+                        <a href="/deploybot" class="btn btn-outline">View Deployment</a>
+                    </div>
+                    <div class="active-copies-grid">
+                        @foreach($activeInvestments as $investment)
+                            <div class="copy-card">
+                                <div class="copy-card-body">
+                                    <h3>{{ $investment->bot->bot_name ?? 'AI Copy Bot' }}</h3>
+                                    <p>{{ $investment->bot->strategy_type ?? $investment->bot->trading_style ?? 'Copy Trading Strategy' }}</p>
+                                    <div class="copy-card-stats">
+                                        <span>Principal: ${{ number_format($investment->investment_amount, 2) }}</span>
+                                        <span>Current Value: ${{ number_format($investment->current_balance, 2) }}</span>
+                                        <span>Profit: ${{ number_format($investment->current_profit, 2) }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </section>
+            @else
+                <div class="empty-state-card scale-up">
+                    <div class="empty-icon">
+                        <i class="fas fa-copy"></i>
+                    </div>
+                    <h2>Start Copy Trading</h2>
+                    <p>You haven't started copying any traders yet. Browse our expert traders and start copying their
+                        winning strategies to earn profits automatically.</p>
 
-                <div class="feature-highlights">
+                    <div class="feature-highlights">
                     <div class="feature-item">
                         <div class="f-icon icon-blue"><i class="fas fa-user-tie"></i></div>
                         <h4>Expert Traders</h4>

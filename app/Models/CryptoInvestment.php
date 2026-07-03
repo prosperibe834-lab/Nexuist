@@ -54,11 +54,7 @@ class CryptoInvestment extends Model
     public function getAccruedProfitAttribute()
     {
         $elapsedDays = now()->diffInDays($this->start_date);
-        if ($elapsedDays <= 0) {
-            return 0.00;
-        }
-
-        $days = min($elapsedDays, $this->term_days);
+        $days = max(1, min(max(1, $elapsedDays), $this->term_days));
         $dailyRate = match ($this->term) {
             'daily' => $this->profit_rate / 100,
             'monthly' => ($this->profit_rate / 100) / 30,
@@ -67,5 +63,19 @@ class CryptoInvestment extends Model
         };
 
         return round($this->amount * $dailyRate * $days, 2);
+    }
+
+    public function refreshEarnings(): self
+    {
+        if ($this->status !== 'Running') {
+            return $this;
+        }
+
+        $accrued = $this->accrued_profit;
+        $this->current_profit = round($accrued, 2);
+        $this->current_balance = round($this->amount + $accrued, 2);
+        $this->save();
+
+        return $this;
     }
 }

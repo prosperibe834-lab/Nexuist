@@ -129,6 +129,7 @@
                 <form id="create-package-form" class="fintech-form" action="{{ route('admin.premium.package.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-row-3">
+                        <input type="hidden" name="premium" value="1" />
                         <div class="form-group">
                             <label>Signal Name</label>
                             <input type="text" name="bot_name" placeholder="e.g. Alpha Crypto VIP" required />

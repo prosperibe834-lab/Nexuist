@@ -62,6 +62,8 @@ class PortfolioController extends Controller
         }
 
         foreach ($cryptoInvestments as $investment) {
+            $investment->refreshEarnings();
+
             $positions->push([
                 'id' => $investment->id,
                 'type' => 'crypto',
@@ -74,6 +76,8 @@ class PortfolioController extends Controller
                 'closeable' => false,
             ]);
         }
+
+        $botInvestments->each(fn ($investment) => $investment->refreshEarnings());
 
         foreach ($botInvestments as $investment) {
             $positions->push([
@@ -93,12 +97,15 @@ class PortfolioController extends Controller
             $durationDays = $investment->investment_date ? now()->diffInDays($investment->investment_date) : 0;
             $dailyRate = ($investment->apy / 100) / 365;
             $accruedProfit = round($investment->investment_amount * $dailyRate * $durationDays, 2);
+            $status = in_array($investment->investment_status, ['Active', 'OPEN', 'Running'], true)
+                ? 'OPEN'
+                : 'CLOSED';
 
             $positions->push([
                 'id' => $investment->id,
                 'type' => 'real_estate',
-                'title' => $investment->property?->name ?? 'Real Estate Investment',
-                'status' => $investment->investment_status,
+                'title' => $investment->property?->property_name ?? 'Real Estate Investment',
+                'status' => $status,
                 'quantity' => $investment->investment_amount,
                 'current_value' => $investment->investment_amount + $accruedProfit,
                 'profit' => $accruedProfit,

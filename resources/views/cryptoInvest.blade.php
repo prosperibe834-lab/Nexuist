@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <link rel="icon" type="image/png" href="{{ asset('assets/Frontend/image/NexuistLogo.png.png') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -46,8 +47,8 @@
  
 
         <!-- Main Content -->
-         <main class="investment-container">
-    <section class="market-insights-hero">
+     <main class="investment-container">
+    <section class="market-insights-hero"> 
         <div class="hero-left">
             <span class="badge-pulsing"><i class="bx bx-trending-up"></i> Live ROI Engine</span>
             <h1>Cryptocurrency Investment Plans</h1>

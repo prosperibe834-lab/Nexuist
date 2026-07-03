@@ -1205,6 +1205,7 @@ ul {
     align-items: flex-end;
     padding: 40px 0;
     gap: 40px;
+    margin-top: 50px;
 }
 
 .header-main-content {

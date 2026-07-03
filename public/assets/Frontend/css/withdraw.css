@@ -1833,6 +1833,7 @@ ul {
     width: calc(100% - var(--sidebar-width) - 48px);
     max-width: unset;
     padding: 24px;
+    margin-top: 80px;
 }
 
 /* FIX OVERFLOW */

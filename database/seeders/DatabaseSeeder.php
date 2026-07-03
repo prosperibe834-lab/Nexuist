@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\RealEstateProperty;
 use App\Models\User;
+use Database\Seeders\CryptoPlanSeeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -56,5 +57,6 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call(StockMarketSeeder::class);
+        $this->call(CryptoPlanSeeder::class);
     }
 }

@@ -58,6 +58,8 @@ class CryptoInvestmentController extends Controller
             'status' => 'Running',
         ]);
 
+        $investment->refreshEarnings();
+
         return response()->json(['success' => true, 'message' => 'Crypto investment created.', 'investment' => $investment, 'redirect' => url('/deploybot')]);
     }
 

@@ -200,7 +200,8 @@ document.addEventListener("DOMContentLoaded", () => {
             { id: 6, name: "Quantum Scalper Edge", tier: "Active Pro", icon: "bx-scatter-chart", min: 10000, max: 25000, dailyRoi: 18.5, duration: 30, bonus: 150, badgeClass: "badge-tier-2", isHot: true },
             { id: 7, name: "Institutional Prime Vault", tier: "High Net", icon: "bx-crown", min: 25000, max: 50000, dailyRoi: 24.0, duration: 45, bonus: 350, badgeClass: "badge-tier-3" },
             { id: 8, name: "Vanguard Sovereign Block", tier: "High Net", icon: "bx-diamond", min: 50000, max: 100000, dailyRoi: 32.5, duration: 60, bonus: 800, badgeClass: "badge-tier-3" },
-            { id: 9, name: "Apex Eternity Infinite", tier: "High Net", icon: "bx-infinite", min: 100000, max: 250000, dailyRoi: 40.0, duration: 90, bonus: 2500, badgeClass: "badge-tier-3" }
+            { id: 9, name: "Apex Eternity Infinite", tier: "High Net", icon: "bx-infinite", min: 100000, max: 250000, dailyRoi: 40.0, duration: 90, bonus: 2500, badgeClass: "badge-tier-3" },
+            { id: 10, name: "Sovereign Infinity", tier: "Elite", icon: "bx-crown", min: 250000, max: 500000, dailyRoi: 48.0, duration: 120, bonus: 3800, badgeClass: "badge-tier-4", isHot: true }
         ];
 
     const gridContainer = document.getElementById("investmentPlansGrid");

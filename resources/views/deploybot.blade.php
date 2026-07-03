@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <link rel="icon" type="image/png" href="{{ asset('assets/Frontend/image/NexuistLogo.png.png') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexuist | Professional Trading</title>
@@ -162,22 +163,35 @@
 
                     <div class="stat-info">
                         <h3>
-                            ${{ number_format($totalInvested ?? 0, 2) }}
+                            {{ $activeBotsCount ?? 0 }}
                         </h3>
-                        <p>Total Invested</p>
+                        <p>Active Bot Investments</p>
                     </div>
                 </div>
 
                 <div class="stat-card reveal">
                     <div class="icon-box green">
-                        <i class="fas fa-chart-pie"></i>
+                        <i class="fas fa-coins"></i>
                     </div>
 
                     <div class="stat-info">
                         <h3>
-                            ${{ number_format($currentBalance ?? 0, 2) }}
+                            {{ ($cryptoInvestments ?? collect())->count() }}
                         </h3>
-                        <p>Current Balance</p>
+                        <p>Crypto Investments</p>
+                    </div>
+                </div>
+
+                <div class="stat-card reveal">
+                    <div class="icon-box orange">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+
+                    <div class="stat-info">
+                        <h3>
+                            {{ ($stockInvestments ?? collect())->count() }}
+                        </h3>
+                        <p>Stock Investments</p>
                     </div>
                 </div>
 
@@ -192,21 +206,6 @@
                         </h3>
 
                         <p>Total Profit</p>
-                    </div>
-                </div>
-
-                <div class="stat-card reveal">
-                    <div class="icon-box red">
-                        <i class="fas fa-robot"></i>
-                    </div>
-
-                    <div class="stat-info">
-                        <h3>
-                            {{ $activeBotsCount ?? 0 }}
-                        </h3>
-                        <p>Deployed Bots</p>
-
-                        <span class="status-indicator"></span>
                     </div>
                 </div>
 
@@ -405,6 +404,7 @@
                                 <div class="item-status">
                                     <span class="badge {{ $inv->status === 'Running' ? 'success' : ($inv->status === 'Completed' ? 'neutral' : 'warning') }}">{{ $inv->status ?? 'Running' }}</span>
                                     <p class="profit">+${{ number_format($inv->current_profit ?? 0, 2) }}</p>
+                                    <p class="profit" style="margin-top:4px; color:#22c55e;">Balance: ${{ number_format($inv->current_balance ?? $inv->amount, 2) }}</p>
                                 </div>
                             </div>
                         @endforeach

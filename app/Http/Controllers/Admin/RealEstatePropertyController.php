@@ -17,6 +17,8 @@ class RealEstatePropertyController extends Controller
 {
     public function index(Request $request)
     {
+        RealEstateProperty::seedDemoProperties();
+
         $query = RealEstateProperty::query();
 
         if ($request->filled('search')) {

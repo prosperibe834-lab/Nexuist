@@ -15,6 +15,11 @@ class AiBotController extends Controller
     {
         $bots = AiBot::latest()->paginate(20);
 
+        $investments = BotInvestment::with(['user', 'bot'])
+            ->latest()
+            ->get()
+            ->each(fn ($investment) => $investment->refreshEarnings());
+
         $stats = [
 
             'totalBots'         => AiBot::count(),
@@ -47,13 +52,9 @@ class AiBotController extends Controller
                 'investment_amount'
             ),
 
-            'aum'               => BotInvestment::sum(
-                'current_balance'
-            ),
+            'aum'               => $investments->sum('current_balance'),
 
-            'totalProfit'       => BotInvestment::sum(
-                'current_profit'
-            ),
+            'totalProfit'       => $investments->sum('current_profit'),
 
             'averageAccuracy'   => round(
                 AiBot::avg('accuracy_rate'),
@@ -76,11 +77,6 @@ class AiBotController extends Controller
 
         ];
 
-            $investments = BotInvestment::with([
-            'user',
-            'bot',
-        ])->latest()->get();
-        
         return view('AdminDashboard.ai-bot', compact(
             'bots',
             'stats',
@@ -309,8 +305,12 @@ class AiBotController extends Controller
 
     public function botTrading()
     {
-        $bots = AiBot::all()->map(function($bot) {
-            $bot->total_net_profit = BotInvestment::where('bot_id', $bot->id)->sum('current_profit');
+        $bots = AiBot::with('investments')->get()->map(function ($bot) {
+            $bot->investments->each(fn ($investment) => $investment->refreshEarnings());
+            $bot->total_net_profit = $bot->investments->sum('current_profit');
+            $bot->total_subscribers = $bot->investments->count();
+            $bot->total_investment = $bot->investments->sum('investment_amount');
+            $bot->current_aum = $bot->investments->sum('current_balance');
             return $bot;
         });
 
@@ -326,18 +326,34 @@ class AiBotController extends Controller
             ->latest()
             ->get();
 
+        foreach ($activeInvestments as $investment) {
+            $investment->refreshEarnings();
+        }
+
         $totalInvested = $activeInvestments->sum('investment_amount');
         $currentValue = $activeInvestments->sum('current_balance');
         $totalProfit = $activeInvestments->sum('current_profit');
         $activeCopies = $activeInvestments->count();
         $roi = $totalInvested > 0 ? round(($totalProfit / max(1, $totalInvested)) * 100, 2) : 0;
 
+        $experts = AiBot::whereRaw('LOWER(status) = ?', ['active'])
+            ->orWhereNull('status')
+            ->orderByDesc('total_subscribers')
+            ->limit(4)
+            ->get();
+
+        if ($experts->isEmpty()) {
+            $experts = AiBot::orderByDesc('total_subscribers')->limit(4)->get();
+        }
+
         return view('copytrading', compact(
             'activeCopies',
             'totalInvested',
             'currentValue',
             'totalProfit',
-            'roi'
+            'roi',
+            'activeInvestments',
+            'experts'
         ));
     }
 
@@ -386,7 +402,8 @@ class AiBotController extends Controller
         $investments = BotInvestment::with(['user', 'bot'])
             ->whereIn('bot_id', $botIds)
             ->latest()
-            ->get();
+            ->get()
+            ->each(fn ($investment) => $investment->refreshEarnings());
 
         $stats = [
             'activePackages' => $bots->count(),
@@ -439,7 +456,8 @@ class AiBotController extends Controller
 
         $investments = BotInvestment::with(['bot', 'user'])
             ->latest()
-            ->get();
+            ->get()
+            ->each(fn ($investment) => $investment->refreshEarnings());
 
         $investors = User::withCount(['botInvestments as total_placements'])
             ->get()

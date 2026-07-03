@@ -86,6 +86,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (!matchSearch) return;
 
+            const monthlyPct = Number(bot.monthly_return) || 0;
+            const minInv = Number(bot.minimum_investment) > 0 ? Number(bot.minimum_investment) : 200;
+            const aumSource = Number(bot.current_aum) > 0 ? Number(bot.current_aum) : minInv;
+            const projectedGain = Math.max(0, aumSource * (monthlyPct / 100));
+            const strategyProfitValue = Number(bot.total_net_profit) > 0 ? Number(bot.total_net_profit) : projectedGain;
+
             const card = document.createElement('div');
             card.className = 'bot-card';
             card.innerHTML = `
@@ -93,8 +99,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 <h3><i class='bx bx-bot'></i> ${bot.bot_name || 'Unnamed Bot'}</h3>
                 <p class="bot-subtitle">${bot.trading_style || bot.strategy_type || 'Strategy'}</p>
                 <div class="card-stats">
-                    <div><small>Daily ROI</small><br><strong>${bot.monthly_return ?? 0}%</strong></div>
-                    <div><small>Duration</small><br><strong>30 Days</strong></div>
+                    <div><small>Daily ROI</small><br><strong>${monthlyPct}%</strong></div>
+                    <div><small>Projected Gain</small><br><strong>$${projectedGain.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}</strong></div>
+                    <div><small>Strategy Profit</small><br><strong>$${strategyProfitValue.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}</strong></div>
                 </div>
                 <button class="btn-invest" data-bot-id="${bot.id}">Details & Invest →</button>
             `;
@@ -107,6 +114,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (botId) openTerminal(Number(botId));
             });
         });
+
+        updateHeaderMetrics();
+    }
+
+    function updateHeaderMetrics() {
+        const totalNetProfitEl = document.getElementById('totalNetProfit');
+        const avgSuccessRateEl = document.getElementById('avgSuccessRate');
+        const expectedROIEl = document.getElementById('expectedROI');
+
+        const totalProfit = fullBotList.reduce((sum, bot) => sum + (Number(bot.total_net_profit) || 0), 0);
+        const averageAccuracy = fullBotList.length ? fullBotList.reduce((sum, bot) => sum + (Number(bot.accuracy_rate) || 0), 0) / fullBotList.length : 0;
+        const averageRoi = fullBotList.length ? fullBotList.reduce((sum, bot) => sum + (Number(bot.monthly_return) || 0), 0) / fullBotList.length : 0;
+
+        if (totalNetProfitEl) {
+            totalNetProfitEl.innerText = `$${totalProfit.toLocaleString(undefined, {minimumFractionDigits:2, maximumFractionDigits:2})}`;
+        }
+
+        if (avgSuccessRateEl) {
+            avgSuccessRateEl.innerText = `${averageAccuracy.toFixed(2)}%`;
+        }
+
+        if (expectedROIEl) {
+            expectedROIEl.innerText = `${averageRoi.toFixed(2)}%`;
+        }
     }
 
     function openTerminal(botId) {

@@ -94,17 +94,13 @@ class BotInvestmentController extends Controller
     public static function accruePendingProfitsForUser($user)
     {
         try {
-            $investments = BotInvestment::where('user_id', $user->id)
+            $investments = BotInvestment::with('bot')
+                ->where('user_id', $user->id)
                 ->where('status', 'Running')
                 ->get();
 
             foreach ($investments as $investment) {
-                // Placeholder logic: refresh current_balance if needed.
-                // Real accrual rules may be added later.
-                if ($investment->current_balance === null) {
-                    $investment->current_balance = $investment->investment_amount;
-                    $investment->save();
-                }
+                $investment->refreshEarnings();
             }
         } catch (\Exception $e) {
             // Prevent failure during signal page render.
@@ -118,19 +114,21 @@ class BotInvestmentController extends Controller
         $activeInvestments = BotInvestment::with('bot')
             ->where('user_id', Auth::id())
             ->latest()
-            ->get();
+            ->get()
+            ->each(fn ($investment) => $investment->refreshEarnings());
 
         $cryptoInvestments = \App\Models\CryptoInvestment::with('plan')
             ->where('user_id', Auth::id())
             ->latest()
-            ->get();
+            ->get()
+            ->each(fn ($investment) => $investment->refreshEarnings());
 
         $stockInvestments = StockInvestment::with('plan')
             ->where('user_id', Auth::id())
             ->latest()
             ->get();
 
-        // Combine bot, crypto and stock investments for dashboard-wide metrics
+        // Calculate totals including crypto
         $totalInvested = $activeInvestments->sum('investment_amount') + $cryptoInvestments->sum('amount') + $stockInvestments->sum('amount');
         $totalProfit = $activeInvestments->sum('current_profit') + $cryptoInvestments->sum('current_profit') + $stockInvestments->sum('current_profit');
         $currentBalance = $activeInvestments->sum('current_balance') + $cryptoInvestments->sum('current_balance') + $stockInvestments->sum('current_balance');
@@ -139,11 +137,13 @@ class BotInvestmentController extends Controller
 
         return view('deploybot', compact(
             'activeInvestments',
+            'cryptoInvestments',
+            'stockInvestments',
             'primaryInvestment',
             'totalInvested',
             'totalProfit',
             'currentBalance',
             'activeBotsCount'
-        ))->with([ 'cryptoInvestments' => $cryptoInvestments, 'stockInvestments' => $stockInvestments ]);
+        ));
     }
 }

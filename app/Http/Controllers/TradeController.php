@@ -64,6 +64,8 @@ class TradeController extends Controller
                         'end_date' => now()->addDays(30),
                         'status' => 'Running',
                     ]);
+
+                    $investment->refreshEarnings();
                 } else {
                     $plan = StockPlan::where('status', 'active')
                         ->where('minimum_investment', '<=', $amount)

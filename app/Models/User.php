@@ -2,10 +2,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\BotInvestment;
+use App\Models\CryptoInvestment;
+use App\Models\DemoTrade;
 use App\Models\KycVerification;
 use App\Models\RealEstateInvestment;
 use App\Models\StockInvestment;
-use App\Models\Withdrawal;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -75,14 +77,19 @@ class User extends Authenticatable
         return $this->hasMany(StockInvestment::class);
     }
 
+    public function cryptoInvestments()
+    {
+        return $this->hasMany(CryptoInvestment::class);
+    }
+
     public function realEstateInvestments()
     {
         return $this->hasMany(RealEstateInvestment::class);
     }
 
-    public function withdrawals()
+    public function demoTrades()
     {
-        return $this->hasMany(Withdrawal::class);
+        return $this->hasMany(DemoTrade::class);
     }
 
     public function referrals()

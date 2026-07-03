@@ -1210,6 +1210,7 @@ ul {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 40px;
+    margin-top: 50px;
 }
 .nexuist-badge { color: #2563eb; font-weight: 800; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; }
 .kyc-dashboard-header h1 { font-size: 36px; font-weight: 800; color: white; margin-top: 5px; }
