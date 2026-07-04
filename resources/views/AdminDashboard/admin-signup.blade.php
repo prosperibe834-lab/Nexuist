@@ -23,95 +23,97 @@
 
     <div class="theme-anchor" id="theme-toggle"><i class='bx bx-moon'></i></div>
 
-    <div class="viewport-wrapper">
-        <div class="auth-card">
-            <div class="card-header">
-                <div class="brand-logo"><i class='bx bx-shield-quarter'></i></div>
-                <h2>Create Admin Account</h2>
-                <p>Initialize a secure, privileged node inside the platform administrative access routing matrix.</p>
+    <!-- Main section starts here -->
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="brand-badge">
+                <i class="bx bxs-shield-alt-2"></i>
             </div>
+            <h2>Create Admin Account</h2>
+            <p>Set up your administrative credentials to manage the terminal.</p>
+        </div>
 
-            <form id="signup-form" novalidate>
-                <div class="form-group">
-                    <label for="signup-name">Full Legal Name</label>
+        <form id="adminSignupForm" class="auth-form" autocomplete="off" novalidate>
+            <div class="form-grid">
+                <div class="input-group">
+                    <label for="fullName">Full Name</label>
                     <div class="input-wrapper">
-                        <i class='bx bx-user-pin'></i>
-                        <input type="text" id="signup-name" placeholder="e.g. Alexander Vance" required>
+                        <i class="bx bx-user input-icon"></i>
+                        <input type="text" id="fullName" placeholder="John Doe" required>
                     </div>
-                    <span class="error-msg">Legal name token declaration required</span>
                 </div>
 
-                <div class="form-group">
-                    <label for="signup-email">Official Admin Email</label>
+                <div class="input-group">
+                    <label for="email">Email Address</label>
                     <div class="input-wrapper">
-                        <i class='bx bx-envelope'></i>
-                        <input type="email" id="signup-email" placeholder="name@nexuist.com" required>
+                        <i class="bx bx-envelope input-icon"></i>
+                        <input type="email" id="email" placeholder="admin@terminal.com" required>
                     </div>
-                    <span class="error-msg">Valid corporate routing mailbox address required</span>
                 </div>
 
-                <div class="form-group">
-                    <label for="signup-role">Requested Clearance Level</label>
+                <div class="input-group">
+                    <label for="phone">Phone Number</label>
                     <div class="input-wrapper">
-                        <i class='bx bx-lock-open-alt'></i>
-                        <select id="signup-role" required>
-                            <option value="" disabled selected>Select Authorization Tier...</option>
-                            <option value="superuser">Superuser (Absolute Platform Control)</option>
-                            <option value="compliance">Compliance Risk Auditor (Level 2)</option>
-                            <option value="support">Customer Support Execution Specialist</option>
+                        <i class="bx bx-phone input-icon"></i>
+                        <input type="tel" id="phone" placeholder="+234..." required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="gender">Gender</label>
+                    <div class="input-wrapper">
+                        <i class="bx bx-git-repo-forked input-icon"></i>
+                        <select id="gender" required>
+                            <option value="" disabled selected hidden>Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
                         </select>
                     </div>
-                    <span class="error-msg">Operational authority layer must be declared</span>
                 </div>
 
-                <div class="form-group">
-                    <label for="signup-token">System Activation Passphrase Key</label>
+                <div class="input-group">
+                    <label for="password">Password</label>
                     <div class="input-wrapper">
-                        <i class='bx bx-key'></i>
-                        <input type="password" id="signup-token" placeholder="Enter security node allocation token"
-                            required>
+                        <i class="bx bx-lock-alt input-icon"></i>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                        <i class="bx bx-hide password-toggle" data-target="password"></i>
                     </div>
-                    <span class="error-msg">Hardware ring provisioning passkey required</span>
                 </div>
 
-                <div class="form-group">
-                    <label for="signup-password">Account Master Password</label>
+                <div class="input-group">
+                    <label for="confirmPassword">Confirm Password</label>
                     <div class="input-wrapper">
-                        <i class='bx bx-lock-alt'></i>
-                        <input type="password" id="signup-password" class="cipher-input" placeholder="••••••••••••"
-                            required>
-                        <i class='bx bx-hide visibility-toggle'></i>
+                        <i class="bx bx-lock-check input-icon"></i>
+                        <input type="password" id="confirmPassword" placeholder="••••••••" required>
+                        <i class="bx bx-hide password-toggle" data-target="confirmPassword"></i>
                     </div>
-                    <span class="error-msg">Cipher parameter structural mismatch (Minimum 8 symbols)</span>
                 </div>
-
-                <div class="form-group">
-                    <label for="signup-confirm-password">Confirm Master Password</label>
-                    <div class="input-wrapper">
-                        <i class='bx bx-check-shield'></i>
-                        <input type="password" id="signup-confirm-password" class="cipher-input"
-                            placeholder="••••••••••••" required>
-                        <i class='bx bx-hide visibility-toggle'></i>
-                    </div>
-                    <span class="error-msg">Verification confirmation boundary fails to equate matching keys</span>
-                </div>
-
-                <div class="disclaimer-box">
-                    <i class='bx bx-info-circle'></i>
-                    <span>All registration instances are logged, monitored, and bound directly to authorization
-                        logs.</span>
-                </div>
-
-                <button type="submit" class="submit-btn" id="btn-signup">
-                    <i class='bx bx-plus-circle'></i> Request Access Clearance
-                </button>
-            </form>
-
-            <div class="card-footer">
-                <p>Already holding a cleared key? <a href="admin-/login">Authorize Session Here</a></p>
             </div>
+
+            <div class="input-group full-width">
+                <label for="adminPin">Admin Security PIN</label>
+                <div class="input-wrapper">
+                    <i class="bx bx-key input-icon"></i>
+                    <input type="password" id="adminPin" maxlength="6" pattern="\d{6}" placeholder="Enter 6-digit authority PIN" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">
+                <span>Generate Administrator Profile</span>
+                <i class="bx bx-right-arrow-alt"></i>
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <p>Already have an admin profile? <a href="/admin-login" class="auth-link">Sign In</a></p>
         </div>
     </div>
+</div>
+
+    <!-- Main section ends here -->
 
     <script src="{{ asset('assets/AdminDashboard/js/signup.js') }}"></script>
 </body>

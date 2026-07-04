@@ -23,39 +23,47 @@
 
     <div class="theme-anchor" id="theme-toggle"><i class='bx bx-moon'></i></div>
 
-    <div class="viewport-wrapper">
-        <div class="auth-card">
-            <div class="card-header">
-                <div class="brand-logo"><i class='bx bx-dialpad-alt'></i></div>
-                <h2>Multi-Layer OTP Check</h2>
-                <p>Inject the high-entropy 6-digit transient passphrase tracking token broadcasted to your declared node
-                    address.</p>
+   
+<!-- Main section starts here -->
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="brand-badge">
+                <i class="bx bxs-message-square-dots"></i>
+            </div>
+            <h2>Security Token Verification</h2>
+            <p>We sent a time-sensitive 6-digit confirmation key to your administrative communications channel.</p>
+        </div>
+
+        <form id="adminOtpForm" class="auth-form" autocomplete="off" novalidate>
+            <div class="otp-fields-group">
+                <input type="text" class="otp-field" maxlength="1" pattern="\d*" inputmode="numeric" required>
+                <input type="text" class="otp-field" maxlength="1" pattern="\d*" inputmode="numeric" required>
+                <input type="text" class="otp-field" maxlength="1" pattern="\d*" inputmode="numeric" required>
+                <input type="text" class="otp-field" maxlength="1" pattern="\d*" inputmode="numeric" required>
+                <input type="text" class="otp-field" maxlength="1" pattern="\d*" inputmode="numeric" required>
+                <input type="text" class="otp-field" maxlength="1" pattern="\d*" inputmode="numeric" required>
             </div>
 
-            <form id="otp-form" novalidate>
-                <div class="otp-row">
-                    <input type="text" maxlength="1" class="otp-cell" pattern="[0-9]*" inputmode="numeric" required>
-                    <input type="text" maxlength="1" class="otp-cell" pattern="[0-9]*" inputmode="numeric" required>
-                    <input type="text" maxlength="1" class="otp-cell" pattern="[0-9]*" inputmode="numeric" required>
-                    <input type="text" maxlength="1" class="otp-cell" pattern="[0-9]*" inputmode="numeric" required>
-                    <input type="text" maxlength="1" class="otp-cell" pattern="[0-9]*" inputmode="numeric" required>
-                    <input type="text" maxlength="1" class="otp-cell" pattern="[0-9]*" inputmode="numeric" required>
-                </div>
-                <input type="hidden" name="otp_payload" id="otp-aggregate">
-                <span class="error-msg text-center">Passphrase entry string incomplete or structurally deficient</span>
+            <div class="timer-wrapper">
+                <p id="otpCountdownMessage">Token expires in <span id="countdownClock">02:00</span></p>
+                <button type="button" id="btnResendOtp" class="btn-resend" disabled>Resend Code</button>
+            </div>
 
-                <div class="timer-zone">
-                    <p>Transient Key Lifetime Remaining: <span id="clock">02:00</span></p>
-                    <button type="button" id="btn-resend" class="context-link" disabled>Re-broadcast Token
-                        Signature</button>
-                </div>
+            <button type="submit" class="btn-submit">
+                <span>Verify Access Token</span>
+                <i class="bx bx-check-shield"></i>
+            </button>
+        </form>
 
-                <button type="submit" class="submit-btn" id="btn-otp-submit">
-                    <i class='bx bx-key'></i> Finalize Verification Checks
-                </button>
-            </form>
+        <div class="auth-footer">
+            <p>Using the wrong profile? <a href="admin-login" class="auth-link">Return to Login</a></p>
         </div>
     </div>
+</div>
+
+<!-- Main section ends here -->
 
     <script src="{{ asset('assets/AdminDashboard/js/otp.js') }}"></script>
 </body>

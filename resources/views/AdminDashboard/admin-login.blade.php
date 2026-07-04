@@ -23,56 +23,60 @@
 
     <div class="theme-anchor" id="theme-toggle"><i class='bx bx-moon'></i></div>
 
-    <div class="viewport-wrapper">
-        <div class="auth-card">
-            <div class="card-header">
-                <div class="brand-logo"><i class='bx bx-lock-open-alt'></i></div>
-                <h2>System Gatekeeper</h2>
-                <p>Provide secure cryptographic credentials to declare an active administrative panel session handler
-                    node.</p>
+    <!-- Main section starts here -->
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <div class="brand-badge">
+                <i class="bx bxs-shield-alt-2"></i>
+            </div>
+            <h2>Admin Terminal Login</h2>
+            <p>Authenticate your administrator profile to access the secure console.</p>
+        </div>
+
+        <form id="adminLoginForm" class="auth-form" autocomplete="off" novalidate>
+            <div class="input-group">
+                <label for="loginIdentifier">Email Address or Phone Number</label>
+                <div class="input-wrapper">
+                    <i class="bx bx-user-pin input-icon"></i>
+                    <input type="text" id="loginIdentifier" placeholder="admin@terminal.com or +234..." required>
+                </div>
             </div>
 
-            <form id="login-form" novalidate>
-                <div class="form-group">
-                    <label for="login-email">Admin Routing Identity Email</label>
-                    <div class="input-wrapper">
-                        <i class='bx bx-envelope'></i>
-                        <input type="email" id="login-email" placeholder="name@nexuist.com" required>
-                    </div>
-                    <span class="error-msg">Account identifier mapping key missing</span>
+            <div class="input-group">
+                <div class="label-wrapper">
+                    <label for="password">Password</label>
+                    <a href="admin-reset" class="context-link">Forgot?</a>
                 </div>
-
-                <div class="form-group">
-                    <label for="login-password">Session Passcode Cipher</label>
-                    <div class="input-wrapper">
-                        <i class='bx bx-lock-alt'></i>
-                        <input type="password" id="login-password" class="cipher-input" placeholder="••••••••••••"
-                            required>
-                        <i class='bx bx-hide visibility-toggle'></i>
-                    </div>
-                    <span class="error-msg">Account cryptographic verification string missing</span>
+                <div class="input-wrapper">
+                    <i class="bx bx-lock-alt input-icon"></i>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                    <i class="bx bx-hide password-toggle" data-target="password"></i>
                 </div>
-
-                <div class="actions-row">
-                    <label class="checkbox-container">
-                        <input type="checkbox" id="login-remember">
-                        <span class="checkbox-mock"></span>
-                        <span class="checkbox-text">Maintain Node Hydration</span>
-                    </label>
-                    <a href="/admin-forgot" class="context-link">Recover Session Clearance</a>
-                </div>
-
-                <button type="submit" class="submit-btn" id="btn-login">
-                    <i class='bx bx-log-in-circle'></i> Execute Session Handshake
-                </button>
-            </form>
-
-            <div class="card-footer">
-                <p>New administrative operation block assignment? <a href="admin-/signup">Request Clearance Node</a>
-                </p>
             </div>
+
+            <div class="input-group">
+                <label for="adminPin">Admin Security PIN</label>
+                <div class="input-wrapper">
+                    <i class="bx bx-key input-icon"></i>
+                    <input type="password" id="adminPin" maxlength="6" pattern="\d{6}" placeholder="Enter 6-digit authority PIN" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">
+                <span>Authenticate Secure Session</span>
+                <i class="bx bx-log-in-circle"></i>
+            </button>
+        </form>
+
+        <div class="auth-footer">
+            <p>New operator? <a href="admin-signup" class="auth-link">Create an Admin Account</a></p>
         </div>
     </div>
+</div>
+
+    <!-- Main section ends here -->
 
     <script src="{{ asset('assets/AdminDashboard/js/login.js') }}"></script>
 </body>

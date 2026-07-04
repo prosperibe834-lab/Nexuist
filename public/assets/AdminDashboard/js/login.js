@@ -32,31 +32,56 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 4. Submission Request Matrix Pipeline
-    const form = document.getElementById("login-form");
-    if (form) {
-        form.addEventListener("submit", (e) => {
-            e.preventDefault();
-            let valid = true;
-            const email = document.getElementById("login-email");
-            const pass = document.getElementById("login-password");
+});
 
-            if (!email.value.includes("@") || email.value.trim() === "") {
-                email.closest(".form-group").classList.add("invalid"); valid = false;
-            } else { email.closest(".form-group").classList.remove("invalid"); }
+// Main section starts here
 
-            if (pass.value.trim() === "") {
-                pass.closest(".form-group").classList.add("invalid"); valid = false;
-            } else { pass.closest(".form-group").classList.remove("invalid"); }
+document.addEventListener("DOMContentLoaded", () => {
+    const loginForm = document.getElementById("adminLoginForm");
+    const toggleElements = document.querySelectorAll(".password-toggle");
 
-            if (valid) {
-                const btn = document.getElementById("btn-login");
-                btn.innerHTML = `<i class='bx bx-loader-alt bx-spin'></i> Handshaking Matrix Session...`;
-                btn.style.pointerEvents = "none";
-                console.log("Login form verification pass. Forwarding payload to identity controller core.");
-                // Ready for backend injection mapping execution point
-                form.submit();
+    // Smooth Interactive Eye Toggle / Untoggle Logic
+    toggleElements.forEach(toggle => {
+        toggle.addEventListener("click", function() {
+            const targetId = this.getAttribute("data-target");
+            const passwordInput = document.getElementById(targetId);
+            
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                this.classList.replace("bx-hide", "bx-show");
+            } else {
+                passwordInput.type = "password";
+                this.classList.replace("bx-show", "bx-hide");
             }
         });
-    }
+    });
+
+    // Form Interception & Core Validation Controls
+    loginForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        
+        const identifier = document.getElementById("loginIdentifier").value.trim();
+        const pwd = document.getElementById("password").value;
+        const pin = document.getElementById("adminPin").value;
+
+        if (!identifier) {
+            alert("Authentication Error: Identity reference field cannot be blank.");
+            return;
+        }
+
+        if (!pwd) {
+            alert("Authentication Error: Password token required.");
+            return;
+        }
+
+        if (pin.length !== 6 || isNaN(pin)) {
+            alert("Security Target Mismatch: Authority PIN must be exactly 6 numeric digits.");
+            return;
+        }
+
+        console.log("Terminal verification targets verified. Forwarding payload package to authentication router...");
+        // Execution sequence for auth endpoint request goes here
+    });
 });
+
+// Main section ends here

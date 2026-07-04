@@ -32,29 +32,66 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // 4. Verification Form Submission Handlers
-    const form = document.getElementById("reset-form");
-    if (form) {
-        form.addEventListener("submit", (e) => {
-            e.preventDefault();
-            let clear = true;
+});
 
-            const pass = document.getElementById("reset-password");
-            const confirm = document.getElementById("reset-confirm-password");
+// main section starts here
 
-            if (pass.value.length < 8) { pass.closest(".form-group").classList.add("invalid"); clear = false; }
-            else { pass.closest(".form-group").classList.remove("invalid"); }
+document.addEventListener("DOMContentLoaded", () => {
+    const resetForm = document.getElementById("adminResetForm");
+    const toggleElements = document.querySelectorAll(".password-toggle");
 
-            if (confirm.value !== pass.value || confirm.value === "") { confirm.closest(".form-group").classList.add("invalid"); clear = false; }
-            else { confirm.closest(".form-group").classList.remove("invalid"); }
-
-            if (clear) {
-                const btn = document.getElementById("btn-reset");
-                btn.innerHTML = `<i class='bx bx-loader-alt bx-spin'></i> Committing New Cryptographic Key...`;
-                btn.style.pointerEvents = "none";
-                console.log("Password Mutation verified safely. Dispatching to overhaul database model mapping pipelines.");
-                form.submit();
+    // Smooth Eye Toggle Logic
+    toggleElements.forEach(toggle => {
+        toggle.addEventListener("click", function() {
+            const targetId = this.getAttribute("data-target");
+            const passwordInput = document.getElementById(targetId);
+            
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                this.classList.replace("bx-hide", "bx-show");
+            } else {
+                passwordInput.type = "password";
+                this.classList.replace("bx-show", "bx-hide");
             }
         });
+    });
+
+    // Form Interception and Password Auditing
+    if (resetForm) {
+       resetForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    
+    const identifier = document.getElementById("recoveryIdentifier").value.trim();
+    const newPwd = document.getElementById("newPassword").value;
+    const confirmPwd = document.getElementById("confirmPassword").value;
+    const pin = document.getElementById("adminPin").value;
+
+    if (!identifier) {
+        alert("Validation Error: Account identifier target cannot be empty.");
+        return;
+    }
+
+    if (!newPwd || !confirmPwd) {
+        alert("Validation Error: Password configurations must be fully populated.");
+        return;
+    }
+
+    if (newPwd !== confirmPwd) {
+        alert("Security Error: Passwords do not match. Please verify configurations.");
+        return;
+    }
+
+    if (pin.length !== 6 || isNaN(pin)) {
+        alert("Security Configuration Exception: Authorization requires an exact 6-digit numeric Master PIN.");
+        return;
+    }
+
+    console.log("Credentials and Security PIN verified. Routing payload to OTP verification pipeline...");
+    
+    // Proceed to OTP verification stage here
+    // example: window.location.href = '/verify-otp';
+});
     }
 });
+
+// main section ends here

@@ -19,58 +19,52 @@ document.addEventListener("DOMContentLoaded", () => {
     const loader = document.getElementById("signup-preloader");
     if (loader) { window.addEventListener("load", () => loader.classList.add("hide")); setTimeout(() => loader.classList.add("hide"), 800); }
 
-    // 3. Multi-field Mask Toggles
-    const masks = document.querySelectorAll(".visibility-toggle");
-    masks.forEach(trigger => {
-        trigger.addEventListener("click", () => {
-            const field = trigger.parentElement.querySelector(".cipher-input");
-            if (field.type === "password") {
-                field.type = "text"; trigger.className = "bx bx-show visibility-toggle";
+    
+});
+
+// Main section starts here
+
+document.addEventListener("DOMContentLoaded", () => {
+    const signupForm = document.getElementById("adminSignupForm");
+    const toggleElements = document.querySelectorAll(".password-toggle");
+
+    // Smooth Interactive Eye Toggle / Untoggle Logic
+    toggleElements.forEach(toggle => {
+        toggle.addEventListener("click", function() {
+            const targetId = this.getAttribute("data-target");
+            const passwordInput = document.getElementById(targetId);
+            
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                this.classList.replace("bx-hide", "bx-show");
             } else {
-                field.type = "password"; trigger.className = "bx bx-hide visibility-toggle";
+                passwordInput.type = "password";
+                this.classList.replace("bx-show", "bx-hide");
             }
         });
     });
 
-    // 4. Strict Signup Engine Validation Metrics
-    const form = document.getElementById("signup-form");
-    if (form) {
-        form.addEventListener("submit", (e) => {
-            e.preventDefault();
-            let secure = true;
+    // Form Interception & Basic Rules Auditing
+    signupForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        
+        const pwd = document.getElementById("password").value;
+        const confirmPwd = document.getElementById("confirmPassword").value;
+        const pin = document.getElementById("adminPin").value;
 
-            const name = document.getElementById("signup-name");
-            const email = document.getElementById("signup-email");
-            const role = document.getElementById("signup-role");
-            const token = document.getElementById("signup-token");
-            const pass = document.getElementById("signup-password");
-            const confirm = document.getElementById("signup-confirm-password");
+        if (pwd !== confirmPwd) {
+            alert("Security check mismatch: Passwords do not match.");
+            return;
+        }
 
-            if (name.value.trim().length < 2) { name.closest(".form-group").classList.add("invalid"); secure = false; }
-            else { name.closest(".form-group").classList.remove("invalid"); }
+        if (pin.length !== 6 || isNaN(pin)) {
+            alert("Invalid Security Target: Authority PIN must be exactly 6 numeric digits.");
+            return;
+        }
 
-            if (!email.value.includes("@")) { email.closest(".form-group").classList.add("invalid"); secure = false; }
-            else { email.closest(".form-group").classList.remove("invalid"); }
-
-            if (!role.value) { role.closest(".form-group").classList.add("invalid"); secure = false; }
-            else { role.closest(".form-group").classList.remove("invalid"); }
-
-            if (token.value.trim() === "") { token.closest(".form-group").classList.add("invalid"); secure = false; }
-            else { token.closest(".form-group").classList.remove("invalid"); }
-
-            if (pass.value.length < 8) { pass.closest(".form-group").classList.add("invalid"); secure = false; }
-            else { pass.closest(".form-group").classList.remove("invalid"); }
-
-            if (confirm.value !== pass.value || confirm.value === "") { confirm.closest(".form-group").classList.add("invalid"); secure = false; }
-            else { confirm.closest(".form-group").classList.remove("invalid"); }
-
-            if (secure) {
-                const btn = document.getElementById("btn-signup");
-                btn.innerHTML = `<i class='bx bx-loader-alt bx-spin'></i> Provisioning Privileged Node...`;
-                btn.style.pointerEvents = "none";
-                console.log("Signup parameters validated safely. Processing endpoint submission pipeline.");
-                form.submit();
-            }
-        });
-    }
+        console.log("System Credentials validated. Packaging payload for auth channel...");
+        // Execution of your fetch endpoint request goes here
+    });
 });
+
+// Main section end here

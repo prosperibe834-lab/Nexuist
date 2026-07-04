@@ -19,65 +19,100 @@ document.addEventListener("DOMContentLoaded", () => {
     const loader = document.getElementById("otp-preloader");
     if(loader) { window.addEventListener("load", () => loader.classList.add("hide")); setTimeout(() => loader.classList.add("hide"), 800); }
 
-    // 3. Automated Segmented Text Input Shift Matrix
-    const cells = document.querySelectorAll(".otp-cell");
-    const aggregateInput = document.getElementById("otp-aggregate");
+    
+});
 
-    cells.forEach((cell, idx) => {
-        cell.addEventListener("input", () => {
-            cell.value = cell.value.replace(/[^0-9]/g, ""); // Allow numeric integers only
-            if(cell.value.length > 0 && idx < cells.length - 1) {
-                cells[idx + 1].focus();
-            }
-            compileOtpCells();
+// MAin section starts here
+
+document.addEventListener("DOMContentLoaded", () => {
+    const otpForm = document.getElementById("adminOtpForm");
+    const fields = document.querySelectorAll(".otp-field");
+    const clockElement = document.getElementById("countdownClock");
+    const resendButton = document.getElementById("btnResendOtp");
+    const timerMessage = document.getElementById("otpCountdownMessage");
+
+    // Initialize Input Shifting Systems
+    if (fields.length > 0) {
+        fields[0].focus();
+
+        fields.forEach((field, index) => {
+            // Forward Key Focus
+            field.addEventListener("input", (e) => {
+                const val = e.target.value;
+                if (val.length >= 1) {
+                    if (index < fields.length - 1) {
+                        fields[index + 1].focus();
+                    }
+                }
+            });
+
+            // Backward Key Focus & Backspace Trapping
+            field.addEventListener("keydown", (e) => {
+                if (e.key === "Backspace" && !e.target.value) {
+                    if (index > 0) {
+                        fields[index - 1].focus();
+                    }
+                }
+            });
+
+            // Block Non-Numeric Entries entirely
+            field.addEventListener("keypress", (e) => {
+                if (!/\d/.test(e.key)) {
+                    e.preventDefault();
+                }
+            });
         });
-
-        cell.addEventListener("keydown", (e) => {
-            if(e.key === "Backspace" && cell.value.length === 0 && idx > 0) {
-                cells[idx - 1].focus();
-            }
-        });
-    });
-
-    function compileOtpCells() {
-        let text = "";
-        cells.forEach(c => text += c.value);
-        aggregateInput.value = text;
     }
 
-    // 4. Recovery Token Lifecycle Countdown Timer Module
-    const clock = document.getElementById("clock");
-    const resendBtn = document.getElementById("btn-resend");
-    let remaining = 120;
+    // 120 Second Countdown Clock Logic
+    let remainingTime = 120;
+    const startCountdown = () => {
+        const interval = setInterval(() => {
+            let minutes = Math.floor(remainingTime / 60);
+            let seconds = remainingTime % 60;
 
-    const timerInterval = setInterval(() => {
-        remaining--;
-        let min = Math.floor(remaining / 60);
-        let sec = remaining % 60;
-        clock.innerText = `0${min}`.slice(-2) + ":" + `0${sec}`.slice(-2);
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        if(remaining <= 0) {
-            clearInterval(timerInterval);
-            resendBtn.removeAttribute("disabled");
-            clock.parentElement.innerText = "Transient Key Lifetime Expired.";
-        }
-    }, 1000);
+            clockElement.textContent = `${minutes}:${seconds}`;
 
-    // 5. Form Submission Flow
-    const form = document.getElementById("otp-form");
-    if(form) {
-        form.addEventListener("submit", (e) => {
-            e.preventDefault();
-            if(aggregateInput.value.length < 6) {
-                form.classList.add("invalid");
-            } else {
-                form.classList.remove("invalid");
-                const btn = document.getElementById("btn-otp-submit");
-                btn.innerHTML = `<i class='bx bx-loader-alt bx-spin'></i> Authenticating Signature...`;
-                btn.style.pointerEvents = "none";
-                console.log("OTP collection validation matched successfully. Transmitting to validation controllers.");
-                form.submit();
+            if (remainingTime <= 0) {
+                clearInterval(interval);
+                timerMessage.style.display = "none";
+                resendButton.removeAttribute("disabled");
             }
+            remainingTime--;
+        }, 1000);
+    };
+    startCountdown();
+
+    // Trigger Resend Button Logic
+    resendButton.addEventListener("click", () => {
+        alert("Generating payload configuration... A new token has been dispatched.");
+        remainingTime = 120;
+        timerMessage.style.display = "block";
+        resendButton.setAttribute("disabled", true);
+        startCountdown();
+        fields[0].focus();
+    });
+
+    // Form Submission Processing
+    if (otpForm) {
+        otpForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            
+            let combinedToken = "";
+            fields.forEach(field => combinedToken += field.value);
+
+            if (combinedToken.length !== 6) {
+                alert("Security Error: Please populate all 6 verification entry characters.");
+                return;
+            }
+
+            console.log(`Payload package compiled. Verifying Token: ${combinedToken}`);
+            // Forward target data to update interface view here
         });
     }
 });
+
+// MAin section ends here
