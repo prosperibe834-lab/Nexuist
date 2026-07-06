@@ -255,12 +255,12 @@
         </li>
 
         <li class="logout-item">
-            <a href="logout.html">
+            <a href="{{ url('/admin-logout') }}">
                 <i class='bx bx-log-out-circle'></i>
                 <span class="link_name">Logout</span>
             </a>
             <ul class="sub-menu blank">
-                <li><a class="link_name" href="logout.html">Logout</a></li>
+                <li><a class="link_name" href="{{ url('/admin-logout') }}">Logout</a></li>
             </ul>
         </li>
     </ul>

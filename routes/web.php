@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminKycController;
 use App\Http\Controllers\Admin\AdminDemoController;
 use App\Http\Controllers\Admin\AiBotController;
+use App\Http\Controllers\Admin\AdminWithdrawalController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\AdminAuthController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\AccountStatementController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ReferralController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WithdrawalController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
@@ -79,6 +81,11 @@ Route::get('/stock-market', [StockMarketController::class, 'index']);
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'submit'])->name('login.submit');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/admin-logout', function () {
+    Auth::logout();
+    Session::flush();
+    return redirect('/admin-login');
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -182,7 +189,10 @@ Route::middleware('auth')->group(function () {
     Route::view('/wallet', 'wallet');
     Route::view('/deposit', 'depositfunds');
     Route::view('/depositfunds', 'depositfunds');
-    Route::view('/withdraw', 'withdraw');
+    Route::get('/withdraw', [WithdrawalController::class, 'index'])->name('withdrawal.index');
+    Route::post('/withdraw', [WithdrawalController::class, 'initiateWithdrawal'])->name('withdrawal.initiate');
+    Route::post('/withdrawal/store', [WithdrawalController::class, 'store'])->name('withdrawal.store');
+    Route::get('/settlement/{tid}', [WithdrawalController::class, 'settlement'])->name('withdrawal.settlement');
     Route::view('/transactions', 'transactions');
     Route::get('/accountstatement', [AccountStatementController::class, 'index'])->name('account.statement');
     Route::view('/signals', 'signals');
@@ -200,7 +210,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/notifications/{id}/toggle-read', [NotificationController::class, 'toggleRead'])->name('notifications.toggleRead');
     Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
     Route::view('/kyc-form', 'kyc-form');
-    Route::view('/settlement', 'settlement');
+    // Route::view('/settlement', 'settlement');
 
     // Route::view('/deploybot', 'deploybot');
     Route::get('/deploybot', [BotInvestmentController::class, 'dashboard'])
@@ -217,7 +227,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/admin-users', [UserController::class, 'adminUsersData'])->name('admin.users.data');
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::put('/users/{id}/balance', [UserController::class, 'updateBalance'])->name('users.updateBalance');
-    Route::view('/withdrawals', 'AdminDashboard.withdrawals');
+    Route::get('/withdrawals', [AdminWithdrawalController::class, 'index'])->name('admin.withdrawals');
+    Route::post('/api/withdrawals/{id}/approve', [AdminWithdrawalController::class, 'approve'])->name('admin.withdrawals.approve');
+    Route::post('/api/withdrawals/{id}/reject', [AdminWithdrawalController::class, 'reject'])->name('admin.withdrawals.reject');
     Route::view('/AdminRealEstate', 'AdminDashboard.AdminRealEstate');
     Route::get('/PremiumInvestment', [AiBotController::class, 'premiumInvestmentDashboard'])->name('admin.premium.dashboard');
 
