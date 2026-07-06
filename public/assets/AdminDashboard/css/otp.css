@@ -303,4 +303,107 @@ html[data-theme="light"] .otp-field {
     }
 }
 
+
+/* NEw */
+/* --- Fintech Input Group Form Styles --- */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+    max-width: 100%; /* Prevents horizontal layout bleeding on smaller devices */
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: inputGroupFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Cascading Entrance Animation Delays for High-End Vibe */
+.input-group:nth-child(1) { animation-delay: 0.1s; }
+.input-group:nth-child(2) { animation-delay: 0.2s; }
+.input-group:nth-child(3) { animation-delay: 0.3s; }
+
+.input-group label {
+    font-size: 0.825rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    user-select: none;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input-wrapper input {
+    width: 100%;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0 1rem 0 2.75rem;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    outline: none;
+    transition: all var(--transition);
+}
+
+/* Light Theme Input Adaptation */
+html[data-theme="light"] .input-wrapper input {
+    background: rgba(15, 23, 42, 0.01);
+}
+
+/* Premium Focus Glow Effect */
+.input-wrapper input:focus {
+    border-color: var(--primary);
+    background: rgba(108, 99, 255, 0.02);
+    box-shadow: 0 0 0 4px rgba(108, 99, 255, 0.12);
+}
+
+/* Icon Alignment and Transitions */
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    font-size: 1.25rem;
+    color: var(--text-muted, #64748b);
+    pointer-events: none;
+    transition: color var(--transition);
+}
+
+.input-wrapper input:focus ~ .input-icon {
+    color: var(--primary);
+}
+
+/* --- Entry Micro-Animations --- */
+@keyframes inputGroupFadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Mobile Viewport Overflow Protection --- */
+@media (max-width: 480px) {
+    .input-wrapper input {
+        height: 48px; /* Slightly lower footprint on mobile */
+        font-size: 0.9rem;
+        padding-left: 2.5rem;
+    }
+
+    .input-icon {
+        left: 0.875rem;
+        font-size: 1.15rem;
+    }
+}
+
 /* Main section ends here */

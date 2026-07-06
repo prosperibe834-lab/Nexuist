@@ -35,13 +35,38 @@
             <p>Set up your administrative credentials to manage the terminal.</p>
         </div>
 
-        <form id="adminSignupForm" class="auth-form" autocomplete="off" novalidate>
+        <form id="adminSignupForm" class="auth-form" autocomplete="off" novalidate method="POST" action="/admin/register">
+            @csrf
+
+            @if(session('success'))
+                <div class="form-alert success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if($errors->any())
+                <div class="form-alert error">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="form-grid">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <div class="input-wrapper">
+                        <i class="bx bx-hash input-icon"></i>
+                        <input type="text" id="username" name="username" placeholder="adminuser" value="{{ old('username') }}" required>
+                    </div>
+                </div>
+
                 <div class="input-group">
                     <label for="fullName">Full Name</label>
                     <div class="input-wrapper">
                         <i class="bx bx-user input-icon"></i>
-                        <input type="text" id="fullName" placeholder="John Doe" required>
+                        <input type="text" id="fullName" name="fullname" placeholder="John Doe" value="{{ old('fullname') }}" required>
                     </div>
                 </div>
 
@@ -49,7 +74,7 @@
                     <label for="email">Email Address</label>
                     <div class="input-wrapper">
                         <i class="bx bx-envelope input-icon"></i>
-                        <input type="email" id="email" placeholder="admin@terminal.com" required>
+                        <input type="email" id="email" name="email" placeholder="admin@terminal.com" value="{{ old('email') }}" required>
                     </div>
                 </div>
 
@@ -57,7 +82,7 @@
                     <label for="phone">Phone Number</label>
                     <div class="input-wrapper">
                         <i class="bx bx-phone input-icon"></i>
-                        <input type="tel" id="phone" placeholder="+234..." required>
+                        <input type="tel" id="phone" name="phone" placeholder="+234..." value="{{ old('phone') }}" required>
                     </div>
                 </div>
 
@@ -65,11 +90,11 @@
                     <label for="gender">Gender</label>
                     <div class="input-wrapper">
                         <i class="bx bx-git-repo-forked input-icon"></i>
-                        <select id="gender" required>
-                            <option value="" disabled selected hidden>Select Gender</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
+                        <select id="gender" name="gender" required>
+                            <option value="" disabled {{ old('gender') ? '' : 'selected' }} hidden>Select Gender</option>
+                            <option value="male" {{ old('gender') === 'male' ? 'selected' : '' }}>Male</option>
+                            <option value="female" {{ old('gender') === 'female' ? 'selected' : '' }}>Female</option>
+                            <option value="other" {{ old('gender') === 'other' ? 'selected' : '' }}>Other</option>
                         </select>
                     </div>
                 </div>
@@ -78,7 +103,7 @@
                     <label for="password">Password</label>
                     <div class="input-wrapper">
                         <i class="bx bx-lock-alt input-icon"></i>
-                        <input type="password" id="password" placeholder="••••••••" required>
+                        <input type="password" id="password" name="password" placeholder="••••••••" required>
                         <i class="bx bx-hide password-toggle" data-target="password"></i>
                     </div>
                 </div>
@@ -87,7 +112,7 @@
                     <label for="confirmPassword">Confirm Password</label>
                     <div class="input-wrapper">
                         <i class="bx bx-lock-check input-icon"></i>
-                        <input type="password" id="confirmPassword" placeholder="••••••••" required>
+                        <input type="password" id="confirmPassword" name="password_confirmation" placeholder="••••••••" required>
                         <i class="bx bx-hide password-toggle" data-target="confirmPassword"></i>
                     </div>
                 </div>
@@ -97,7 +122,7 @@
                 <label for="adminPin">Admin Security PIN</label>
                 <div class="input-wrapper">
                     <i class="bx bx-key input-icon"></i>
-                    <input type="password" id="adminPin" maxlength="6" pattern="\d{6}" placeholder="Enter 6-digit authority PIN" required>
+                    <input type="password" id="adminPin" name="admin_pin" maxlength="6" pattern="\d{6}" placeholder="Enter 6-digit authority PIN" value="{{ old('admin_pin') }}" required>
                 </div>
             </div>
 
@@ -108,7 +133,7 @@
         </form>
 
         <div class="auth-footer">
-            <p>Already have an admin profile? <a href="/admin-login" class="auth-link">Sign In</a></p>
+            <p>Already have an admin profile? <a href="admin-login" class="auth-link">Sign In</a></p>
         </div>
     </div>
 </div>

@@ -62,8 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        console.log("System Credentials validated. Packaging payload for auth channel...");
-        // Execution of your fetch endpoint request goes here
+        // All client-side checks passed — submit the form to the server
+        signupForm.submit();
     });
 });
 

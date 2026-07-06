@@ -35,48 +35,25 @@
             <p>Provide your admin identifier and configure a secure new password token below.</p>
         </div>
 
-        <form id="adminResetForm" class="auth-form" autocomplete="off" novalidate>
-            <!-- Account Identifier (Email or Phone) -->
+        @if ($errors->any())
+            <div class="alert error-alert">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form id="adminResetForm" class="auth-form" autocomplete="off" novalidate method="POST" action="/admin/otp">
+            @csrf
             <div class="input-group">
-                <label for="recoveryIdentifier">Registered Email or Phone</label>
+                <label for="email">Registered Email Address</label>
                 <div class="input-wrapper">
-                    <i class="bx bx-user-check input-icon"></i>
-                    <input type="text" id="recoveryIdentifier" placeholder="Enter email or phone number" required>
+                    <i class="bx bx-envelope input-icon"></i>
+                    <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="admin@terminal.com" required>
                 </div>
             </div>
-
-            <!-- New Password -->
-            <div class="input-group">
-                <label for="newPassword">New Password</label>
-                <div class="input-wrapper">
-                    <i class="bx bx-lock-alt input-icon"></i>
-                    <input type="password" id="newPassword" placeholder="••••••••" required>
-                    <i class="bx bx-hide password-toggle" data-target="newPassword"></i>
-                </div>
-            </div>
-
-            <!-- Confirm New Password -->
-            <div class="input-group">
-                <label for="confirmPassword">Confirm New Password</label>
-                <div class="input-wrapper">
-                    <i class="bx bx-lock-check input-icon"></i>
-                    <input type="password" id="confirmPassword" placeholder="••••••••" required>
-                    <i class="bx bx-hide password-toggle" data-target="confirmPassword"></i>
-                </div>
-            </div>
-
-
-            <!-- Admin Security PIN Verification Check -->
-<div class="input-group">
-    <label for="adminPin">Admin Security PIN</label>
-    <div class="input-wrapper">
-        <i class="bx bx-key input-icon"></i>
-        <input type="password" id="adminPin" maxlength="6" pattern="\d{6}" placeholder="Enter 6-digit authority PIN" required>
-    </div>
-    <small class="input-hint" style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.3;">Your structural master PIN is required to authorize this credential change.</small>
-</div>
-
-
 
             <button type="submit" class="btn-submit">
                 <span>Request Verification Code</span>

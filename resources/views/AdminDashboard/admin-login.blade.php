@@ -35,12 +35,28 @@
             <p>Authenticate your administrator profile to access the secure console.</p>
         </div>
 
-        <form id="adminLoginForm" class="auth-form" autocomplete="off" novalidate>
+        <form id="adminLoginForm" class="auth-form" autocomplete="off" novalidate method="POST" action="/admin/login">
+            @csrf
+            @if(session('success'))
+                <div class="form-alert success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if($errors->any())
+                <div class="form-alert error">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="input-group">
                 <label for="loginIdentifier">Email Address or Phone Number</label>
                 <div class="input-wrapper">
                     <i class="bx bx-user-pin input-icon"></i>
-                    <input type="text" id="loginIdentifier" placeholder="admin@terminal.com or +234..." required>
+                    <input type="text" id="loginIdentifier" name="login_identity" placeholder="admin@terminal.com or username" value="{{ old('login_identity') }}" required>
                 </div>
             </div>
 
@@ -51,7 +67,7 @@
                 </div>
                 <div class="input-wrapper">
                     <i class="bx bx-lock-alt input-icon"></i>
-                    <input type="password" id="password" placeholder="••••••••" required>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
                     <i class="bx bx-hide password-toggle" data-target="password"></i>
                 </div>
             </div>
@@ -60,7 +76,7 @@
                 <label for="adminPin">Admin Security PIN</label>
                 <div class="input-wrapper">
                     <i class="bx bx-key input-icon"></i>
-                    <input type="password" id="adminPin" maxlength="6" pattern="\d{6}" placeholder="Enter 6-digit authority PIN" required>
+                    <input type="password" id="adminPin" name="admin_pin" maxlength="6" pattern="\d{6}" placeholder="Enter 6-digit authority PIN" value="{{ old('admin_pin') }}" required>
                 </div>
             </div>
 

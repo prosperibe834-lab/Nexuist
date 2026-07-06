@@ -58,39 +58,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Form Interception and Password Auditing
     if (resetForm) {
-       resetForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    
-    const identifier = document.getElementById("recoveryIdentifier").value.trim();
-    const newPwd = document.getElementById("newPassword").value;
-    const confirmPwd = document.getElementById("confirmPassword").value;
-    const pin = document.getElementById("adminPin").value;
+        const recoveryIdentifier = document.getElementById("recoveryIdentifier");
+        const newPasswordInput = document.getElementById("newPassword");
+        const confirmPasswordInput = document.getElementById("confirmPassword");
+        const adminPinInput = document.getElementById("adminPin");
 
-    if (!identifier) {
-        alert("Validation Error: Account identifier target cannot be empty.");
-        return;
-    }
+        if (recoveryIdentifier && newPasswordInput && confirmPasswordInput && adminPinInput) {
+            resetForm.addEventListener("submit", (e) => {
+                e.preventDefault();
 
-    if (!newPwd || !confirmPwd) {
-        alert("Validation Error: Password configurations must be fully populated.");
-        return;
-    }
+                const identifier = recoveryIdentifier.value.trim();
+                const newPwd = newPasswordInput.value;
+                const confirmPwd = confirmPasswordInput.value;
+                const pin = adminPinInput.value;
 
-    if (newPwd !== confirmPwd) {
-        alert("Security Error: Passwords do not match. Please verify configurations.");
-        return;
-    }
+                if (!identifier) {
+                    alert("Validation Error: Account identifier target cannot be empty.");
+                    return;
+                }
 
-    if (pin.length !== 6 || isNaN(pin)) {
-        alert("Security Configuration Exception: Authorization requires an exact 6-digit numeric Master PIN.");
-        return;
-    }
+                if (!newPwd || !confirmPwd) {
+                    alert("Validation Error: Password configurations must be fully populated.");
+                    return;
+                }
 
-    console.log("Credentials and Security PIN verified. Routing payload to OTP verification pipeline...");
-    
-    // Proceed to OTP verification stage here
-    // example: window.location.href = '/verify-otp';
-});
+                if (newPwd !== confirmPwd) {
+                    alert("Security Error: Passwords do not match. Please verify configurations.");
+                    return;
+                }
+
+                if (pin.length !== 6 || isNaN(pin)) {
+                    alert("Security Configuration Exception: Authorization requires an exact 6-digit numeric Master PIN.");
+                    return;
+                }
+
+                console.log("Credentials and Security PIN verified. Routing payload to OTP verification pipeline...");
+                // Proceed to OTP verification stage here
+            });
+        }
     }
 });
 

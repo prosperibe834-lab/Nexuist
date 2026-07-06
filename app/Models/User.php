@@ -29,6 +29,7 @@ class User extends Authenticatable
         'email',
         'phone',
         'country',
+        'is_admin',
         'password',
         'balance',
         'crypto_balance',

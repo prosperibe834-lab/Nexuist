@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminDemoController;
 use App\Http\Controllers\Admin\AiBotController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\DemoTradeController;
 use App\Http\Controllers\DepositController;
 use App\Http\Controllers\KycController;
@@ -94,11 +95,42 @@ Route::middleware('guest')->group(function () {
     Route::view('/forgot-password', 'forgot-password');
     Route::view('/reset-password', 'reset-password');
     Route::post('/register/submit', [RegisterController::class, 'submit'])->name('register.submit');
+    
 
-    Route::view('/admin-login', 'admin-login');
-    Route::view('/admin-signup', 'admin-signup');
-    Route::view('/admin-forgot', 'admin-forgot');
-    Route::view('/admin-reset', 'admin-reset');
+    // Admin auth handlers (backend) - keep these public so POSTs work even if a session exists
+});
+
+// Admin auth handlers (backend) available outside of the 'guest' middleware
+Route::post('/admin/register', [AdminAuthController::class, 'register'])->name('admin.register.submit');
+Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login.submit');
+Route::post('/admin/otp', [AdminAuthController::class, 'sendOtp'])->name('admin-otp');
+Route::post('/admin/reset', [AdminAuthController::class, 'resetWithOtp'])->name('admin-reset');
+// Public GET routes for admin OTP and reset pages (always accessible)
+Route::get('/admin-otp', function () {
+    return view('AdminDashboard.admin-otp');
+});
+
+Route::get('/admin-reset', function () {
+    return view('AdminDashboard.admin-reset');
+});
+
+// Also accept the slash-style paths so either URL works
+Route::get('/admin/otp', function () {
+    return view('AdminDashboard.admin-otp');
+});
+
+Route::get('/admin/reset', function () {
+    return view('AdminDashboard.admin-reset');
+});
+
+// Public route for admin signup (bypass guest middleware so URL always loads)
+Route::get('/admin-signup', function () {
+    return view('AdminDashboard.admin-signup');
+});
+
+// Public route for admin login (show login view even if a user session exists)
+Route::get('/admin-login', function () {
+    return view('AdminDashboard.admin-login');
 });
 
 /*
@@ -181,10 +213,7 @@ Route::middleware('auth')->group(function () {
     Route::view('/admin-dashboard', 'AdminDashboard.index')->name('admin.dashboard');
     Route::view('/admin-settings', 'AdminDashboard.admin-settings');
     Route::view('/website-settings', 'AdminDashboard.website-settings');
-    Route::view('/admin-signup', 'AdminDashboard.admin-signup');
-    Route::view('/admin-login', 'AdminDashboard.admin-login');
-    Route::view('/admin-reset', 'AdminDashboard.admin-reset');
-    Route::view('/admin-otp', 'AdminDashboard.admin-otp');
+    Route::view('/admin-users', 'AdminDashboard.admin-users');
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::put('/users/{id}/balance', [UserController::class, 'updateBalance'])->name('users.updateBalance');
     Route::view('/withdrawals', 'AdminDashboard.withdrawals');
@@ -329,6 +358,4 @@ Route::get('/deploy2', function () {
 
     return view('deploy2', compact('deploys'));
 });
-
-
 

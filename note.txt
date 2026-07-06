@@ -725,5 +725,5 @@ body {
 
 
 git add .
-git commit -m "Describe your changes"
+git commit -m "i did admin authentications both otp"
 git push

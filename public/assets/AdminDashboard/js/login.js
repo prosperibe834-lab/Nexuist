@@ -79,8 +79,9 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        console.log("Terminal verification targets verified. Forwarding payload package to authentication router...");
-        // Execution sequence for auth endpoint request goes here
+        console.log("Terminal verification targets verified. Submitting login form...");
+        // Submit the native form so Laravel receives the POST (CSRF token already in form)
+        loginForm.submit();
     });
 });
 

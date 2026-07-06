@@ -98,6 +98,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Form Submission Processing
     if (otpForm) {
+        const otpHidden = document.getElementById('otp');
+
         otpForm.addEventListener("submit", (e) => {
             e.preventDefault();
             
@@ -109,8 +111,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            console.log(`Payload package compiled. Verifying Token: ${combinedToken}`);
-            // Forward target data to update interface view here
+            if (otpHidden) {
+                otpHidden.value = combinedToken;
+            }
+
+            otpForm.submit();
         });
     }
 });

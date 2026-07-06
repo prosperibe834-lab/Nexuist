@@ -232,6 +232,16 @@
             </ul>
         </li>
 
+ <li class="{{ request()->is('admin-users') ? 'active' : '' }}">
+            <a href="{{ url('/admin-users') }}">
+                <i class='bx bxs-user-account'></i>
+                <span class="link_name">Admin Users</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="/admin-settings">Admiz Users</a></li>
+            </ul>
+        </li>
+
         <li class="control-items">
             <div class="mode-toggle-wrapper">
                 <div class="mode-text-wrapper">
