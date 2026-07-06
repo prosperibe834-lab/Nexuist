@@ -213,7 +213,8 @@ Route::middleware('auth')->group(function () {
     Route::view('/admin-dashboard', 'AdminDashboard.index')->name('admin.dashboard');
     Route::view('/admin-settings', 'AdminDashboard.admin-settings');
     Route::view('/website-settings', 'AdminDashboard.website-settings');
-    Route::view('/admin-users', 'AdminDashboard.admin-users');
+    Route::get('/admin-users', [UserController::class, 'adminUsersPage'])->name('admin.users');
+    Route::get('/api/admin-users', [UserController::class, 'adminUsersData'])->name('admin.users.data');
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::put('/users/{id}/balance', [UserController::class, 'updateBalance'])->name('users.updateBalance');
     Route::view('/withdrawals', 'AdminDashboard.withdrawals');

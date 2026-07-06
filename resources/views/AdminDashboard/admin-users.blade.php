@@ -66,9 +66,9 @@
                 <span class="nex-stat-label">Total Admins</span>
                 <div class="nex-icon-box text-primary"><i class="bx bx-shield-quarter"></i></div>
             </div>
-            <div class="nex-stat-counter">14</div>
+            <div class="nex-stat-counter" id="totalAdminsCount">0</div>
             <div class="nex-stat-footer">
-                <span class="nex-trend up"><i class="bx bx-trending-up"></i> +12.5%</span>
+                <span class="nex-trend up"><i class="bx bx-trending-up"></i> +0%</span>
                 <span class="nex-trend-label">this month</span>
             </div>
         </div>
@@ -79,7 +79,7 @@
                 <span class="nex-stat-label">Active Admins</span>
                 <div class="nex-icon-box text-secondary"><i class="bx bx-pulse"></i></div>
             </div>
-            <div class="nex-stat-counter">11</div>
+            <div class="nex-stat-counter" id="activeAdminsCount">0</div>
             <div class="nex-stat-footer">
                 <span class="nex-pulse-node"></span>
                 <span class="nex-trend-label text-active">Live Active Sync</span>
@@ -92,7 +92,7 @@
                 <span class="nex-stat-label">Suspended Admins</span>
                 <div class="nex-icon-box text-error"><i class="bx bx-user-x"></i></div>
             </div>
-            <div class="nex-stat-counter">1</div>
+            <div class="nex-stat-counter" id="suspendedAdminsCount">0</div>
             <div class="nex-stat-footer">
                 <span class="nex-trend static">Stable baseline</span>
             </div>
@@ -104,7 +104,7 @@
                 <span class="nex-stat-label">Super Admins</span>
                 <div class="nex-icon-box text-accent"><i class="bx bx-crown"></i></div>
             </div>
-            <div class="nex-stat-counter">2</div>
+            <div class="nex-stat-counter" id="superAdminsCount">0</div>
             <div class="nex-stat-footer">
                 <span class="nex-trend up"><i class="bx bx-check-shield"></i> Root Vault</span>
             </div>

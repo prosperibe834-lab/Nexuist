@@ -124,22 +124,45 @@ document.addEventListener("DOMContentLoaded", () => {
 // =========================================================================
 // NEXUIST ADMINISTRATIVE FRAMEWORK - CORE WEBSITE SETTINGS RUNTIME LOGIC
 // =========================================================================
-// Master Local State Database Engine
-let nexDbArray = [
-    { id: "NX-70291", username: "cyber_boss", fullName: "Prosper Ibe", email: "admin@nexuist.com", phone: "+234 810 000 1111", gender: "Male", role: "Super Admin", status: "Active", regDate: "2026-01-10", lastLogin: "2026-07-06 14:22", ip: "102.89.44.18", config: "Chrome/Win10", country: "Nigeria", activity: "Created User Account" },
-    { id: "NX-44810", username: "monica_h", fullName: "Monica Hughes", email: "monica@nexuist.com", phone: "+234 901 222 3333", gender: "Female", role: "Admin", status: "Active", regDate: "2026-03-14", lastLogin: "2026-07-06 09:15", ip: "197.210.64.5", config: "Safari/iOS17", country: "Nigeria", activity: "Approved Settlement Node" },
-    { id: "NX-10294", username: "dev_alpha", fullName: "John Doe", email: "john@nexuist.com", phone: "+1 415 555 2671", gender: "Male", role: "Admin", status: "Suspended", regDate: "2025-11-05", lastLogin: "2026-06-20 18:40", ip: "64.233.160.10", config: "Firefox/Linux", country: "United States", activity: "Logged Out" },
-    { id: "NX-30912", username: "ops_sec", fullName: "Sarah Connor", email: "sarah@nexuist.com", phone: "+44 20 7946 0192", gender: "Female", role: "Admin", status: "Pending", regDate: "2026-06-29", lastLogin: "---", ip: "---", config: "---", country: "United Kingdom", activity: "System Onboarding Verification" }
-];
-
+// Master Live State Cache
+let nexDbArray = [];
 let nexTargetRowId = null;
 
-document.addEventListener("DOMContentLoaded", () => {
-    bindNexTableRecords(nexDbArray);
+const adminUsersEndpoint = '/api/admin-users';
+
+async function fetchAdminUsers(query = '', role = 'all', sort = 'recent') {
+    const url = new URL(adminUsersEndpoint, window.location.origin);
+    if (query) url.searchParams.set('q', query);
+    if (role) url.searchParams.set('role', role);
+    if (sort) url.searchParams.set('sort', sort);
+
+    const response = await fetch(url.toString(), {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Accept': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        console.error('Failed to load admin users', response.statusText);
+        return { items: [], counts: { total: 0, active: 0, suspended: 0, super: 0 } };
+    }
+
+    return await response.json();
+}
+
+document.addEventListener("DOMContentLoaded", async () => {
     initNexFilterListeners();
+    await refreshAdminRecords();
 });
 
-// Master Table Builder Loop
+function updateAdminCounters(counts) {
+    document.getElementById('totalAdminsCount').textContent = counts.total ?? 0;
+    document.getElementById('activeAdminsCount').textContent = counts.active ?? 0;
+    document.getElementById('suspendedAdminsCount').textContent = counts.suspended ?? 0;
+    document.getElementById('superAdminsCount').textContent = counts.super ?? 0;
+}
+
 function bindNexTableRecords(dataset) {
     const tBody = document.getElementById("nexTableBody");
     const tWrapper = document.getElementById("nexTableWrapper");
@@ -200,36 +223,41 @@ function initNexFilterListeners() {
     const roleF = document.getElementById("nexRoleFilter");
     const sortF = document.getElementById("nexSortFilter");
 
-    const execFilterRoutine = () => {
-        const query = search.value.toLowerCase().trim();
+    const execFilterRoutine = async () => {
+        const query = search.value.trim();
         const role = roleF.value;
-
-        let trackingPool = nexDbArray.filter(item => {
-            const hitSearch = item.id.toLowerCase().includes(query) ||
-                              item.username.toLowerCase().includes(query) ||
-                              item.fullName.toLowerCase().includes(query) ||
-                              item.email.toLowerCase().includes(query);
-            
-            let hitRole = true;
-            if (role === "active") hitRole = item.status === "Active";
-            else if (role === "suspended") hitRole = item.status === "Suspended";
-            else if (role === "pending") hitRole = item.status === "Pending";
-            else if (role === "super") hitRole = item.role === "Super Admin";
-
-            return hitSearch && hitRole;
-        });
-
-        if (sortF.value === "oldest") {
-            trackingPool.sort((a,b) => new Date(a.regDate) - new Date(b.regDate));
-        } else {
-            trackingPool.sort((a,b) => new Date(b.regDate) - new Date(a.regDate));
-        }
-        bindNexTableRecords(trackingPool);
+        const sort = sortF.value;
+        await refreshAdminRecords(query, role, sort);
     };
 
     search.addEventListener("input", execFilterRoutine);
     roleF.addEventListener("change", execFilterRoutine);
     sortF.addEventListener("change", execFilterRoutine);
+}
+
+async function refreshAdminRecords(query = '', role = 'all', sort = 'recent') {
+    const table = document.getElementById("nexTableWrapper");
+    const skeleton = document.getElementById("nexSkeleton");
+    const emptyCard = document.getElementById("nexEmptyState");
+
+    if (skeleton) skeleton.classList.remove("nex-hidden");
+    if (table) table.classList.add("nex-hidden");
+    if (emptyCard) emptyCard.classList.add("nex-hidden");
+
+    const response = await fetchAdminUsers(query, role, sort);
+    nexDbArray = response.items || [];
+
+    updateAdminCounters(response.counts || {
+        total: 0,
+        active: 0,
+        suspended: 0,
+        super: 0,
+    });
+
+    bindNexTableRecords(nexDbArray);
+
+    if (skeleton) skeleton.classList.add("nex-hidden");
+    if (table) table.classList.remove("nex-hidden");
 }
 
 // Modal Animation Drivers
@@ -396,24 +424,22 @@ function openNexTimelineLogs(username) {
 }
 
 // Database Refresh Simulator Routine
-function triggerNexRefresh() {
+async function triggerNexRefresh() {
     const icon = document.getElementById("nexRefreshIcon");
-    const loader = document.getElementById("nexSkeleton");
-    const table = document.getElementById("nexTableWrapper");
 
-    icon.style.transform = "rotate(360deg)";
-    icon.style.transition = "transform 0.7s cub-bezier(0.4, 0, 0.2, 1)";
-    table.classList.add("nex-hidden");
-    loader.classList.remove("nex-hidden");
+    if (icon) {
+        icon.style.transform = "rotate(360deg)";
+        icon.style.transition = "transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)";
+    }
 
-    setTimeout(() => {
+    await refreshAdminRecords(document.getElementById('nexSearch')?.value.trim() ?? '', document.getElementById('nexRoleFilter')?.value ?? 'all', document.getElementById('nexSortFilter')?.value ?? 'recent');
+
+    if (icon) {
         icon.style.transform = "rotate(0deg)";
         icon.style.transition = "none";
-        loader.classList.add("nex-hidden");
-        table.classList.remove("nex-hidden");
-        bindNexTableRecords(nexDbArray);
-        fireNexToast("Cache records synchronization matching live parameters.", "success");
-    }, 1100);
+    }
+
+    fireNexToast("Live admin dataset synchronized from backend.", "success");
 }
 
 // Custom Premium Notification System Component

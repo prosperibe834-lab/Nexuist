@@ -36,6 +36,100 @@ class UserController extends Controller
     ));
 }
 
+    public function adminUsersPage()
+    {
+        return view('AdminDashboard.admin-users');
+    }
+
+    public function adminUsersData(Request $request)
+    {
+        $query = User::query()->where('is_admin', true);
+
+        if ($search = $request->query('q')) {
+            $search = strtolower(trim($search));
+            $query->where(function ($sub) use ($search) {
+                $sub->whereRaw('LOWER(COALESCE(uid, CAST(id AS CHAR))) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(username) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(name) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(email) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(phone) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(country) LIKE ?', ["%{$search}%"]);
+            });
+        }
+
+        if ($role = $request->query('role')) {
+            $role = strtolower($role);
+            if ($role === 'super') {
+                $query->where(function ($sub) {
+                    $sub->where('username', 'like', '%super%')
+                        ->orWhere('email', 'like', '%super%');
+                });
+            } elseif ($role === 'active') {
+                $query->whereNotNull('email_verified_at');
+            } elseif ($role === 'pending') {
+                $query->whereNull('email_verified_at');
+            } elseif ($role === 'suspended') {
+                $query->where('kyc_status', 'rejected');
+            }
+        }
+
+        $sort = $request->query('sort', 'recent');
+        if ($sort === 'oldest') {
+            $query->orderBy('created_at', 'asc');
+        } else {
+            $query->orderBy('created_at', 'desc');
+        }
+
+        $admins = $query->get()->map(function (User $user) {
+            $adminUid = $user->uid ?: 'NX-' . str_pad($user->id, 5, '0', STR_PAD_LEFT);
+            $role = 'Admin';
+            $lowerUsername = strtolower($user->username ?? '');
+            $lowerEmail = strtolower($user->email ?? '');
+            if (str_contains($lowerUsername, 'super') || str_contains($lowerEmail, 'super')) {
+                $role = 'Super Admin';
+            }
+
+            $status = $user->email_verified_at ? 'Active' : 'Pending';
+            if ($user->kyc_status === 'rejected') {
+                $status = 'Suspended';
+            }
+
+            return [
+                'id' => $adminUid,
+                'username' => $user->username,
+                'fullName' => $user->name,
+                'email' => $user->email,
+                'phone' => $user->phone ?? 'N/A',
+                'gender' => ucfirst($user->gender ?? 'Unknown'),
+                'role' => $role,
+                'status' => $status,
+                'regDate' => optional($user->created_at)->format('Y-m-d') ?: 'N/A',
+                'lastLogin' => optional($user->updated_at)->format('Y-m-d H:i') ?: '---',
+                'ip' => $user->last_login_ip ?? '---',
+                'config' => $user->device_info ?? 'N/A',
+                'country' => $user->country ?? 'Unknown',
+                'activity' => $user->kyc_status ? ucfirst($user->kyc_status) : 'Active Administrator',
+            ];
+        });
+
+        $allAdmins = User::where('is_admin', true)->get();
+        $superAdmins = $allAdmins->filter(function (User $user) {
+            return str_contains(strtolower($user->username ?? ''), 'super') || str_contains(strtolower($user->email ?? ''), 'super');
+        })->count();
+        $activeAdmins = $allAdmins->whereNotNull('email_verified_at')->count();
+        $suspendedAdmins = $allAdmins->where('kyc_status', 'rejected')->count();
+
+        return response()->json([
+            'items' => $admins,
+            'counts' => [
+                'total' => $allAdmins->count(),
+                'active' => $activeAdmins,
+                'suspended' => $suspendedAdmins,
+                'super' => $superAdmins,
+            ],
+        ]);
+    }
+
     public function dashboard()
     {
         $user = Auth::user();
