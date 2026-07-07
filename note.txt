@@ -725,5 +725,11 @@ body {
 
 
 git add .
-git commit -m "i fixed admin withrawal error both the frontend"
-git push
+git commit -m "i fixed the investment so that it can be earning profit"
+git 
+
+php artisan investments:process
+php artisan schedule:run
+
+
+php artisan schedule:work

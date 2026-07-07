@@ -6,6 +6,7 @@ use App\Models\StockInvestment;
 use App\Models\StockPlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class StockInvestmentController extends Controller
 {
@@ -55,21 +56,46 @@ class StockInvestmentController extends Controller
         $durationDays = $this->getDurationForTerm($term);
         $profitAmount = round($amount * ($profitRate / 100), 2);
 
-        $user->balance -= $amount;
-        $user->save();
+        DB::beginTransaction();
+        try {
+            $before = $user->balance;
+            $user->balance = round($user->balance - $amount, 2);
+            $user->save();
 
-        StockInvestment::create([
-            'user_id' => $user->id,
-            'stock_plan_id' => $plan->id,
-            'amount' => $amount,
-            'term' => $term,
-            'profit_rate' => $profitRate,
-            'current_profit' => 0.00,
-            'current_balance' => $amount,
-            'start_date' => now(),
-            'end_date' => now()->addDays($durationDays),
-            'status' => 'Running',
-        ]);
+            $investment = StockInvestment::create([
+                'user_id' => $user->id,
+                'stock_plan_id' => $plan->id,
+                'amount' => $amount,
+                'term' => $term,
+                'profit_rate' => $profitRate,
+                'current_profit' => 0.00,
+                'current_balance' => $amount,
+                'start_date' => now(),
+                'end_date' => now()->addDays($durationDays),
+                'status' => 'Running',
+            ]);
+
+            \App\Models\Transaction::create([
+                'user_id' => $user->id,
+                'type' => 'Investment',
+                'amount' => -1 * $amount,
+                'balance_before' => $before,
+                'balance_after' => $user->balance,
+                'related_id' => $investment->id,
+                'related_type' => StockInvestment::class,
+                'transaction_id' => \App\Models\Transaction::generateTransactionId(),
+                'meta' => ['plan_id' => $plan->id, 'term' => $term],
+                'status' => 'completed',
+            ]);
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            if ($request->expectsJson()) {
+                return response()->json(['success' => false, 'message' => 'Investment failed: ' . $e->getMessage()], 500);
+            }
+            return back()->with('error', 'Investment failed: ' . $e->getMessage());
+        }
 
         if ($request->expectsJson()) {
             return response()->json([

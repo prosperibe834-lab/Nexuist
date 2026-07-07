@@ -68,6 +68,24 @@ class RealEstateInvestmentController extends Controller
                 'investment_date' => now(),
             ]);
 
+            // Record transaction for investment deduction
+            try {
+                \App\Models\Transaction::create([
+                    'user_id' => $user->id,
+                    'type' => 'Investment',
+                    'amount' => -1 * $investmentAmount,
+                    'balance_before' => null,
+                    'balance_after' => $user->balance,
+                    'related_id' => $investment->id,
+                    'related_type' => RealEstateInvestment::class,
+                    'transaction_id' => \App\Models\Transaction::generateTransactionId(),
+                    'meta' => ['property_id' => $property->id],
+                    'status' => 'completed',
+                ]);
+            } catch (\Exception $e) {
+                Log::error('Failed to record real estate investment transaction: ' . $e->getMessage());
+            }
+
             $property->sold_tokens = bcadd($property->sold_tokens, $tokensPurchased, 8);
             $property->available_tokens = max(0, bcsub($property->available_tokens, $tokensPurchased, 8));
 

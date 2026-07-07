@@ -6,6 +6,7 @@ use App\Models\BotInvestment;
 use App\Models\StockInvestment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BotInvestmentController extends Controller
 {
@@ -40,26 +41,49 @@ class BotInvestmentController extends Controller
                 return $this->jsonResponse(false, 'Insufficient balance. Please deposit funds.', ['redirect' => '/deposit']);
             }
 
-            // DEDUCT WALLET
-            $userModel = \App\Models\User::findOrFail(Auth::id());
-            $userModel->balance -= $amount;
-            $userModel->save();
+            DB::beginTransaction();
+            try {
+                // DEDUCT WALLET
+                $userModel = \App\Models\User::findOrFail(Auth::id());
+                $before = $userModel->balance;
+                $userModel->balance = round($userModel->balance - $amount, 2);
+                $userModel->save();
 
-            // CREATE INVESTMENT
-            BotInvestment::create([
-                'user_id'           => $user->id,
-                'bot_id'            => $bot->id,
-                'investment_amount' => $amount,
-                'current_profit'    => 0,
-                'current_balance'   => $amount,
-                'start_date'        => now(),
-                'end_date'          => now()->addDays(30),
-                'status'            => 'Running',
-            ]);
+                // CREATE INVESTMENT
+                $investment = BotInvestment::create([
+                    'user_id'           => $user->id,
+                    'bot_id'            => $bot->id,
+                    'investment_amount' => $amount,
+                    'current_profit'    => 0,
+                    'current_balance'   => $amount,
+                    'start_date'        => now(),
+                    'end_date'          => now()->addDays(30),
+                    'status'            => 'Running',
+                ]);
 
-            // UPDATE BOT STATS
-            $bot->increment('total_subscribers');
-            $bot->increment('total_investment', $amount);
+                // Record transaction
+                \App\Models\Transaction::create([
+                    'user_id' => $userModel->id,
+                    'type' => 'Investment',
+                    'amount' => -1 * $amount,
+                    'balance_before' => $before,
+                    'balance_after' => $userModel->balance,
+                    'related_id' => $investment->id,
+                    'related_type' => BotInvestment::class,
+                    'transaction_id' => \App\Models\Transaction::generateTransactionId(),
+                    'meta' => ['bot_id' => $bot->id],
+                    'status' => 'completed',
+                ]);
+
+                // UPDATE BOT STATS
+                $bot->increment('total_subscribers');
+                $bot->increment('total_investment', $amount);
+
+                DB::commit();
+            } catch (\Exception $e) {
+                DB::rollBack();
+                return $this->jsonResponse(false, 'Error: ' . $e->getMessage());
+            }
 
             return $this->jsonResponse(true, 'AI Bot Investment Activated Successfully', ['redirect' => '/deploybot']);
 

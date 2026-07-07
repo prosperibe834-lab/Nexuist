@@ -6,6 +6,7 @@ use App\Models\CryptoInvestment;
 use App\Models\CryptoPlan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CryptoInvestmentController extends Controller
 {
@@ -42,23 +43,45 @@ class CryptoInvestmentController extends Controller
         $profitRate = $this->getRateForTerm($plan, $term);
         $durationDays = $this->getDurationForTerm($term);
 
-        $user->balance -= $amount;
-        $user->save();
+        DB::beginTransaction();
+        try {
+            $before = $user->balance;
+            $user->balance = round($user->balance - $amount, 2);
+            $user->save();
 
-        $investment = CryptoInvestment::create([
-            'user_id' => $user->id,
-            'crypto_plan_id' => $plan->id,
-            'amount' => $amount,
-            'term' => $term,
-            'profit_rate' => $profitRate,
-            'current_profit' => 0.00,
-            'current_balance' => $amount,
-            'start_date' => now(),
-            'end_date' => now()->addDays($durationDays),
-            'status' => 'Running',
-        ]);
+            $investment = CryptoInvestment::create([
+                'user_id' => $user->id,
+                'crypto_plan_id' => $plan->id,
+                'amount' => $amount,
+                'term' => $term,
+                'profit_rate' => $profitRate,
+                'current_profit' => 0.00,
+                'current_balance' => $amount,
+                'start_date' => now(),
+                'end_date' => now()->addDays($durationDays),
+                'status' => 'Running',
+            ]);
 
-        $investment->refreshEarnings();
+            \App\Models\Transaction::create([
+                'user_id' => $user->id,
+                'type' => 'Investment',
+                'amount' => -1 * $amount,
+                'balance_before' => $before,
+                'balance_after' => $user->balance,
+                'related_id' => $investment->id,
+                'related_type' => CryptoInvestment::class,
+                'transaction_id' => \App\Models\Transaction::generateTransactionId(),
+                'meta' => ['plan_id' => $plan->id, 'term' => $term],
+                'status' => 'completed',
+            ]);
+
+            $investment->refreshEarnings();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['success' => false, 'message' => 'Investment failed: ' . $e->getMessage()], 500);
+        }
 
         return response()->json(['success' => true, 'message' => 'Crypto investment created.', 'investment' => $investment, 'redirect' => url('/deploybot')]);
     }

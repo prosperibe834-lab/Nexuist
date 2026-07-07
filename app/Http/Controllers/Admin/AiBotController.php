@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class AiBotController extends Controller
 {
@@ -664,7 +665,9 @@ class AiBotController extends Controller
         $user->balance -= $request->amount;
         $user->save();
 
-        $investment = BotInvestment::create([
+        DB::beginTransaction();
+        try {
+            $investment = BotInvestment::create([
             'user_id' => $user->id,
             'bot_id' => $bot->id,
             'investment_amount' => $request->amount,
@@ -673,12 +676,31 @@ class AiBotController extends Controller
             'start_date' => now(),
             'end_date' => now()->addDays(30),
             'status' => 'Running',
-        ]);
+            ]);
 
-        $bot->increment('total_subscribers');
-        $bot->increment('total_investment', $request->amount);
+            \App\Models\Transaction::create([
+                'user_id' => $user->id,
+                'type' => 'Investment',
+                'amount' => -1 * $request->amount,
+                'balance_before' => null,
+                'balance_after' => $user->balance,
+                'related_id' => $investment->id,
+                'related_type' => BotInvestment::class,
+                'transaction_id' => \App\Models\Transaction::generateTransactionId(),
+                'meta' => ['bot_id' => $bot->id],
+                'status' => 'completed',
+            ]);
 
-        return response()->json(['success' => true, 'investment' => $investment]);
+            $bot->increment('total_subscribers');
+            $bot->increment('total_investment', $request->amount);
+
+            DB::commit();
+
+            return response()->json(['success' => true, 'investment' => $investment]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['success' => false, 'message' => 'Error: ' . $e->getMessage()], 500);
+        }
     }
 
     public function broadcastLiveSignal(Request $request)

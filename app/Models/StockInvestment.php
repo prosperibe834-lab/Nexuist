@@ -68,4 +68,18 @@ class StockInvestment extends Model
 
         return round($this->amount * $dailyRate * $days, 2);
     }
+
+    public function refreshEarnings(): self
+    {
+        if ($this->status !== 'Running') {
+            return $this;
+        }
+
+        $accrued = $this->accrued_profit;
+        $this->current_profit = round($accrued, 2);
+        $this->current_balance = round($this->amount + $accrued, 2);
+        $this->save();
+
+        return $this;
+    }
 }
