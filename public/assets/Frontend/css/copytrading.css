@@ -2036,3 +2036,217 @@ body{
     .node-text h5 { font-size: 1rem; }
     .node-text p { font-size: 0.85rem; }
 }
+
+
+/*  */
+
+/* ==========================================================================
+   ACTIVE COPIES SECTION - TRADING LAYOUT
+   ========================================================================== */
+
+.active-copies-section {
+    padding: 24px;
+    background: var(--bg-main);
+    border-radius: var(--radius-lg);
+    margin-bottom: 30px;
+}
+
+/* Header layout rules matching target classes */
+.active-copies-section .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    gap: 16px;
+}
+
+.active-copies-section .section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+    margin: 0;
+}
+
+/* Glassmorphic Active Action Vector Button */
+.active-copies-section .btn.btn-outline {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.active-copies-section .btn.btn-outline:hover {
+    background: var(--color-blue);
+    border-color: var(--color-blue-hover);
+    box-shadow: 0 0 16px rgba(37, 99, 235, 0.35);
+    transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Layout Grid 
+   -------------------------------------------------------------------------- */
+.active-copies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 20px;
+}
+
+/* --------------------------------------------------------------------------
+   Premium Trading Position Cards
+   -------------------------------------------------------------------------- */
+.copy-card {
+    background: linear-gradient(145deg, var(--bg-card), rgba(21, 27, 43, 0.75));
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                background-color 0.3s ease, 
+                border-color 0.3s ease, 
+                box-shadow 0.3s ease;
+    animation: positionCardEntrance 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Interactive card transitions */
+.copy-card:hover {
+    background: var(--bg-card-hover);
+    border-color: rgba(255, 255, 255, 0.14);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35), 
+                0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+}
+
+/* Top colored accent indicator line */
+.copy-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-blue), var(--color-purple));
+    opacity: 0.85;
+    transition: var(--transition);
+}
+
+.copy-card:hover::before {
+    height: 5px;
+    background: linear-gradient(90deg, var(--color-purple), var(--color-green));
+}
+
+.copy-card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Card typography adjustments */
+.copy-card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 4px 0;
+    letter-spacing: -0.2px;
+}
+
+.copy-card-description {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin: 0 0 20px 0;
+}
+
+/* --------------------------------------------------------------------------
+   Trading Metrics Structures
+   -------------------------------------------------------------------------- */
+.copy-card-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.copy-card-stats .stat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    padding-bottom: 2px;
+}
+
+/* Clean structural styling to turn internal plain strings into rows */
+.copy-card-stats .stat-item::before {
+    content: attr(class); /* Fallback rule anchor */
+    display: none;
+}
+
+/* Apply specific styles to the last child metric container (Profit/Loss row) */
+.copy-card-stats .stat-item:last-child {
+    border-top: 1px solid var(--border-color);
+    margin-top: 4px;
+    padding-top: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* Custom numbers alignment layout font rule overrides */
+.copy-card-stats .stat-item {
+    font-family: 'SF Mono', SFMono-Regular, Consolas, monospace, sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   Keyframe Entrance Vectors
+   -------------------------------------------------------------------------- */
+@keyframes positionCardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Structural Stagger Allocations */
+.copy-card:nth-child(1) { animation-delay: 0.04s; }
+.copy-card:nth-child(2) { animation-delay: 0.10s; }
+.copy-card:nth-child(3) { animation-delay: 0.16s; }
+.copy-card:nth-child(4) { animation-delay: 0.22s; }
+
+/* --------------------------------------------------------------------------
+   Mobile View Breaks
+   -------------------------------------------------------------------------- */
+@media (max-width: 576px) {
+    .active-copies-section {
+        padding: 16px;
+    }
+    
+    .active-copies-section .section-header {
+        gap: 12px;
+    }
+    
+    .active-copies-section .section-title {
+        font-size: 1.1rem;
+    }
+    
+    .active-copies-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+    
+    .copy-card-body {
+        padding: 16px;
+    }
+}

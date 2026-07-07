@@ -725,7 +725,7 @@ body {
 
 
 git add .
-git commit -m "i fixed the investment so that it can be earning profit"
+git commit -m "i fixed copytrading error"
 git 
 
 php artisan investments:process
@@ -733,3 +733,6 @@ php artisan schedule:run
 
 
 php artisan schedule:work
+
+
+

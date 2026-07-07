@@ -101,21 +101,23 @@
             </div>
 
             @if(!empty($activeCopies) && $activeCopies > 0)
-                <section class="active-copies-section">
+                
+
+ <section class="active-copies-section">
                     <div class="section-header">
-                        <h2>Your Active Copying Positions</h2>
+                        <h2 class="section-title">Your Active Copying Positions</h2>
                         <a href="/deploybot" class="btn btn-outline">View Deployment</a>
                     </div>
                     <div class="active-copies-grid">
                         @foreach($activeInvestments as $investment)
                             <div class="copy-card">
                                 <div class="copy-card-body">
-                                    <h3>{{ $investment->bot->bot_name ?? 'AI Copy Bot' }}</h3>
-                                    <p>{{ $investment->bot->strategy_type ?? $investment->bot->trading_style ?? 'Copy Trading Strategy' }}</p>
+                                    <h3 class="copy-card-title">{{ $investment->bot->bot_name ?? 'AI Copy Bot' }}</h3>
+                                    <p class="copy-card-description">{{ $investment->bot->strategy_type ?? $investment->bot->trading_style ?? 'Copy Trading Strategy' }}</p>
                                     <div class="copy-card-stats">
-                                        <span>Principal: ${{ number_format($investment->investment_amount, 2) }}</span>
-                                        <span>Current Value: ${{ number_format($investment->current_balance, 2) }}</span>
-                                        <span>Profit: ${{ number_format($investment->current_profit, 2) }}</span>
+                                        <span class="stat-item">Principal: ${{ number_format($investment->investment_amount, 2) }}</span>
+                                        <span class="stat-item">Current Value: ${{ number_format($investment->current_balance, 2) }}</span>
+                                        <span class="stat-item">Profit: ${{ number_format($investment->current_profit, 2) }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -243,6 +245,8 @@
                 </div>
             </div>
         </section>
+
+                @endif
 
     <script src="{{ asset('assets/Frontend/js/copytrading.js') }}"></script>
 </body>
