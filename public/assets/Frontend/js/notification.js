@@ -155,43 +155,44 @@ document.addEventListener('DOMContentLoaded', () => {
 const qtDropdownBtn = document.getElementById("qtDropdownBtn");
 const qtDropdownMenu = document.getElementById("qtDropdownMenu");
 
-qtDropdownBtn.addEventListener("click", () => {
+if (qtDropdownBtn && qtDropdownMenu) {
+    qtDropdownBtn.addEventListener("click", () => {
+        qtDropdownMenu.classList.toggle("active");
+        qtDropdownBtn.classList.toggle("active");
+    });
 
-    qtDropdownMenu.classList.toggle("active");
-    qtDropdownBtn.classList.toggle("active");
-
-});
-
-window.addEventListener("click", (e) => {
-
-    if(
-        !qtDropdownBtn.contains(e.target) &&
-        !qtDropdownMenu.contains(e.target)
-    ){
-        qtDropdownMenu.classList.remove("active");
-        qtDropdownBtn.classList.remove("active");
-    }
-
-});
+    window.addEventListener("click", (e) => {
+        if (
+            !qtDropdownBtn.contains(e.target) &&
+            !qtDropdownMenu.contains(e.target)
+        ) {
+            qtDropdownMenu.classList.remove("active");
+            qtDropdownBtn.classList.remove("active");
+        }
+    });
+}
 
 const acmVerifyBtn = document.getElementById("acmVerifyBtn");
 const acmVerifyMenu = document.getElementById("acmVerifyMenu");
 
-acmVerifyBtn.addEventListener("click", () => {
-
-    acmVerifyBtn.classList.toggle("active");
-
-    acmVerifyMenu.classList.toggle("active");
-
-});
+if (acmVerifyBtn && acmVerifyMenu) {
+    acmVerifyBtn.addEventListener("click", () => {
+        acmVerifyBtn.classList.toggle("active");
+        acmVerifyMenu.classList.toggle("active");
+    });
+}
 
 
 // Main section starts here
 document.addEventListener("DOMContentLoaded", function () {
     // DOM Cache Elements Selection
+    const notificationsWrapper = document.getElementById("notifications-wrapper");
+    if (!notificationsWrapper) {
+        return;
+    }
+
     const searchInput = document.getElementById("noti-search");
     const tabButtons = document.querySelectorAll(".filter-tabs .tab-btn");
-    const notiItems = document.querySelectorAll(".noti-list .noti-item");
     const unreadCountBadge = document.getElementById("unread-count");
     const showingCountText = document.getElementById("showing-count-text");
     const markAllBtn = document.getElementById("mark-all-read-btn");
@@ -203,23 +204,27 @@ document.addEventListener("DOMContentLoaded", function () {
     updateStatusMetrics();
 
     // 1. Search Query Input Event Listener
-    searchInput.addEventListener("input", function (e) {
-        searchQuery = e.target.value.toLowerCase().trim();
-        evaluateVisibilityFilterEngine();
-    });
-
-    // 2. Tab Filter Switching Listener Loop
-    tabButtons.forEach(button => {
-        button.addEventListener("click", function () {
-            tabButtons.forEach(btn => btn.classList.remove("active"));
-            this.classList.add("active");
-            currentFilter = this.getAttribute("data-filter");
+    if (searchInput) {
+        searchInput.addEventListener("input", function (e) {
+            searchQuery = e.target.value.toLowerCase().trim();
             evaluateVisibilityFilterEngine();
         });
-    });
+    }
+
+    // 2. Tab Filter Switching Listener Loop
+    if (tabButtons.length) {
+        tabButtons.forEach(button => {
+            button.addEventListener("click", function () {
+                tabButtons.forEach(btn => btn.classList.remove("active"));
+                this.classList.add("active");
+                currentFilter = this.getAttribute("data-filter");
+                evaluateVisibilityFilterEngine();
+            });
+        });
+    }
 
     // 3. Row Action Controllers (Mark Read/Delete Toggle)
-    document.getElementById("notifications-wrapper").addEventListener("click", async function (e) {
+    notificationsWrapper.addEventListener("click", async function (e) {
         const item = e.target.closest(".noti-item");
         if (!item) return;
 
@@ -239,9 +244,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // 4. Global Bulk State Action Configuration
-    markAllBtn.addEventListener("click", async function () {
-        await markAllNotificationsRead();
-    });
+    if (markAllBtn) {
+        markAllBtn.addEventListener("click", async function () {
+            await markAllNotificationsRead();
+        });
+    }
 
     // Core Filtering Engine Rule Calculator Matrix
     function evaluateVisibilityFilterEngine() {
@@ -250,8 +257,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         totalItems.forEach(item => {
             const statusMatch = (currentFilter === "all") || (item.getAttribute("data-status") === currentFilter);
-            const textContent = item.querySelector(".noti-message").textContent.toLowerCase();
-            const tagContent = item.querySelector(".noti-type-tag").textContent.toLowerCase();
+            const messageEl = item.querySelector(".noti-message");
+            const tagEl = item.querySelector(".noti-type-tag");
+            const textContent = messageEl ? messageEl.textContent.toLowerCase() : '';
+            const tagContent = tagEl ? tagEl.textContent.toLowerCase() : '';
             const searchMatch = textContent.includes(searchQuery) || tagContent.includes(searchQuery);
 
             if (statusMatch && searchMatch) {
@@ -262,7 +271,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
 
-        showingCountText.textContent = `Showing ${visibleCount} of ${totalItems.length} notifications`;
+        if (showingCountText) {
+            showingCountText.textContent = `Showing ${visibleCount} of ${totalItems.length} notifications`;
+        }
     }
 
     // Badge Metric Updates Counter Utility
@@ -270,8 +281,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const activeUnreadCount = document.querySelectorAll(".noti-list .noti-item.unread").length;
         const currentTotalItems = document.querySelectorAll(".noti-list .noti-item").length;
         
-        unreadCountBadge.textContent = activeUnreadCount;
-        showingCountText.textContent = `Showing ${currentTotalItems} of ${currentTotalItems} notifications`;
+        if (unreadCountBadge) {
+            unreadCountBadge.textContent = activeUnreadCount;
+        }
+        if (showingCountText) {
+            showingCountText.textContent = `Showing ${currentTotalItems} of ${currentTotalItems} notifications`;
+        }
     }
 
     function getCsrfToken() {

@@ -70,16 +70,6 @@ class AdminAuthController extends Controller
 
         if (Auth::attempt($credentials, $request->has('remember'))) {
             $request->session()->regenerate();
-
-            // Optional: create a simple notification record if model exists
-            if (class_exists(UserNotification::class)) {
-                UserNotification::createForUser(
-                    Auth::user(),
-                    'Admin Login',
-                    'Admin login detected from IP: ' . $request->ip()
-                );
-            }
-
             return redirect('/admin-dashboard')->with('success', 'Admin authentication verified.');
         }
 

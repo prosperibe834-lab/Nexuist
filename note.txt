@@ -725,12 +725,12 @@ body {
 
 
 git add .
-git commit -m "i fixed copytrading error"
+git commit -m "i fixed notification"
 git 
 
 php artisan investments:process
 php artisan schedule:run
-
+php artisan serve
 
 php artisan schedule:work
 
