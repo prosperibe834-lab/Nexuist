@@ -725,7 +725,7 @@ body {
 
 
 git add .
-git commit -m "i fixed notification"
+git commit -m "i puted currect deposit address"
 git 
 
 php artisan investments:process
@@ -736,3 +736,32 @@ php artisan schedule:work
 
 
 
+
+/*  */
+
+ .otp-input-row {
+
+    display: flex;                 /* Forces layout items to sit side-by-side */
+
+    flex-direction: row;           /* Declares horizontal linear axis positioning */
+
+    justify-content: space-between;/* Spreads boxes across the container boundaries */
+
+    gap: 10px;                     /* Balanced margins between individual nodes */
+
+    width: 100%;                   /* Snaps the container width limits */
+
+    margin-top: 8px;        
+
+} 
+
+
+.otp-input-row .otp-cell {
+     /* 🎨 COLOR CORRECTIONS */
+    color: #ffffff ;     
+    caret-color: #3b82f6;         
+}
+
+.interactive-input-container input{
+    color: #ffffff;
+}

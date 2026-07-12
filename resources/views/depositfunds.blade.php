@@ -114,7 +114,7 @@
                     <div class="method-grid">
                         <!-- USDT Card -->
                         <div class="gate-card"
-                            onclick="openGateway('USDT', 'Tether (TRC20)', 'T9xRV872vzPqW82Lkp90SvcW', 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=T9xRV872vzPqW82Lkp90SvcW')">
+                            onclick="openGateway('USDT', 'Tether (TRC20)', 'TVMWtPzFwnek5DfpA5qiyRwvy3Qi8dCbpg', 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=T9xRV872vzPqW82Lkp90SvcW')">
                             <div class="gate-icon usdt"><i class='bx bxs-dollar-circle'></i></div>
                             <div class="gate-details">
                                 <h3>USDT</h3>
@@ -125,7 +125,7 @@
 
                         <!-- BTC Card -->
                         <div class="gate-card"
-                            onclick="openGateway('BTC', 'Bitcoin Network', 'bc1qxy2kgdy6jrsqxms6pazf', 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bc1qxy2kgdy6jrsqxms6pazf')">
+                            onclick="openGateway('BTC', 'Bitcoin Network', '14xxNLpG5fdjzMJwHuFteeoZayfy63S1Lk', 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bc1qxy2kgdy6jrsqxms6pazf')">
                             <div class="gate-icon btc"><i class='bx bxl-bitcoin'></i></div>
                             <div class="gate-details">
                                 <h3>Bitcoin</h3>
@@ -136,7 +136,7 @@
 
                         <!-- ETH Card -->
                         <div class="gate-card"
-                            onclick="openGateway('ETH', 'Ethereum (ERC20)', '0x71C7656EC7ab88b098defB751B7401B5f6d8976F', 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=0x71C7656EC7ab88b098defB751B7401B5f6d8976F')">
+                            onclick="openGateway('ETH', 'Ethereum (ERC20)', '0xcd9fe862dbbbc5f38f0e86a1eed343308be7bbaa', 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=0x71C7656EC7ab88b098defB751B7401B5f6d8976F')">
                             <div class="gate-icon eth"><span class="iconify"
                                     data-icon="cryptocurrency-color:eth"></span>
                             </div>

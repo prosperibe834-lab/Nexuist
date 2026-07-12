@@ -291,7 +291,9 @@ body {
 
 .interactive-input-container {
     position: relative;
-    width: 100%;
+    /* width: 100%; */
+     display: flex;                
+    gap: 0.2rem;
 }
 
 .interactive-input-container input {
@@ -301,10 +303,12 @@ body {
     border-radius: var(--radius-md);
     color: var(--text-primary);
     padding: 0.8rem 1rem 0.8rem 2.5rem;
-    font-size: 16px; /* Guaranteed lock preventing viewport bounce offsets upon keyboard triggers */
+     font-size: 16px; 
     outline: none;
     transition: var(--transition);
 }
+
+
 
 .interactive-input-container input:focus {
     border-color: var(--color-blue);
@@ -471,3 +475,7 @@ body {
         padding: 2rem 1.15rem;
     }
 }
+
+
+/*  */
+
