@@ -726,8 +726,8 @@ body {
 npm run build
 
 git add .
-git commit -m "i puted something on profit"
-git 
+git commit -m "i tried fixing the realestate 404 error"
+git push origin main
 
 php artisan investments:process
 php artisan schedule:run
@@ -769,3 +769,22 @@ php artisan schedule:work
 
 
 Gd^/P;|~0
+
+
+Main
+# DB_CONNECTION=mysql
+# DB_HOST=localhost
+# DB_PORT=3306
+# DB_DATABASE=u660772820_nexuist
+# DB_USERNAME=u660772820_nexuist
+# DB_PASSWORD=Gd^/P;|~0
+
+
+
+Local 
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nexuist           # Change this to whatever you named your local database in phpMyAdmin
+DB_USERNAME=root
+DB_PASSWORD=

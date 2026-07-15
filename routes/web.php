@@ -50,7 +50,9 @@ Route::get('/users', [App\Http\Controllers\UserController::class, 'index']);
 Route::get('/dashboard', [App\Http\Controllers\UserController::class, 'dashboard']);
 
 // Route for depositing funds
-Route::post('/admin/deposits/update-status', [DepositController::class, 'updateStatus'])->name('deposits.update-status');
+Route::post('/admin/deposits/update-status', [DepositController::class, 'updateStatus'])
+    ->middleware(['auth', 'admin'])
+    ->name('deposits.update-status');
 Route::get('/deposits', [DepositController::class, 'index'])->name('deposits.index');
 
 Route::middleware(['auth'])->group(function () {
@@ -62,11 +64,14 @@ Route::post('/kyc/store', [KycController::class, 'store'])
     ->middleware('auth')
     ->name('kyc.store');
 
-Route::get('/kyc', [AdminKycController::class, 'index']);
+Route::get('/kyc', [AdminKycController::class, 'index'])
+    ->middleware(['auth', 'admin']);
 Route::post('/kyc/{id}/approve',
-    [AdminKycController::class, 'approve']);
+    [AdminKycController::class, 'approve'])
+    ->middleware(['auth', 'admin']);
 Route::post('/kyc/{id}/reject',
-    [AdminKycController::class, 'reject']);
+    [AdminKycController::class, 'reject'])
+    ->middleware(['auth', 'admin']);
 
 /*
 |--------------------------------------------------------------------------
@@ -172,7 +177,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/account/statement', [AccountStatementController::class, 'data'])->name('account.statement.data');
     
     // AdminDemo Route
-    Route::get('/AdminDemo', [AdminDemoController::class, 'index'])->name('admin.demo');
+    Route::get('/AdminDemo', [AdminDemoController::class, 'index'])
+    ->middleware('admin')
+    ->name('admin.demo');
     
     Route::view('/invest', 'invest');
     Route::view('/plans', 'plans');
@@ -180,7 +187,7 @@ Route::middleware('auth')->group(function () {
     Route::view('/cryptoInvest', 'cryptoInvest');
     Route::view('/cryptocurrencies', 'cryptocurrencies');
     Route::view('/realestate', 'realestate');
-    Route::view('/myRealEstateinvestment', 'myRealEstateinvestment');
+    Route::view('/myRealEstateinvestment', 'myRealEstateInvestment');
 
     // Route::view('/botTrading', 'botTrading');
     Route::get('/botTrading', [AiBotController::class, 'botTrading']);
@@ -190,7 +197,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/copytrading', [AiBotController::class, 'copyTrading'])->name('copytrading');
     Route::get('/experts', [AiBotController::class, 'experts'])->name('experts');
-    Route::get('/copy-trading', [AiBotController::class, 'copyTradingAdmin'])->name('admin.copy-trading');
+    Route::get('/copy-trading', [AiBotController::class, 'copyTradingAdmin'])
+        ->middleware('admin')
+        ->name('admin.copy-trading');
     Route::view('/wallet', 'wallet');
     Route::view('/deposit', 'depositfunds');
     Route::view('/depositfunds', 'depositfunds');
@@ -225,18 +234,39 @@ Route::middleware('auth')->group(function () {
     Route::get('/notification', [NotificationController::class, 'index'])->name('notification.index');
 
     // Admin
-    Route::view('/admin-dashboard', 'AdminDashboard.index')->name('admin.dashboard');
-    Route::view('/admin-settings', 'AdminDashboard.admin-settings');
-    Route::view('/website-settings', 'AdminDashboard.website-settings');
-    Route::get('/admin-users', [UserController::class, 'adminUsersPage'])->name('admin.users');
-    Route::get('/api/admin-users', [UserController::class, 'adminUsersData'])->name('admin.users.data');
-    Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::put('/users/{id}/balance', [UserController::class, 'updateBalance'])->name('users.updateBalance');
-    Route::get('/withdrawals', [AdminWithdrawalController::class, 'index'])->name('admin.withdrawals');
-    Route::post('/api/withdrawals/{id}/approve', [AdminWithdrawalController::class, 'approve'])->name('admin.withdrawals.approve');
-    Route::post('/api/withdrawals/{id}/reject', [AdminWithdrawalController::class, 'reject'])->name('admin.withdrawals.reject');
-    Route::view('/AdminRealEstate', 'AdminDashboard.AdminRealEstate');
-    Route::get('/PremiumInvestment', [AiBotController::class, 'premiumInvestmentDashboard'])->name('admin.premium.dashboard');
+    Route::view('/admin-dashboard', 'AdminDashboard.index')
+        ->middleware('admin')
+        ->name('admin.dashboard');
+    Route::view('/admin-settings', 'AdminDashboard.admin-settings')
+        ->middleware('admin');
+    Route::view('/website-settings', 'AdminDashboard.website-settings')
+        ->middleware('admin');
+    Route::get('/admin-users', [UserController::class, 'adminUsersPage'])
+        ->middleware('admin')
+        ->name('admin.users');
+    Route::get('/api/admin-users', [UserController::class, 'adminUsersData'])
+        ->middleware('admin')
+        ->name('admin.users.data');
+    Route::get('/users', [UserController::class, 'index'])
+        ->middleware('admin')
+        ->name('users.index');
+    Route::put('/users/{id}/balance', [UserController::class, 'updateBalance'])
+        ->middleware('admin')
+        ->name('users.updateBalance');
+    Route::get('/withdrawals', [AdminWithdrawalController::class, 'index'])
+        ->middleware('admin')
+        ->name('admin.withdrawals');
+    Route::post('/api/withdrawals/{id}/approve', [AdminWithdrawalController::class, 'approve'])
+        ->middleware('admin')
+        ->name('admin.withdrawals.approve');
+    Route::post('/api/withdrawals/{id}/reject', [AdminWithdrawalController::class, 'reject'])
+        ->middleware('admin')
+        ->name('admin.withdrawals.reject');
+    Route::view('/AdminRealEstate', 'AdminDashboard.AdminRealEstate')
+        ->middleware('admin');
+    Route::get('/PremiumInvestment', [AiBotController::class, 'premiumInvestmentDashboard'])
+        ->middleware('admin')
+        ->name('admin.premium.dashboard');
 
     Route::get('/api/real-estate/properties', [RealEstatePropertyController::class, 'index']);
     Route::get('/api/real-estate/properties/{slug}', [RealEstatePropertyController::class, 'show']);
@@ -247,47 +277,70 @@ Route::middleware('auth')->group(function () {
 
     // Route::view('/ai-bot', 'AdminDashboard.ai-bot');
     Route::get('/ai-bot', [AiBotController::class, 'index'])
-    ->name('admin.ai-bot');
+        ->middleware('admin')
+        ->name('admin.ai-bot');
 
-    Route::view('/internal-transfers', 'AdminDashboard.internal-transfers');
-    Route::view('/statements', 'AdminDashboard.statements');
+    Route::view('/internal-transfers', 'AdminDashboard.internal-transfers')
+        ->middleware('admin');
+    Route::view('/statements', 'AdminDashboard.statements')
+        ->middleware('admin');
     // Route::view('/kyc', 'AdminDashboard.kyc');
-    Route::view('/loans', 'AdminDashboard.loans');
+    Route::view('/loans', 'AdminDashboard.loans')
+        ->middleware('admin');
 
     // Route::view('/deposits', 'AdminDashboard.deposits');
 
-    Route::view('/investment-plans', 'AdminDashboard.investment-plans');
-    Route::view('/Adminperformance', 'AdminDashboard.Adminperformance');
-    Route::view('/AdminPortfolio', 'AdminDashboard.AdminPortfolio');
-    Route::view('/admin-notifications', 'AdminDashboard.notifications')->name('admin.notifications');
-    Route::view('/AdminSupport', 'AdminDashboard.AdminSupport');
-    Route::view('/transactions', 'AdminDashboard.transactions');
-    Route::view('/security', 'AdminDashboard.security');
-    Route::get('/AdminReferUSer', [ReferralController::class, 'adminDashboard']);
-    Route::get('/StockMarket', [AdminStockMarketController::class, 'index'])->name('admin.stockmarket');
-    Route::post('/admin/stock-market/plans', [AdminStockMarketController::class, 'storePlan'])->name('admin.stockmarket.plan.store');
-    Route::post('/admin/stock-market/plans/{id}/toggle', [AdminStockMarketController::class, 'toggleStatus'])->name('admin.stockmarket.plan.toggle');
-    Route::post('/admin/crypto/plans', [App\Http\Controllers\Admin\CryptoController::class, 'storePlan'])->name('admin.crypto.plan.store');
-    Route::post('/admin/crypto/plans/{id}/toggle', [App\Http\Controllers\Admin\CryptoController::class, 'toggleStatus'])->name('admin.crypto.plan.toggle');
-    Route::delete('/admin/crypto/plans/{id}', [App\Http\Controllers\Admin\CryptoController::class, 'destroy'])->name('admin.crypto.plan.destroy');
-    Route::view('/Crypto', 'AdminDashboard.Crypto');
+    Route::view('/investment-plans', 'AdminDashboard.investment-plans')
+        ->middleware('admin');
+    Route::view('/Adminperformance', 'AdminDashboard.Adminperformance')
+        ->middleware('admin');
+    Route::view('/AdminPortfolio', 'AdminDashboard.AdminPortfolio')
+        ->middleware('admin');
+    Route::view('/admin-notifications', 'AdminDashboard.notifications')
+        ->middleware('admin')
+        ->name('admin.notifications');
+    Route::view('/AdminSupport', 'AdminDashboard.AdminSupport')
+        ->middleware('admin');
+    Route::view('/transactions', 'AdminDashboard.transactions')
+        ->middleware('admin');
+    Route::view('/security', 'AdminDashboard.security')
+        ->middleware('admin');
+    Route::get('/AdminReferUSer', [ReferralController::class, 'adminDashboard'])
+        ->middleware('admin');
+    Route::get('/StockMarket', [AdminStockMarketController::class, 'index'])
+        ->middleware('admin')
+        ->name('admin.stockmarket');
+    Route::post('/admin/stock-market/plans', [AdminStockMarketController::class, 'storePlan'])
+        ->middleware(['auth', 'admin'])
+        ->name('admin.stockmarket.plan.store');
+    Route::post('/admin/stock-market/plans/{id}/toggle', [AdminStockMarketController::class, 'toggleStatus'])
+        ->middleware(['auth', 'admin'])
+        ->name('admin.stockmarket.plan.toggle');
+    Route::post('/admin/crypto/plans', [App\Http\Controllers\Admin\CryptoController::class, 'storePlan'])
+        ->middleware(['auth', 'admin'])
+        ->name('admin.crypto.plan.store');
+    Route::post('/admin/crypto/plans/{id}/toggle', [App\Http\Controllers\Admin\CryptoController::class, 'toggleStatus'])
+        ->middleware(['auth', 'admin'])
+        ->name('admin.crypto.plan.toggle');
+    Route::delete('/admin/crypto/plans/{id}', [App\Http\Controllers\Admin\CryptoController::class, 'destroy'])
+        ->middleware(['auth', 'admin'])
+        ->name('admin.crypto.plan.destroy');
+    Route::view('/Crypto', 'AdminDashboard.Crypto')
+        ->middleware('admin');
 });
 
-Route::get('/kyc', [AdminKycController::class, 'index'])->name('kyc.index');
-
-Route::post('/kyc/{id}/approve', [AdminKycController::class, 'approve']);
-
-Route::post('/kyc/{id}/reject', [AdminKycController::class, 'reject']);
-
-Route::get('/admin/kyc/data', [AdminKycController::class, 'getKycData']);
+Route::get('/admin/kyc/data', [AdminKycController::class, 'getKycData'])
+    ->middleware(['auth', 'admin']);
 
 Route::get('/admin/kyc/data', [AdminKycController::class, 'getKycData'])
+    ->middleware(['auth', 'admin'])
     ->name('admin.kyc.data');
 
-Route::post('/admin/kyc/{id}/status', [AdminKycController::class, 'updateStatus']);
+Route::post('/admin/kyc/{id}/status', [AdminKycController::class, 'updateStatus'])
+    ->middleware(['auth', 'admin']);
 
 // Investment Routes
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     Route::get('/bots', [AiBotController::class, 'index'])
         ->name('admin.bots.index');
@@ -353,19 +406,19 @@ Route::prefix('admin')->group(function () {
 Route::get(
     '/admin/bots/search',
     [AiBotController::class, 'search']
-);
+)->middleware(['auth', 'admin']);
 
 Route::get(
     '/admin/bots/filter',
     [AiBotController::class, 'filter']
-);
+)->middleware(['auth', 'admin']);
 
 // Remove duplicate invest route - it's now in auth middleware above
 
 Route::get(
     '/admin/bots/sort/{type}',
     [AiBotController::class, 'sort']
-);
+)->middleware(['auth', 'admin']);
 
 // Public feed for recent bot deployments (deploy2)
 Route::get('/deploy2', function () {
