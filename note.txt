@@ -765,3 +765,6 @@ php artisan schedule:work
 .interactive-input-container input{
     color: #ffffff;
 }
+
+
+Gd^/P;|~0
