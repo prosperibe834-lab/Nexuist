@@ -121,7 +121,7 @@
 
                 <div class="card mini-card">
                     <div class="mini-card-top">
-                        <p>Total Profit</p>
+                        <p>Total Profits</p>
                         <div class="icon-circle"><span class="iconify" data-icon="ri:money-dollar-circle-line"></span>
                         </div>
                     </div>

@@ -723,9 +723,10 @@ body {
 }
 
 
+npm run build
 
 git add .
-git commit -m "i puted currect deposit address"
+git commit -m "i puted something on profit"
 git 
 
 php artisan investments:process
