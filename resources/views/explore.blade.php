@@ -144,8 +144,8 @@
                 <p>Access advanced trading tools for Forex, Cryptocurrencies, Commodities, Indices, and more with
                     competitive spreads and lightning-fast execution.</p>
                 <div class="cta-group">
-                    <a href="#" class="btn btn-primary">Create Account</a>
-                    <a href="#" class="btn btn-secondary">Login</a>
+                    <a href="/signup" class="btn btn-primary">Create Account</a>
+                    <a href="/login" class="btn btn-secondary">Login</a>
                 </div>
             </div>
 
